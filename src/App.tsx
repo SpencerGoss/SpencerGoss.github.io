@@ -1035,13 +1035,19 @@ export default function App() {
         <div className="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden z-10">
           <div
             ref={heroContentRef}
-            className="w-full h-full flex flex-col items-center justify-center px-6 transition-none"
+            className="w-full h-full flex flex-col items-center justify-center px-6 transition-none relative"
             style={{ background: "#f8fafc" }}
           >
+            {/* Ambient background blobs */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <div className="hero-blob hero-blob-1" />
+              <div className="hero-blob hero-blob-2" />
+            </div>
+
             {/* Hero text content */}
             <div ref={heroTextRef} className="text-center mb-12 transition-all duration-100" style={{ willChange: "opacity, transform" }}>
               {/* Status badge */}
-              <div className="flex items-center justify-center gap-2 mb-6">
+              <div className="split-reveal flex items-center justify-center gap-2 mb-6">
                 <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-border shadow-sm">
                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                   <span className="text-xs font-semibold text-muted-foreground">Open to opportunities</span>
@@ -1049,12 +1055,12 @@ export default function App() {
               </div>
 
               {/* Name */}
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter text-foreground leading-none mb-4 fade-in">
+              <h1 className="split-reveal split-reveal-delay-1 text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter text-foreground leading-none mb-4">
                 Spencer Goss
               </h1>
 
               {/* Subtitle pills */}
-              <div className="flex items-center justify-center gap-3 mb-8 flex-wrap">
+              <div className="split-reveal split-reveal-delay-2 flex items-center justify-center gap-3 mb-8 flex-wrap">
                 <span className="text-base md:text-lg font-semibold text-muted-foreground tracking-tight">Business Analyst</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                 <span className="text-base md:text-lg font-semibold text-muted-foreground tracking-tight">MSBA</span>
@@ -1063,12 +1069,12 @@ export default function App() {
               </div>
 
               {/* Tagline */}
-              <p className="text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed mb-10">
+              <p className="split-reveal split-reveal-delay-3 text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed mb-10">
                 Turning data and hard problems into things that actually work.
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex items-center justify-center gap-4">
+              <div className="split-reveal flex items-center justify-center gap-4" style={{ animationDelay: "0.55s" }}>
                 <Button
                   size="lg"
                   onClick={() => scrollTo("projects")}
@@ -1091,8 +1097,8 @@ export default function App() {
             {/* Media card - light theme, expands on scroll */}
             <div
               ref={mediaCardRef}
-              className="w-[70%] bg-white border border-border rounded-[16px] shadow-md overflow-hidden transition-none"
-              style={{ willChange: "width, border-radius" }}
+              className="split-reveal w-[70%] bg-white border border-border rounded-[16px] shadow-md overflow-hidden transition-none"
+              style={{ willChange: "width, border-radius", animationDelay: "0.7s" }}
             >
               {/* Browser chrome bar - light */}
               <div className="bg-gray-100 border-b border-gray-200 px-4 py-3 flex items-center gap-3">

@@ -30,10 +30,18 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 
 ## Design Decisions
 - Scroll media expansion hero (text fades, card expands 70%->100%)
+- Hero ambient blobs: standalone `.hero-blob` class (NOT `.blob` parent — opacity stacking issue)
+- Hero staggered entrance: `split-reveal` classes with delays on badge→name→subtitle→tagline→buttons→card
 - Compact horizontal timeline overview -> full-screen experience slides with real bg images + frosted glass
 - Tagline: "Turning data and hard problems into things that actually work"
 - Glass cards: backdrop-filter blur(20px) + semi-transparent white bg
 - Soft gray bg, cyan/purple accents
+- Spencer prefers subtle/soft visual effects over bold/vibrant
+
+## In-Progress Redesign
+- Working section-by-section: Hero (started) → Nav → About → Projects → Skills → Experience → Contact → Global polish
+- 54 ideas tracked in `memory/project_redesign_plan.md`
+- Spencer has prefers-reduced-motion ON in Windows — must toggle to preview animations
 
 ## Bundle Script (run after vite build)
 ```bash
