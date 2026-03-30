@@ -1,0 +1,50 @@
+# Spencer Portfolio Website
+
+## What This Is
+Personal portfolio website for Spencer Goss (Business Analyst / Data Analyst / MSBA candidate). Single-page React app that bundles into a standalone `portfolio.html` file. Light theme, scroll-expansion hero, full-screen experience slides with glass cards.
+
+## Stack
+React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus Jakarta Sans + JetBrains Mono.
+
+## Commands
+- `npm run dev` — Vite dev server
+- `npm run build` — production build (Vite only, no tsc)
+- `npx vite build` — same as above
+- Do NOT run `tsc -b` — unused shadcn components cause TS errors, Vite builds fine without it
+
+## Key Paths
+- `src/App.tsx` — entire app (~1355 lines, single file with all components/hooks/data)
+- `src/index.css` — global styles, experience slide animations, scroll effects
+- `src/main.tsx` — React entry point
+- `src/components/ui/` — shadcn/ui components (only badge, button, card, separator are used)
+- `src/lib/utils.ts` — cn() helper
+- `portfolio.html` — bundled single-file deliverable (rebuild with Python script after vite build)
+- `vite.config.ts` — Vite 8 config, cssCodeSplit: false
+
+## Hard Rules
+- Spencer is very particular about design — always ask before making visual changes
+- Light theme throughout — dark theme was rejected
+- `portfolio.html` is the deliverable, not a deployed app
+- Build with `vite build`, never `tsc -b`
+- Hero uses `min-height: 200vh` outer + `sticky top-0` inner for scroll expansion effect
+
+## Design Decisions
+- Scroll media expansion hero (text fades, card expands 70%->100%)
+- Compact horizontal timeline overview -> full-screen experience slides with real bg images + frosted glass
+- Tagline: "Turning data and hard problems into things that actually work"
+- Glass cards: backdrop-filter blur(20px) + semi-transparent white bg
+- Soft gray bg, cyan/purple accents
+
+## Bundle Script (run after vite build)
+```bash
+python3 -c "
+import os
+dist = 'dist/assets'
+css_file = [f for f in os.listdir(dist) if f.endswith('.css')][0]
+js_file = [f for f in os.listdir(dist) if f.endswith('.js')][0]
+with open(os.path.join(dist, css_file)) as f: css = f.read()
+with open(os.path.join(dist, js_file)) as f: js = f.read()
+html = '<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\" /><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /><title>Spencer Goss - Portfolio</title><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" /><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin /><link href=\"https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap\" rel=\"stylesheet\" /><style>' + css + '</style></head><body><div id=\"root\"></div><script>' + js.replace('</script>','<\\/script>') + '</script></body></html>'
+with open('portfolio.html','w') as f: f.write(html)
+"
+```
