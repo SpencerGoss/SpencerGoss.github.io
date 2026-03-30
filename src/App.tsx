@@ -7,6 +7,11 @@ import {
   Menu,
   X,
   ArrowUpRight,
+  Database,
+  Sparkles,
+  Bot,
+  BarChart3,
+  FlaskConical,
 } from "lucide-react";
 
 /* Inline SVG brand icons (removed from lucide-react v1.x) */
@@ -105,21 +110,26 @@ const PROJECTS = [
   },
 ];
 
-/* Logo-based tech skills — icon from Simple Icons CDN or devicon */
-const TECH_SKILLS = [
+/* Tech skills — Simple Icons CDN for brands, Lucide icons for generic concepts */
+type TechSkill = { name: string; category: string } & (
+  | { icon: string; LucideIcon?: never }
+  | { icon?: never; LucideIcon: React.ComponentType<{ className?: string; size?: number }>; iconColor: string }
+);
+
+const TECH_SKILLS: TechSkill[] = [
   { name: "Python", icon: "https://cdn.simpleicons.org/python/3776AB", category: "Languages" },
-  { name: "SQL", icon: "https://cdn.simpleicons.org/amazondynamodb/4053D6", category: "Languages" },
+  { name: "SQL", LucideIcon: Database, iconColor: "#4053D6", category: "Languages" },
   { name: "R", icon: "https://cdn.simpleicons.org/r/276DC3", category: "Languages" },
   { name: "Claude AI", icon: "https://cdn.simpleicons.org/anthropic/191919", category: "AI & Automation" },
   { name: "ChatGPT", icon: "https://cdn.simpleicons.org/openai/412991", category: "AI & Automation" },
   { name: "GitHub Copilot", icon: "https://cdn.simpleicons.org/githubcopilot/000000", category: "AI & Automation" },
-  { name: "Prompt Engineering", icon: "https://cdn.simpleicons.org/sparkfun/E8413C", category: "AI & Automation" },
-  { name: "AI Agents", icon: "https://cdn.simpleicons.org/probot/00B0D8", category: "AI & Automation" },
-  { name: "Rapid Miner", icon: "https://cdn.simpleicons.org/rapids/7400FF", category: "Analytics" },
+  { name: "Prompt Engineering", LucideIcon: Sparkles, iconColor: "#E8413C", category: "AI & Automation" },
+  { name: "AI Agents", LucideIcon: Bot, iconColor: "#00B0D8", category: "AI & Automation" },
+  { name: "RapidMiner", icon: "https://cdn.simpleicons.org/rapidminer/F47920", category: "Analytics" },
   { name: "Tableau", icon: "https://cdn.simpleicons.org/tableau/E97627", category: "Visualization" },
   { name: "Power BI", icon: "https://cdn.simpleicons.org/powerbi/F2C811", category: "Visualization" },
-  { name: "JMP", icon: "https://cdn.simpleicons.org/sas/1E6FBA", category: "Visualization" },
-  { name: "SPSS", icon: "https://cdn.simpleicons.org/ibm/1F70C1", category: "Visualization" },
+  { name: "JMP", LucideIcon: FlaskConical, iconColor: "#1E6FBA", category: "Analytics" },
+  { name: "SPSS", LucideIcon: BarChart3, iconColor: "#1F70C1", category: "Analytics" },
   { name: "Excel", icon: "https://cdn.simpleicons.org/microsoftexcel/217346", category: "Tools" },
   { name: "Google Sheets", icon: "https://cdn.simpleicons.org/googlesheets/34A853", category: "Tools" },
   { name: "PowerPoint", icon: "https://cdn.simpleicons.org/microsoftpowerpoint/B7472A", category: "Tools" },
@@ -532,7 +542,7 @@ function ProjectCard({ project, index }: { project: typeof PROJECTS[0]; index: n
   );
 }
 
-function TechIcon({ skill }: { skill: typeof TECH_SKILLS[0] }) {
+function TechIcon({ skill }: { skill: TechSkill }) {
   const [hovered, setHovered] = useState(false);
   return (
     <div
@@ -540,20 +550,28 @@ function TechIcon({ skill }: { skill: typeof TECH_SKILLS[0] }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <img
-        src={skill.icon}
-        alt={skill.name}
-        className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-110"
-        loading="lazy"
-      />
-      {/* Tooltip */}
+      {skill.icon ? (
+        <img
+          src={skill.icon}
+          alt={skill.name}
+          className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-110"
+          loading="lazy"
+        />
+      ) : (
+        <skill.LucideIcon
+          size={32}
+          className="transition-transform duration-300 group-hover:scale-110"
+          style={{ color: skill.iconColor }}
+        />
+      )}
+      {/* Tooltip — positioned above to avoid clipping between rows */}
       <div
-        className={`absolute -bottom-9 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-md bg-foreground text-background text-[11px] font-medium whitespace-nowrap transition-all duration-200 pointer-events-none ${
-          hovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"
+        className={`absolute -top-9 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-md bg-foreground text-background text-[11px] font-medium whitespace-nowrap transition-all duration-200 pointer-events-none z-10 ${
+          hovered ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"
         }`}
       >
         {skill.name}
-        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-foreground rotate-45" />
+        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-foreground rotate-45" />
       </div>
     </div>
   );
@@ -1203,7 +1221,7 @@ export default function App() {
             <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-6">
               Tools & Technologies
             </h3>
-            <div className="flex flex-wrap gap-4 pb-4">
+            <div className="flex flex-wrap gap-4 pt-10 pb-4">
               {TECH_SKILLS.map((skill) => (
                 <TechIcon key={skill.name} skill={skill} />
               ))}
