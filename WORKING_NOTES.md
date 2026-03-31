@@ -1,13 +1,13 @@
 # Working Notes — Spencer Portfolio Website
 
 ## Core Insights
-- **Hero must be static and scannable**: Spencer rejected rotating words in the subtitle — the hero's job is 6-second identity recognition, not animation. Save dynamic elements for lower sections.
-- **Spencer rejects card-based layouts for About**: Multiple attempts (bento grid, dark cards, equal cards, interactive keywords) all felt "bland" or "template-y." The winning pattern is split layout with asymmetric content (statement left, details right).
-- **Numbers without context are meaningless**: Stat cards (4+ Projects, 2 Degrees, 3 Industries) were removed because they don't say anything without supporting narrative. Metrics belong in the Projects section where they have context.
-- **Scrollytelling > hard section breaks**: Content that transforms within the same viewport (hero→about) feels more impressive than a gradient fade or hard cut. Sticky containers with crossfade are the mechanism.
-- **Spencer prefers subtle/soft effects**: Confirmed multiple times — "noticeable but soft" wins over bold. Applies to colors, animations, transitions. But "too subtle to notice" is also rejected — there's a minimum visibility threshold.
-- **Blob opacity stacking**: The `.blob` parent class sets `opacity: 0.4` globally — any child blob inherits this multiplicatively. Use standalone classes (`.hero-blob`) for direct control.
-- **prefers-reduced-motion blocks all animations**: Spencer's Windows has animation effects toggled ON now, but this is worth remembering if animations stop working.
+- **Spencer wants breadth over depth in skills**: He wants all skills listed so employers can see everything he offers. Organized by category rows, not hidden behind tabs.
+- **External image CDNs are unreliable**: Simple Icons CDN, Wikimedia Commons, and Clearbit logos all broke during this build. Use local images or Iconify API (most reliable CDN found). Google favicon service works for logos but quality varies.
+- **Spencer prefers subtle/soft effects**: "Noticeable but soft" wins. But "too subtle to notice" is also rejected — minimum visibility threshold applies to all animations, hovers, and accent colors.
+- **Bento grids work for visual hierarchy**: Asymmetric card layouts (featured large + compact others) communicate importance better than equal grids. Used successfully in Projects section.
+- **Full-page takeover > modals for rich content**: Case studies need room for screenshots, narrative, metrics, tech stack. Modals and expand-in-place are too constrained.
+- **Scrollytelling > hard section breaks**: Sticky containers with crossfade for section transitions (hero→about). Content transforms in viewport rather than hard cuts.
+- **Spencer gives fast visual rejections — ship and iterate**: Present 2-3 options with recommendation, let him choose, build quickly. Don't over-explain or over-ask.
 
 ## Domain Notes
 
@@ -26,3 +26,16 @@ Multiple card-based approaches failed for About: bento grid, dark cards, interac
 
 ### [portfolio] 2026-03-30 — Spencer's design feedback patterns
 Spencer gives fast, clear rejections ("this looks off", "I can't see any changes", "this looks like instruction"). He trusts Claude's judgment on implementation but has strong instincts about what feels right visually. Best approach: present options, let him choose direction, then build. Don't over-explain — ship and iterate.
+
+### [portfolio] 2026-03-30 — Icon CDN reliability ranking
+1. Iconify API (`api.iconify.design`) — best coverage, most reliable, aggregates multiple icon sets
+2. Google Favicons (`google.com/s2/favicons?domain=X&sz=128`) — always available, quality varies
+3. Devicon (`cdn.jsdelivr.net/gh/devicons/devicon`) — good for dev tools, missing enterprise apps
+4. Simple Icons CDN (`cdn.simpleicons.org`) — broken for many slugs, avoid
+5. Clearbit Logos (`logo.clearbit.com`) — completely down as of 2026-03-30
+
+### [portfolio] 2026-03-30 — Oddsix is an analytics platform, not a betting tool
+Spencer is a basketball enthusiast who built a comprehensive NBA analytics dashboard. Predictions are one feature among player tracking, league standings, historical data, and interactive visualizations. Frame it as data exploration, not gambling. Lead with "built by a basketball fan."
+
+### [portfolio] 2026-03-30 — Portfolio.html bundle requires UTF-8 encoding on Windows
+The Python bundle script must use `encoding='utf-8'` for both reading dist files and writing portfolio.html. Windows default (cp1252) fails on Unicode characters in the JS bundle.

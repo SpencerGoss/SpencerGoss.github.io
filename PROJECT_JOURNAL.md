@@ -1,5 +1,38 @@
 # Project Journal — Spencer Portfolio Website
 
+## 2026-03-30 — Full Site Redesign: Projects, Skills, Experience, Contact, Global Polish
+
+### What Was Done
+- **Projects section redesign**: Replaced 2x2 browser-mockup grid with bento layout (Oddsix featured large, Trading Bot medium, DevToolbox + Churn compact). Clickable cards open full-page magazine-spread case studies with slideshow, metrics bar, narrative sections (Challenge → Built → Result), tech stack, and "Next Project" navigation. All project content rewritten based on actual codebase research.
+- **Skills section redesign**: Reorganized flat icon grid into 6 categorized rows (Languages, AI, ML, Visualization, Analytics, Tools) with colored accent bars. Added 10 new tech skills (scikit-learn, pandas, NumPy, Jupyter, Colab, VS Code, Teams, OneNote, Qualtrics, SurveyMonkey). Updated to 23 business skills. Wired rotating typewriter words into section header. Switched from Simple Icons CDN (broken) to Iconify API for brand logos.
+- **Experience section polish**: Added parallax scroll on background images, accent-colored slide indicators, slide counter (1/7). Replaced all broken Wikipedia/Clearbit images with local photos (UofL Grawemeyer Hall, UK Young Library, Churchill Downs building, Terex warehouse, Saint Xavier stadium) and Google favicon logos.
+- **Contact section enhancements**: Added resume download button (PDF placeholder), updated subtitle to "Open to BA/DA roles", added visible text labels below social icons.
+- **Global polish**: Installed Lenis smooth scroll, added cursor spotlight effect (subtle cyan radial glow following mouse), optimized font loading.
+- **CLV Predictor renamed to Churn Predictor**: Discovered the capstone project is actually churn prediction, not CLV. Updated all references.
+
+### Decisions
+- Bento grid layout chosen over stacked case studies or tabbed views — gives Oddsix clear visual dominance
+- Full-page takeover for case studies (not modal or expand-in-place) — most room for screenshots and narrative
+- Magazine-spread case study layout — cinematic hero, metrics bar, narrative sections with screenshots woven in
+- Category rows for skills (not tabs or bento cards) — all skills visible at once, scannable by category
+- Iconify API over Simple Icons CDN — Simple Icons was returning 404s for most slugs
+- Local images for experience slides — Wikimedia Commons blocked from localhost, Clearbit fully down
+
+### Discoveries
+- Simple Icons CDN (`cdn.simpleicons.org`) returns 404 for many common slugs (openai, tableau, microsoftexcel, etc.)
+- Wikimedia Commons blocks image loading from localhost (both img tags and fetch)
+- Clearbit logo service (`logo.clearbit.com`) is completely down (returns 000 status)
+- Iconify API (`api.iconify.design`) is the most reliable icon CDN — aggregates multiple icon sets
+- Google favicon service (`google.com/s2/favicons?domain=X&sz=128`) is always available but quality varies by domain
+- Lenis smooth scroll requires removing CSS `scroll-behavior: smooth` to avoid conflicts
+
+### What's Next
+- Add Spencer's photo to hero section (replace "SG" placeholder)
+- Add resume PDF file (download button is wired up)
+- Swap real screenshots into project slideshow data
+- Adjust project case study copy as needed
+- Consider deploying to Netlify/Vercel/Cloudflare Pages
+
 ## 2026-03-30 — Hero Redesign Research + First Implementations
 
 ### What Was Done

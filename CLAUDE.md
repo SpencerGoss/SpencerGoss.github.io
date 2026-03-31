@@ -42,10 +42,14 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 - Soft gray bg, cyan/purple accents
 - Spencer prefers subtle/soft visual effects over bold/vibrant
 
-## In-Progress Redesign
-- Working section-by-section: Hero ✅ → Nav ✅ → About ✅ → Projects (next) → Skills → Experience → Contact → Global polish
+## Redesign Status (2026-03-30)
+- All sections redesigned: Hero ✅ → Nav ✅ → About ✅ → Projects ✅ → Skills ✅ → Experience ✅ → Contact ✅ → Global ✅
 - Photo placeholder in hero — Spencer will take a casual photo to replace "SG" placeholder
-- `useRotatingWord` hook + `TYPEWRITER_WORDS` ready to wire into Skills section
+- Resume PDF placeholder — download button wired up, needs actual file at `/Spencer_Goss_Resume.pdf`
+- Project slideshow screenshots are placeholders — swap real screenshots into PROJECTS data when ready
+- Experience slide images are local files at `public/images/experience/` — real campus/building photos
+- Lenis smooth scroll + cursor spotlight are active
+- Icons use Iconify API (reliable) — do NOT switch back to Simple Icons CDN (broken)
 
 ## Bundle Script (run after vite build)
 ```bash
