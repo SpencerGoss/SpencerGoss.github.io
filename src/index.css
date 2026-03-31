@@ -305,6 +305,24 @@
   border-bottom: 1px solid rgba(226, 232, 240, 0.5);
 }
 
+.nav-pill {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid rgba(226, 232, 240, 0.6);
+}
+
+/* ========== ABOUT TRAIT KEYWORDS ========== */
+.trait-keyword {
+  background: none;
+  padding: 0 2px;
+  border-radius: 2px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.trait-keyword:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
 /* ========== COUNTER ANIMATION ========== */
 .counter-card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;

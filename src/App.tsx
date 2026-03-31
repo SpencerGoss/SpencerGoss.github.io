@@ -12,6 +12,13 @@ import {
   Bot,
   BarChart3,
   FlaskConical,
+  Search,
+  Target,
+  RefreshCw,
+  Rocket,
+  MapPin,
+  GraduationCap,
+  Briefcase,
 } from "lucide-react";
 
 /* Inline SVG brand icons (removed from lucide-react v1.x) */
@@ -309,6 +316,24 @@ const TYPEWRITER_WORDS = [
    HOOKS
    ================================================================ */
 
+function useRotatingWord(words: string[], interval = 3000) {
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIndex((i) => (i + 1) % words.length);
+        setVisible(true);
+      }, 300);
+    }, interval);
+    return () => clearInterval(id);
+  }, [words.length, interval]);
+
+  return { word: words[index], visible };
+}
+
 function useScrollReveal() {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -574,6 +599,44 @@ function TechIcon({ skill }: { skill: TechSkill }) {
         <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-foreground rotate-45" />
       </div>
     </div>
+  );
+}
+
+const ABOUT_TRAITS: { word: string; description: string; color: string; Icon: React.ComponentType<{ size?: number; className?: string }> }[] = [
+  { word: "curiosity", description: "I start by understanding the full picture — the context, the constraints, and what success actually looks like.", color: "#06B6D4", Icon: Search },
+  { word: "deliberate", description: "Every decision is researched and pressure-tested. I don't commit to an approach until I'm confident it's the right one.", color: "#8B5CF6", Icon: Target },
+  { word: "never settled", description: "I refine until the work meets a high standard — not just until it functions.", color: "#F59E0B", Icon: RefreshCw },
+  { word: "builder", description: "I go beyond analysis to ship real products — prediction engines, trading systems, and automation tools.", color: "#10B981", Icon: Rocket },
+];
+
+function TraitWord({ trait }: { trait: typeof ABOUT_TRAITS[0] }) {
+  const [active, setActive] = useState(false);
+  return (
+    <span className="relative inline-block">
+      <button
+        className="trait-keyword font-bold cursor-pointer border-b-2 border-dashed transition-all duration-200"
+        style={{ color: trait.color, borderColor: active ? trait.color : `${trait.color}40` }}
+        onMouseEnter={() => setActive(true)}
+        onMouseLeave={() => setActive(false)}
+        onClick={() => setActive(!active)}
+      >
+        {trait.word}
+      </button>
+      <div
+        className="absolute left-0 top-full mt-3 z-20 transition-all duration-300 pointer-events-none"
+        style={{
+          opacity: active ? 1 : 0,
+          transform: active ? "translateY(0)" : "translateY(-8px)",
+        }}
+      >
+        <div className="flex items-start gap-3 px-5 py-4 rounded-xl shadow-lg border border-border/50 w-72" style={{ background: "rgba(255,255,255,0.95)", backdropFilter: "blur(12px)" }}>
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style={{ background: `${trait.color}15` }}>
+            <trait.Icon size={16} style={{ color: trait.color }} />
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">{trait.description}</p>
+        </div>
+      </div>
+    </span>
   );
 }
 
@@ -863,6 +926,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [navShrunk, setNavShrunk] = useState(false);
+  const { word: rotatingWord, visible: wordVisible } = useRotatingWord(TYPEWRITER_WORDS);
 
   const sectionRefs = {
     hero: useRef<HTMLElement>(null),
@@ -911,35 +975,63 @@ export default function App() {
   const mediaCardRef = useRef<HTMLDivElement>(null);
   const heroTextRef = useRef<HTMLDivElement>(null);
   const scrollCueRef = useRef<HTMLDivElement>(null);
+  const aboutRevealRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleHeroScroll = () => {
-      if (!heroRef.current || !mediaCardRef.current || !heroContentRef.current) return;
+      if (!heroRef.current || !heroContentRef.current) return;
 
       const heroRect = heroRef.current.getBoundingClientRect();
       const sectionHeight = heroRef.current.offsetHeight - window.innerHeight;
       const scrolled = Math.max(0, -heroRect.top);
       const progress = sectionHeight > 0 ? Math.min(1, scrolled / sectionHeight) : 0;
 
-      // Card width: 70% -> 100%
-      const cardWidth = 70 + progress * 30;
-      mediaCardRef.current.style.width = `${cardWidth}%`;
-      if (progress > 0.5) {
-        mediaCardRef.current.style.maxWidth = "none";
-      } else {
-        mediaCardRef.current.style.maxWidth = "";
+      // Phase 1: Hero exit (0% - 50% of scroll)
+      const heroExit = Math.min(1, progress / 0.5);
+      // Phase 2: About enter (35% - 60% of scroll)
+      const aboutEnter = Math.max(0, Math.min(1, (progress - 0.35) / 0.25));
+      // Phase 3: About exit (75% - 100% of scroll)
+      const aboutExit = Math.max(0, Math.min(1, (progress - 0.75) / 0.25));
+
+      if (heroTextRef.current) {
+        const textEl = heroTextRef.current.querySelector('[data-hero="text"]') as HTMLElement;
+        const photoEl = heroTextRef.current.querySelector('[data-hero="photo"]') as HTMLElement;
+
+        if (textEl) {
+          // Text: stays sharp until 20%, blurs out by 50%
+          const textProgress = Math.max(0, Math.min(1, (heroExit - 0.4) / 0.6));
+          const textBlur = textProgress * 16;
+          const textOpacity = Math.max(0, 1 - textProgress);
+          const textX = -textProgress * 80;
+          textEl.style.transform = `translateX(${textX}px)`;
+          textEl.style.opacity = `${textOpacity}`;
+          textEl.style.filter = textBlur > 0.5 ? `blur(${textBlur}px)` : "none";
+        }
+
+        if (photoEl) {
+          // Photo: starts later, blurs out by 50%
+          const photoProgress = Math.max(0, Math.min(1, (heroExit - 0.6) / 0.4));
+          const photoBlur = photoProgress * 16;
+          const photoOpacity = Math.max(0, 1 - photoProgress);
+          const photoX = photoProgress * 60;
+          photoEl.style.transform = `translateX(${photoX}px)`;
+          photoEl.style.opacity = `${photoOpacity}`;
+          photoEl.style.filter = photoBlur > 0.5 ? `blur(${photoBlur}px)` : "none";
+        }
       }
 
-      // Border radius: 16px -> 0px
-      const borderRadius = 16 * (1 - progress);
-      mediaCardRef.current.style.borderRadius = `${borderRadius}px`;
-
-      // Hero text fade out and move up
-      if (heroTextRef.current) {
-        const textOpacity = Math.max(0, 1 - progress * 2.5);
-        const textTranslate = -progress * 50;
-        heroTextRef.current.style.opacity = `${textOpacity}`;
-        heroTextRef.current.style.transform = `translateY(${textTranslate}px)`;
+      // About content fades in, then fades out before releasing
+      if (aboutRevealRef.current) {
+        if (aboutExit > 0) {
+          // Phase 3: About fading out
+          aboutRevealRef.current.style.opacity = `${1 - aboutExit}`;
+          aboutRevealRef.current.style.transform = `translateY(${-aboutExit * 30}px)`;
+        } else {
+          // Phase 2: About fading in
+          aboutRevealRef.current.style.opacity = `${aboutEnter}`;
+          aboutRevealRef.current.style.transform = `translateY(${(1 - aboutEnter) * 40}px)`;
+        }
+        aboutRevealRef.current.style.pointerEvents = aboutEnter > 0.5 && aboutExit < 0.5 ? "auto" : "none";
       }
 
       // Scroll cue fade out
@@ -966,56 +1058,67 @@ export default function App() {
       {/* Scroll progress */}
       <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} />
 
-      {/* Navigation */}
+      {/* Navigation — floating pill */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          navShrunk ? "py-2 nav-glass" : "py-4"
+        className={`fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-500 ${
+          navShrunk ? "top-4 pointer-events-none" : "top-0 pointer-events-none"
         }`}
-        style={navShrunk ? {} : { background: "transparent" }}
       >
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-          <button
-            onClick={() => scrollTo("hero")}
-            className="font-bold tracking-tight text-lg hover:text-primary transition-colors cursor-pointer text-foreground"
-          >
-            SG<span className="text-primary">.</span>
-          </button>
+        {/* Floating pill container */}
+        <div
+          className={`pointer-events-auto transition-all duration-500 ${
+            navShrunk
+              ? "nav-pill px-2 py-1.5 rounded-full shadow-lg"
+              : "w-full px-6 py-4"
+          }`}
+          style={navShrunk ? {} : { background: "transparent" }}
+        >
+          <div className={`flex items-center ${navShrunk ? "gap-1" : "max-w-6xl mx-auto justify-between"}`}>
+            <button
+              onClick={() => scrollTo("hero")}
+              className={`font-bold tracking-tight hover:text-primary transition-colors cursor-pointer text-foreground ${
+                navShrunk ? "text-sm px-3" : "text-lg"
+              }`}
+            >
+              SG<span className="text-primary">.</span>
+            </button>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
-            {NAV_ITEMS.map(({ key, label }) => (
-              <button
-                key={key}
-                onClick={() => scrollTo(key)}
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors cursor-pointer ${
-                  activeSection === key
-                    ? "text-primary bg-primary/5"
-                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-
-          {/* Mobile toggle */}
-          <button
-            className="md:hidden p-2 cursor-pointer text-foreground"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
-
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t border-border/50 bg-white/95 backdrop-blur-lg">
-            <div className="max-w-6xl mx-auto px-6 py-3 flex flex-col gap-1">
+            {/* Desktop nav */}
+            <div className="hidden md:flex items-center gap-0.5">
               {NAV_ITEMS.map(({ key, label }) => (
                 <button
                   key={key}
                   onClick={() => scrollTo(key)}
-                  className="text-left px-3 py-2.5 rounded-md text-sm font-medium text-muted-foreground hover:text-primary hover:bg-secondary transition-colors cursor-pointer"
+                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ${
+                    activeSection === key
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-black/5"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+
+            {/* Mobile toggle */}
+            <button
+              className="md:hidden p-2 cursor-pointer text-foreground"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && navShrunk && (
+          <div className="pointer-events-auto absolute top-16 left-4 right-4 rounded-2xl bg-white/95 backdrop-blur-lg border border-border/50 shadow-lg">
+            <div className="px-4 py-3 flex flex-col gap-1">
+              {NAV_ITEMS.map(({ key, label }) => (
+                <button
+                  key={key}
+                  onClick={() => scrollTo(key)}
+                  className="text-left px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-primary hover:bg-secondary transition-colors cursor-pointer"
                 >
                   {label}
                 </button>
@@ -1029,7 +1132,7 @@ export default function App() {
       <section
         ref={heroRef}
         className="relative"
-        style={{ minHeight: "200vh", background: "#f8fafc" }}
+        style={{ minHeight: "280vh", background: "#f8fafc" }}
       >
         {/* Sticky container */}
         <div className="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden z-10">
@@ -1044,85 +1147,71 @@ export default function App() {
               <div className="hero-blob hero-blob-2" />
             </div>
 
-            {/* Hero text content */}
-            <div ref={heroTextRef} className="text-center mb-12 transition-all duration-100" style={{ willChange: "opacity, transform" }}>
-              {/* Status badge */}
-              <div className="split-reveal flex items-center justify-center gap-2 mb-6">
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-border shadow-sm">
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-xs font-semibold text-muted-foreground">Open to opportunities</span>
-                </div>
-              </div>
-
-              {/* Name */}
-              <h1 className="split-reveal split-reveal-delay-1 text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter text-foreground leading-none mb-4">
-                Spencer Goss
-              </h1>
-
-              {/* Subtitle pills */}
-              <div className="split-reveal split-reveal-delay-2 flex items-center justify-center gap-3 mb-8 flex-wrap">
-                <span className="text-base md:text-lg font-semibold text-muted-foreground tracking-tight">Business Analyst</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span className="text-base md:text-lg font-semibold text-muted-foreground tracking-tight">MSBA</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span className="text-base md:text-lg font-semibold text-muted-foreground tracking-tight">AI Concentration</span>
-              </div>
-
-              {/* Tagline */}
-              <p className="split-reveal split-reveal-delay-3 text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed mb-10">
-                Turning data and hard problems into things that actually work.
-              </p>
-
-              {/* CTA Buttons */}
-              <div className="split-reveal flex items-center justify-center gap-4" style={{ animationDelay: "0.55s" }}>
-                <Button
-                  size="lg"
-                  onClick={() => scrollTo("projects")}
-                  className="font-semibold tracking-tight cursor-pointer border-0"
-                  style={{ background: "#06B6D4", color: "#f8fafc" }}
-                >
-                  View My Work
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={() => scrollTo("contact")}
-                  className="font-semibold tracking-tight cursor-pointer text-foreground border-border hover:border-primary hover:bg-primary/5"
-                >
-                  Get in Touch
-                </Button>
-              </div>
-            </div>
-
-            {/* Media card - light theme, expands on scroll */}
-            <div
-              ref={mediaCardRef}
-              className="split-reveal w-[70%] bg-white border border-border rounded-[16px] shadow-md overflow-hidden transition-none"
-              style={{ willChange: "width, border-radius", animationDelay: "0.7s" }}
-            >
-              {/* Browser chrome bar - light */}
-              <div className="bg-gray-100 border-b border-gray-200 px-4 py-3 flex items-center gap-3">
-                <div className="flex gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-gray-400" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-gray-400" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-gray-400" />
-                </div>
-                <div className="flex-1 ml-2">
-                  <div className="text-xs text-gray-500 font-medium">spencergoss.com</div>
-                </div>
-              </div>
-
-              {/* Stat cards inside */}
-              <div className="p-8 flex items-center justify-center gap-6">
-                {STATS.map((stat, i) => (
-                  <div key={i} className="text-center">
-                    <div className="text-2xl md:text-3xl font-bold text-foreground">
-                      {stat.value}
-                      <span className="gradient-text">{stat.suffix}</span>
-                    </div>
-                    <div className="text-sm text-muted-foreground font-medium mt-1">{stat.label}</div>
+            {/* Hero split layout */}
+            <div ref={heroTextRef} className="w-full max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-16 transition-all duration-100" style={{ willChange: "opacity, transform" }}>
+              {/* Left — text content */}
+              <div data-hero="text" className="flex-1 text-center md:text-left transition-none" style={{ willChange: "transform, opacity" }}>
+                {/* Status badge */}
+                <div className="split-reveal flex items-center justify-center md:justify-start gap-2 mb-6">
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-border shadow-sm">
+                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-xs font-semibold text-muted-foreground">Open to opportunities</span>
                   </div>
-                ))}
+                </div>
+
+                {/* Name */}
+                <h1 className="split-reveal split-reveal-delay-1 text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-foreground leading-none mb-4">
+                  Spencer Goss
+                </h1>
+
+                {/* Subtitle pills */}
+                <div className="split-reveal split-reveal-delay-2 flex items-center justify-center md:justify-start gap-3 mb-6 flex-wrap">
+                  <span className="text-base md:text-lg font-semibold text-muted-foreground tracking-tight">Business Analyst</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <span className="text-base md:text-lg font-semibold text-muted-foreground tracking-tight">MSBA</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <span className="text-base md:text-lg font-semibold text-muted-foreground tracking-tight">AI Concentration</span>
+                </div>
+
+                {/* Tagline */}
+                <p className="split-reveal split-reveal-delay-3 text-base md:text-lg text-muted-foreground max-w-lg leading-relaxed mb-8">
+                  <span className="font-medium text-foreground/70">From raw data to real results</span> — predictive models, automated systems, and analytics tools.
+                </p>
+
+                {/* CTA Buttons */}
+                <div className="split-reveal flex items-center justify-center md:justify-start gap-4" style={{ animationDelay: "0.55s" }}>
+                  <Button
+                    size="lg"
+                    onClick={() => scrollTo("projects")}
+                    className="font-semibold tracking-tight cursor-pointer border-0"
+                    style={{ background: "#06B6D4", color: "#f8fafc" }}
+                  >
+                    View My Work
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={() => scrollTo("contact")}
+                    className="font-semibold tracking-tight cursor-pointer text-foreground border-border hover:border-primary hover:bg-primary/5"
+                  >
+                    Get in Touch
+                  </Button>
+                </div>
+              </div>
+
+              {/* Right — photo */}
+              <div data-hero="photo" className="split-reveal flex-shrink-0 relative transition-none" style={{ animationDelay: "0.7s", willChange: "transform, opacity" }}>
+                {/* Decorative blob behind photo */}
+                <div className="absolute -inset-6 rounded-full opacity-30" style={{ background: "radial-gradient(circle, #06B6D4 0%, transparent 70%)", filter: "blur(40px)" }} />
+                <div
+                  ref={mediaCardRef}
+                  className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg border border-white/50"
+                >
+                  {/* Placeholder — replace src with actual photo */}
+                  <div className="w-full h-full bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 flex items-center justify-center">
+                    <span className="text-4xl text-gray-300 font-bold select-none">SG</span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -1130,62 +1219,79 @@ export default function App() {
             <div ref={scrollCueRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 bounce-arrow text-muted-foreground/40 transition-opacity duration-100" style={{ willChange: "opacity" }}>
               <ChevronDown size={28} />
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ===== ABOUT ===== */}
-      <section ref={sectionRefs.about} className="section-alt min-h-screen flex items-center py-24 md:py-32">
-        <div className="max-w-5xl mx-auto px-6">
-          <div ref={aboutReveal} className="scroll-reveal">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
-              About Me
-            </h2>
-            <Separator className="w-12 bg-primary h-0.5 mb-10" />
+            {/* About content — fades in as hero fades out */}
+            <div
+              ref={aboutRevealRef}
+              className="absolute inset-0 flex items-center justify-center px-6"
+              style={{ opacity: 0, willChange: "opacity, transform", pointerEvents: "none" }}
+            >
+              <div className="max-w-6xl mx-auto w-full">
+                {/* Split layout with vertical divider */}
+                <div className="flex flex-col lg:flex-row items-start">
 
-            {/* Stat cards row */}
-            <div className="grid grid-cols-3 gap-3 mb-10 max-w-md">
-              {STATS.map((stat, i) => (
-                <StatCard key={i} {...stat} />
-              ))}
-            </div>
+                  {/* Left — headline + statement */}
+                  <div className="lg:w-2/5 lg:pr-12 mb-12 lg:mb-0">
+                    <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
+                      About Me
+                    </h2>
+                    <Separator className="w-12 bg-primary h-0.5 mb-8" />
+                    <p className="text-xl md:text-2xl font-semibold tracking-tight text-foreground/80 leading-snug mb-8">
+                      Turning raw data into<br />
+                      <span style={{ color: "#06B6D4" }}>real-world solutions</span>
+                    </p>
 
-            {/* Bio text — professional but approachable */}
-            <div className="max-w-3xl mb-10">
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-5">
-                I'm a business analytics graduate student at the University of Louisville with a concentration in Artificial Intelligence. My background spans finance, marketing, and operations — and I've spent the last few years applying that mix to build data-driven solutions that deliver measurable results.
-              </p>
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-5">
-                At Churchill Downs, I introduced AI-powered invoice analysis that improved processing speed and accuracy across 10+ properties. Before that, I streamlined warehouse operations at Terex by adopting new systems and earning certifications to reduce turnaround time. I look for inefficiencies, and I fix them.
-              </p>
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                Outside of work and school, I build things. A full-stack ML prediction platform, automated trading systems with risk management, and AI-powered content pipelines. I learn best by shipping real products — and each one sharpens how I think about data, automation, and problem-solving.
-              </p>
-            </div>
-
-            {/* Quick facts card */}
-            <div className="bg-white rounded-2xl border border-border p-6 shadow-sm max-w-3xl">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
-                {[
-                  { label: "Currently", value: "MSBA, AI Concentration — University of Louisville" },
-                  { label: "Degree", value: "BBA Finance, Marketing & Analytics — University of Kentucky" },
-                  { label: "Based in", value: "Louisville, KY" },
-                  { label: "Looking for", value: "Business Analyst & Data Analyst roles" },
-                  { label: "Industries", value: "Entertainment, Manufacturing, Real Estate" },
-                  { label: "Focus", value: "ML, Automation & Process Optimization" },
-                ].map((fact, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                    <div>
-                      <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">{fact.label}</div>
-                      <div className="text-sm font-medium text-foreground">{fact.value}</div>
+                    {/* Quick facts */}
+                    <div className="flex flex-col gap-3">
+                      {[
+                        { Icon: MapPin, value: "Louisville, KY" },
+                        { Icon: GraduationCap, value: "MSBA, AI — UofL" },
+                        { Icon: Briefcase, value: "Seeking BA & DA roles" },
+                      ].map((fact, i) => (
+                        <div key={i} className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(6,182,212,0.1)" }}>
+                            <fact.Icon size={15} className="text-primary" />
+                          </div>
+                          <span className="text-sm font-medium text-foreground">{fact.value}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                ))}
+
+                  {/* Vertical divider */}
+                  <div className="hidden lg:block w-px self-stretch" style={{ background: "linear-gradient(to bottom, transparent, #cbd5e1, transparent)" }} />
+
+                  {/* Right — bio + details */}
+                  <div className="lg:w-3/5 lg:pl-12">
+                    <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-10">
+                      I'm pursuing my MSBA at the University of Louisville with a concentration in AI. Outside of coursework, I'm usually building something — a prediction engine, an automated trading system, or whatever problem I'm trying to solve that week. I learn best by shipping real products, and every project sharpens how I approach data and decision-making.
+                    </p>
+
+                    {/* Detail grid with left accent borders */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      {[
+                        { label: "Approach", value: "Research deeply, build deliberately, refine relentlessly", color: "#06B6D4" },
+                        { label: "Strength", value: "Turning messy problems into working products", color: "#8B5CF6" },
+                        { label: "Education", value: "MSBA (AI) — UofL, BBA (Finance, Marketing, Analytics) — UK", color: "#10B981" },
+                        { label: "Experience", value: "Churchill Downs, Terex Corporation, Independent Projects", color: "#F59E0B" },
+                      ].map((item, i) => (
+                        <div key={i} className="pl-4" style={{ borderLeft: `2px solid ${item.color}` }}>
+                          <div className="text-[11px] font-semibold uppercase tracking-wider mb-1" style={{ color: item.color }}>{item.label}</div>
+                          <div className="text-sm font-medium text-foreground leading-relaxed">{item.value}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ===== ABOUT (anchor for nav tracking) ===== */}
+      <section ref={sectionRefs.about} className="relative" style={{ marginTop: "-1px" }}>
+        <div className="h-1" />
       </section>
 
       {/* ===== PROJECTS ===== */}
