@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import Lenis from "lenis";
 import {
   Mail,
   ExternalLink,
@@ -1316,6 +1317,34 @@ export default function App() {
   const [navShrunk, setNavShrunk] = useState(false);
   const { word: rotatingWord, visible: wordVisible } = useRotatingWord(TYPEWRITER_WORDS);
 
+  // Lenis smooth scroll
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+    return () => lenis.destroy();
+  }, []);
+
+  // Cursor spotlight
+  const spotlightRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (spotlightRef.current) {
+        spotlightRef.current.style.left = `${e.clientX}px`;
+        spotlightRef.current.style.top = `${e.clientY}px`;
+      }
+    };
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   const sectionRefs = {
     hero: useRef<HTMLElement>(null),
     about: useRef<HTMLElement>(null),
@@ -1442,6 +1471,9 @@ export default function App() {
     <>
       {/* Noise overlay */}
       <div className="noise-overlay" />
+
+      {/* Cursor spotlight */}
+      <div ref={spotlightRef} className="cursor-spotlight" />
 
       {/* Scroll progress */}
       <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} />
