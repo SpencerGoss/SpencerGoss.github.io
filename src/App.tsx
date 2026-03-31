@@ -523,6 +523,9 @@ function BentoCard({ project, onClick }: { project: typeof PROJECTS[0]; onClick:
         ref={revealRef}
         className="scroll-reveal bento-card bento-featured"
         onClick={onClick}
+        style={{ ["--accent" as string]: project.accent }}
+        onMouseEnter={(e) => (e.currentTarget.style.borderColor = project.accent + "40")}
+        onMouseLeave={(e) => (e.currentTarget.style.borderColor = "")}
       >
         <div
           className="absolute -top-16 -right-16 w-64 h-64 rounded-full pointer-events-none"
@@ -562,12 +565,17 @@ function BentoCard({ project, onClick }: { project: typeof PROJECTS[0]; onClick:
                 </div>
               ))}
             </div>
-            <div className="flex gap-1.5 flex-wrap">
-              {project.tags.slice(0, 4).map((tag) => (
-                <span key={tag} className="text-[10px] bg-secondary border border-border text-muted-foreground px-2.5 py-1 rounded-full">
-                  {tag}
-                </span>
-              ))}
+            <div className="flex items-center gap-3">
+              <div className="flex gap-1.5 flex-wrap">
+                {project.tags.slice(0, 4).map((tag) => (
+                  <span key={tag} className="text-[10px] bg-secondary border border-border text-muted-foreground px-2.5 py-1 rounded-full">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className="bento-hover-hint flex items-center gap-1 ml-auto text-[11px] font-semibold whitespace-nowrap" style={{ color: project.accent }}>
+                View Case Study <ArrowUpRight size={12} />
+              </div>
             </div>
           </div>
         </div>
@@ -580,6 +588,8 @@ function BentoCard({ project, onClick }: { project: typeof PROJECTS[0]; onClick:
       ref={revealRef}
       className="scroll-reveal bento-card"
       onClick={onClick}
+      onMouseEnter={(e) => (e.currentTarget.style.borderColor = project.accent + "40")}
+      onMouseLeave={(e) => (e.currentTarget.style.borderColor = "")}
     >
       <div className="flex flex-col justify-between h-full">
         <div>
@@ -600,18 +610,31 @@ function BentoCard({ project, onClick }: { project: typeof PROJECTS[0]; onClick:
             ))}
           </div>
         )}
-        <div className="flex gap-1.5 flex-wrap mt-2">
-          {project.tags.slice(0, 4).map((tag) => (
-            <span
-              key={tag}
-              className="text-[9px] px-2 py-0.5 rounded-full border"
-              style={{ background: project.accentBg, color: project.accent, borderColor: `${project.accent}20` }}
-            >
-              {tag}
-            </span>
-          ))}
+        <div className="flex items-center gap-2 mt-2">
+          <div className="flex gap-1.5 flex-wrap">
+            {project.tags.slice(0, 4).map((tag) => (
+              <span
+                key={tag}
+                className="text-[9px] px-2 py-0.5 rounded-full border"
+                style={{ background: project.accentBg, color: project.accent, borderColor: `${project.accent}20` }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          <div className="bento-hover-hint ml-auto">
+            <ArrowUpRight size={14} style={{ color: project.accent }} />
+          </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function BentoCard2({ project, onClick, delay }: { project: typeof PROJECTS[0]; onClick: () => void; delay: number }) {
+  return (
+    <div style={{ transitionDelay: `${delay}ms` }}>
+      <BentoCard project={project} onClick={onClick} />
     </div>
   );
 }
@@ -625,13 +648,13 @@ function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void 
   return (
     <div className="bento-grid">
       <div className="bento-col-left">
-        <BentoCard project={oddsix} onClick={() => onSelectProject("oddsix")} />
+        <BentoCard2 project={oddsix} onClick={() => onSelectProject("oddsix")} delay={0} />
       </div>
       <div className="bento-col-right">
-        <BentoCard project={tradingBot} onClick={() => onSelectProject("trading-bot")} />
+        <BentoCard2 project={tradingBot} onClick={() => onSelectProject("trading-bot")} delay={120} />
         <div className="bento-row-compact">
-          <BentoCard project={devtoolbox} onClick={() => onSelectProject("devtoolbox")} />
-          <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} />
+          <BentoCard2 project={devtoolbox} onClick={() => onSelectProject("devtoolbox")} delay={240} />
+          <BentoCard2 project={churnModel} onClick={() => onSelectProject("churn-model")} delay={300} />
         </div>
       </div>
     </div>
@@ -651,10 +674,10 @@ function CaseStudyMetric({ metric }: { metric: typeof PROJECTS[0]["metrics"][0] 
   );
 }
 
-function StorySection({ section, index }: { section: { title: string; color: string; body: string; features?: { emoji: string; name: string; desc: string }[] }; index: number }) {
+function StorySection({ section, index, isLast }: { section: { title: string; color: string; body: string; features?: { emoji: string; name: string; desc: string }[] }; index: number; isLast?: boolean }) {
   const ref = useScrollReveal();
   return (
-    <div ref={ref} className="scroll-reveal mb-8 md:mb-10" style={{ transitionDelay: `${index * 100}ms` }}>
+    <div ref={ref} className={`scroll-reveal ${isLast ? "mb-8 md:mb-10" : "mb-10 md:mb-12 pb-10 md:pb-12 border-b border-border/50"}`} style={{ transitionDelay: `${index * 100}ms` }}>
       <div className="flex items-center gap-2 mb-3">
         <div className="w-1 h-5 md:h-6 rounded-full" style={{ background: section.color }} />
         <h3 className="text-lg md:text-xl font-bold text-foreground">{section.title}</h3>
@@ -820,7 +843,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
       {/* Story sections */}
       <div className="max-w-2xl mx-auto px-6 py-10 md:py-14">
         {project.caseStudy.sections.map((section, i) => (
-          <StorySection key={i} section={section} index={i} />
+          <StorySection key={i} section={section} index={i} isLast={i === project.caseStudy.sections.length - 1} />
         ))}
 
         <div
