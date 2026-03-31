@@ -26,22 +26,26 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 - Light theme throughout — dark theme was rejected
 - `portfolio.html` is the deliverable, not a deployed app
 - Build with `vite build`, never `tsc -b`
-- Hero uses `min-height: 200vh` outer + `sticky top-0` inner for scroll expansion effect
+- Hero uses `min-height: 280vh` outer + `sticky top-0` inner for scrollytelling (hero→about crossfade)
+- Hero subtitle pills must stay static — no rotating/animated words there
+- Don't use card-based layouts for About section — multiple attempts rejected as bland
 
 ## Design Decisions
-- Scroll media expansion hero (text fades, card expands 70%->100%)
+- Hero: split layout (text left, photo right), parallax blur exit (text left, photo right, staggered)
+- Hero→About: scrollytelling crossfade in same sticky viewport (hero blurs out, about fades in, about fades out)
 - Hero ambient blobs: standalone `.hero-blob` class (NOT `.blob` parent — opacity stacking issue)
-- Hero staggered entrance: `split-reveal` classes with delays on badge→name→subtitle→tagline→buttons→card
-- Compact horizontal timeline overview -> full-screen experience slides with real bg images + frosted glass
-- Tagline: "Turning data and hard problems into things that actually work"
-- Glass cards: backdrop-filter blur(20px) + semi-transparent white bg
+- Hero staggered entrance: `split-reveal` classes with delays on badge→name→subtitle→tagline→buttons→photo
+- Tagline: "From raw data to real results — predictive models, automated systems, and analytics tools."
+- Nav: floating frosted-glass pill (`.nav-pill`) appears after scrolling past hero
+- About: split layout — statement + facts left, bio + detail grid right, vertical divider
+- Experience: full-screen slides with real bg images + frosted glass
 - Soft gray bg, cyan/purple accents
 - Spencer prefers subtle/soft visual effects over bold/vibrant
 
 ## In-Progress Redesign
-- Working section-by-section: Hero (started) → Nav → About → Projects → Skills → Experience → Contact → Global polish
-- 54 ideas tracked in `memory/project_redesign_plan.md`
-- Spencer has prefers-reduced-motion ON in Windows — must toggle to preview animations
+- Working section-by-section: Hero ✅ → Nav ✅ → About ✅ → Projects (next) → Skills → Experience → Contact → Global polish
+- Photo placeholder in hero — Spencer will take a casual photo to replace "SG" placeholder
+- `useRotatingWord` hook + `TYPEWRITER_WORDS` ready to wire into Skills section
 
 ## Bundle Script (run after vite build)
 ```bash

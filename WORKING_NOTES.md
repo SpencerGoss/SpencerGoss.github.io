@@ -1,11 +1,13 @@
 # Working Notes — Spencer Portfolio Website
 
 ## Core Insights
-- **Blob opacity stacking**: The `.blob` parent class sets `opacity: 0.4` globally — any child blob inherits this multiplicatively. Use standalone classes (`.hero-blob`) when you need direct control over opacity on light backgrounds.
-- **prefers-reduced-motion blocks all animations**: Spencer's Windows has animation effects OFF, which disables `split-reveal`, blob drift, gradient-shift, and bounce-arrow via the existing media query. Must be toggled ON to preview any motion work.
-- **Unused code assets exist**: `TYPEWRITER_WORDS` array and `.typewriter-cursor` CSS are defined but not rendered anywhere — available for hero subtitle rotation without new code.
-- **Hiring manager 6-second rule**: Research shows employers spend 6-8 seconds on initial hero scan. Metrics and specificity in the hero outperform generic taglines. "72.6% accuracy" beats "I solve problems."
-- **Portfolio IS the work sample**: For a BA/DA candidate, the fact the portfolio is hand-coded React (not Squarespace) is itself a differentiator — make this visible.
+- **Hero must be static and scannable**: Spencer rejected rotating words in the subtitle — the hero's job is 6-second identity recognition, not animation. Save dynamic elements for lower sections.
+- **Spencer rejects card-based layouts for About**: Multiple attempts (bento grid, dark cards, equal cards, interactive keywords) all felt "bland" or "template-y." The winning pattern is split layout with asymmetric content (statement left, details right).
+- **Numbers without context are meaningless**: Stat cards (4+ Projects, 2 Degrees, 3 Industries) were removed because they don't say anything without supporting narrative. Metrics belong in the Projects section where they have context.
+- **Scrollytelling > hard section breaks**: Content that transforms within the same viewport (hero→about) feels more impressive than a gradient fade or hard cut. Sticky containers with crossfade are the mechanism.
+- **Spencer prefers subtle/soft effects**: Confirmed multiple times — "noticeable but soft" wins over bold. Applies to colors, animations, transitions. But "too subtle to notice" is also rejected — there's a minimum visibility threshold.
+- **Blob opacity stacking**: The `.blob` parent class sets `opacity: 0.4` globally — any child blob inherits this multiplicatively. Use standalone classes (`.hero-blob`) for direct control.
+- **prefers-reduced-motion blocks all animations**: Spencer's Windows has animation effects toggled ON now, but this is worth remembering if animations stop working.
 
 ## Domain Notes
 
@@ -15,6 +17,12 @@ Radial gradients with low alpha (0.15-0.18) + 80px blur + 0.4 parent opacity = i
 ### [portfolio] 2026-03-30 — Research synthesis: top 5 employer-impact changes
 1. Real project screenshots (not gradient placeholders)
 2. Case study deep-dives (Problem → Approach → Impact)
-3. Professional headshot in About
+3. Professional headshot in About — DONE (moved to hero)
 4. Resume download button in Contact
-5. Animated text reveals + smooth scroll for polish
+5. Animated text reveals + smooth scroll for polish — DONE (split-reveal + parallax)
+
+### [portfolio] 2026-03-30 — About section design learnings
+Multiple card-based approaches failed for About: bento grid, dark cards, interactive keywords, typographic statement. Root cause: light theme + white cards = no contrast. Split layout with asymmetric content was the winning pattern. The scrollytelling transition (hero morphs into About in same viewport) was the breakthrough for section-to-section flow.
+
+### [portfolio] 2026-03-30 — Spencer's design feedback patterns
+Spencer gives fast, clear rejections ("this looks off", "I can't see any changes", "this looks like instruction"). He trusts Claude's judgment on implementation but has strong instincts about what feels right visually. Best approach: present options, let him choose direction, then build. Don't over-explain — ship and iterate.
