@@ -435,7 +435,7 @@ const EXPERIENCE = [
     details: [
       "Member of the National Honors Society for academic excellence",
       "Served on the Student Activity Council, helping plan and coordinate school events",
-      "Lacrosse player and Powerlifter",
+      "Member of the Lacrosse and Powerlifting teams",
       "Active in Ryken Service Club, contributing to community service initiatives",
     ],
     highlights: ["National Honors Society", "Lacrosse", "Student Activity Council"],
