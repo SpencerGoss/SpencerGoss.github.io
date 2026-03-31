@@ -7,6 +7,7 @@ import {
   Menu,
   X,
   ArrowUpRight,
+  ArrowLeft,
   Database,
   Sparkles,
   Bot,
@@ -48,72 +49,167 @@ import { Separator } from "@/components/ui/separator";
 
 const PROJECTS = [
   {
+    id: "oddsix",
     title: "Oddsix",
     subtitle: "NBA Analytics Platform",
-    description:
-      "Full-stack NBA prediction engine with 390+ ML features, 72.6% model accuracy, and a live analytics dashboard. 5-model ensemble with Bayesian weight optimization and Monte Carlo uncertainty.",
-    tags: ["Python", "Machine Learning", "Plotly", "GitHub Pages"],
+    accent: "#06B6D4",
+    accentBg: "rgba(6,182,212,0.08)",
+    featured: true,
+    shortDescription: "Comprehensive NBA analytics dashboard with ML-powered predictions, player tracking, historical data, and interactive visualizations — built by a basketball enthusiast.",
     url: "https://oddsix.app",
     github: "https://github.com/SpencerGoss/nba-analytics-project",
+    tags: ["Python", "scikit-learn", "LightGBM", "Plotly", "Chart.js", "GitHub Pages", "SQL Server"],
     metrics: [
-      { value: "72.6%", label: "Accuracy" },
-      { value: "82-31", label: "Record" },
-      { value: "+7.9%", label: "ROI" },
+      { value: 73, suffix: ".5%", label: "Prediction Accuracy" },
+      { value: 490, suffix: "+", label: "ML Features" },
+      { value: 5, suffix: "", label: "Dashboard Sections" },
+      { value: 30, suffix: "", label: "NBA Teams Covered" },
     ],
-    gradient: "from-[#0a0e1a] via-[#0D1326] to-[#161B2A]",
-    accent: "#00C896",
-    domain: "oddsix.app",
+    cardMetrics: [
+      { display: "73.5%", label: "Accuracy" },
+      { display: "490+", label: "ML Features" },
+      { display: "25+", label: "Years of Data" },
+    ],
+    caseStudy: {
+      hook: "A comprehensive NBA analytics platform with ML-powered predictions, player tracking, league standings, and interactive data visualizations — covering 25+ years of basketball history.",
+      sections: [
+        {
+          title: "The Challenge",
+          color: "#06B6D4",
+          body: "As a lifelong basketball fan, I wanted a single place to explore NBA data — player stats, team standings, historical trends, and game predictions — without the clutter and ads of existing sports sites. Most prediction models online use basic stats and single-model approaches. I wanted to build something comprehensive: a platform that combines rigorous ML with rich data exploration.",
+        },
+        {
+          title: "What I Built",
+          color: "#8B5CF6",
+          body: "Oddsix is a free, open-source NBA analytics dashboard with five major sections: Home (daily picks, live scores), Games (ML predictions with confidence tiers, matchup radar charts, head-to-head history), League (conference standings, power rankings, playoff picture), Players (stats for all 30 teams, player comparisons, prop projections with conformal intervals), and Betting (odds tools, value detection, CLV tracking). The prediction engine uses a stacked ensemble (Gradient Boosting + Logistic Regression) trained on 490+ engineered features — Elo ratings, clutch performance, lineup net ratings, RAPM, and opponent-adjusted stats. Auto-calibrated with Platt/Isotonic scaling. Daily updates run automatically via scheduled pipelines.",
+          features: [
+            { emoji: "\u{1F3E0}", name: "Home", desc: "Daily picks, live scores carousel, season performance tracking" },
+            { emoji: "\u{1F3AE}", name: "Games", desc: "ML predictions with confidence tiers, matchup radar charts, head-to-head history" },
+            { emoji: "\u{1F3C6}", name: "League", desc: "Conference standings, power rankings, playoff picture, head-to-head matrix" },
+            { emoji: "\u{1F464}", name: "Players", desc: "Stats for all 30 teams, player comparisons, prop projections with conformal intervals" },
+          ],
+        },
+        {
+          title: "The Result",
+          color: "#10B981",
+          body: "73.5% moneyline prediction accuracy across 132+ tracked games. The live dashboard at oddsix.app serves daily predictions with confidence scores, model agreement indicators, and uncertainty quantification via Monte Carlo dropout. Every prediction comes with a plain-text explanation — not a black box.",
+        },
+      ],
+    },
   },
   {
+    id: "trading-bot",
     title: "Trading Bot",
     subtitle: "Automated Trading System",
-    description:
-      "Algorithmic trading system with real-time risk management, circuit breakers, and multi-strategy signal processing. Automated execution with position sizing, drawdown limits, and audit logging.",
-    tags: ["Python", "Risk Management", "APIs", "Automation"],
+    accent: "#8B5CF6",
+    accentBg: "rgba(139,92,246,0.08)",
+    featured: false,
+    shortDescription: "Async multi-asset trading system with 21-signal fusion, AI agent pipeline, circuit breakers, and 95% test coverage.",
     url: "#",
     github: "#",
+    tags: ["Python", "asyncio", "FastAPI", "LightGBM", "Pydantic v2", "React", "SQLAlchemy"],
     metrics: [
-      { value: "24/7", label: "Automated" },
-      { value: "Multi", label: "Strategies" },
-      { value: "Live", label: "Risk Mgmt" },
+      { value: 31, suffix: "K+", label: "Lines of Code" },
+      { value: 3082, suffix: "", label: "Tests" },
+      { value: 21, suffix: "", label: "Signal Types" },
+      { value: 95, suffix: "%", label: "Test Coverage" },
     ],
-    gradient: "from-[#0F172A] via-[#1a1f35] to-[#1E293B]",
-    accent: "#8B5CF6",
-    domain: "automated-trading",
+    cardMetrics: [],
+    caseStudy: {
+      hook: "A production-grade automated trading system that fuses 21 signal types through an AI agent pipeline, with immutable circuit breakers and real-time risk monitoring.",
+      sections: [
+        {
+          title: "The Challenge",
+          color: "#06B6D4",
+          body: "Most open-source trading bots are toy scripts — a single strategy, no risk management, no testing. I wanted to build a production-grade system that could actually handle real money: multi-asset support, multiple signal sources, proper risk controls that can't be overridden, and enough test coverage to sleep at night.",
+        },
+        {
+          title: "What I Built",
+          color: "#8B5CF6",
+          body: "A fully async Python trading system that trades stocks (via Alpaca) and crypto (via Kraken). 21 signal generators — technical indicators, ML predictions (LightGBM), FinBERT sentiment analysis, SEC insider filings, institutional 13F flows, and macro regime detection (FRED data) — are fused into a single confidence score. A 5-stage AI agent pipeline (Analyst → Risk Manager → Executor → Monitor → Researcher) evaluates every trade using Claude and Ollama with a hard $10/month LLM budget cap. Four-layer circuit breakers (per-trade, daily, weekly, kill switch) with immutable thresholds protect against catastrophic loss. The kill switch is permanent and cannot be overridden at runtime.",
+        },
+        {
+          title: "The Result",
+          color: "#10B981",
+          body: "31,000+ lines of production Python with 3,082 tests at 95% coverage. Real-time React/FastAPI dashboard for monitoring. Pushover mobile alerts for circuit breaker trips. HMAC-signed audit logs. Tax compliance with wash-sale detection. Graceful degradation — TimescaleDB, Redis, and push notifications are all optional; the system falls back to in-memory operation.",
+        },
+      ],
+    },
   },
   {
+    id: "devtoolbox",
     title: "DevToolbox",
     subtitle: "AI Developer Tools Blog",
-    description:
-      "Content platform reviewing and comparing AI-powered developer tools. Hugo static site with automated content pipeline, SEO-optimized architecture, and category-driven navigation.",
-    tags: ["Hugo", "SEO", "Content Pipeline", "Cloudflare"],
+    accent: "#0891B2",
+    accentBg: "rgba(8,145,178,0.08)",
+    featured: false,
+    shortDescription: "350+ articles reviewing AI coding tools. SEO-optimized Hugo site on Cloudflare Pages.",
     url: "https://devtoolbox-blog.pages.dev",
     github: "#",
+    tags: ["Hugo", "PaperMod", "Cloudflare Pages", "GoatCounter", "Fuse.js"],
     metrics: [
-      { value: "15+", label: "Articles" },
-      { value: "3", label: "Categories" },
-      { value: "Auto", label: "Pipeline" },
+      { value: 350, suffix: "+", label: "Articles Published" },
+      { value: 38, suffix: "", label: "Tools Reviewed" },
+      { value: 3, suffix: "", label: "Content Types" },
     ],
-    gradient: "from-[#0F172A] via-[#162033] to-[#1E293B]",
-    accent: "#0891B2",
-    domain: "devtoolbox-blog.pages.dev",
+    cardMetrics: [],
+    caseStudy: {
+      hook: "A comprehensive content platform reviewing and comparing 38+ AI-powered developer tools, with automated SEO, schema markup, and AI-friendly content distribution.",
+      sections: [
+        {
+          title: "The Challenge",
+          color: "#06B6D4",
+          body: "The AI developer tools landscape moves fast — new tools launch weekly, pricing changes constantly, and most review sites are either surface-level listicles or thinly disguised affiliate content. I wanted to build a resource with real depth: detailed reviews, honest comparisons, and practical guides that actually help developers choose the right tools.",
+        },
+        {
+          title: "What I Built",
+          color: "#8B5CF6",
+          body: "A Hugo static site with 43 in-depth reviews, 28 head-to-head comparisons, 27 practical guides, and 255+ auto-generated tool comparison pages. Every article has structured schema markup (TechArticle, Review, FAQPage) for search optimization. AI-friendly llms.txt endpoints serve content directly to language models. Beehiiv newsletter integration and transparent affiliate disclosures. The content pipeline auto-generates comparison pages from a central tools.json database — one data update creates dozens of pages.",
+        },
+        {
+          title: "The Result",
+          color: "#10B981",
+          body: "350+ published articles covering 38 AI developer tools across code editors, terminal AI, code completion, app builders, and code review categories. Live at devtoolbox-blog.pages.dev on Cloudflare Pages with GoatCounter privacy-first analytics. Designed for both human readers (dark theme, smooth transitions, full-text search) and AI consumption (llms.txt, structured data).",
+        },
+      ],
+    },
   },
   {
-    title: "CLV Predictor",
-    subtitle: "Customer Analytics Capstone",
-    description:
-      "Predictive customer lifetime value model using gradient-boosted ensembles. Business analytics capstone applying ML to real-world marketing optimization and customer segmentation.",
-    tags: ["Python", "scikit-learn", "Tableau", "SQL"],
-    url: "#",
-    github: "#",
-    metrics: [
-      { value: "94%", label: "Accuracy" },
-      { value: "CLV", label: "Model" },
-      { value: "$2.1M", label: "Impact" },
-    ],
-    gradient: "from-[#1E3A5F] via-[#1E4578] to-[#2563EB]",
+    id: "churn-model",
+    title: "Churn Predictor",
+    subtitle: "MSBA Capstone",
     accent: "#F59E0B",
-    domain: "capstone-project",
+    accentBg: "rgba(245,158,11,0.08)",
+    featured: false,
+    shortDescription: "Customer retention prediction with cluster segmentation.",
+    url: "#",
+    github: "https://github.com/SpencerGoss/msba-portfolio-SpencerGoss",
+    tags: ["Python", "scikit-learn", "Jupyter", "pandas"],
+    metrics: [
+      { value: 3, suffix: "", label: "Customer Clusters" },
+      { value: 5636, suffix: "", label: "Data Points" },
+    ],
+    cardMetrics: [],
+    caseStudy: {
+      hook: "A predictive churn model that identifies at-risk customers and segments them into actionable clusters for targeted retention strategies.",
+      sections: [
+        {
+          title: "The Challenge",
+          color: "#06B6D4",
+          body: "For my MSBA capstone, we were given a real customer dataset of 5,636 records with demographics and behavioral characteristics. The goal: build a predictive model to identify churn risk, find the key factors driving churn, and provide data-driven recommendations for retention.",
+        },
+        {
+          title: "What I Built",
+          color: "#8B5CF6",
+          body: "A gradient-boosted ensemble model for churn prediction, combined with customer segmentation using clustering. The analysis revealed that tenure and contract type are the strongest churn predictors — customers in their first 6 months on month-to-month plans are at highest risk. Customers who refer others churn significantly less. Three distinct customer clusters emerged, each requiring a different retention strategy.",
+        },
+        {
+          title: "The Result",
+          color: "#10B981",
+          body: "Key actionable insights: new customers (0-6 months) on month-to-month contracts need immediate engagement. Referral programs are a high-leverage retention tool. Each of the three customer segments should receive a tailored retention approach based on their risk profile and behavioral patterns. The model provides a prioritized list of at-risk customers for the marketing team to act on.",
+        },
+      ],
+    },
   },
 ];
 
@@ -414,152 +510,261 @@ function StatCard({ value, suffix, label }: { value: number; suffix: string; lab
   );
 }
 
-function ProjectCard({ project, index }: { project: typeof PROJECTS[0]; index: number }) {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
+function BentoCard({ project, onClick }: { project: typeof PROJECTS[0]; onClick: () => void }) {
   const revealRef = useScrollReveal();
 
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
-      if (!cardRef.current || !wrapperRef.current) return;
-      const rect = wrapperRef.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      cardRef.current.style.transform = `rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
-    },
-    []
-  );
+  if (project.featured) {
+    return (
+      <div
+        ref={revealRef}
+        className="scroll-reveal bento-card bento-featured"
+        onClick={onClick}
+      >
+        <div
+          className="absolute -top-16 -right-16 w-64 h-64 rounded-full pointer-events-none"
+          style={{ background: `radial-gradient(circle, ${project.accentBg}, transparent 70%)`, filter: "blur(40px)" }}
+        />
+        <div className="relative z-10 flex flex-col justify-between h-full">
+          <div>
+            <div className="text-[10px] font-bold tracking-[2px] uppercase mb-2" style={{ color: project.accent }}>
+              Featured Project
+            </div>
+            <h3 className="text-2xl md:text-[26px] font-extrabold tracking-tight text-foreground mb-1">
+              {project.title}
+            </h3>
+            <p className="text-sm text-muted-foreground mb-2">{project.subtitle}</p>
+            <p className="text-xs text-muted-foreground/70 leading-relaxed max-w-[360px]">
+              {project.shortDescription}
+            </p>
+          </div>
 
-  const handleMouseLeave = useCallback(() => {
-    if (cardRef.current) {
-      cardRef.current.style.transform = "rotateY(0deg) rotateX(0deg)";
-    }
-  }, []);
+          <div className="my-4 rounded-xl border border-border bg-secondary/50 h-20 flex items-center justify-center">
+            <span className="text-xs text-muted-foreground/40">[ screenshot ]</span>
+          </div>
+
+          <div>
+            <div className="flex gap-6 mb-3">
+              {project.cardMetrics.map((m, i) => (
+                <div key={i}>
+                  <div className="text-xl md:text-[22px] font-extrabold text-foreground">{m.display}</div>
+                  <div className="text-[9px] text-muted-foreground uppercase tracking-[1px]">{m.label}</div>
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-1.5 flex-wrap">
+              {project.tags.slice(0, 4).map((tag) => (
+                <span key={tag} className="text-[10px] bg-secondary border border-border text-muted-foreground px-2.5 py-1 rounded-full">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
-      ref={(el) => {
-        (wrapperRef as any).current = el;
-        (revealRef as any).current = el;
-      }}
-      className="scroll-reveal project-card-wrapper"
-      style={{ transitionDelay: `${index * 120}ms` }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      ref={revealRef}
+      className="scroll-reveal bento-card"
+      onClick={onClick}
     >
-      <div ref={cardRef} className="project-card-tilt">
-        <div className="browser-mockup group cursor-pointer">
-          {/* Browser chrome */}
-          <div className="browser-chrome">
-            <div className="browser-dots">
-              <div className="browser-dot" style={{ background: "#FF5F57" }} />
-              <div className="browser-dot" style={{ background: "#FEBC2E" }} />
-              <div className="browser-dot" style={{ background: "#28C840" }} />
-            </div>
-            <div className="browser-url">{project.domain}</div>
+      <div className="flex flex-col justify-between h-full">
+        <div>
+          <div className="flex items-center gap-2 mb-1.5">
+            <div className="w-2 h-2 rounded-full" style={{ background: project.accent }} />
+            <h3 className="text-base md:text-lg font-extrabold text-foreground">{project.title}</h3>
           </div>
-
-          {/* Screenshot area */}
-          <div className="relative overflow-hidden" style={{ aspectRatio: "16/10" }}>
-            <div
-              className={`screenshot-area absolute inset-0 bg-gradient-to-br ${project.gradient} flex flex-col items-center justify-center`}
+          <p className="text-[11px] text-muted-foreground mb-2">{project.subtitle}</p>
+          <p className="text-[11px] text-muted-foreground/70 leading-relaxed">{project.shortDescription}</p>
+        </div>
+        <div className="flex gap-1.5 flex-wrap mt-3">
+          {project.tags.slice(0, 4).map((tag) => (
+            <span
+              key={tag}
+              className="text-[9px] px-2 py-0.5 rounded-full border"
+              style={{ background: project.accentBg, color: project.accent, borderColor: `${project.accent}20` }}
             >
-              <div
-                className="text-3xl font-bold tracking-tight mb-2"
-                style={{ color: project.accent }}
-              >
-                {project.title}
-              </div>
-              <div className="text-white/50 text-sm font-medium">{project.subtitle}</div>
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
-              {/* Decorative elements */}
-              <div
-                className="absolute top-4 right-4 w-20 h-20 rounded-full opacity-20"
-                style={{ background: project.accent, filter: "blur(20px)" }}
-              />
-              <div
-                className="absolute bottom-4 left-4 w-32 h-1 rounded-full opacity-30"
-                style={{ background: project.accent }}
-              />
+function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void }) {
+  const oddsix = PROJECTS.find((p) => p.id === "oddsix")!;
+  const tradingBot = PROJECTS.find((p) => p.id === "trading-bot")!;
+  const devtoolbox = PROJECTS.find((p) => p.id === "devtoolbox")!;
+  const churnModel = PROJECTS.find((p) => p.id === "churn-model")!;
 
-              {/* Fake UI lines */}
-              <div className="absolute top-8 left-6 space-y-2">
-                <div className="w-16 h-1.5 rounded bg-white/10" />
-                <div className="w-24 h-1.5 rounded bg-white/5" />
-              </div>
+  return (
+    <div className="bento-grid">
+      <div className="bento-col-left">
+        <BentoCard project={oddsix} onClick={() => onSelectProject("oddsix")} />
+      </div>
+      <div className="bento-col-right">
+        <BentoCard project={tradingBot} onClick={() => onSelectProject("trading-bot")} />
+        <div className="bento-row-compact">
+          <BentoCard project={devtoolbox} onClick={() => onSelectProject("devtoolbox")} />
+          <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CaseStudyMetric({ metric }: { metric: typeof PROJECTS[0]["metrics"][0] }) {
+  const { count, ref } = useCountUp(metric.value);
+  if (!metric.label) return null;
+  return (
+    <div ref={ref} className="flex-1 py-5 md:py-6 text-center border-r border-border last:border-r-0">
+      <div className="text-2xl md:text-[26px] font-extrabold text-foreground tracking-tight">
+        {count}{metric.suffix}
+      </div>
+      <div className="text-[10px] text-muted-foreground uppercase tracking-[1px] mt-1">{metric.label}</div>
+    </div>
+  );
+}
+
+function StorySection({ section, index }: { section: { title: string; color: string; body: string; features?: { emoji: string; name: string; desc: string }[] }; index: number }) {
+  const ref = useScrollReveal();
+  return (
+    <div ref={ref} className="scroll-reveal mb-8 md:mb-10" style={{ transitionDelay: `${index * 100}ms` }}>
+      <div className="flex items-center gap-2 mb-3">
+        <div className="w-1 h-5 md:h-6 rounded-full" style={{ background: section.color }} />
+        <h3 className="text-lg md:text-xl font-bold text-foreground">{section.title}</h3>
+      </div>
+
+      {section.features && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-4">
+          {section.features.map((f, i) => (
+            <div key={i} className="bg-white border border-border rounded-xl p-3.5">
+              <div className="text-sm font-bold text-foreground mb-1">{f.emoji} {f.name}</div>
+              <div className="text-[11px] text-muted-foreground leading-relaxed">{f.desc}</div>
             </div>
+          ))}
+        </div>
+      )}
 
-            {/* Glass overlay on hover */}
-            <div className="glass-overlay absolute inset-0 flex flex-col justify-end p-5">
-              <p className="text-sm text-foreground/80 leading-relaxed mb-3 line-clamp-3">
-                {project.description}
-              </p>
-              <div className="flex gap-3 mb-3">
-                {project.metrics.map((m, i) => (
-                  <div key={i} className="text-center">
-                    <div className="text-sm font-bold" style={{ color: project.accent }}>
-                      {m.value}
-                    </div>
-                    <div className="text-[10px] text-muted-foreground uppercase tracking-wider">
-                      {m.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="flex gap-2">
-                {project.url !== "#" && (
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-md bg-foreground text-background hover:opacity-90 transition-opacity"
-                  >
-                    View Live <ArrowUpRight size={12} />
-                  </a>
-                )}
-                {project.github !== "#" && (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-md border border-border hover:bg-secondary transition-colors"
-                  >
-                    <Code2 size={12} /> Code
-                  </a>
-                )}
-              </div>
-            </div>
+      <p className="text-sm md:text-[15px] text-muted-foreground leading-[1.8]">{section.body}</p>
+    </div>
+  );
+}
+
+function CaseStudy({ project, onBack }: { project: typeof PROJECTS[0]; onBack: () => void }) {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+  }, []);
+
+  const heroRef = useScrollReveal();
+  const metricsRef = useScrollReveal();
+  const visibleMetrics = project.metrics.filter((m) => m.label);
+
+  return (
+    <div className="case-study-enter">
+      {/* Back bar */}
+      <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-lg border-b border-border">
+        <div className="max-w-6xl mx-auto px-6 py-3 flex items-center gap-2">
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+          >
+            <ArrowLeft size={16} />
+            <span className="font-medium">Back to Projects</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Hero */}
+      <div
+        ref={heroRef}
+        className="scroll-reveal relative overflow-hidden border-b border-border"
+        style={{ background: "linear-gradient(135deg, #f8fafc, #ecfeff, #f0f9ff)" }}
+      >
+        <div
+          className="absolute -top-20 -right-20 w-80 h-80 pointer-events-none"
+          style={{ background: `radial-gradient(circle, ${project.accentBg}, transparent 70%)`, filter: "blur(60px)" }}
+        />
+        <div className="relative z-10 max-w-2xl mx-auto px-6 pt-12 md:pt-16 pb-8 md:pb-10">
+          <div className="text-[10px] font-bold tracking-[2px] uppercase mb-2" style={{ color: project.accent }}>
+            Case Study
+          </div>
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground mb-1">
+            {project.title}
+          </h2>
+          <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6">
+            {project.caseStudy.hook}
+          </p>
+
+          <div className="bg-white border border-border rounded-xl h-32 md:h-48 flex items-center justify-center shadow-sm mb-6">
+            <span className="text-sm text-muted-foreground/40">[ hero screenshot ]</span>
           </div>
 
-          {/* Card footer */}
-          <div className="bg-white p-5">
-            <div className="flex items-start justify-between mb-3">
-              <div>
-                <h3 className="font-bold text-foreground tracking-tight text-lg">{project.title}</h3>
-                <p className="text-sm text-muted-foreground">{project.subtitle}</p>
-              </div>
-              {project.url !== "#" && (
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors mt-1"
-                >
-                  <ExternalLink size={16} />
-                </a>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {project.tags.map((tag) => (
-                <Badge
-                  key={tag}
-                  variant="secondary"
-                  className="text-[10px] font-medium tracking-wide uppercase"
-                >
-                  {tag}
-                </Badge>
-              ))}
-            </div>
+          <div className="flex gap-3">
+            {project.url !== "#" && (
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-lg text-white transition-opacity hover:opacity-90"
+                style={{ background: project.accent }}
+              >
+                Visit {project.title} <ArrowUpRight size={14} />
+              </a>
+            )}
+            {project.github !== "#" && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-lg bg-white border border-border text-foreground hover:border-primary/30 transition-colors"
+              >
+                <Code2 size={14} /> GitHub
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Metrics bar */}
+      {visibleMetrics.length > 0 && (
+        <div ref={metricsRef} className="scroll-reveal bg-white border-b border-border">
+          <div className="max-w-2xl mx-auto flex">
+            {visibleMetrics.map((m, i) => (
+              <CaseStudyMetric key={i} metric={m} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Story sections */}
+      <div className="max-w-2xl mx-auto px-6 py-10 md:py-14">
+        {project.caseStudy.sections.map((section, i) => (
+          <StorySection key={i} section={section} index={i} />
+        ))}
+
+        <div className="bg-white border border-border rounded-xl h-24 md:h-32 flex items-center justify-center shadow-sm mb-10">
+          <span className="text-sm text-muted-foreground/40">[ additional screenshot ]</span>
+        </div>
+
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-1 h-5 md:h-6 rounded-full" style={{ background: "#F59E0B" }} />
+            <h3 className="text-lg md:text-xl font-bold text-foreground">Tech Stack</h3>
+          </div>
+          <div className="flex gap-2 flex-wrap">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-sm bg-white border border-border text-muted-foreground px-3.5 py-1.5 rounded-full font-medium"
+              >
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
       </div>
@@ -925,6 +1130,7 @@ export default function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [navShrunk, setNavShrunk] = useState(false);
   const { word: rotatingWord, visible: wordVisible } = useRotatingWord(TYPEWRITER_WORDS);
 
@@ -1295,24 +1501,31 @@ export default function App() {
       </section>
 
       {/* ===== PROJECTS ===== */}
-      <section ref={sectionRefs.projects} className="min-h-screen flex items-center py-24 md:py-32" style={{ background: "#FAFBFF" }}>
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
-              Featured Projects
-            </h2>
-            <Separator className="w-12 bg-primary h-0.5 mb-4" />
-            <p className="text-muted-foreground">
-              Real projects, real data, real impact.
-            </p>
+      <section ref={sectionRefs.projects} className="py-24 md:py-32" style={{ background: "#FAFBFF" }}>
+        {selectedProject ? (
+          <CaseStudy
+            project={PROJECTS.find((p) => p.id === selectedProject)!}
+            onBack={() => {
+              setSelectedProject(null);
+              setTimeout(() => {
+                sectionRefs.projects.current?.scrollIntoView({ behavior: "instant" as ScrollBehavior, block: "start" });
+              }, 0);
+            }}
+          />
+        ) : (
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
+                Featured Projects
+              </h2>
+              <Separator className="w-12 bg-primary h-0.5 mb-4" />
+              <p className="text-muted-foreground">
+                Real projects, real data, real impact. Click any to see the full case study.
+              </p>
+            </div>
+            <BentoGrid onSelectProject={setSelectedProject} />
           </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {PROJECTS.map((project, i) => (
-              <ProjectCard key={i} project={project} index={i} />
-            ))}
-          </div>
-        </div>
+        )}
       </section>
 
       {/* ===== SKILLS ===== */}
