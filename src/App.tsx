@@ -340,7 +340,7 @@ const EXPERIENCE = [
     ],
     highlights: ["AI Concentration", "Predictive Modeling", "Machine Learning Pipelines"],
     type: "education" as const,
-    logo: "/images/experience/uofl-logo.jpg",
+    logo: "https://www.google.com/s2/favicons?domain=louisville.edu&sz=128",
     color: "#AD0000",
     gradient: "from-[#AD0000] to-[#D32F2F]",
     year: "2025",
@@ -438,7 +438,7 @@ const EXPERIENCE = [
     ],
     highlights: ["College Preparatory", "Louisville, KY"],
     type: "education" as const,
-    logo: "/images/experience/saint-xavier-logo.png",
+    logo: "https://www.google.com/s2/favicons?domain=saintx.com&sz=128",
     color: "#6A1B9A",
     gradient: "from-[#4A148C] to-[#6A1B9A]",
     year: "2016",
@@ -1126,6 +1126,7 @@ function ExperienceSlide({ entry, index, total }: { entry: typeof EXPERIENCE[0];
               alt={entry.org}
               className="w-16 h-16 md:w-20 md:h-20 rounded-2xl object-contain bg-white/95 p-3 shadow-2xl"
               loading="lazy"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
             />
           ) : (
             <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-white/95 flex items-center justify-center shadow-2xl">
@@ -1248,7 +1249,7 @@ function ExperienceTimeline() {
               {/* Entry pill */}
               <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white border border-border shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-200 cursor-default group">
                 {entry.logo ? (
-                  <img src={entry.logo} alt={entry.org} className="w-5 h-5 rounded object-contain" loading="lazy" />
+                  <img src={entry.logo} alt={entry.org} className="w-5 h-5 rounded object-contain" loading="lazy" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                 ) : (
                   <Code2 size={14} className="text-muted-foreground" />
                 )}
