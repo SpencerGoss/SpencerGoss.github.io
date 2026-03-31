@@ -632,9 +632,11 @@ function StorySection({ section, index }: { section: { title: string; color: str
   );
 }
 
-function CaseStudy({ project, onBack }: { project: typeof PROJECTS[0]; onBack: () => void }) {
+function CaseStudy({ project, onBack, sectionRef }: { project: typeof PROJECTS[0]; onBack: () => void; sectionRef?: React.RefObject<HTMLElement | null> }) {
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    if (sectionRef?.current) {
+      sectionRef.current.scrollIntoView({ behavior: "instant" as ScrollBehavior, block: "start" });
+    }
   }, []);
 
   const heroRef = useScrollReveal();
@@ -1444,6 +1446,7 @@ export default function App() {
         {selectedProject ? (
           <CaseStudy
             project={PROJECTS.find((p) => p.id === selectedProject)!}
+            sectionRef={sectionRefs.projects}
             onBack={() => {
               setSelectedProject(null);
               setTimeout(() => {
