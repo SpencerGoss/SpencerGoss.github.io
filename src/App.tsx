@@ -18,6 +18,22 @@ import {
   MapPin,
   GraduationCap,
   Briefcase,
+  FileCode2,
+  BrainCircuit,
+  Sigma,
+  BookOpen,
+  Cloud,
+  LayoutDashboard,
+  TrendingUp,
+  FileSpreadsheet,
+  Presentation,
+  FileText,
+  StickyNote,
+  Boxes,
+  GitBranch,
+  MonitorSmartphone,
+  Users,
+  Terminal,
 } from "lucide-react";
 
 /* Inline SVG brand icons (removed from lucide-react v1.x) */
@@ -238,46 +254,48 @@ const PROJECTS = [
   },
 ];
 
-/* Tech skills — Simple Icons CDN for brands, Lucide icons for generic concepts */
-type TechSkill = { name: string; category: string } & (
-  | { icon: string; LucideIcon?: never }
-  | { icon?: never; LucideIcon: React.ComponentType<{ className?: string; size?: number }>; iconColor: string }
-);
+/* Tech skills — all Lucide icons for reliability */
+type TechSkill = {
+  name: string;
+  category: string;
+  LucideIcon: React.ComponentType<{ className?: string; size?: number }>;
+  iconColor: string;
+};
 
 const TECH_SKILLS: TechSkill[] = [
   // Languages
-  { name: "Python", icon: "https://cdn.simpleicons.org/python/3776AB", category: "Languages" },
+  { name: "Python", LucideIcon: FileCode2, iconColor: "#3776AB", category: "Languages" },
   { name: "SQL", LucideIcon: Database, iconColor: "#4053D6", category: "Languages" },
-  { name: "R", icon: "https://cdn.simpleicons.org/r/276DC3", category: "Languages" },
+  { name: "R", LucideIcon: TrendingUp, iconColor: "#276DC3", category: "Languages" },
   // AI & Automation
-  { name: "Claude AI", icon: "https://cdn.simpleicons.org/anthropic/191919", category: "AI & Automation" },
-  { name: "ChatGPT", icon: "https://cdn.simpleicons.org/openai/412991", category: "AI & Automation" },
-  { name: "GitHub Copilot", icon: "https://cdn.simpleicons.org/githubcopilot/000000", category: "AI & Automation" },
+  { name: "Claude AI", LucideIcon: BrainCircuit, iconColor: "#D97706", category: "AI & Automation" },
+  { name: "ChatGPT", LucideIcon: Bot, iconColor: "#10A37F", category: "AI & Automation" },
+  { name: "GitHub Copilot", LucideIcon: Code2, iconColor: "#000000", category: "AI & Automation" },
   { name: "Prompt Engineering", LucideIcon: Sparkles, iconColor: "#E8413C", category: "AI & Automation" },
-  { name: "AI Agents", LucideIcon: Bot, iconColor: "#00B0D8", category: "AI & Automation" },
+  { name: "AI Agents", LucideIcon: Users, iconColor: "#00B0D8", category: "AI & Automation" },
   // Machine Learning
-  { name: "scikit-learn", icon: "https://cdn.simpleicons.org/scikitlearn/F7931E", category: "Machine Learning" },
-  { name: "pandas", icon: "https://cdn.simpleicons.org/pandas/150458", category: "Machine Learning" },
-  { name: "NumPy", icon: "https://cdn.simpleicons.org/numpy/013243", category: "Machine Learning" },
-  { name: "Jupyter", icon: "https://cdn.simpleicons.org/jupyter/F37626", category: "Machine Learning" },
-  { name: "Google Colab", icon: "https://cdn.simpleicons.org/googlecolab/F9AB00", category: "Machine Learning" },
+  { name: "scikit-learn", LucideIcon: Sigma, iconColor: "#F7931E", category: "Machine Learning" },
+  { name: "pandas", LucideIcon: FileSpreadsheet, iconColor: "#150458", category: "Machine Learning" },
+  { name: "NumPy", LucideIcon: Boxes, iconColor: "#013243", category: "Machine Learning" },
+  { name: "Jupyter", LucideIcon: BookOpen, iconColor: "#F37626", category: "Machine Learning" },
+  { name: "Google Colab", LucideIcon: Cloud, iconColor: "#F9AB00", category: "Machine Learning" },
   // Visualization
-  { name: "Tableau", icon: "https://cdn.simpleicons.org/tableau/E97627", category: "Visualization" },
-  { name: "Power BI", icon: "https://cdn.simpleicons.org/powerbi/F2C811", category: "Visualization" },
+  { name: "Tableau", LucideIcon: LayoutDashboard, iconColor: "#E97627", category: "Visualization" },
+  { name: "Power BI", LucideIcon: BarChart3, iconColor: "#F2C811", category: "Visualization" },
   // Analytics
   { name: "JMP", LucideIcon: FlaskConical, iconColor: "#1E6FBA", category: "Analytics" },
-  { name: "SPSS", LucideIcon: BarChart3, iconColor: "#1F70C1", category: "Analytics" },
+  { name: "SPSS", LucideIcon: TrendingUp, iconColor: "#1F70C1", category: "Analytics" },
   { name: "Qualtrics", LucideIcon: ClipboardCheck, iconColor: "#00B4EF", category: "Analytics" },
   { name: "SurveyMonkey", LucideIcon: MessageSquare, iconColor: "#00BF6F", category: "Analytics" },
   // Tools & Platforms
-  { name: "Excel", icon: "https://cdn.simpleicons.org/microsoftexcel/217346", category: "Tools & Platforms" },
-  { name: "PowerPoint", icon: "https://cdn.simpleicons.org/microsoftpowerpoint/B7472A", category: "Tools & Platforms" },
-  { name: "Word", icon: "https://cdn.simpleicons.org/microsoftword/2B579A", category: "Tools & Platforms" },
-  { name: "OneNote", icon: "https://cdn.simpleicons.org/microsoftonenote/7719AA", category: "Tools & Platforms" },
-  { name: "SAP", icon: "https://cdn.simpleicons.org/sap/0FAAFF", category: "Tools & Platforms" },
-  { name: "GitHub", icon: "https://cdn.simpleicons.org/github/181717", category: "Tools & Platforms" },
-  { name: "VS Code", icon: "https://cdn.simpleicons.org/visualstudiocode/007ACC", category: "Tools & Platforms" },
-  { name: "Microsoft Teams", icon: "https://cdn.simpleicons.org/microsoftteams/6264A7", category: "Tools & Platforms" },
+  { name: "Excel", LucideIcon: FileSpreadsheet, iconColor: "#217346", category: "Tools & Platforms" },
+  { name: "PowerPoint", LucideIcon: Presentation, iconColor: "#B7472A", category: "Tools & Platforms" },
+  { name: "Word", LucideIcon: FileText, iconColor: "#2B579A", category: "Tools & Platforms" },
+  { name: "OneNote", LucideIcon: StickyNote, iconColor: "#7719AA", category: "Tools & Platforms" },
+  { name: "SAP", LucideIcon: Boxes, iconColor: "#0FAAFF", category: "Tools & Platforms" },
+  { name: "GitHub", LucideIcon: GitBranch, iconColor: "#181717", category: "Tools & Platforms" },
+  { name: "VS Code", LucideIcon: Terminal, iconColor: "#007ACC", category: "Tools & Platforms" },
+  { name: "Microsoft Teams", LucideIcon: MonitorSmartphone, iconColor: "#6264A7", category: "Tools & Platforms" },
 ];
 
 /* Text-based business & professional skills */
@@ -928,20 +946,11 @@ function TechIcon({ skill }: { skill: TechSkill }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {skill.icon ? (
-        <img
-          src={skill.icon}
-          alt={skill.name}
-          className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-110"
-          loading="lazy"
-        />
-      ) : (
-        <skill.LucideIcon
-          size={32}
-          className="transition-transform duration-300 group-hover:scale-110"
-          style={{ color: skill.iconColor }}
-        />
-      )}
+      <skill.LucideIcon
+        size={32}
+        className="transition-transform duration-300 group-hover:scale-110"
+        style={{ color: skill.iconColor }}
+      />
       {/* Tooltip — positioned above to avoid clipping between rows */}
       <div
         className={`absolute -top-9 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-md bg-foreground text-background text-[11px] font-medium whitespace-nowrap transition-all duration-200 pointer-events-none z-10 ${
