@@ -340,11 +340,11 @@ const EXPERIENCE = [
     ],
     highlights: ["AI Concentration", "Predictive Modeling", "Machine Learning Pipelines"],
     type: "education" as const,
-    logo: "https://www.google.com/s2/favicons?domain=louisville.edu&sz=128",
+    logo: "/images/experience/uofl-logo.jpg",
     color: "#AD0000",
     gradient: "from-[#AD0000] to-[#D32F2F]",
     year: "2025",
-    bgImage: "https://images.unsplash.com/photo-1568792923760-d70635a89fdc?w=1920&h=1080&fit=crop&q=80",
+    bgImage: "/images/experience/uofl-campus.jpg",
   },
   {
     title: "Independent Projects",
@@ -364,7 +364,7 @@ const EXPERIENCE = [
     color: "#06B6D4",
     gradient: "from-[#0891B2] to-[#06B6D4]",
     year: "2025",
-    bgImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&h=1080&fit=crop&q=80",
+    bgImage: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=1920&h=1080&fit=crop&q=80",
   },
   {
     title: "Accounts Payable Specialist",
@@ -384,7 +384,7 @@ const EXPERIENCE = [
     color: "#1B5E20",
     gradient: "from-[#1B5E20] to-[#388E3C]",
     year: "2024",
-    bgImage: "https://images.unsplash.com/photo-1529753253655-470be9a42781?w=1920&h=1080&fit=crop&q=80",
+    bgImage: "/images/experience/churchill-downs.webp",
   },
   {
     title: "BBA — Finance, Marketing & Business Analytics",
@@ -404,7 +404,7 @@ const EXPERIENCE = [
     color: "#0033A0",
     gradient: "from-[#001F6D] to-[#0033A0]",
     year: "2020",
-    bgImage: "https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=1920&h=1080&fit=crop&q=80",
+    bgImage: "/images/experience/uk-campus.jpg",
   },
   {
     title: "Warehouse Associate",
@@ -424,7 +424,7 @@ const EXPERIENCE = [
     color: "#1565C0",
     gradient: "from-[#0D47A1] to-[#1565C0]",
     year: "2020",
-    bgImage: "https://images.unsplash.com/photo-1553413077-190dd305871c?w=1920&h=1080&fit=crop&q=80",
+    bgImage: "/images/experience/terex.jpg",
   },
   {
     title: "High School Diploma",
@@ -438,11 +438,11 @@ const EXPERIENCE = [
     ],
     highlights: ["College Preparatory", "Louisville, KY"],
     type: "education" as const,
-    logo: "https://www.google.com/s2/favicons?domain=stx.org&sz=128",
+    logo: "/images/experience/saint-xavier-logo.png",
     color: "#6A1B9A",
     gradient: "from-[#4A148C] to-[#6A1B9A]",
     year: "2016",
-    bgImage: "https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?w=1920&h=1080&fit=crop&q=80",
+    bgImage: "/images/experience/saint-xavier.jpg",
   },
 ];
 
