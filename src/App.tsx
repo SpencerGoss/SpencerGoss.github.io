@@ -298,31 +298,31 @@ const TECH_SKILLS: TechSkill[] = [
   { name: "Microsoft Teams", icon: "https://api.iconify.design/logos:microsoft-teams.svg", category: "Tools & Platforms" },
 ];
 
-/* Text-based business & professional skills */
-const BUSINESS_SKILLS = [
-  "Financial Analysis",
-  "Marketing Analytics",
-  "Predictive Modeling",
-  "Statistical Analysis",
-  "Data Storytelling",
-  "Econometrics & Forecasting",
-  "Regression & Classification",
-  "A/B Testing",
-  "Data Cleaning & ETL",
-  "Machine Learning",
-  "Feature Engineering",
-  "Customer Segmentation",
-  "Risk Analysis",
-  "SEO & Content Strategy",
-  "Data Pipeline Development",
-  "Dashboard Design",
-  "Data Wrangling",
-  "Stakeholder Communication",
-  "Requirements Gathering",
-  "Process Automation",
-  "Business Strategy",
-  "Cross-functional Collaboration",
-  "Project Management",
+/* Text-based business & professional skills — featured = stronger visual emphasis */
+const BUSINESS_SKILLS: { name: string; featured?: boolean }[] = [
+  { name: "Predictive Modeling", featured: true },
+  { name: "Machine Learning", featured: true },
+  { name: "Statistical Analysis", featured: true },
+  { name: "Feature Engineering", featured: true },
+  { name: "Data Pipeline Development", featured: true },
+  { name: "Financial Analysis" },
+  { name: "Marketing Analytics" },
+  { name: "Data Storytelling" },
+  { name: "Econometrics & Forecasting" },
+  { name: "Regression & Classification" },
+  { name: "A/B Testing" },
+  { name: "Data Cleaning & ETL" },
+  { name: "Customer Segmentation" },
+  { name: "Risk Analysis" },
+  { name: "SEO & Content Strategy" },
+  { name: "Dashboard Design" },
+  { name: "Data Wrangling" },
+  { name: "Stakeholder Communication" },
+  { name: "Requirements Gathering" },
+  { name: "Process Automation" },
+  { name: "Business Strategy" },
+  { name: "Cross-functional Collaboration" },
+  { name: "Project Management" },
 ];
 
 const EXPERIENCE = [
@@ -948,45 +948,42 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
 }
 
 function TechIcon({ skill }: { skill: TechSkill }) {
-  const [hovered, setHovered] = useState(false);
   return (
     <div
-      className="tech-icon-card relative group flex flex-col items-center justify-center bg-white border border-border rounded-xl w-20 h-20 cursor-default transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-1"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      className="tech-icon-card relative group flex flex-col items-center gap-2 cursor-default"
     >
-      {skill.icon ? (
-        <img
-          src={skill.icon}
-          alt={skill.name}
-          className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-110"
-          loading="lazy"
-        />
-      ) : (
-        <skill.LucideIcon
-          size={32}
-          className="transition-transform duration-300 group-hover:scale-110"
-          style={{ color: skill.iconColor }}
-        />
-      )}
-      {/* Tooltip — positioned above to avoid clipping between rows */}
-      <div
-        className={`absolute -top-9 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-md bg-foreground text-background text-[11px] font-medium whitespace-nowrap transition-all duration-200 pointer-events-none z-10 ${
-          hovered ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"
-        }`}
-      >
-        {skill.name}
-        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-foreground rotate-45" />
+      <div className="relative flex items-center justify-center bg-white border border-border rounded-xl w-[72px] h-[72px] transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-1 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.12)]">
+        {skill.icon ? (
+          <img
+            src={skill.icon}
+            alt={skill.name}
+            className="w-7 h-7 object-contain transition-transform duration-300 group-hover:scale-110"
+            loading="lazy"
+          />
+        ) : (
+          <skill.LucideIcon
+            size={28}
+            className="transition-transform duration-300 group-hover:scale-110"
+            style={{ color: skill.iconColor }}
+          />
+        )}
       </div>
+      <span className="text-[10px] font-medium text-muted-foreground text-center leading-tight max-w-[80px] group-hover:text-foreground transition-colors duration-200">
+        {skill.name}
+      </span>
     </div>
   );
 }
 
-function BusinessSkillPill({ skill }: { skill: string }) {
+function BusinessSkillPill({ skill }: { skill: { name: string; featured?: boolean } }) {
   return (
-    <div className="skill-badge inline-flex items-center gap-2 bg-white border border-border rounded-full px-4 py-2 cursor-default text-sm font-medium text-foreground hover:border-primary/30 hover:shadow-sm transition-all duration-200">
-      <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-      {skill}
+    <div className={`skill-badge inline-flex items-center gap-2 rounded-full px-4 py-2 cursor-default text-sm font-medium transition-all duration-200 ${
+      skill.featured
+        ? "bg-primary/8 border border-primary/25 text-foreground hover:border-primary/40 hover:shadow-md hover:shadow-primary/5"
+        : "bg-white border border-border text-foreground hover:border-primary/30 hover:shadow-sm"
+    }`}>
+      <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${skill.featured ? "bg-primary" : "bg-muted-foreground/30"}`} />
+      {skill.name}
     </div>
   );
 }
@@ -1821,7 +1818,7 @@ export default function App() {
             </div>
             <div className="flex flex-wrap gap-2.5">
               {BUSINESS_SKILLS.map((skill) => (
-                <BusinessSkillPill key={skill} skill={skill} />
+                <BusinessSkillPill key={skill.name} skill={skill} />
               ))}
             </div>
           </div>
