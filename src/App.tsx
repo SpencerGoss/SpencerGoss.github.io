@@ -34,6 +34,7 @@ import {
   MonitorSmartphone,
   Users,
   Terminal,
+  Download,
 } from "lucide-react";
 
 /* Inline SVG brand icons (removed from lucide-react v1.x) */
@@ -1019,6 +1020,7 @@ function ExperienceSlide({ entry, index, total }: { entry: typeof EXPERIENCE[0];
   const slideRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [parallaxY, setParallaxY] = useState(0);
   const typeLabel = entry.type === "education" ? "Education" : entry.type === "work" ? "Work" : "Projects";
 
   useEffect(() => {
@@ -1040,6 +1042,21 @@ function ExperienceSlide({ entry, index, total }: { entry: typeof EXPERIENCE[0];
     img.src = entry.bgImage;
   }, [entry.bgImage]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!slideRef.current) return;
+      const rect = slideRef.current.getBoundingClientRect();
+      const viewHeight = window.innerHeight;
+      // Only compute when slide is near viewport
+      if (rect.bottom > -viewHeight && rect.top < viewHeight * 2) {
+        const offset = (rect.top / viewHeight) * -30; // subtle 30px max movement
+        setParallaxY(offset);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div
       ref={slideRef}
@@ -1055,7 +1072,7 @@ function ExperienceSlide({ entry, index, total }: { entry: typeof EXPERIENCE[0];
             src={entry.bgImage}
             alt=""
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-            style={{ opacity: imgLoaded ? 1 : 0 }}
+            style={{ opacity: imgLoaded ? 1 : 0, transform: `translateY(${parallaxY}px) scale(1.05)`, willChange: "transform" }}
             loading="lazy"
           />
         )}
@@ -1066,19 +1083,24 @@ function ExperienceSlide({ entry, index, total }: { entry: typeof EXPERIENCE[0];
       </div>
 
       {/* ---- Slide number indicator ---- */}
-      <div className="absolute top-6 right-8 z-20 hidden md:flex items-center gap-2">
-        {Array.from({ length: total }, (_, i) => (
-          <div
-            key={i}
-            className="transition-all duration-500"
-            style={{
-              width: i === index ? 24 : 6,
-              height: 6,
-              borderRadius: 3,
-              background: i === index ? "#fff" : "rgba(255,255,255,0.3)",
-            }}
-          />
-        ))}
+      <div className="absolute top-6 right-8 z-20 hidden md:flex flex-col items-end gap-2">
+        <div className="flex items-center gap-2">
+          {Array.from({ length: total }, (_, i) => (
+            <div
+              key={i}
+              className="transition-all duration-500"
+              style={{
+                width: i === index ? 24 : 6,
+                height: 6,
+                borderRadius: 3,
+                background: i === index ? entry.color : "rgba(255,255,255,0.3)",
+              }}
+            />
+          ))}
+        </div>
+        <span className="text-[10px] text-white/40 font-medium" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+          {index + 1} / {total}
+        </span>
       </div>
 
       {/* ---- Content: logo + glass card ---- */}
@@ -1762,25 +1784,48 @@ export default function App() {
           </h2>
           <Separator className="w-12 bg-primary h-0.5 mx-auto mb-6" />
           <p className="text-muted-foreground mb-10 text-lg">
-            Interested in working together? I'd love to hear from you.
+            Open to Business Analyst and Data Analyst roles. Let's talk.
           </p>
 
-          <div className="flex items-center justify-center gap-4">
-            <ContactButton
-              href="https://linkedin.com/in/spencergoss1234"
-              icon={<Linkedin size={22} />}
-              label="LinkedIn"
-            />
-            <ContactButton
-              href="https://github.com/SpencerGoss"
-              icon={<Github size={22} />}
-              label="GitHub"
-            />
-            <ContactButton
-              href="mailto:spencer.goss@outlook.com"
-              icon={<Mail size={22} />}
-              label="Email"
-            />
+          {/* Resume download */}
+          <div className="mb-8">
+            <a
+              href="/Spencer_Goss_Resume.pdf"
+              download
+              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl font-semibold text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg shadow-sm"
+              style={{ background: "#06B6D4" }}
+            >
+              <Download size={18} />
+              Download Resume
+            </a>
+            <p className="text-xs text-muted-foreground/50 mt-2">PDF • Updated March 2026</p>
+          </div>
+
+          <div className="flex items-center justify-center gap-6">
+            <div className="flex flex-col items-center gap-2">
+              <ContactButton
+                href="https://linkedin.com/in/spencergoss1234"
+                icon={<Linkedin size={22} />}
+                label="LinkedIn"
+              />
+              <span className="text-xs text-muted-foreground font-medium">LinkedIn</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <ContactButton
+                href="https://github.com/SpencerGoss"
+                icon={<Github size={22} />}
+                label="GitHub"
+              />
+              <span className="text-xs text-muted-foreground font-medium">GitHub</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <ContactButton
+                href="mailto:spencer.goss@outlook.com"
+                icon={<Mail size={22} />}
+                label="Email"
+              />
+              <span className="text-xs text-muted-foreground font-medium">Email</span>
+            </div>
           </div>
 
           <p className="text-xs text-muted-foreground/60 mt-16">
