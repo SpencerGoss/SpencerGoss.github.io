@@ -13,6 +13,8 @@ import {
   Bot,
   BarChart3,
   FlaskConical,
+  ClipboardCheck,
+  MessageSquare,
   MapPin,
   GraduationCap,
   Briefcase,
@@ -243,25 +245,39 @@ type TechSkill = { name: string; category: string } & (
 );
 
 const TECH_SKILLS: TechSkill[] = [
+  // Languages
   { name: "Python", icon: "https://cdn.simpleicons.org/python/3776AB", category: "Languages" },
   { name: "SQL", LucideIcon: Database, iconColor: "#4053D6", category: "Languages" },
   { name: "R", icon: "https://cdn.simpleicons.org/r/276DC3", category: "Languages" },
+  // AI & Automation
   { name: "Claude AI", icon: "https://cdn.simpleicons.org/anthropic/191919", category: "AI & Automation" },
   { name: "ChatGPT", icon: "https://cdn.simpleicons.org/openai/412991", category: "AI & Automation" },
   { name: "GitHub Copilot", icon: "https://cdn.simpleicons.org/githubcopilot/000000", category: "AI & Automation" },
   { name: "Prompt Engineering", LucideIcon: Sparkles, iconColor: "#E8413C", category: "AI & Automation" },
   { name: "AI Agents", LucideIcon: Bot, iconColor: "#00B0D8", category: "AI & Automation" },
-  { name: "RapidMiner", icon: "https://cdn.simpleicons.org/rapidminer/F47920", category: "Analytics" },
+  // Machine Learning
+  { name: "scikit-learn", icon: "https://cdn.simpleicons.org/scikitlearn/F7931E", category: "Machine Learning" },
+  { name: "pandas", icon: "https://cdn.simpleicons.org/pandas/150458", category: "Machine Learning" },
+  { name: "NumPy", icon: "https://cdn.simpleicons.org/numpy/013243", category: "Machine Learning" },
+  { name: "Jupyter", icon: "https://cdn.simpleicons.org/jupyter/F37626", category: "Machine Learning" },
+  { name: "Google Colab", icon: "https://cdn.simpleicons.org/googlecolab/F9AB00", category: "Machine Learning" },
+  // Visualization
   { name: "Tableau", icon: "https://cdn.simpleicons.org/tableau/E97627", category: "Visualization" },
   { name: "Power BI", icon: "https://cdn.simpleicons.org/powerbi/F2C811", category: "Visualization" },
+  // Analytics
   { name: "JMP", LucideIcon: FlaskConical, iconColor: "#1E6FBA", category: "Analytics" },
   { name: "SPSS", LucideIcon: BarChart3, iconColor: "#1F70C1", category: "Analytics" },
-  { name: "Excel", icon: "https://cdn.simpleicons.org/microsoftexcel/217346", category: "Tools" },
-  { name: "Google Sheets", icon: "https://cdn.simpleicons.org/googlesheets/34A853", category: "Tools" },
-  { name: "PowerPoint", icon: "https://cdn.simpleicons.org/microsoftpowerpoint/B7472A", category: "Tools" },
-  { name: "Word", icon: "https://cdn.simpleicons.org/microsoftword/2B579A", category: "Tools" },
-  { name: "SAP", icon: "https://cdn.simpleicons.org/sap/0FAAFF", category: "Tools" },
-  { name: "GitHub", icon: "https://cdn.simpleicons.org/github/181717", category: "Tools" },
+  { name: "Qualtrics", LucideIcon: ClipboardCheck, iconColor: "#00B4EF", category: "Analytics" },
+  { name: "SurveyMonkey", LucideIcon: MessageSquare, iconColor: "#00BF6F", category: "Analytics" },
+  // Tools & Platforms
+  { name: "Excel", icon: "https://cdn.simpleicons.org/microsoftexcel/217346", category: "Tools & Platforms" },
+  { name: "PowerPoint", icon: "https://cdn.simpleicons.org/microsoftpowerpoint/B7472A", category: "Tools & Platforms" },
+  { name: "Word", icon: "https://cdn.simpleicons.org/microsoftword/2B579A", category: "Tools & Platforms" },
+  { name: "OneNote", icon: "https://cdn.simpleicons.org/microsoftonenote/7719AA", category: "Tools & Platforms" },
+  { name: "SAP", icon: "https://cdn.simpleicons.org/sap/0FAAFF", category: "Tools & Platforms" },
+  { name: "GitHub", icon: "https://cdn.simpleicons.org/github/181717", category: "Tools & Platforms" },
+  { name: "VS Code", icon: "https://cdn.simpleicons.org/visualstudiocode/007ACC", category: "Tools & Platforms" },
+  { name: "Microsoft Teams", icon: "https://cdn.simpleicons.org/microsoftteams/6264A7", category: "Tools & Platforms" },
 ];
 
 /* Text-based business & professional skills */
@@ -275,16 +291,20 @@ const BUSINESS_SKILLS = [
   "Regression & Classification",
   "A/B Testing",
   "Data Cleaning & ETL",
+  "Machine Learning",
+  "Feature Engineering",
+  "Customer Segmentation",
+  "Risk Analysis",
+  "SEO & Content Strategy",
+  "Data Pipeline Development",
+  "Dashboard Design",
+  "Data Wrangling",
+  "Stakeholder Communication",
+  "Requirements Gathering",
+  "Process Automation",
   "Business Strategy",
-  "Process Improvement",
   "Cross-functional Collaboration",
   "Project Management",
-  "Problem Solving",
-  "Team Leadership",
-  "Research & Synthesis",
-  "Time Management",
-  "Attention to Detail",
-  "Adaptability",
 ];
 
 const EXPERIENCE = [
@@ -940,6 +960,40 @@ function BusinessSkillPill({ skill }: { skill: string }) {
     <div className="skill-badge inline-flex items-center gap-2 bg-white border border-border rounded-full px-4 py-2 cursor-default text-sm font-medium text-foreground hover:border-primary/30 hover:shadow-sm transition-all duration-200">
       <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
       {skill}
+    </div>
+  );
+}
+
+const SKILL_CATEGORIES = [
+  { name: "Languages", color: "#06B6D4" },
+  { name: "AI & Automation", color: "#8B5CF6" },
+  { name: "Machine Learning", color: "#10B981" },
+  { name: "Visualization", color: "#0891B2" },
+  { name: "Analytics", color: "#F59E0B" },
+  { name: "Tools & Platforms", color: "#64748b" },
+];
+
+function SkillCategory({ category, delay }: { category: { name: string; color: string }; delay: number }) {
+  const ref = useScrollReveal();
+  const skills = TECH_SKILLS.filter((s) => s.category === category.name);
+  if (skills.length === 0) return null;
+
+  return (
+    <div ref={ref} className="scroll-reveal mb-8" style={{ transitionDelay: `${delay}ms` }}>
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-1 h-5 rounded-full" style={{ background: category.color }} />
+        <h3
+          className="text-[11px] font-bold uppercase tracking-[1.5px]"
+          style={{ color: category.color }}
+        >
+          {category.name}
+        </h3>
+      </div>
+      <div className="flex flex-wrap gap-4">
+        {skills.map((skill) => (
+          <TechIcon key={skill.name} skill={skill} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -1628,33 +1682,36 @@ export default function App() {
       {/* ===== SKILLS ===== */}
       <section ref={sectionRefs.skills} className="section-alt min-h-screen flex items-center py-24 md:py-32">
         <div className="max-w-5xl mx-auto px-6">
-          <div ref={skillsReveal} className="scroll-reveal">
+          <div ref={skillsReveal} className="scroll-reveal mb-14">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
-              Skills & Tech Stack
+              Skills &{" "}
+              <span
+                className="inline-block transition-all duration-300"
+                style={{ opacity: wordVisible ? 1 : 0, transform: wordVisible ? "translateY(0)" : "translateY(8px)" }}
+              >
+                {rotatingWord}
+              </span>
+              <span className="typewriter-cursor" />
             </h2>
             <Separator className="w-12 bg-primary h-0.5 mb-6" />
-            <p className="text-muted-foreground mb-12">
+            <p className="text-muted-foreground">
               Tools I use and skills I bring to the table.
             </p>
           </div>
 
-          {/* Tech tools logo grid */}
-          <div className="mb-16">
-            <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-6">
-              Tools & Technologies
-            </h3>
-            <div className="flex flex-wrap gap-4 pt-10 pb-4">
-              {TECH_SKILLS.map((skill) => (
-                <TechIcon key={skill.name} skill={skill} />
-              ))}
-            </div>
-          </div>
+          {/* Tech skills by category */}
+          {SKILL_CATEGORIES.map((cat, i) => (
+            <SkillCategory key={cat.name} category={cat} delay={i * 80} />
+          ))}
 
           {/* Business & Professional skills */}
-          <div>
-            <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-6">
-              Business & Professional
-            </h3>
+          <div className="mt-12 pt-8 border-t border-border/50">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1 h-5 rounded-full bg-foreground/20" />
+              <h3 className="text-[11px] font-bold text-muted-foreground uppercase tracking-[1.5px]">
+                Business & Professional
+              </h3>
+            </div>
             <div className="flex flex-wrap gap-2.5">
               {BUSINESS_SKILLS.map((skill) => (
                 <BusinessSkillPill key={skill} skill={skill} />
