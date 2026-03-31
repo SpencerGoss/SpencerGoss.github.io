@@ -55,6 +55,12 @@ const PROJECTS = [
     url: "https://oddsix.app",
     github: "https://github.com/SpencerGoss/nba-analytics-project",
     tags: ["Python", "scikit-learn", "LightGBM", "Plotly", "Chart.js", "GitHub Pages", "SQL Server"],
+    screenshots: [
+      { label: "Dashboard Home", desc: "Daily picks & live scores" },
+      { label: "Game Predictions", desc: "Confidence tiers & radar charts" },
+      { label: "Player Comparison", desc: "Stats, efficiency & career totals" },
+      { label: "League Standings", desc: "Power rankings & playoff picture" },
+    ],
     metrics: [
       { value: 73, suffix: ".5%", label: "Prediction Accuracy" },
       { value: 490, suffix: "+", label: "ML Features" },
@@ -104,13 +110,21 @@ const PROJECTS = [
     url: "#",
     github: "#",
     tags: ["Python", "asyncio", "FastAPI", "LightGBM", "Pydantic v2", "React", "SQLAlchemy"],
+    screenshots: [
+      { label: "Signal Dashboard", desc: "21 signals fused in real-time" },
+      { label: "Risk Monitor", desc: "Circuit breakers & drawdown tracking" },
+      { label: "Agent Pipeline", desc: "5-stage AI trade evaluation" },
+    ],
     metrics: [
       { value: 31, suffix: "K+", label: "Lines of Code" },
       { value: 3082, suffix: "", label: "Tests" },
       { value: 21, suffix: "", label: "Signal Types" },
       { value: 95, suffix: "%", label: "Test Coverage" },
     ],
-    cardMetrics: [],
+    cardMetrics: [
+      { display: "3K+", label: "Tests" },
+      { display: "95%", label: "Coverage" },
+    ],
     caseStudy: {
       hook: "A production-grade automated trading system that fuses 21 signal types through an AI agent pipeline, with immutable circuit breakers and real-time risk monitoring.",
       sections: [
@@ -143,12 +157,19 @@ const PROJECTS = [
     url: "https://devtoolbox-blog.pages.dev",
     github: "#",
     tags: ["Hugo", "PaperMod", "Cloudflare Pages", "GoatCounter", "Fuse.js"],
+    screenshots: [
+      { label: "Homepage", desc: "Dark theme with category navigation" },
+      { label: "Tool Review", desc: "In-depth analysis with ratings" },
+      { label: "Comparison Table", desc: "Side-by-side feature breakdown" },
+    ],
     metrics: [
       { value: 350, suffix: "+", label: "Articles Published" },
       { value: 38, suffix: "", label: "Tools Reviewed" },
       { value: 3, suffix: "", label: "Content Types" },
     ],
-    cardMetrics: [],
+    cardMetrics: [
+      { display: "350+", label: "Articles" },
+    ],
     caseStudy: {
       hook: "A comprehensive content platform reviewing and comparing 38+ AI-powered developer tools, with automated SEO, schema markup, and AI-friendly content distribution.",
       sections: [
@@ -181,11 +202,17 @@ const PROJECTS = [
     url: "#",
     github: "https://github.com/SpencerGoss/msba-portfolio-SpencerGoss",
     tags: ["Python", "scikit-learn", "Jupyter", "pandas"],
+    screenshots: [
+      { label: "Cluster Analysis", desc: "3 customer segments identified" },
+      { label: "Churn Factors", desc: "Key drivers of customer attrition" },
+    ],
     metrics: [
       { value: 3, suffix: "", label: "Customer Clusters" },
       { value: 5636, suffix: "", label: "Data Points" },
     ],
-    cardMetrics: [],
+    cardMetrics: [
+      { display: "3", label: "Clusters" },
+    ],
     caseStudy: {
       hook: "A predictive churn model that identifies at-risk customers and segments them into actionable clusters for targeted retention strategies.",
       sections: [
@@ -515,8 +542,15 @@ function BentoCard({ project, onClick }: { project: typeof PROJECTS[0]; onClick:
             </p>
           </div>
 
-          <div className="my-4 rounded-xl border border-border bg-secondary/50 h-20 flex items-center justify-center">
-            <span className="text-xs text-muted-foreground/40">[ screenshot ]</span>
+          <div
+            className="my-4 rounded-xl border border-border h-20 flex items-center justify-center overflow-hidden"
+            style={{ background: `linear-gradient(135deg, ${project.accent}06, ${project.accent}12, ${project.accent}06)` }}
+          >
+            <div className="flex gap-2">
+              {[32, 44, 36].map((w, i) => (
+                <div key={i} className="h-10 rounded" style={{ width: w, background: `${project.accent}15` }} />
+              ))}
+            </div>
           </div>
 
           <div>
@@ -556,7 +590,17 @@ function BentoCard({ project, onClick }: { project: typeof PROJECTS[0]; onClick:
           <p className="text-[11px] text-muted-foreground mb-2">{project.subtitle}</p>
           <p className="text-[11px] text-muted-foreground/70 leading-relaxed">{project.shortDescription}</p>
         </div>
-        <div className="flex gap-1.5 flex-wrap mt-3">
+        {project.cardMetrics.length > 0 && (
+          <div className="flex gap-4 mt-3">
+            {project.cardMetrics.map((m, i) => (
+              <div key={i}>
+                <div className="text-base font-extrabold text-foreground">{m.display}</div>
+                <div className="text-[8px] text-muted-foreground uppercase tracking-[1px]">{m.label}</div>
+              </div>
+            ))}
+          </div>
+        )}
+        <div className="flex gap-1.5 flex-wrap mt-2">
           {project.tags.slice(0, 4).map((tag) => (
             <span
               key={tag}
@@ -632,7 +676,62 @@ function StorySection({ section, index }: { section: { title: string; color: str
   );
 }
 
-function CaseStudy({ project, onBack, sectionRef }: { project: typeof PROJECTS[0]; onBack: () => void; sectionRef?: React.RefObject<HTMLElement | null> }) {
+function Slideshow({ screenshots, accent }: { screenshots: { label: string; desc: string }[]; accent: string }) {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (screenshots.length <= 1) return;
+    const id = setInterval(() => {
+      setCurrent((c) => (c + 1) % screenshots.length);
+    }, 4000);
+    return () => clearInterval(id);
+  }, [screenshots.length]);
+
+  return (
+    <div className="slideshow-container rounded-xl border border-border shadow-sm mb-6 overflow-hidden">
+      {/* Slides */}
+      <div className="relative h-40 md:h-56">
+        {screenshots.map((shot, i) => (
+          <div
+            key={i}
+            className="absolute inset-0 flex flex-col items-center justify-center transition-all duration-500"
+            style={{
+              opacity: i === current ? 1 : 0,
+              transform: i === current ? "translateX(0)" : i < current ? "translateX(-20px)" : "translateX(20px)",
+              background: `linear-gradient(135deg, ${accent}08, ${accent}15, ${accent}08)`,
+            }}
+          >
+            <div className="w-12 h-12 rounded-xl mb-3 flex items-center justify-center" style={{ background: `${accent}15` }}>
+              <div className="w-6 h-6 rounded" style={{ background: `${accent}30` }} />
+            </div>
+            <div className="text-sm font-semibold text-foreground">{shot.label}</div>
+            <div className="text-xs text-muted-foreground mt-1">{shot.desc}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Dot indicators */}
+      {screenshots.length > 1 && (
+        <div className="flex items-center justify-center gap-2 py-3 bg-white border-t border-border">
+          {screenshots.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className="transition-all duration-300 rounded-full cursor-pointer"
+              style={{
+                width: i === current ? 20 : 6,
+                height: 6,
+                background: i === current ? accent : "#e2e8f0",
+              }}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: typeof PROJECTS[0]; onBack: () => void; sectionRef?: React.RefObject<HTMLElement | null>; onSelectProject: (id: string) => void }) {
   useEffect(() => {
     if (sectionRef?.current) {
       sectionRef.current.scrollIntoView({ behavior: "instant" as ScrollBehavior, block: "start" });
@@ -679,9 +778,7 @@ function CaseStudy({ project, onBack, sectionRef }: { project: typeof PROJECTS[0
             {project.caseStudy.hook}
           </p>
 
-          <div className="bg-white border border-border rounded-xl h-32 md:h-48 flex items-center justify-center shadow-sm mb-6">
-            <span className="text-sm text-muted-foreground/40">[ hero screenshot ]</span>
-          </div>
+          <Slideshow screenshots={project.screenshots} accent={project.accent} />
 
           <div className="flex gap-3">
             {project.url !== "#" && (
@@ -726,8 +823,16 @@ function CaseStudy({ project, onBack, sectionRef }: { project: typeof PROJECTS[0
           <StorySection key={i} section={section} index={i} />
         ))}
 
-        <div className="bg-white border border-border rounded-xl h-24 md:h-32 flex items-center justify-center shadow-sm mb-10">
-          <span className="text-sm text-muted-foreground/40">[ additional screenshot ]</span>
+        <div
+          className="rounded-xl border border-border h-24 md:h-32 flex flex-col items-center justify-center shadow-sm mb-10 overflow-hidden"
+          style={{ background: `linear-gradient(135deg, ${project.accent}05, ${project.accent}12, ${project.accent}05)` }}
+        >
+          <div className="flex gap-3 mb-2">
+            {[40, 56, 48].map((w, i) => (
+              <div key={i} className="h-8 rounded" style={{ width: w, background: `${project.accent}12` }} />
+            ))}
+          </div>
+          <div className="text-xs text-muted-foreground/50">More screenshots coming soon</div>
         </div>
 
         <div className="mb-6">
@@ -746,6 +851,34 @@ function CaseStudy({ project, onBack, sectionRef }: { project: typeof PROJECTS[0
             ))}
           </div>
         </div>
+
+        {/* Next Project */}
+        {(() => {
+          const currentIndex = PROJECTS.findIndex((p) => p.id === project.id);
+          const nextProject = PROJECTS[(currentIndex + 1) % PROJECTS.length];
+          return (
+            <div className="mt-12 pt-8 border-t border-border">
+              <div className="text-xs text-muted-foreground uppercase tracking-wider mb-3">Next Project</div>
+              <button
+                onClick={() => onSelectProject(nextProject.id)}
+                className="w-full text-left bg-white border border-border rounded-xl p-5 cursor-pointer hover:shadow-md hover:border-primary/20 transition-all duration-200 group"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="w-2 h-2 rounded-full" style={{ background: nextProject.accent }} />
+                      <div className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                        {nextProject.title}
+                      </div>
+                    </div>
+                    <div className="text-sm text-muted-foreground">{nextProject.subtitle}</div>
+                  </div>
+                  <ArrowUpRight size={18} className="text-muted-foreground group-hover:text-primary transition-colors" />
+                </div>
+              </button>
+            </div>
+          );
+        })()}
       </div>
     </div>
   );
@@ -1447,6 +1580,12 @@ export default function App() {
           <CaseStudy
             project={PROJECTS.find((p) => p.id === selectedProject)!}
             sectionRef={sectionRefs.projects}
+            onSelectProject={(id) => {
+              setSelectedProject(id);
+              setTimeout(() => {
+                sectionRefs.projects.current?.scrollIntoView({ behavior: "instant" as ScrollBehavior, block: "start" });
+              }, 0);
+            }}
             onBack={() => {
               setSelectedProject(null);
               setTimeout(() => {
