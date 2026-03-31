@@ -13,10 +13,6 @@ import {
   Bot,
   BarChart3,
   FlaskConical,
-  Search,
-  Target,
-  RefreshCw,
-  Rocket,
   MapPin,
   GraduationCap,
   Briefcase,
@@ -385,12 +381,6 @@ const EXPERIENCE = [
   },
 ];
 
-const STATS = [
-  { value: 4, suffix: "+", label: "Live Projects" },
-  { value: 2, suffix: "", label: "Degrees" },
-  { value: 3, suffix: "", label: "Industries" },
-];
-
 const NAV_ITEMS = [
   { key: "about", label: "About" },
   { key: "projects", label: "Projects" },
@@ -496,19 +486,6 @@ function useCountUp(target: number, duration = 2000) {
 /* ================================================================
    COMPONENTS
    ================================================================ */
-
-function StatCard({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  const { count, ref } = useCountUp(value);
-  return (
-    <div ref={ref} className="counter-card bg-white border border-border rounded-xl p-6 text-center cursor-default">
-      <div className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-        {count}
-        <span className="gradient-text">{suffix}</span>
-      </div>
-      <div className="text-sm text-muted-foreground mt-1 font-medium">{label}</div>
-    </div>
-  );
-}
 
 function BentoCard({ project, onClick }: { project: typeof PROJECTS[0]; onClick: () => void }) {
   const revealRef = useScrollReveal();
@@ -804,44 +781,6 @@ function TechIcon({ skill }: { skill: TechSkill }) {
         <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-foreground rotate-45" />
       </div>
     </div>
-  );
-}
-
-const ABOUT_TRAITS: { word: string; description: string; color: string; Icon: React.ComponentType<{ size?: number; className?: string }> }[] = [
-  { word: "curiosity", description: "I start by understanding the full picture — the context, the constraints, and what success actually looks like.", color: "#06B6D4", Icon: Search },
-  { word: "deliberate", description: "Every decision is researched and pressure-tested. I don't commit to an approach until I'm confident it's the right one.", color: "#8B5CF6", Icon: Target },
-  { word: "never settled", description: "I refine until the work meets a high standard — not just until it functions.", color: "#F59E0B", Icon: RefreshCw },
-  { word: "builder", description: "I go beyond analysis to ship real products — prediction engines, trading systems, and automation tools.", color: "#10B981", Icon: Rocket },
-];
-
-function TraitWord({ trait }: { trait: typeof ABOUT_TRAITS[0] }) {
-  const [active, setActive] = useState(false);
-  return (
-    <span className="relative inline-block">
-      <button
-        className="trait-keyword font-bold cursor-pointer border-b-2 border-dashed transition-all duration-200"
-        style={{ color: trait.color, borderColor: active ? trait.color : `${trait.color}40` }}
-        onMouseEnter={() => setActive(true)}
-        onMouseLeave={() => setActive(false)}
-        onClick={() => setActive(!active)}
-      >
-        {trait.word}
-      </button>
-      <div
-        className="absolute left-0 top-full mt-3 z-20 transition-all duration-300 pointer-events-none"
-        style={{
-          opacity: active ? 1 : 0,
-          transform: active ? "translateY(0)" : "translateY(-8px)",
-        }}
-      >
-        <div className="flex items-start gap-3 px-5 py-4 rounded-xl shadow-lg border border-border/50 w-72" style={{ background: "rgba(255,255,255,0.95)", backdropFilter: "blur(12px)" }}>
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style={{ background: `${trait.color}15` }}>
-            <trait.Icon size={16} style={{ color: trait.color }} />
-          </div>
-          <p className="text-sm text-muted-foreground leading-relaxed">{trait.description}</p>
-        </div>
-      </div>
-    </span>
   );
 }
 
