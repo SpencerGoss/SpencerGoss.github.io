@@ -509,6 +509,11 @@ function useScrollReveal() {
   return ref;
 }
 
+function ScrollReveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useScrollReveal();
+  return <div ref={ref} className={`scroll-reveal ${className}`}>{children}</div>;
+}
+
 function useCountUp(target: number, duration = 2000) {
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
@@ -1770,7 +1775,7 @@ export default function App() {
           />
         ) : (
           <div className="max-w-6xl mx-auto px-6">
-            <div className="mb-16">
+            <ScrollReveal className="mb-16">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
                 Featured Projects
               </h2>
@@ -1778,7 +1783,7 @@ export default function App() {
               <p className="text-muted-foreground">
                 Real projects, real data, real impact. Click any to see the full case study.
               </p>
-            </div>
+            </ScrollReveal>
             <BentoGrid onSelectProject={setSelectedProject} />
           </div>
         )}
@@ -1841,63 +1846,59 @@ export default function App() {
       <section
         ref={sectionRefs.contact}
         aria-label="Contact"
-        className="min-h-screen flex items-center py-24 md:py-32"
+        className="relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden"
         style={{
-          background: "linear-gradient(180deg, #F1F5F9 0%, #FAFBFF 100%)",
+          background: "linear-gradient(180deg, #F1F5F9 0%, #f8fafc 40%, #FAFBFF 100%)",
         }}
       >
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
-            Let's Connect
-          </h2>
-          <Separator className="w-12 bg-primary h-0.5 mx-auto mb-6" />
-          <p className="text-muted-foreground mb-10 text-lg">
-            Open to Business Analyst and Data Analyst roles. Let's talk.
-          </p>
+        {/* Decorative ambient blobs */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full" style={{ background: "radial-gradient(circle, rgba(6,182,212,0.06), transparent 70%)", filter: "blur(80px)" }} />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full" style={{ background: "radial-gradient(circle, rgba(139,92,246,0.04), transparent 70%)", filter: "blur(80px)" }} />
+        </div>
 
-          {/* Resume download */}
-          <div className="mb-8">
+        <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
+          <ScrollReveal>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-foreground mb-3">
+              Let's Connect
+            </h2>
+            <Separator className="w-12 bg-primary h-0.5 mx-auto mb-6" />
+            <p className="text-muted-foreground mb-12 text-lg max-w-md mx-auto">
+              Open to Business Analyst and Data Analyst roles. Let's talk.
+            </p>
+          </ScrollReveal>
+
+          {/* Resume download — prominent */}
+          <ScrollReveal className="mb-12">
             <a
               href="/Spencer_Goss_Resume.pdf"
               download
               aria-label="Download Spencer Goss resume (PDF)"
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl font-semibold text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg shadow-sm"
-              style={{ background: "#06B6D4" }}
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-white transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1 shadow-lg shadow-primary/10"
+              style={{ background: "linear-gradient(135deg, #06B6D4, #0891B2)" }}
             >
-              <Download size={18} aria-hidden="true" />
+              <Download size={20} aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-0.5" />
               Download Resume
             </a>
-            <p className="text-xs text-muted-foreground/50 mt-2">PDF • Updated March 2026</p>
-          </div>
+            <p className="text-xs text-muted-foreground/50 mt-3">PDF • Updated March 2026</p>
+          </ScrollReveal>
 
-          <div className="flex items-center justify-center gap-6">
-            <div className="flex flex-col items-center gap-2">
-              <ContactButton
-                href="https://linkedin.com/in/spencergoss1234"
-                icon={<Linkedin size={22} />}
-                label="LinkedIn"
-              />
-              <span className="text-xs text-muted-foreground font-medium">LinkedIn</span>
+          <ScrollReveal>
+            <div className="flex items-center justify-center gap-8">
+              {[
+                { href: "https://linkedin.com/in/spencergoss1234", icon: <Linkedin size={24} />, label: "LinkedIn" },
+                { href: "https://github.com/SpencerGoss", icon: <Github size={24} />, label: "GitHub" },
+                { href: "mailto:spencer.goss@outlook.com", icon: <Mail size={24} />, label: "Email" },
+              ].map((item) => (
+                <div key={item.label} className="flex flex-col items-center gap-2.5">
+                  <ContactButton href={item.href} icon={item.icon} label={item.label} />
+                  <span className="text-xs text-muted-foreground font-medium">{item.label}</span>
+                </div>
+              ))}
             </div>
-            <div className="flex flex-col items-center gap-2">
-              <ContactButton
-                href="https://github.com/SpencerGoss"
-                icon={<Github size={22} />}
-                label="GitHub"
-              />
-              <span className="text-xs text-muted-foreground font-medium">GitHub</span>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <ContactButton
-                href="mailto:spencer.goss@outlook.com"
-                icon={<Mail size={22} />}
-                label="Email"
-              />
-              <span className="text-xs text-muted-foreground font-medium">Email</span>
-            </div>
-          </div>
+          </ScrollReveal>
 
-          <p className="text-xs text-muted-foreground/60 mt-16">
+          <p className="text-xs text-muted-foreground/40 mt-20">
             Built with React, Tailwind CSS & shadcn/ui
           </p>
         </div>
