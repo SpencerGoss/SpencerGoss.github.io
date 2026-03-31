@@ -514,7 +514,7 @@ function useCountUp(target: number, duration = 2000) {
    COMPONENTS
    ================================================================ */
 
-function BentoCard({ project, onClick }: { project: typeof PROJECTS[0]; onClick: () => void }) {
+function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0]; onClick: () => void; delay?: number }) {
   const revealRef = useScrollReveal();
 
   if (project.featured) {
@@ -523,7 +523,7 @@ function BentoCard({ project, onClick }: { project: typeof PROJECTS[0]; onClick:
         ref={revealRef}
         className="scroll-reveal bento-card bento-featured"
         onClick={onClick}
-        style={{ ["--accent" as string]: project.accent }}
+        style={{ ["--accent" as string]: project.accent, transitionDelay: `${delay}ms` }}
         onMouseEnter={(e) => (e.currentTarget.style.borderColor = project.accent + "40")}
         onMouseLeave={(e) => (e.currentTarget.style.borderColor = "")}
       >
@@ -588,6 +588,7 @@ function BentoCard({ project, onClick }: { project: typeof PROJECTS[0]; onClick:
       ref={revealRef}
       className="scroll-reveal bento-card"
       onClick={onClick}
+      style={{ transitionDelay: `${delay}ms` }}
       onMouseEnter={(e) => (e.currentTarget.style.borderColor = project.accent + "40")}
       onMouseLeave={(e) => (e.currentTarget.style.borderColor = "")}
     >
@@ -631,14 +632,6 @@ function BentoCard({ project, onClick }: { project: typeof PROJECTS[0]; onClick:
   );
 }
 
-function BentoCard2({ project, onClick, delay }: { project: typeof PROJECTS[0]; onClick: () => void; delay: number }) {
-  return (
-    <div style={{ transitionDelay: `${delay}ms` }}>
-      <BentoCard project={project} onClick={onClick} />
-    </div>
-  );
-}
-
 function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void }) {
   const oddsix = PROJECTS.find((p) => p.id === "oddsix")!;
   const tradingBot = PROJECTS.find((p) => p.id === "trading-bot")!;
@@ -648,13 +641,13 @@ function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void 
   return (
     <div className="bento-grid">
       <div className="bento-col-left">
-        <BentoCard2 project={oddsix} onClick={() => onSelectProject("oddsix")} delay={0} />
+        <BentoCard project={oddsix} onClick={() => onSelectProject("oddsix")} delay={0} />
       </div>
       <div className="bento-col-right">
-        <BentoCard2 project={tradingBot} onClick={() => onSelectProject("trading-bot")} delay={120} />
+        <BentoCard project={tradingBot} onClick={() => onSelectProject("trading-bot")} delay={120} />
         <div className="bento-row-compact">
-          <BentoCard2 project={devtoolbox} onClick={() => onSelectProject("devtoolbox")} delay={240} />
-          <BentoCard2 project={churnModel} onClick={() => onSelectProject("churn-model")} delay={300} />
+          <BentoCard project={devtoolbox} onClick={() => onSelectProject("devtoolbox")} delay={240} />
+          <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} delay={300} />
         </div>
       </div>
     </div>
