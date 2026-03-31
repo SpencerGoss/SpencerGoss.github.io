@@ -559,15 +559,13 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
     return (
       <div
         ref={revealRef}
-        className="scroll-reveal bento-card bento-featured"
+        className="scroll-reveal bento-card bento-featured group/card"
         onClick={onClick}
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); } }}
         role="button"
         tabIndex={0}
         aria-label={`View ${project.title} case study`}
         style={{ ["--accent" as string]: project.accent, transitionDelay: `${delay}ms` }}
-        onMouseEnter={(e) => (e.currentTarget.style.borderColor = project.accent + "40")}
-        onMouseLeave={(e) => (e.currentTarget.style.borderColor = "")}
       >
         <div
           className="absolute -top-16 -right-16 w-64 h-64 rounded-full pointer-events-none"
@@ -588,14 +586,19 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
           </div>
 
           <div
-            className="my-4 rounded-xl border border-border h-20 flex items-center justify-center overflow-hidden"
-            style={{ background: `linear-gradient(135deg, ${project.accent}06, ${project.accent}12, ${project.accent}06)` }}
+            className="my-4 rounded-xl border border-border/50 h-20 flex items-center justify-center overflow-hidden relative"
+            style={{ background: `linear-gradient(135deg, ${project.accent}08, ${project.accent}15, ${project.accent}06)` }}
           >
-            <div className="flex gap-2">
-              {[32, 44, 36].map((w, i) => (
-                <div key={i} className="h-10 rounded" style={{ width: w, background: `${project.accent}15` }} />
+            <div className="flex gap-3 items-end">
+              {[24, 36, 28, 42, 20].map((h, i) => (
+                <div
+                  key={i}
+                  className="w-2 rounded-t-sm transition-all duration-500"
+                  style={{ height: h, background: `${project.accent}30`, animationDelay: `${i * 0.15}s` }}
+                />
               ))}
             </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/30" />
           </div>
 
           <div>
@@ -610,13 +613,13 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
             <div className="flex items-center gap-3">
               <div className="flex gap-1.5 flex-wrap">
                 {project.tags.slice(0, 4).map((tag) => (
-                  <span key={tag} className="text-[10px] bg-secondary border border-border text-muted-foreground px-2.5 py-1 rounded-full">
+                  <span key={tag} className="text-[11px] bg-secondary border border-border text-muted-foreground px-3 py-1 rounded-full">
                     {tag}
                   </span>
                 ))}
               </div>
-              <div className="bento-hover-hint flex items-center gap-1 ml-auto text-[11px] font-semibold whitespace-nowrap" style={{ color: project.accent }}>
-                View Case Study <ArrowUpRight size={12} />
+              <div className="flex items-center gap-1 ml-auto text-[11px] font-semibold whitespace-nowrap opacity-60 group-hover/card:opacity-100 transition-opacity duration-200" style={{ color: project.accent }}>
+                View Case Study <ArrowUpRight size={12} className="transition-transform duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
               </div>
             </div>
           </div>
@@ -628,15 +631,13 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
   return (
     <div
       ref={revealRef}
-      className="scroll-reveal bento-card"
+      className="scroll-reveal bento-card group/card"
       onClick={onClick}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); } }}
       role="button"
       tabIndex={0}
       aria-label={`View ${project.title} case study`}
       style={{ transitionDelay: `${delay}ms` }}
-      onMouseEnter={(e) => (e.currentTarget.style.borderColor = project.accent + "40")}
-      onMouseLeave={(e) => (e.currentTarget.style.borderColor = "")}
     >
       <div className="flex flex-col justify-between h-full">
         <div>
@@ -659,18 +660,18 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
         )}
         <div className="flex items-center gap-2 mt-2">
           <div className="flex gap-1.5 flex-wrap">
-            {project.tags.slice(0, 4).map((tag) => (
+            {project.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="text-[9px] px-2 py-0.5 rounded-full border"
+                className="text-[10px] px-2.5 py-0.5 rounded-full border"
                 style={{ background: project.accentBg, color: project.accent, borderColor: `${project.accent}20` }}
               >
                 {tag}
               </span>
             ))}
           </div>
-          <div className="bento-hover-hint ml-auto">
-            <ArrowUpRight size={14} style={{ color: project.accent }} />
+          <div className="ml-auto opacity-50 group-hover/card:opacity-100 transition-opacity duration-200">
+            <ArrowUpRight size={14} className="transition-transform duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" style={{ color: project.accent }} />
           </div>
         </div>
       </div>
