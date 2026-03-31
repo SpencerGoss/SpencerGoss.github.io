@@ -39,3 +39,9 @@ Spencer is a basketball enthusiast who built a comprehensive NBA analytics dashb
 
 ### [portfolio] 2026-03-30 — Portfolio.html bundle requires UTF-8 encoding on Windows
 The Python bundle script must use `encoding='utf-8'` for both reading dist files and writing portfolio.html. Windows default (cp1252) fails on Unicode characters in the JS bundle.
+
+### [portfolio] 2026-03-31 — Standalone portfolio.html vs Netlify deploy: different image strategies
+Local images at `public/images/experience/` work for Vite dev and Netlify deploy but break in the standalone `portfolio.html` bundle (no local file access). Solution: bg images use gradient fallback (opacity stays 0 if image doesn't load), logos use Google favicon URLs (work anywhere). Don't base64-encode images — would bloat the 333KB bundle massively.
+
+### [portfolio] 2026-03-31 — Accessibility is non-visual and safe to add without design approval
+Skip-to-content links, aria-labels, keyboard nav, and prefers-reduced-motion support are invisible to sighted users. These can be added autonomously without Spencer's design review. Keyboard-accessible BentoCards need `role="button"`, `tabIndex={0}`, and `onKeyDown` handler for Enter/Space.
