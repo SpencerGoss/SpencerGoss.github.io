@@ -561,6 +561,10 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
         ref={revealRef}
         className="scroll-reveal bento-card bento-featured"
         onClick={onClick}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); } }}
+        role="button"
+        tabIndex={0}
+        aria-label={`View ${project.title} case study`}
         style={{ ["--accent" as string]: project.accent, transitionDelay: `${delay}ms` }}
         onMouseEnter={(e) => (e.currentTarget.style.borderColor = project.accent + "40")}
         onMouseLeave={(e) => (e.currentTarget.style.borderColor = "")}
@@ -626,6 +630,10 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
       ref={revealRef}
       className="scroll-reveal bento-card"
       onClick={onClick}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); } }}
+      role="button"
+      tabIndex={0}
+      aria-label={`View ${project.title} case study`}
       style={{ transitionDelay: `${delay}ms` }}
       onMouseEnter={(e) => (e.currentTarget.style.borderColor = project.accent + "40")}
       onMouseLeave={(e) => (e.currentTarget.style.borderColor = "")}
@@ -633,7 +641,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
       <div className="flex flex-col justify-between h-full">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
-            <div className="w-2 h-2 rounded-full" style={{ background: project.accent }} />
+            <div className="w-2 h-2 rounded-full" aria-hidden="true" style={{ background: project.accent }} />
             <h3 className="text-base md:text-lg font-extrabold text-foreground">{project.title}</h3>
           </div>
           <p className="text-[11px] text-muted-foreground mb-2">{project.subtitle}</p>
@@ -803,9 +811,10 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
         <div className="max-w-6xl mx-auto px-6 py-3 flex items-center gap-2">
           <button
             onClick={onBack}
+            aria-label="Back to projects list"
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer"
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft size={16} aria-hidden="true" />
             <span className="font-medium">Back to Projects</span>
           </button>
         </div>
@@ -1062,6 +1071,8 @@ function ExperienceSlide({ entry, index, total }: { entry: typeof EXPERIENCE[0];
     <div
       ref={slideRef}
       className="exp-slide relative"
+      role="article"
+      aria-label={`${entry.org} — ${entry.title}`}
     >
       {/* ---- Full-screen background image ---- */}
       <div className="absolute inset-0 z-0">
@@ -1084,7 +1095,7 @@ function ExperienceSlide({ entry, index, total }: { entry: typeof EXPERIENCE[0];
       </div>
 
       {/* ---- Slide number indicator ---- */}
-      <div className="absolute top-6 right-8 z-20 hidden md:flex flex-col items-end gap-2">
+      <div className="absolute top-6 right-8 z-20 hidden md:flex flex-col items-end gap-2" aria-hidden="true">
         <div className="flex items-center gap-2">
           {Array.from({ length: total }, (_, i) => (
             <div
@@ -1291,6 +1302,7 @@ function ContactButton({
       onClick={handleClick}
       className="magnetic-btn relative overflow-hidden flex items-center justify-center w-14 h-14 rounded-xl bg-white border border-border shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-200 cursor-pointer group"
       title={label}
+      aria-label={label}
     >
       <div className="relative z-10 text-muted-foreground group-hover:text-primary transition-colors">
         {icon}
@@ -1317,8 +1329,11 @@ export default function App() {
   const [navShrunk, setNavShrunk] = useState(false);
   const { word: rotatingWord, visible: wordVisible } = useRotatingWord(TYPEWRITER_WORDS);
 
-  // Lenis smooth scroll
+  // Lenis smooth scroll (disabled when user prefers reduced motion)
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -1469,17 +1484,31 @@ export default function App() {
 
   return (
     <>
+      {/* Skip to content (a11y) */}
+      <a href="#main-content" className="skip-to-content">
+        Skip to main content
+      </a>
+
       {/* Noise overlay */}
-      <div className="noise-overlay" />
+      <div className="noise-overlay" aria-hidden="true" />
 
       {/* Cursor spotlight */}
-      <div ref={spotlightRef} className="cursor-spotlight" />
+      <div ref={spotlightRef} className="cursor-spotlight" aria-hidden="true" />
 
       {/* Scroll progress */}
-      <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} />
+      <div
+        className="scroll-progress"
+        style={{ width: `${scrollProgress}%` }}
+        role="progressbar"
+        aria-valuenow={Math.round(scrollProgress)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="Page scroll progress"
+      />
 
       {/* Navigation — floating pill */}
       <nav
+        aria-label="Main navigation"
         className={`fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-500 ${
           navShrunk ? "top-4 pointer-events-none" : "top-0 pointer-events-none"
         }`}
@@ -1509,6 +1538,7 @@ export default function App() {
                 <button
                   key={key}
                   onClick={() => scrollTo(key)}
+                  aria-current={activeSection === key ? "true" : undefined}
                   className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ${
                     activeSection === key
                       ? "text-primary bg-primary/10"
@@ -1524,19 +1554,23 @@ export default function App() {
             <button
               className="md:hidden p-2 cursor-pointer text-foreground"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
-              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+              {mobileMenuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
             </button>
           </div>
         </div>
 
         {/* Mobile menu */}
         {mobileMenuOpen && navShrunk && (
-          <div className="pointer-events-auto absolute top-16 left-4 right-4 rounded-2xl bg-white/95 backdrop-blur-lg border border-border/50 shadow-lg">
+          <div id="mobile-menu" role="menu" className="pointer-events-auto absolute top-16 left-4 right-4 rounded-2xl bg-white/95 backdrop-blur-lg border border-border/50 shadow-lg">
             <div className="px-4 py-3 flex flex-col gap-1">
               {NAV_ITEMS.map(({ key, label }) => (
                 <button
                   key={key}
+                  role="menuitem"
                   onClick={() => scrollTo(key)}
                   className="text-left px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-primary hover:bg-secondary transition-colors cursor-pointer"
                 >
@@ -1549,8 +1583,10 @@ export default function App() {
       </nav>
 
       {/* ===== HERO WITH SCROLL EXPANSION ===== */}
+      <main id="main-content">
       <section
         ref={heroRef}
+        aria-label="Introduction"
         className="relative"
         style={{ minHeight: "280vh", background: "#f8fafc" }}
       >
@@ -1562,7 +1598,7 @@ export default function App() {
             style={{ background: "#f8fafc" }}
           >
             {/* Ambient background blobs */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
               <div className="hero-blob hero-blob-1" />
               <div className="hero-blob hero-blob-2" />
             </div>
@@ -1574,7 +1610,7 @@ export default function App() {
                 {/* Status badge */}
                 <div className="split-reveal flex items-center justify-center md:justify-start gap-2 mb-6">
                   <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-border shadow-sm">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" aria-hidden="true" />
                     <span className="text-xs font-semibold text-muted-foreground">Open to opportunities</span>
                   </div>
                 </div>
@@ -1622,21 +1658,21 @@ export default function App() {
               {/* Right — photo */}
               <div data-hero="photo" className="split-reveal flex-shrink-0 relative transition-none" style={{ animationDelay: "0.7s", willChange: "transform, opacity" }}>
                 {/* Decorative blob behind photo */}
-                <div className="absolute -inset-6 rounded-full opacity-30" style={{ background: "radial-gradient(circle, #06B6D4 0%, transparent 70%)", filter: "blur(40px)" }} />
+                <div className="absolute -inset-6 rounded-full opacity-30" aria-hidden="true" style={{ background: "radial-gradient(circle, #06B6D4 0%, transparent 70%)", filter: "blur(40px)" }} />
                 <div
                   ref={mediaCardRef}
                   className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg border border-white/50"
                 >
                   {/* Placeholder — replace src with actual photo */}
-                  <div className="w-full h-full bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 flex items-center justify-center">
-                    <span className="text-4xl text-gray-300 font-bold select-none">SG</span>
+                  <div className="w-full h-full bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 flex items-center justify-center" role="img" aria-label="Spencer Goss — photo placeholder">
+                    <span className="text-4xl text-gray-300 font-bold select-none" aria-hidden="true">SG</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Scroll cue */}
-            <div ref={scrollCueRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 bounce-arrow text-muted-foreground/40 transition-opacity duration-100" style={{ willChange: "opacity" }}>
+            <div ref={scrollCueRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 bounce-arrow text-muted-foreground/40 transition-opacity duration-100" aria-hidden="true" style={{ willChange: "opacity" }}>
               <ChevronDown size={28} />
             </div>
 
@@ -1715,7 +1751,7 @@ export default function App() {
       </section>
 
       {/* ===== PROJECTS ===== */}
-      <section ref={sectionRefs.projects} className="py-24 md:py-32" style={{ background: "#FAFBFF" }}>
+      <section ref={sectionRefs.projects} aria-label="Featured Projects" className="py-24 md:py-32" style={{ background: "#FAFBFF" }}>
         {selectedProject ? (
           <CaseStudy
             project={PROJECTS.find((p) => p.id === selectedProject)!}
@@ -1750,7 +1786,7 @@ export default function App() {
       </section>
 
       {/* ===== SKILLS ===== */}
-      <section ref={sectionRefs.skills} className="section-alt min-h-screen flex items-center py-24 md:py-32">
+      <section ref={sectionRefs.skills} aria-label="Skills" className="section-alt min-h-screen flex items-center py-24 md:py-32">
         <div className="max-w-5xl mx-auto px-6">
           <div ref={skillsReveal} className="scroll-reveal mb-14">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
@@ -1795,7 +1831,7 @@ export default function App() {
       <ExperienceTimeline />
 
       {/* ===== EXPERIENCE SLIDES ===== */}
-      <section ref={sectionRefs.experience} className="relative" style={{ background: "#FAFBFF" }}>
+      <section ref={sectionRefs.experience} aria-label="Experience" className="relative" style={{ background: "#FAFBFF" }}>
         {/* Individual experience slides */}
         {EXPERIENCE.map((entry, i) => (
           <ExperienceSlide key={i} entry={entry} index={i} total={EXPERIENCE.length} />
@@ -1805,6 +1841,7 @@ export default function App() {
       {/* ===== CONTACT ===== */}
       <section
         ref={sectionRefs.contact}
+        aria-label="Contact"
         className="min-h-screen flex items-center py-24 md:py-32"
         style={{
           background: "linear-gradient(180deg, #F1F5F9 0%, #FAFBFF 100%)",
@@ -1824,10 +1861,11 @@ export default function App() {
             <a
               href="/Spencer_Goss_Resume.pdf"
               download
+              aria-label="Download Spencer Goss resume (PDF)"
               className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl font-semibold text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg shadow-sm"
               style={{ background: "#06B6D4" }}
             >
-              <Download size={18} />
+              <Download size={18} aria-hidden="true" />
               Download Resume
             </a>
             <p className="text-xs text-muted-foreground/50 mt-2">PDF • Updated March 2026</p>
@@ -1865,6 +1903,7 @@ export default function App() {
           </p>
         </div>
       </section>
+      </main>
     </>
   );
 }

@@ -487,6 +487,34 @@ html.lenis, html.lenis body {
   background-color: #F1F5F9;
 }
 
+/* ========== SKIP TO CONTENT (a11y) ========== */
+.skip-to-content {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: hsl(var(--primary));
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-to-content:focus {
+  top: 0;
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* ========== FOCUS VISIBLE (a11y) ========== */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
 /* ========== REDUCED MOTION ========== */
 @media (prefers-reduced-motion: reduce) {
   .split-reveal,
@@ -500,9 +528,15 @@ html.lenis, html.lenis body {
   }
 
   .blob { animation: none !important; }
+  .hero-blob { animation: none !important; }
   .gradient-text { animation: none !important; }
   .typewriter-cursor { animation: none !important; }
   .bounce-arrow { animation: none !important; }
+  .cursor-spotlight { display: none !important; }
 
   .case-study-enter { animation: none !important; }
+  .exp-slide img { transition: none !important; }
+
+  /* Disable smooth scroll when user prefers reduced motion */
+  html { scroll-behavior: auto !important; }
 }
