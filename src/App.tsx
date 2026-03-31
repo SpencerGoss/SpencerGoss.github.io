@@ -1216,12 +1216,38 @@ function ExperienceSlide({ entry, index, total }: { entry: typeof EXPERIENCE[0];
         </div>
       </div>
 
-      {/* Scroll hint on first slide */}
-      {index === 0 && (
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bounce-arrow text-white/30 hidden md:block">
-          <ChevronDown size={24} />
-        </div>
-      )}
+      {/* Navigation arrows */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 hidden md:flex items-center gap-4">
+        {index > 0 && (
+          <button
+            onClick={() => {
+              const prev = slideRef.current?.previousElementSibling as HTMLElement;
+              prev?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all duration-200 cursor-pointer"
+            aria-label="Previous experience"
+          >
+            <ChevronDown size={18} className="rotate-90" />
+          </button>
+        )}
+        {index === 0 && (
+          <div className="bounce-arrow text-white/30">
+            <ChevronDown size={24} />
+          </div>
+        )}
+        {index < total - 1 && (
+          <button
+            onClick={() => {
+              const next = slideRef.current?.nextElementSibling as HTMLElement;
+              next?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all duration-200 cursor-pointer"
+            aria-label="Next experience"
+          >
+            <ChevronDown size={18} className="-rotate-90" />
+          </button>
+        )}
+      </div>
     </div>
   );
 }
