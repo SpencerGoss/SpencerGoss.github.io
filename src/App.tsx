@@ -1377,7 +1377,7 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
   const expandedNode = expanded ? NODES[expanded] : null;
 
   return (
-    <section ref={sectionRef} aria-label="AI System" className="relative py-24 md:py-32 overflow-hidden" style={{ background: "linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)" }}>
+    <section ref={sectionRef} aria-label="AI System" className="relative py-24 md:py-32 overflow-hidden" style={{ background: "linear-gradient(180deg, #FAFBFF 0%, #0f172a 6%, #1e293b 50%, #0f172a 94%, #F1F5F9 100%)" }}>
       {/* Ambient effects */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(6,182,212,0.04) 1px, transparent 0)", backgroundSize: "48px 48px" }} />
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none" aria-hidden="true" style={{ background: "radial-gradient(circle, rgba(6,182,212,0.06), transparent 70%)", filter: "blur(120px)" }} />
@@ -1469,7 +1469,7 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
 
           {/* TIER 2: Living System */}
           <TierLabel text="Living System" color="#10B981" />
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-1">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-1">
             <NodeCard id="immuneMemory" />
             <NodeCard id="vitalsMonitor" />
             <NodeCard id="worldModel" />
@@ -1504,13 +1504,13 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
           </div>
         </ScrollReveal>
 
-        {/* Expanded detail panel */}
+        {/* Expanded detail panel — fixed at bottom of section viewport */}
         {expandedNode && expanded && (
-          <div className="mt-10 mb-4">
-            <div className="max-w-2xl mx-auto rounded-2xl border p-6 backdrop-blur-sm" style={{ borderColor: expandedNode.color + "25", background: expandedNode.color + "06" }}>
-              <div className="flex items-center justify-between mb-4">
+          <div className="sticky bottom-6 z-30 mt-8 mb-4">
+            <div className="max-w-2xl mx-auto rounded-2xl border p-5 shadow-2xl shadow-black/40" style={{ borderColor: expandedNode.color + "30", background: "#1a2332ee", backdropFilter: "blur(20px)" }}>
+              <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: expandedNode.color + "15" }}>
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: expandedNode.color + "15" }}>
                     <div style={{ color: expandedNode.color }}>{expandedNode.icon}</div>
                   </div>
                   <div>
@@ -1913,7 +1913,7 @@ export default function App() {
                     size="lg"
                     variant="outline"
                     onClick={() => scrollTo("contact")}
-                    className="font-semibold tracking-tight cursor-pointer text-foreground border-border hover:border-primary hover:bg-primary/5"
+                    className="font-semibold tracking-tight cursor-pointer text-foreground border-foreground/20 hover:border-primary hover:bg-primary/5"
                   >
                     Get in Touch
                   </Button>
@@ -2054,7 +2054,7 @@ export default function App() {
       <AISystemSection sectionRef={sectionRefs.aisystem} />
 
       {/* ===== SKILLS ===== */}
-      <section ref={sectionRefs.skills} aria-label="Skills" className="section-alt min-h-screen flex items-center py-24 md:py-32">
+      <section ref={sectionRefs.skills} aria-label="Skills" className="section-alt py-24 md:py-32">
         <div className="max-w-5xl mx-auto px-6">
           <div ref={skillsReveal} className="scroll-reveal mb-14">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
@@ -2110,7 +2110,7 @@ export default function App() {
       <section
         ref={sectionRefs.contact}
         aria-label="Contact"
-        className="relative min-h-screen flex items-center py-24 md:py-32 overflow-hidden"
+        className="relative flex items-center py-24 md:py-32 overflow-hidden"
         style={{
           background: "linear-gradient(180deg, #F1F5F9 0%, #f8fafc 40%, #FAFBFF 100%)",
         }}
@@ -2162,7 +2162,7 @@ export default function App() {
             </div>
           </ScrollReveal>
 
-          <p className="text-xs text-muted-foreground/40 mt-20">
+          <p className="text-xs text-muted-foreground/40 mt-12">
             Built with React, Tailwind CSS & shadcn/ui
           </p>
         </div>
