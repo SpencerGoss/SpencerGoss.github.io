@@ -1311,71 +1311,78 @@ function ExperienceTimeline() {
    AI SYSTEM SECTION
    ================================================================ */
 
-const AI_NODES = {
-  spencer: { label: "Spencer", sub: "Designs, directs, decides", color: "#06B6D4", detail: "Every task starts with me. I design the system architecture, set agent missions, define skill workflows, and make all strategic decisions. The AI executes — I direct." },
-  skillRouter: { label: "Skill Router", sub: "44 custom workflows", color: "#06B6D4", detail: "Every task is automatically routed through one of 44 custom skills I built — from debugging to deployment to code review. Each skill enforces a proven step-by-step process so nothing gets skipped. Skills are versioned, audited weekly, and scored for fitness." },
-  cliTools: { label: "CLI Tools", sub: "12 Python utilities", color: "#06B6D4", detail: "Lightweight Python scripts that replace heavyweight integrations. Stock data, research paper search, chart generation, web scraping, system health monitoring, and cross-project git stats — all invoked on demand with zero overhead." },
-  sessionState: { label: "Session Memory", sub: "Context persistence", color: "#06B6D4", detail: "Every session reads a handoff file from the last session and writes one at the end. Working notes, decision logs, and failed approaches persist across sessions. No context is ever lost — I pick up exactly where I left off." },
-  orchestrator: { label: "Orchestrator", sub: "Scheduled at 2:35 AM", color: "#8B5CF6", detail: "A PowerShell orchestrator launches 28 agents sequentially across 6 execution rounds every night. Each agent runs in its own Claude session with a standing mission, territory boundaries, and a shared intelligence protocol." },
-  researchAgents: { label: "Research Agents", sub: "Discover & analyze", color: "#8B5CF6", detail: "Agents that scan for new techniques, analyze model performance, explore frontier AI concepts, and identify improvement opportunities. They read the latest papers, test hypotheses, and log discoveries for the next morning." },
-  buildAgents: { label: "Build & Test Agents", sub: "Implement & validate", color: "#8B5CF6", detail: "Agents that write code, run tests, optimize pipelines, and build features. Each has a defined territory — specific files and directories they can modify — with a 3-tier enforcement system preventing conflicts." },
-  qaAgents: { label: "Quality Agents", sub: "Audit & enforce", color: "#8B5CF6", detail: "Agents focused on consistency, test coverage, prompt optimization, and cross-project standards. They catch regressions, enforce naming conventions, and ensure overnight work meets quality gates before merging." },
-  immuneMemory: { label: "Immune Memory", sub: "20 defensive antibodies", color: "#EF4444", detail: "Every real mistake generates an antibody — a defensive rule that fires automatically before the same error can happen again. 20 active antibodies cover auth bypasses, ML feature mismatches, false completions, and more. 100% precision rate — zero false positives." },
-  vitalsMonitor: { label: "Vitals Monitor", sub: "9 real-time metrics", color: "#06B6D4", detail: "Homeostatic monitoring: context pressure, error rate, coherence score, insight rate, prediction accuracy, skill freshness, agent health, depth score, and merge rate. Each has healthy/warning/critical ranges with automatic behavioral responses." },
-  worldModel: { label: "World Model", sub: "Predictive processing", color: "#8B5CF6", detail: "Maintains predictions about every project, the environment, and the skill ecosystem. Predictions are tested against reality each session — surprises drive investigation priority. Currently at 72% accuracy across 5 active hypotheses." },
-  dreamCycle: { label: "Dream Cycle", sub: "Knowledge consolidation", color: "#F59E0B", detail: "End-of-session consolidation in 5 stages: artifact collection → fact extraction → connection discovery → memory integration → pruning. Knowledge compounds across sessions. Cross-project discoveries transfer automatically via a shared log." },
-  crossTransfer: { label: "Cross-Project Transfer", sub: "Shared discovery log", color: "#10B981", detail: "When an agent discovers something useful in one project, it exports the finding to a shared transfer log. Other projects pick it up automatically. A calibration technique from analytics improved the trading system. A quality gate from business ops got ported to every project." },
-  morningBriefing: { label: "Morning Briefing", sub: "Auto-generated summary", color: "#F59E0B", detail: "Every morning I wake up to an auto-generated report: agent results, system vitals, immune alerts, world model updates, and prioritized recommendations. I review it, make decisions, and the loop restarts — informed and improved." },
-};
-
-type AINodeKey = keyof typeof AI_NODES;
+type SystemNodeData = { label: string; sub: string; color: string; icon: React.ReactNode; detail: string };
 
 function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
-  const [expanded, setExpanded] = useState<AINodeKey | null>(null);
+  const [expanded, setExpanded] = useState<string | null>(null);
 
-  const Node = ({ id, icon, size = "md" }: { id: AINodeKey; icon: React.ReactNode; size?: "lg" | "md" | "sm" }) => {
-    const node = AI_NODES[id];
+  const NODES: Record<string, SystemNodeData> = {
+    spencer: { label: "Spencer", sub: "Architect & decision-maker", color: "#06B6D4", icon: <Users size={20} />, detail: "Every task starts with me. I design the system architecture, set agent missions, define skill workflows, and make all strategic decisions. The AI executes — I direct." },
+    skillRouter: { label: "Skill Router", sub: "44 custom workflows", color: "#06B6D4", icon: <Terminal size={16} />, detail: "Every task is automatically routed through one of 44 custom skills I built — from debugging to deployment to code review. Each skill enforces a proven step-by-step process so nothing gets skipped. Skills are versioned, audited weekly, and scored for fitness." },
+    cliTools: { label: "CLI Tools", sub: "12 Python utilities", color: "#06B6D4", icon: <Code2 size={16} />, detail: "Lightweight Python scripts that replace heavyweight integrations. Stock data, research paper search, chart generation, web scraping, system health monitoring, and cross-project git stats — all invoked on demand with zero overhead." },
+    sessionMemory: { label: "Session Memory", sub: "Persistent context", color: "#06B6D4", icon: <StickyNote size={16} />, detail: "Every session reads a handoff file from the last session and writes one at the end. Working notes, decision logs, and failed approaches persist across sessions — no context is ever lost." },
+    orchestrator: { label: "Orchestrator", sub: "Scheduled at 2:35 AM", color: "#8B5CF6", icon: <BrainCircuit size={16} />, detail: "A scheduled orchestrator launches 28 agents sequentially across 6 execution rounds every night. Each agent runs in its own session with a standing mission, territory boundaries, and a shared intelligence protocol." },
+    researchAgents: { label: "Research Agents", sub: "Discover & analyze", color: "#8B5CF6", icon: <BookOpen size={16} />, detail: "Agents that scan for new techniques, analyze model performance, explore frontier AI concepts, and identify improvement opportunities. They read the latest research, test hypotheses, and log discoveries." },
+    buildAgents: { label: "Build Agents", sub: "Implement & test", color: "#8B5CF6", icon: <GitBranch size={16} />, detail: "Agents that write code, run tests, optimize pipelines, and build features. Each has a defined territory — specific files and directories they can modify — with 3-tier enforcement preventing conflicts." },
+    qaAgents: { label: "Quality Agents", sub: "Audit & enforce", color: "#8B5CF6", icon: <ClipboardCheck size={16} />, detail: "Agents focused on consistency, test coverage, prompt optimization, and cross-project standards. They catch regressions, enforce conventions, and ensure overnight work meets quality gates before merging." },
+    immuneMemory: { label: "Immune Memory", sub: "Mistake-driven defense", color: "#EF4444", icon: <Sigma size={16} />, detail: "Every real mistake generates an antibody — a defensive rule that fires automatically before the same error can recur. 20 active antibodies with 100% precision covering auth bypasses, ML mismatches, false completions, and more." },
+    vitalsMonitor: { label: "Vitals Monitor", sub: "9 real-time metrics", color: "#06B6D4", icon: <TrendingUp size={16} />, detail: "Homeostatic monitoring: context pressure, error rate, coherence score, insight rate, prediction accuracy, skill freshness, agent health, depth score, and merge rate. Each metric has automatic behavioral responses." },
+    worldModel: { label: "World Model", sub: "72% prediction accuracy", color: "#8B5CF6", icon: <LayoutDashboard size={16} />, detail: "Predictive processing across all projects. Predictions are tested against reality each session — surprises drive investigation priority. Active hypotheses are tracked, confirmed, or rejected over time." },
+    dreamCycle: { label: "Dream Cycle", sub: "Knowledge consolidation", color: "#F59E0B", icon: <Sparkles size={16} />, detail: "End-of-session consolidation in 5 stages: artifact collection → fact extraction → connection discovery → memory integration → pruning. Cross-project discoveries transfer automatically via a shared log." },
+    crossTransfer: { label: "Cross-Transfer", sub: "Shared discovery log", color: "#10B981", icon: <Boxes size={16} />, detail: "When an agent discovers something useful in one project, it exports the finding to a shared log. Other projects pick it up automatically — techniques transfer between analytics, trading, and automation." },
+    morningBriefing: { label: "Morning Briefing", sub: "Auto-generated report", color: "#F59E0B", icon: <FileSpreadsheet size={16} />, detail: "Every morning I wake up to an auto-generated report: agent results, system vitals, immune alerts, world model updates, and prioritized recommendations. I review it, make decisions, and the loop restarts." },
+  };
+
+  const NodeCard = ({ id }: { id: string }) => {
+    const n = NODES[id];
     const isOpen = expanded === id;
-    const sizes = { lg: "w-20 h-20", md: "w-14 h-14", sm: "w-11 h-11" };
-    const textSizes = { lg: "text-sm", md: "text-xs", sm: "text-[11px]" };
-    const subSizes = { lg: "text-[10px]", md: "text-[9px]", sm: "text-[8px]" };
-
     return (
-      <div className="flex flex-col items-center cursor-pointer group" onClick={() => setExpanded(isOpen ? null : id)}>
-        <div
-          className={`${sizes[size]} rounded-2xl flex items-center justify-center border transition-all duration-300 ${
-            isOpen ? "scale-110 shadow-[0_0_25px_rgba(6,182,212,0.2)]" : "group-hover:scale-105 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.1)]"
-          }`}
-          style={{
-            background: `${node.color}10`,
-            borderColor: isOpen ? `${node.color}60` : `${node.color}25`,
-          }}
-        >
-          <div style={{ color: node.color }}>{icon}</div>
+      <button
+        onClick={() => setExpanded(isOpen ? null : id)}
+        className={`ai-node group flex items-center gap-3 px-4 py-3 rounded-xl border cursor-pointer transition-all duration-200 w-full text-left ${
+          isOpen ? "border-opacity-60 shadow-lg" : "hover:border-opacity-40 hover:bg-white/[0.03]"
+        }`}
+        style={{
+          borderColor: isOpen ? n.color + "60" : "rgba(255,255,255,0.08)",
+          background: isOpen ? n.color + "08" : "rgba(255,255,255,0.02)",
+        }}
+      >
+        <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: n.color + "15" }}>
+          <div style={{ color: n.color }}>{n.icon}</div>
         </div>
-        <div className={`mt-2 font-semibold text-white text-center ${textSizes[size]}`}>{node.label}</div>
-        <div className={`text-slate-500 text-center ${subSizes[size]}`}>{node.sub}</div>
-      </div>
+        <div className="min-w-0">
+          <div className="text-[13px] font-semibold text-white leading-tight">{n.label}</div>
+          <div className="text-[10px] text-slate-500 leading-tight">{n.sub}</div>
+        </div>
+      </button>
     );
   };
 
-  const Connector = ({ direction = "down", length = 8, color = "rgba(6,182,212,0.2)" }: { direction?: "down" | "split"; length?: number; color?: string }) => (
-    <div className="flex flex-col items-center" aria-hidden="true">
-      <div className="w-px" style={{ height: `${length * 4}px`, background: `linear-gradient(to bottom, ${color}, transparent)` }} />
-      <div className="w-1.5 h-1.5 rounded-full" style={{ background: color }} />
+  const VLine = ({ h = 32, color = "rgba(255,255,255,0.08)" }: { h?: number; color?: string }) => (
+    <div className="flex justify-center" aria-hidden="true"><div style={{ width: 1, height: h, background: color }} /></div>
+  );
+
+  const HLine = ({ color = "rgba(255,255,255,0.08)" }: { color?: string }) => (
+    <div className="hidden md:block" aria-hidden="true" style={{ height: 1, background: color }} />
+  );
+
+  const TierLabel = ({ text, color }: { text: string; color: string }) => (
+    <div className="flex justify-center mb-4">
+      <div className="px-4 py-1.5 rounded-full border text-[10px] font-bold uppercase tracking-[2px]" style={{ borderColor: color + "30", color, background: color + "08" }}>
+        {text}
+      </div>
     </div>
   );
 
-  const expandedNode = expanded ? AI_NODES[expanded] : null;
+  const expandedNode = expanded ? NODES[expanded] : null;
 
   return (
     <section ref={sectionRef} aria-label="AI System" className="relative py-24 md:py-32 overflow-hidden" style={{ background: "linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)" }}>
       {/* Ambient effects */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(6,182,212,0.05) 1px, transparent 0)", backgroundSize: "48px 48px" }} />
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(6,182,212,0.04) 1px, transparent 0)", backgroundSize: "48px 48px" }} />
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none" aria-hidden="true" style={{ background: "radial-gradient(circle, rgba(6,182,212,0.06), transparent 70%)", filter: "blur(120px)" }} />
-      <div className="absolute bottom-1/3 right-1/5 w-96 h-96 rounded-full pointer-events-none" aria-hidden="true" style={{ background: "radial-gradient(circle, rgba(139,92,246,0.05), transparent 70%)", filter: "blur(100px)" }} />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6">
+      <div className="relative z-10 max-w-4xl mx-auto px-6">
         {/* Header */}
         <ScrollReveal className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 mb-6">
@@ -1391,7 +1398,7 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
         </ScrollReveal>
 
         {/* Metrics */}
-        <ScrollReveal className="mb-16">
+        <ScrollReveal className="mb-20">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
               { value: "28", label: "Autonomous Agents", color: "#06B6D4" },
@@ -1399,7 +1406,7 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
               { value: "5", label: "Active Projects", color: "#10B981" },
               { value: "6,100+", label: "Automated Tests", color: "#F59E0B" },
             ].map((s) => (
-              <div key={s.label} className="text-center py-4 px-3 rounded-xl border border-white/8 bg-white/[0.02]">
+              <div key={s.label} className="text-center py-4 px-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                 <div className="text-xl md:text-2xl font-extrabold tracking-tight" style={{ color: s.color }}>{s.value}</div>
                 <div className="text-[10px] text-slate-500 uppercase tracking-wider font-medium mt-1">{s.label}</div>
               </div>
@@ -1407,109 +1414,121 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
           </div>
         </ScrollReveal>
 
-        {/* Tap hint */}
-        <div className="text-center mb-8">
-          <span className="text-[10px] text-slate-600 uppercase tracking-widest">Click any node to explore</span>
-        </div>
+        {/* ===== FLOW DIAGRAM ===== */}
+        <ScrollReveal>
+          <div className="text-center mb-6">
+            <span className="text-[10px] text-slate-600 uppercase tracking-[3px]">Click any node to explore</span>
+          </div>
 
-        {/* ===== TREE DIAGRAM ===== */}
-        <ScrollReveal className="mb-8">
+          {/* TIER 0: Spencer — the hub */}
+          <div className="max-w-xs mx-auto mb-1">
+            <NodeCard id="spencer" />
+          </div>
+          <VLine h={28} color="rgba(6,182,212,0.15)" />
+
+          {/* Branch split indicator */}
+          <div className="hidden md:flex items-center justify-center gap-0 mb-1" aria-hidden="true">
+            <div style={{ width: "22%", height: 1, background: "linear-gradient(to right, transparent, rgba(6,182,212,0.2))" }} />
+            <div className="w-2 h-2 rounded-full bg-white/10 shrink-0" />
+            <div style={{ width: "22%", height: 1, background: "linear-gradient(to left, transparent, rgba(139,92,246,0.2))" }} />
+          </div>
+
+          {/* TIER 1: Two branches */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 mb-1">
+            {/* LEFT: Daytime */}
+            <div>
+              <TierLabel text="Daytime" color="#06B6D4" />
+              <div className="space-y-2">
+                <NodeCard id="skillRouter" />
+                <NodeCard id="cliTools" />
+                <NodeCard id="sessionMemory" />
+              </div>
+            </div>
+
+            {/* RIGHT: Overnight */}
+            <div>
+              <TierLabel text="Overnight" color="#8B5CF6" />
+              <div className="space-y-2">
+                <NodeCard id="orchestrator" />
+                <div className="pl-6 border-l border-white/[0.06] space-y-2 ml-4">
+                  <NodeCard id="researchAgents" />
+                  <NodeCard id="buildAgents" />
+                  <NodeCard id="qaAgents" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Converge */}
+          <div className="hidden md:flex items-center justify-center gap-0 mt-1 mb-1" aria-hidden="true">
+            <div style={{ width: "22%", height: 1, background: "linear-gradient(to right, transparent, rgba(16,185,129,0.2))" }} />
+            <div className="w-2 h-2 rounded-full bg-white/10 shrink-0" />
+            <div style={{ width: "22%", height: 1, background: "linear-gradient(to left, transparent, rgba(16,185,129,0.2))" }} />
+          </div>
+          <VLine h={20} color="rgba(16,185,129,0.15)" />
+
+          {/* TIER 2: Living System */}
+          <TierLabel text="Living System" color="#10B981" />
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-1">
+            <NodeCard id="immuneMemory" />
+            <NodeCard id="vitalsMonitor" />
+            <NodeCard id="worldModel" />
+            <NodeCard id="dreamCycle" />
+            <NodeCard id="crossTransfer" />
+          </div>
+          <VLine h={28} color="rgba(245,158,11,0.15)" />
+
+          {/* TIER 3: Morning Briefing */}
+          <TierLabel text="Output" color="#F59E0B" />
+          <div className="max-w-xs mx-auto mb-1">
+            <NodeCard id="morningBriefing" />
+          </div>
+
+          {/* Loop back */}
+          <div className="flex flex-col items-center mt-4 mb-2" aria-hidden="true">
+            <svg width="120" height="48" viewBox="0 0 120 48">
+              <path d="M60 0 L60 16 Q60 32, 60 32" stroke="rgba(6,182,212,0.15)" strokeWidth="1" fill="none" />
+              <path d="M40 36 Q60 48, 80 36" stroke="rgba(6,182,212,0.2)" strokeWidth="1" fill="none" strokeDasharray="4 3" />
+              <text x="60" y="44" textAnchor="middle" fill="rgba(6,182,212,0.3)" fontSize="8" fontFamily="JetBrains Mono, monospace">loop</text>
+            </svg>
+          </div>
+
+          {/* Spencer return node */}
           <div className="flex flex-col items-center">
-
-            {/* TIER 0: Spencer */}
-            <Node id="spencer" icon={<span className="text-base font-bold">SG</span>} size="lg" />
-            <Connector color="rgba(6,182,212,0.3)" />
-
-            {/* TIER 1: Two branches — Daytime & Overnight */}
-            <div className="w-full max-w-3xl">
-              {/* Horizontal connector bar */}
-              <div className="hidden md:block mx-auto h-px mb-0" style={{ width: "60%", background: "linear-gradient(to right, transparent, rgba(6,182,212,0.2) 20%, rgba(139,92,246,0.2) 80%, transparent)" }} aria-hidden="true" />
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
-                {/* LEFT BRANCH: Daytime */}
-                <div className="flex flex-col items-center">
-                  <div className="px-4 py-2 rounded-lg border border-cyan-500/20 bg-cyan-500/5 mb-4">
-                    <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest">Daytime</span>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    <Node id="skillRouter" icon={<Terminal size={18} />} size="sm" />
-                    <Node id="cliTools" icon={<Code2 size={18} />} size="sm" />
-                    <Node id="sessionState" icon={<FileText size={18} />} size="sm" />
-                  </div>
-                </div>
-
-                {/* RIGHT BRANCH: Overnight */}
-                <div className="flex flex-col items-center">
-                  <div className="px-4 py-2 rounded-lg border border-violet-500/20 bg-violet-500/5 mb-4">
-                    <span className="text-[10px] font-bold text-violet-400 uppercase tracking-widest">Overnight</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-3">
-                    <Node id="orchestrator" icon={<BrainCircuit size={18} />} size="sm" />
-                    <div className="flex gap-4">
-                      <Node id="researchAgents" icon={<BookOpen size={16} />} size="sm" />
-                      <Node id="buildAgents" icon={<GitBranch size={16} />} size="sm" />
-                      <Node id="qaAgents" icon={<ClipboardCheck size={16} />} size="sm" />
-                    </div>
-                  </div>
-                </div>
+            <div className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-cyan-400/15 bg-cyan-400/5">
+              <div className="w-6 h-6 rounded-full bg-cyan-400/10 flex items-center justify-center">
+                <span className="text-[10px] font-bold text-cyan-300">SG</span>
               </div>
-            </div>
-
-            {/* TIER 2: Converge into Living System */}
-            <Connector length={6} color="rgba(16,185,129,0.25)" />
-            <div className="px-4 py-2 rounded-lg border border-emerald-500/20 bg-emerald-500/5 mb-4">
-              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Living System</span>
-            </div>
-            <div className="grid grid-cols-3 md:grid-cols-5 gap-4 mb-2">
-              <Node id="immuneMemory" icon={<span className="text-sm">🛡️</span>} size="sm" />
-              <Node id="vitalsMonitor" icon={<span className="text-sm">💓</span>} size="sm" />
-              <Node id="worldModel" icon={<span className="text-sm">🌍</span>} size="sm" />
-              <Node id="dreamCycle" icon={<span className="text-sm">🌙</span>} size="sm" />
-              <Node id="crossTransfer" icon={<span className="text-sm">🔄</span>} size="sm" />
-            </div>
-
-            {/* TIER 3: Morning Briefing */}
-            <Connector length={6} color="rgba(245,158,11,0.25)" />
-            <Node id="morningBriefing" icon={<Presentation size={18} />} size="md" />
-
-            {/* Loop back arrow */}
-            <div className="flex flex-col items-center mt-4" aria-hidden="true">
-              <svg width="60" height="40" viewBox="0 0 60 40">
-                <path d="M30 0 C30 25, 30 30, 30 35" stroke="rgba(6,182,212,0.2)" strokeWidth="1" fill="none" strokeDasharray="3 3" />
-                <path d="M24 30 L30 38 L36 30" stroke="rgba(6,182,212,0.3)" strokeWidth="1.5" fill="none" />
-              </svg>
-            </div>
-
-            {/* Spencer returns */}
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500/15 to-violet-500/15 border border-cyan-400/20 flex items-center justify-center">
-                <span className="text-xs font-bold text-cyan-300">SG</span>
-              </div>
-              <div className="mt-2 text-[10px] font-semibold text-slate-500">Loop restarts — informed & improved</div>
+              <span className="text-[11px] font-medium text-slate-400">Reviews, decides, improves — cycle restarts</span>
             </div>
           </div>
         </ScrollReveal>
 
         {/* Expanded detail panel */}
         {expandedNode && expanded && (
-          <div className="mb-12 transition-all duration-300">
-            <div className="max-w-2xl mx-auto rounded-2xl border p-6" style={{ borderColor: `${expandedNode.color}25`, background: `${expandedNode.color}05` }}>
-              <div className="flex items-center justify-between mb-3">
+          <div className="mt-10 mb-4">
+            <div className="max-w-2xl mx-auto rounded-2xl border p-6 backdrop-blur-sm" style={{ borderColor: expandedNode.color + "25", background: expandedNode.color + "06" }}>
+              <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-full" style={{ background: expandedNode.color, boxShadow: `0 0 10px ${expandedNode.color}40` }} />
-                  <h3 className="text-base font-bold text-white">{expandedNode.label}</h3>
+                  <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: expandedNode.color + "15" }}>
+                    <div style={{ color: expandedNode.color }}>{expandedNode.icon}</div>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-white">{expandedNode.label}</h3>
+                    <p className="text-[10px] text-slate-500">{expandedNode.sub}</p>
+                  </div>
                 </div>
-                <button onClick={() => setExpanded(null)} className="text-slate-500 hover:text-white transition-colors cursor-pointer">
+                <button onClick={() => setExpanded(null)} className="text-slate-500 hover:text-white transition-colors cursor-pointer p-1">
                   <X size={16} />
                 </button>
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed">{expandedNode.detail}</p>
+              <p className="text-[13px] text-slate-300 leading-relaxed">{expandedNode.detail}</p>
             </div>
           </div>
         )}
 
         {/* Bottom stats */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-12">
           <p className="text-[10px] text-slate-600" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
             167,000+ tool calls  •  runs every night at 2:35 AM  •  self-improving since March 2026
           </p>
