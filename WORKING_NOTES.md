@@ -45,3 +45,15 @@ Local images at `public/images/experience/` work for Vite dev and Netlify deploy
 
 ### [portfolio] 2026-03-31 — Accessibility is non-visual and safe to add without design approval
 Skip-to-content links, aria-labels, keyboard nav, and prefers-reduced-motion support are invisible to sighted users. These can be added autonomously without Spencer's design review. Keyboard-accessible BentoCards need `role="button"`, `tabIndex={0}`, and `onKeyDown` handler for Enter/Space.
+
+### [portfolio] 2026-03-31 — AI System section: Spencer wants general showcase, not project-specific
+First attempt named specific projects and agents — Spencer rejected it. Wants it to show the SYSTEM ARCHITECTURE generically (skills, agents, living system) so employers see depth of AI usage. Spencer must be the start/hub of the loop — he's the architect, not a bystander. Descriptions must be plain English, no jargon.
+
+### [portfolio] 2026-03-31 — Skills section has a min-h-screen problem
+The `min-h-screen` class on Skills forces a full viewport minimum even though content doesn't fill it. Combined with scroll-reveal stagger on categories, this creates massive blank gaps. Remove min-h-screen and let content determine height.
+
+### [portfolio] 2026-03-31 — Dark-to-light section transitions need gradient bridging
+The AI System section (dark #0f172a) sits between Projects (light #FAFBFF) and Skills (light #F1F5F9). Hard edges between light→dark→light look broken. Need gradient transitions at both edges of the dark section.
+
+### [portfolio] 2026-03-31 — Design audit priority pattern
+Spencer reviews in the browser and gives fast feedback. Present changes, let him scroll through, collect feedback in batches. Don't over-explain — ship and iterate. He cares about how it LOOKS, not the code behind it.

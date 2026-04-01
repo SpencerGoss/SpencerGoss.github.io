@@ -45,9 +45,30 @@ Branch: master (6 commits this session, clean tree)
 7. **Optional Tier 3-4 ideas** — dark/light toggle, "Currently Building" indicator, easter eggs
 
 ## Key Decisions
-- Single-file architecture maintained (~1880 lines in App.tsx)
+- Single-file architecture maintained (~2100 lines in App.tsx)
 - Iconify API remains the icon CDN (most reliable)
 - Local experience images kept for Netlify deploy, Google favicons for logos
+- AI System section uses general descriptions, not project-specific names
+
+## Mid-Session Resume Anchor
+Written: 2026-03-31 ~4pm
+Current task: Design audit — 6 priority fixes identified, about to implement
+Progress: This session completed accessibility, SEO, skills overhaul, projects interactivity, contact redesign, experience nav arrows, AI System section (3 iterations), LinkedIn content updates, Saint Xavier bg fix
+Next step: Implement these 6 fixes IN ORDER:
+  1. Skills section: remove `min-h-screen`, let content determine height (fixes massive blank gaps)
+  2. AI System dark/light transitions: add gradient fade at top/bottom edges of dark section
+  3. AI System Living System row: change from 5-col to 2-row layout so text doesn't wrap
+  4. AI System detail panel: position it as a fixed/sticky element or right below clicked tier
+  5. "Get in Touch" hero button: increase border contrast
+  6. Contact section: reduce bottom whitespace
+Open questions: None — all fixes are straightforward CSS/layout changes
+Files modified this session: src/App.tsx, src/index.css, index.html, netlify.toml, portfolio.html, public/images/experience/saint-xavier.jpg, HANDOFF.md, WORKING_NOTES.md
+
+## Content Still Blocked on Spencer
+1. **Spencer's photo** — replace hero "SG" placeholder
+2. **Resume PDF** — add file at `/Spencer_Goss_Resume.pdf`
+3. **Real screenshots** — swap into project slideshow data
+4. **Deploy to Netlify** — `npm i -g netlify-cli && netlify login && netlify deploy --prod`
 
 ## What's Next
-All remaining items are BLOCKED on Spencer's input (photo, resume, screenshots, copy) or authentication (Netlify deploy). Next productive session needs Spencer to provide at least one of those assets, OR to run `netlify login` for deployment.
+Implement the 6 audit fixes above. Then rebuild portfolio.html.
