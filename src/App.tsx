@@ -348,7 +348,7 @@ const EXPERIENCE = [
   },
   {
     title: "Independent Projects",
-    org: "Self-Directed",
+    org: "Independent Projects",
     location: "Louisville, KY",
     period: "2025 — Present",
     description: "Shipping real products: a full-stack ML prediction platform, automated trading systems with risk management, and content platforms with AI-powered pipelines.",
@@ -364,7 +364,7 @@ const EXPERIENCE = [
     color: "#06B6D4",
     gradient: "from-[#0891B2] to-[#06B6D4]",
     year: "2025",
-    bgImage: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=1920&h=1080&fit=crop&q=80",
+    bgImage: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1920&h=1080&fit=crop&q=80",
   },
   {
     title: "Accounts Payable Specialist",
