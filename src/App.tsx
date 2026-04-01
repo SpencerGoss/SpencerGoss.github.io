@@ -451,6 +451,7 @@ const EXPERIENCE = [
 const NAV_ITEMS = [
   { key: "about", label: "About" },
   { key: "projects", label: "Projects" },
+  { key: "aisystem", label: "AI System" },
   { key: "skills", label: "Skills" },
   { key: "experience", label: "Experience" },
   { key: "contact", label: "Contact" },
@@ -1306,6 +1307,218 @@ function ExperienceTimeline() {
   );
 }
 
+/* ================================================================
+   AI SYSTEM SECTION
+   ================================================================ */
+
+const AI_NODES = {
+  spencer: { label: "Spencer", sub: "Designs, directs, decides", color: "#06B6D4", detail: "Every task starts with me. I design the system architecture, set agent missions, define skill workflows, and make all strategic decisions. The AI executes — I direct." },
+  skillRouter: { label: "Skill Router", sub: "44 custom workflows", color: "#06B6D4", detail: "Every task is automatically routed through one of 44 custom skills I built — from debugging to deployment to code review. Each skill enforces a proven step-by-step process so nothing gets skipped. Skills are versioned, audited weekly, and scored for fitness." },
+  cliTools: { label: "CLI Tools", sub: "12 Python utilities", color: "#06B6D4", detail: "Lightweight Python scripts that replace heavyweight integrations. Stock data, research paper search, chart generation, web scraping, system health monitoring, and cross-project git stats — all invoked on demand with zero overhead." },
+  sessionState: { label: "Session Memory", sub: "Context persistence", color: "#06B6D4", detail: "Every session reads a handoff file from the last session and writes one at the end. Working notes, decision logs, and failed approaches persist across sessions. No context is ever lost — I pick up exactly where I left off." },
+  orchestrator: { label: "Orchestrator", sub: "Scheduled at 2:35 AM", color: "#8B5CF6", detail: "A PowerShell orchestrator launches 28 agents sequentially across 6 execution rounds every night. Each agent runs in its own Claude session with a standing mission, territory boundaries, and a shared intelligence protocol." },
+  researchAgents: { label: "Research Agents", sub: "Discover & analyze", color: "#8B5CF6", detail: "Agents that scan for new techniques, analyze model performance, explore frontier AI concepts, and identify improvement opportunities. They read the latest papers, test hypotheses, and log discoveries for the next morning." },
+  buildAgents: { label: "Build & Test Agents", sub: "Implement & validate", color: "#8B5CF6", detail: "Agents that write code, run tests, optimize pipelines, and build features. Each has a defined territory — specific files and directories they can modify — with a 3-tier enforcement system preventing conflicts." },
+  qaAgents: { label: "Quality Agents", sub: "Audit & enforce", color: "#8B5CF6", detail: "Agents focused on consistency, test coverage, prompt optimization, and cross-project standards. They catch regressions, enforce naming conventions, and ensure overnight work meets quality gates before merging." },
+  immuneMemory: { label: "Immune Memory", sub: "20 defensive antibodies", color: "#EF4444", detail: "Every real mistake generates an antibody — a defensive rule that fires automatically before the same error can happen again. 20 active antibodies cover auth bypasses, ML feature mismatches, false completions, and more. 100% precision rate — zero false positives." },
+  vitalsMonitor: { label: "Vitals Monitor", sub: "9 real-time metrics", color: "#06B6D4", detail: "Homeostatic monitoring: context pressure, error rate, coherence score, insight rate, prediction accuracy, skill freshness, agent health, depth score, and merge rate. Each has healthy/warning/critical ranges with automatic behavioral responses." },
+  worldModel: { label: "World Model", sub: "Predictive processing", color: "#8B5CF6", detail: "Maintains predictions about every project, the environment, and the skill ecosystem. Predictions are tested against reality each session — surprises drive investigation priority. Currently at 72% accuracy across 5 active hypotheses." },
+  dreamCycle: { label: "Dream Cycle", sub: "Knowledge consolidation", color: "#F59E0B", detail: "End-of-session consolidation in 5 stages: artifact collection → fact extraction → connection discovery → memory integration → pruning. Knowledge compounds across sessions. Cross-project discoveries transfer automatically via a shared log." },
+  crossTransfer: { label: "Cross-Project Transfer", sub: "Shared discovery log", color: "#10B981", detail: "When an agent discovers something useful in one project, it exports the finding to a shared transfer log. Other projects pick it up automatically. A calibration technique from analytics improved the trading system. A quality gate from business ops got ported to every project." },
+  morningBriefing: { label: "Morning Briefing", sub: "Auto-generated summary", color: "#F59E0B", detail: "Every morning I wake up to an auto-generated report: agent results, system vitals, immune alerts, world model updates, and prioritized recommendations. I review it, make decisions, and the loop restarts — informed and improved." },
+};
+
+type AINodeKey = keyof typeof AI_NODES;
+
+function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
+  const [expanded, setExpanded] = useState<AINodeKey | null>(null);
+
+  const Node = ({ id, icon, size = "md" }: { id: AINodeKey; icon: React.ReactNode; size?: "lg" | "md" | "sm" }) => {
+    const node = AI_NODES[id];
+    const isOpen = expanded === id;
+    const sizes = { lg: "w-20 h-20", md: "w-14 h-14", sm: "w-11 h-11" };
+    const textSizes = { lg: "text-sm", md: "text-xs", sm: "text-[11px]" };
+    const subSizes = { lg: "text-[10px]", md: "text-[9px]", sm: "text-[8px]" };
+
+    return (
+      <div className="flex flex-col items-center cursor-pointer group" onClick={() => setExpanded(isOpen ? null : id)}>
+        <div
+          className={`${sizes[size]} rounded-2xl flex items-center justify-center border transition-all duration-300 ${
+            isOpen ? "scale-110 shadow-[0_0_25px_rgba(6,182,212,0.2)]" : "group-hover:scale-105 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.1)]"
+          }`}
+          style={{
+            background: `${node.color}10`,
+            borderColor: isOpen ? `${node.color}60` : `${node.color}25`,
+          }}
+        >
+          <div style={{ color: node.color }}>{icon}</div>
+        </div>
+        <div className={`mt-2 font-semibold text-white text-center ${textSizes[size]}`}>{node.label}</div>
+        <div className={`text-slate-500 text-center ${subSizes[size]}`}>{node.sub}</div>
+      </div>
+    );
+  };
+
+  const Connector = ({ direction = "down", length = 8, color = "rgba(6,182,212,0.2)" }: { direction?: "down" | "split"; length?: number; color?: string }) => (
+    <div className="flex flex-col items-center" aria-hidden="true">
+      <div className="w-px" style={{ height: `${length * 4}px`, background: `linear-gradient(to bottom, ${color}, transparent)` }} />
+      <div className="w-1.5 h-1.5 rounded-full" style={{ background: color }} />
+    </div>
+  );
+
+  const expandedNode = expanded ? AI_NODES[expanded] : null;
+
+  return (
+    <section ref={sectionRef} aria-label="AI System" className="relative py-24 md:py-32 overflow-hidden" style={{ background: "linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)" }}>
+      {/* Ambient effects */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(6,182,212,0.05) 1px, transparent 0)", backgroundSize: "48px 48px" }} />
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none" aria-hidden="true" style={{ background: "radial-gradient(circle, rgba(6,182,212,0.06), transparent 70%)", filter: "blur(120px)" }} />
+      <div className="absolute bottom-1/3 right-1/5 w-96 h-96 rounded-full pointer-events-none" aria-hidden="true" style={{ background: "radial-gradient(circle, rgba(139,92,246,0.05), transparent 70%)", filter: "blur(100px)" }} />
+
+      <div className="relative z-10 max-w-5xl mx-auto px-6">
+        {/* Header */}
+        <ScrollReveal className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 mb-6">
+            <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="text-xs font-semibold text-cyan-300 tracking-wider uppercase">Running Nightly</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white mb-4">
+            AI System Architecture
+          </h2>
+          <p className="text-slate-400 max-w-xl mx-auto text-base md:text-lg leading-relaxed">
+            I don't just use AI — I architect autonomous systems that learn, adapt, and compound knowledge while I sleep.
+          </p>
+        </ScrollReveal>
+
+        {/* Metrics */}
+        <ScrollReveal className="mb-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {[
+              { value: "28", label: "Autonomous Agents", color: "#06B6D4" },
+              { value: "44", label: "Custom Skills", color: "#8B5CF6" },
+              { value: "5", label: "Active Projects", color: "#10B981" },
+              { value: "6,100+", label: "Automated Tests", color: "#F59E0B" },
+            ].map((s) => (
+              <div key={s.label} className="text-center py-4 px-3 rounded-xl border border-white/8 bg-white/[0.02]">
+                <div className="text-xl md:text-2xl font-extrabold tracking-tight" style={{ color: s.color }}>{s.value}</div>
+                <div className="text-[10px] text-slate-500 uppercase tracking-wider font-medium mt-1">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </ScrollReveal>
+
+        {/* Tap hint */}
+        <div className="text-center mb-8">
+          <span className="text-[10px] text-slate-600 uppercase tracking-widest">Click any node to explore</span>
+        </div>
+
+        {/* ===== TREE DIAGRAM ===== */}
+        <ScrollReveal className="mb-8">
+          <div className="flex flex-col items-center">
+
+            {/* TIER 0: Spencer */}
+            <Node id="spencer" icon={<span className="text-base font-bold">SG</span>} size="lg" />
+            <Connector color="rgba(6,182,212,0.3)" />
+
+            {/* TIER 1: Two branches — Daytime & Overnight */}
+            <div className="w-full max-w-3xl">
+              {/* Horizontal connector bar */}
+              <div className="hidden md:block mx-auto h-px mb-0" style={{ width: "60%", background: "linear-gradient(to right, transparent, rgba(6,182,212,0.2) 20%, rgba(139,92,246,0.2) 80%, transparent)" }} aria-hidden="true" />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+                {/* LEFT BRANCH: Daytime */}
+                <div className="flex flex-col items-center">
+                  <div className="px-4 py-2 rounded-lg border border-cyan-500/20 bg-cyan-500/5 mb-4">
+                    <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest">Daytime</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <Node id="skillRouter" icon={<Terminal size={18} />} size="sm" />
+                    <Node id="cliTools" icon={<Code2 size={18} />} size="sm" />
+                    <Node id="sessionState" icon={<FileText size={18} />} size="sm" />
+                  </div>
+                </div>
+
+                {/* RIGHT BRANCH: Overnight */}
+                <div className="flex flex-col items-center">
+                  <div className="px-4 py-2 rounded-lg border border-violet-500/20 bg-violet-500/5 mb-4">
+                    <span className="text-[10px] font-bold text-violet-400 uppercase tracking-widest">Overnight</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-3">
+                    <Node id="orchestrator" icon={<BrainCircuit size={18} />} size="sm" />
+                    <div className="flex gap-4">
+                      <Node id="researchAgents" icon={<BookOpen size={16} />} size="sm" />
+                      <Node id="buildAgents" icon={<GitBranch size={16} />} size="sm" />
+                      <Node id="qaAgents" icon={<ClipboardCheck size={16} />} size="sm" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* TIER 2: Converge into Living System */}
+            <Connector length={6} color="rgba(16,185,129,0.25)" />
+            <div className="px-4 py-2 rounded-lg border border-emerald-500/20 bg-emerald-500/5 mb-4">
+              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Living System</span>
+            </div>
+            <div className="grid grid-cols-3 md:grid-cols-5 gap-4 mb-2">
+              <Node id="immuneMemory" icon={<span className="text-sm">🛡️</span>} size="sm" />
+              <Node id="vitalsMonitor" icon={<span className="text-sm">💓</span>} size="sm" />
+              <Node id="worldModel" icon={<span className="text-sm">🌍</span>} size="sm" />
+              <Node id="dreamCycle" icon={<span className="text-sm">🌙</span>} size="sm" />
+              <Node id="crossTransfer" icon={<span className="text-sm">🔄</span>} size="sm" />
+            </div>
+
+            {/* TIER 3: Morning Briefing */}
+            <Connector length={6} color="rgba(245,158,11,0.25)" />
+            <Node id="morningBriefing" icon={<Presentation size={18} />} size="md" />
+
+            {/* Loop back arrow */}
+            <div className="flex flex-col items-center mt-4" aria-hidden="true">
+              <svg width="60" height="40" viewBox="0 0 60 40">
+                <path d="M30 0 C30 25, 30 30, 30 35" stroke="rgba(6,182,212,0.2)" strokeWidth="1" fill="none" strokeDasharray="3 3" />
+                <path d="M24 30 L30 38 L36 30" stroke="rgba(6,182,212,0.3)" strokeWidth="1.5" fill="none" />
+              </svg>
+            </div>
+
+            {/* Spencer returns */}
+            <div className="flex flex-col items-center">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500/15 to-violet-500/15 border border-cyan-400/20 flex items-center justify-center">
+                <span className="text-xs font-bold text-cyan-300">SG</span>
+              </div>
+              <div className="mt-2 text-[10px] font-semibold text-slate-500">Loop restarts — informed & improved</div>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Expanded detail panel */}
+        {expandedNode && expanded && (
+          <div className="mb-12 transition-all duration-300">
+            <div className="max-w-2xl mx-auto rounded-2xl border p-6" style={{ borderColor: `${expandedNode.color}25`, background: `${expandedNode.color}05` }}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 rounded-full" style={{ background: expandedNode.color, boxShadow: `0 0 10px ${expandedNode.color}40` }} />
+                  <h3 className="text-base font-bold text-white">{expandedNode.label}</h3>
+                </div>
+                <button onClick={() => setExpanded(null)} className="text-slate-500 hover:text-white transition-colors cursor-pointer">
+                  <X size={16} />
+                </button>
+              </div>
+              <p className="text-sm text-slate-300 leading-relaxed">{expandedNode.detail}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Bottom stats */}
+        <div className="text-center mt-8">
+          <p className="text-[10px] text-slate-600" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+            167,000+ tool calls  •  runs every night at 2:35 AM  •  self-improving since March 2026
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ContactButton({
   href,
   icon,
@@ -1396,6 +1609,7 @@ export default function App() {
     hero: useRef<HTMLElement>(null),
     about: useRef<HTMLElement>(null),
     projects: useRef<HTMLElement>(null),
+    aisystem: useRef<HTMLElement>(null),
     skills: useRef<HTMLElement>(null),
     experience: useRef<HTMLElement>(null),
     contact: useRef<HTMLElement>(null),
@@ -1816,6 +2030,9 @@ export default function App() {
           </div>
         )}
       </section>
+
+      {/* ===== AI SYSTEM ===== */}
+      <AISystemSection sectionRef={sectionRefs.aisystem} />
 
       {/* ===== SKILLS ===== */}
       <section ref={sectionRefs.skills} aria-label="Skills" className="section-alt min-h-screen flex items-center py-24 md:py-32">
