@@ -1656,10 +1656,21 @@ export default function App() {
   }, []);
 
   const scrollTo = (key: string) => {
-    sectionRefs[key as keyof typeof sectionRefs]?.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+    if (key === "hero") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (key === "about") {
+      // About content lives inside the hero's scrollytelling zone (~65% through)
+      const heroEl = sectionRefs.hero.current;
+      if (heroEl) {
+        const aboutOffset = heroEl.offsetTop + heroEl.offsetHeight * 0.55;
+        window.scrollTo({ top: aboutOffset, behavior: "smooth" });
+      }
+    } else {
+      sectionRefs[key as keyof typeof sectionRefs]?.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
     setMobileMenuOpen(false);
   };
 
