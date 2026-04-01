@@ -1641,11 +1641,29 @@ export default function App() {
       setScrollProgress(scrollH > 0 ? (window.scrollY / scrollH) * 100 : 0);
       setNavShrunk(window.scrollY > 50);
 
-      for (const [key, ref] of Object.entries(sectionRefs)) {
-        if (ref.current) {
-          const rect = ref.current.getBoundingClientRect();
-          if (rect.top <= 120 && rect.bottom >= 120) {
-            setActiveSection(key);
+      // Check if we're in the hero zone (top of page)
+      if (window.scrollY < window.innerHeight) {
+        setActiveSection("hero");
+      } else {
+        // Find which section is currently in view (first match wins)
+        for (const [key, ref] of Object.entries(sectionRefs)) {
+          if (key === "hero" || key === "about") continue; // skip — handled above
+          if (ref.current) {
+            const rect = ref.current.getBoundingClientRect();
+            if (rect.top <= 200 && rect.bottom >= 200) {
+              setActiveSection(key);
+              break;
+            }
+          }
+        }
+        // Check about separately — it's visible when scrolled past 1 viewport but before projects
+        const heroEl = sectionRefs.hero.current;
+        const projectsEl = sectionRefs.projects.current;
+        if (heroEl && projectsEl) {
+          const heroBottom = heroEl.getBoundingClientRect().bottom;
+          const projectsTop = projectsEl.getBoundingClientRect().top;
+          if (heroBottom < 300 && projectsTop > 200) {
+            setActiveSection("about");
           }
         }
       }
