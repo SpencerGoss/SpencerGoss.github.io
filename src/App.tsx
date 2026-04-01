@@ -833,7 +833,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
       <div
         ref={heroRef}
         className="scroll-reveal relative overflow-hidden border-b border-border"
-        style={{ background: "linear-gradient(135deg, #f0f2f5, #ecfeff, #f0f9ff)" }}
+        style={{ background: "linear-gradient(135deg, #e8ebf0, #ecfeff, #f0f9ff)" }}
       >
         <div
           className="absolute -top-20 -right-20 w-80 h-80 pointer-events-none"
@@ -1261,7 +1261,7 @@ function ExperienceTimeline() {
   const revealRef = useScrollReveal();
 
   return (
-    <div ref={revealRef} className="scroll-reveal py-16 md:py-20" style={{ background: "linear-gradient(180deg, #EBEEF3 0%, #f0f2f5 100%)" }}>
+    <div ref={revealRef} className="scroll-reveal py-16 md:py-20" style={{ background: "linear-gradient(180deg, #e3e7ed 0%, #e8ebf0 100%)" }}>
       <div className="max-w-5xl mx-auto px-6 text-center">
         <h2 className="text-sm font-semibold text-primary uppercase tracking-wider mb-2">
           Experience & Education
@@ -1377,7 +1377,7 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
   const expandedNode = expanded ? NODES[expanded] : null;
 
   return (
-    <section ref={sectionRef} aria-label="AI System" className="relative py-24 md:py-32 overflow-hidden" style={{ background: "linear-gradient(180deg, #f0f2f5 0%, #0f172a 6%, #1e293b 50%, #0f172a 94%, #EBEEF3 100%)" }}>
+    <section ref={sectionRef} aria-label="AI System" className="relative py-24 md:py-32 overflow-hidden" style={{ background: "linear-gradient(180deg, #e8ebf0 0%, #0f172a 6%, #1e293b 50%, #0f172a 94%, #e3e7ed 100%)" }}>
       {/* Ambient effects */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(6,182,212,0.04) 1px, transparent 0)", backgroundSize: "48px 48px" }} />
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none" aria-hidden="true" style={{ background: "radial-gradient(circle, rgba(6,182,212,0.06), transparent 70%)", filter: "blur(120px)" }} />
@@ -1882,14 +1882,14 @@ export default function App() {
         ref={heroRef}
         aria-label="Introduction"
         className="relative"
-        style={{ minHeight: "280vh", background: "#f0f2f5" }}
+        style={{ minHeight: "280vh", background: "#e8ebf0" }}
       >
         {/* Sticky container */}
         <div className="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden z-10">
           <div
             ref={heroContentRef}
             className="w-full h-full flex flex-col items-center justify-center px-6 transition-none relative"
-            style={{ background: "#f0f2f5" }}
+            style={{ background: "#e8ebf0" }}
           >
             {/* Ambient background blobs */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -1934,7 +1934,7 @@ export default function App() {
                     size="lg"
                     onClick={() => scrollTo("projects")}
                     className="font-semibold tracking-tight cursor-pointer border-0"
-                    style={{ background: "#06B6D4", color: "#f0f2f5" }}
+                    style={{ background: "#06B6D4", color: "#e8ebf0" }}
                   >
                     View My Work
                   </Button>
@@ -2045,7 +2045,7 @@ export default function App() {
       </section>
 
       {/* ===== PROJECTS ===== */}
-      <section ref={sectionRefs.projects} aria-label="Featured Projects" className="py-24 md:py-32" style={{ background: "#f0f2f5" }}>
+      <section ref={sectionRefs.projects} aria-label="Featured Projects" className="py-24 md:py-32" style={{ background: "#e8ebf0" }}>
         {selectedProject ? (
           <CaseStudy
             project={PROJECTS.find((p) => p.id === selectedProject)!}
@@ -2128,7 +2128,7 @@ export default function App() {
       <ExperienceTimeline />
 
       {/* ===== EXPERIENCE SLIDES ===== */}
-      <section ref={sectionRefs.experience} aria-label="Experience" className="relative" style={{ background: "#f0f2f5" }}>
+      <section ref={sectionRefs.experience} aria-label="Experience" className="relative" style={{ background: "#e8ebf0" }}>
         {/* Individual experience slides */}
         {EXPERIENCE.map((entry, i) => (
           <ExperienceSlide key={i} entry={entry} index={i} total={EXPERIENCE.length} />
@@ -2141,7 +2141,7 @@ export default function App() {
         aria-label="Contact"
         className="relative flex items-center py-24 md:py-32 overflow-hidden"
         style={{
-          background: "linear-gradient(180deg, #EBEEF3 0%, #f0f2f5 40%, #f0f2f5 100%)",
+          background: "linear-gradient(180deg, #e3e7ed 0%, #e8ebf0 40%, #e8ebf0 100%)",
         }}
       >
         {/* Decorative ambient blobs */}
