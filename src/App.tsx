@@ -120,6 +120,56 @@ const PROJECTS = [
     },
   },
   {
+    id: "msba-nba",
+    title: "From Box Scores to Predictions",
+    subtitle: "NBA Prediction Model · MSBA 645",
+    accent: "#EA580C",
+    accentBg: "rgba(234,88,12,0.08)",
+    featured: false,
+    video: "QSooLoE32zk",
+    shortDescription: "The honest predictive-modeling foundation behind Oddsix — and the data-leakage trap I had to escape. Includes a recorded walkthrough of the project.",
+    url: "#",
+    github: "#",
+    tags: ["Python", "LightGBM", "scikit-learn", "K-Means", "NBA Stats API"],
+    screenshots: [],
+    metrics: [
+      { value: 10500, suffix: "+", label: "Games Analyzed" },
+      { value: 5, suffix: "", label: "NBA Seasons" },
+      { value: 26, suffix: "", label: "Pre-Tipoff Features" },
+      { value: 4, suffix: "", label: "Play-Style Clusters" },
+    ],
+    cardMetrics: [
+      { display: "10.5K+", label: "Games" },
+      { display: "26", label: "Features" },
+      { display: "4", label: "Clusters" },
+    ],
+    caseStudy: {
+      hook: "An honest NBA win-prediction model — and the data-leakage trap I had to escape to build it. This MSBA 645 final is the predictive-modeling base layer that later grew into Oddsix.",
+      sections: [
+        {
+          title: "The Business Problem",
+          color: "#06B6D4",
+          body: "Game prediction sits at the center of a multi-billion-dollar sports analytics industry — teams use it for prep, broadcasters build storylines around it, and bettors are always chasing an edge. For my MSBA 645 final, I set out to build a genuinely honest NBA win-prediction model on every game from the last five seasons: ~10,500 games across 30 teams, pulled directly from the NBA Stats API. Each row is one team's performance in one game, joined to its opponent and labeled with the outcome.",
+        },
+        {
+          title: "Too Good to Be True",
+          color: "#8B5CF6",
+          body: "My first attempt looked great — an 80/20 split with Logistic Regression and LightGBM, both landing around 85% accuracy and a 0.93 ROC-AUC. Then I caught the flaw. The features I was leaning on (field-goal %, rebounds, turnovers) only exist after a game is played. I wasn't predicting games; I was describing them. It's like predicting a race from each runner's finishing time — of course it works, but you've already seen the answer.",
+        },
+        {
+          title: "Making It Honest",
+          color: "#10B981",
+          body: "I rebuilt the model with walk-forward validation — train on past seasons, test on the most recent, never train on the future — and engineered 26 features that are all knowable before tip-off: last-10-game rolling form, home/away win-rate splits, season-to-date averages, and team-vs-opponent matchup differentials. Accuracy dropped, and that drop is the point: the model was finally being honest. I then ran K-Means clustering to group teams by play style (Elite Efficiency, Pace & Pressure, Rebuilding, Middle of the Pack) — it even caught the Rockets' real franchise transformation across seasons. Folding those style clusters back into the model added a small but real lift of about 1.3 points of accuracy.",
+        },
+        {
+          title: "What It Taught Me",
+          color: "#EA580C",
+          body: "The hardest part of analytics isn't running models — it's making sure they're solving the problem you think they are. High accuracy on a hard problem is a red flag for leakage. Validation has to mirror real deployment, which means test sets from the future. Simpler models often win (logistic regression beat LightGBM here). And unsupervised work can measurably feed supervised work. This project is the foundation Oddsix was built on — the same honest, pre-tip-off philosophy, scaled into a full production platform.",
+        },
+      ],
+    },
+  },
+  {
     id: "trading-bot",
     title: "Trading Bot",
     subtitle: "Automated Trading System",
@@ -606,6 +656,14 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
           <div className="flex items-center gap-2 mb-1.5">
             <div className="w-2 h-2 rounded-full" aria-hidden="true" style={{ background: project.accent }} />
             <h3 className="text-base md:text-lg font-extrabold text-foreground">{project.title}</h3>
+            {(project as { video?: string }).video && (
+              <span
+                className="ml-auto text-[9px] font-bold px-2 py-0.5 rounded-full inline-flex items-center gap-1 whitespace-nowrap"
+                style={{ background: project.accentBg, color: project.accent }}
+              >
+                ▶ Video
+              </span>
+            )}
           </div>
           <p className="text-[11px] text-muted-foreground mb-2">{project.subtitle}</p>
           <p className="text-[11px] text-muted-foreground/70 leading-relaxed">{project.shortDescription}</p>
@@ -644,6 +702,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
 function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void }) {
   const oddsix = PROJECTS.find((p) => p.id === "oddsix")!;
   const tradingBot = PROJECTS.find((p) => p.id === "trading-bot")!;
+  const msbaNba = PROJECTS.find((p) => p.id === "msba-nba")!;
   const churnModel = PROJECTS.find((p) => p.id === "churn-model")!;
 
   return (
@@ -653,7 +712,10 @@ function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void 
       </div>
       <div className="bento-col-right">
         <BentoCard project={tradingBot} onClick={() => onSelectProject("trading-bot")} delay={120} />
-        <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} delay={240} />
+        <div className="bento-row-compact">
+          <BentoCard project={msbaNba} onClick={() => onSelectProject("msba-nba")} delay={240} />
+          <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} delay={300} />
+        </div>
       </div>
     </div>
   );
@@ -693,6 +755,22 @@ function StorySection({ section, index, isLast }: { section: { title: string; co
       )}
 
       <p className="text-sm md:text-[15px] text-muted-foreground leading-[1.8]">{section.body}</p>
+    </div>
+  );
+}
+
+function VideoEmbed({ id }: { id: string }) {
+  return (
+    <div className="aspect-video w-full rounded-xl border border-border shadow-sm mb-6 overflow-hidden bg-black">
+      <iframe
+        className="w-full h-full"
+        src={`https://www.youtube-nocookie.com/embed/${id}`}
+        title="Project video walkthrough"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+      />
     </div>
   );
 }
@@ -762,6 +840,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
   const heroRef = useScrollReveal();
   const metricsRef = useScrollReveal();
   const visibleMetrics = project.metrics.filter((m) => m.label);
+  const video = (project as { video?: string }).video;
 
   return (
     <div className="case-study-enter">
@@ -800,9 +879,24 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
             {project.caseStudy.hook}
           </p>
 
-          <Slideshow screenshots={project.screenshots} accent={project.accent} />
+          {video ? (
+            <VideoEmbed id={video} />
+          ) : (
+            <Slideshow screenshots={project.screenshots} accent={project.accent} />
+          )}
 
           <div className="flex gap-3">
+            {video && (
+              <a
+                href={`https://youtu.be/${video}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-lg text-white transition-opacity hover:opacity-90"
+                style={{ background: project.accent }}
+              >
+                Watch on YouTube <ArrowUpRight size={14} />
+              </a>
+            )}
             {project.url !== "#" && (
               <a
                 href={project.url}
@@ -845,17 +939,19 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
           <StorySection key={i} section={section} index={i} isLast={i === project.caseStudy.sections.length - 1} />
         ))}
 
-        <div
-          className="rounded-xl border border-border h-24 md:h-32 flex flex-col items-center justify-center shadow-sm mb-10 overflow-hidden"
-          style={{ background: `linear-gradient(135deg, ${project.accent}05, ${project.accent}12, ${project.accent}05)` }}
-        >
-          <div className="flex gap-3 mb-2">
-            {[40, 56, 48].map((w, i) => (
-              <div key={i} className="h-8 rounded" style={{ width: w, background: `${project.accent}12` }} />
-            ))}
+        {!video && (
+          <div
+            className="rounded-xl border border-border h-24 md:h-32 flex flex-col items-center justify-center shadow-sm mb-10 overflow-hidden"
+            style={{ background: `linear-gradient(135deg, ${project.accent}05, ${project.accent}12, ${project.accent}05)` }}
+          >
+            <div className="flex gap-3 mb-2">
+              {[40, 56, 48].map((w, i) => (
+                <div key={i} className="h-8 rounded" style={{ width: w, background: `${project.accent}12` }} />
+              ))}
+            </div>
+            <div className="text-xs text-muted-foreground/50">More screenshots coming soon</div>
           </div>
-          <div className="text-xs text-muted-foreground/50">More screenshots coming soon</div>
-        </div>
+        )}
 
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
