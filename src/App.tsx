@@ -77,20 +77,20 @@ const PROJECTS = [
     accent: "#06B6D4",
     accentBg: "rgba(6,182,212,0.08)",
     featured: true,
-    shortDescription: "A live, multi-sport prediction platform — daily ML picks across the NBA, MLB, NFL, soccer, hockey and college, with real betting edges, Kelly sizing, and a fully transparent, auto-graded track record.",
+    shortDescription: "A live multi-sport prediction platform. Daily ML picks across the NBA, MLB, NFL, soccer, hockey and college, with real betting edges, Kelly sizing, and a public track record that grades itself every day.",
     url: "https://oddsix.app",
     github: "https://github.com/SpencerGoss/nba-analytics-project",
     tags: ["Python", "scikit-learn", "LightGBM", "Calibration", "Daily Pipeline", "Multi-Sport"],
     screenshots: [
       { label: "Today across all sports", desc: "Daily slate, top performers & tonight's edge", img: "/images/projects/oddsix-home.png" },
       { label: "Betting hub", desc: "Model read vs. market line, point edges & Kelly sizing", img: "/images/projects/oddsix-betting.png" },
-      { label: "Transparent track record", desc: "Every pick graded daily — recent & lifetime, losses included", img: "/images/projects/oddsix-track.png" },
+      { label: "Track record", desc: "Every pick graded daily, recent and lifetime, losses included", img: "/images/projects/oddsix-track.png" },
     ],
     metrics: [
       { value: 72, suffix: "%", label: "Win Rate · All-Time" },
       { value: 290, suffix: "+", label: "Picks Graded" },
       { value: 6, suffix: "", label: "Sports Covered" },
-      { value: 210, suffix: "–80", label: "Won–Lost" },
+      { value: 210, suffix: "-80", label: "Won-Lost" },
     ],
     cardMetrics: [
       { display: "72%", label: "Win Rate" },
@@ -98,28 +98,28 @@ const PROJECTS = [
       { display: "6", label: "Sports" },
     ],
     caseStudy: {
-      hook: "A live, multi-sport prediction platform that posts daily ML picks across six sports — with real betting edges, Kelly stake sizing, and a fully transparent, auto-graded track record. 72% accuracy over 290 completed picks, losses included.",
+      hook: "A live multi-sport prediction platform that posts daily ML picks across six sports, with real betting edges, Kelly stake sizing, and a public track record that grades itself. 72% accuracy over 290 completed picks, losses included.",
       sections: [
         {
           title: "Why I Built It",
           color: "#06B6D4",
-          body: "I built Oddsix as a personal project, driven by a deep passion for the NBA. I've watched basketball for years and wanted to build something that combined that love for the game with the data science and machine learning skills I've been developing. It started simply — a place to dig into player stats and compare players across eras — and grew into something bigger: a real ML pipeline, game-outcome predictions, and a tool that explains every recommendation in plain English, so anyone can see why a pick might have value. It's not perfect, but it's real — real data, real models, real predictions. And it's something I actually use.",
+          body: "I built Oddsix as a personal project, driven by a deep passion for the NBA. I've watched basketball for years and wanted to build something that combined that love for the game with the data science and machine learning skills I've been developing. It started simply, as a place to dig into player stats and compare players across eras, and grew into something bigger: a real ML pipeline, game-outcome predictions, and a tool that explains every recommendation in plain English, so anyone can see why a pick might have value. It's not perfect, but it's real. Real data, real models, real predictions. And it's something I actually use.",
         },
         {
           title: "What I Built",
           color: "#8B5CF6",
-          body: "Oddsix is a live, multi-sport prediction platform covering the NBA, MLB, NFL, soccer, hockey and college. Each sport runs its own machine-learning model, trained only on information known before tip-off and probability-calibrated so that “60%” actually means 60%. The NBA model alone is a three-model stacked ensemble over 490 engineered features — Elo ratings, clutch performance, lineup quality and opponent-adjusted stats — landing around 0.74 AUC on unseen games. The betting hub turns those probabilities into actionable edges — comparing the model's read to the market line, flagging value, and sizing stakes with the Kelly criterion. A daily pipeline pulls fresh data, regenerates every prediction, grades yesterday's results, and updates the site automatically.",
+          body: "Oddsix is a live multi-sport prediction platform covering the NBA, MLB, NFL, soccer, hockey and college. Each sport runs its own machine-learning model, trained only on information known before tip-off and calibrated so that a 60% really means 60%. The NBA model alone is a three-model stacked ensemble over 490 engineered features (Elo ratings, clutch performance, lineup quality, opponent-adjusted stats) and lands around 0.74 AUC on games it hasn't seen. The betting hub turns those probabilities into real edges: it compares the model's read to the market line, flags value, and sizes the stake with the Kelly criterion. A daily pipeline pulls fresh data, regenerates every prediction, grades yesterday's results, and updates the site on its own.",
           features: [
             { emoji: "\u{1F3C0}", name: "Every Sport, One Slate", desc: "Daily picks across NBA, MLB, NFL, soccer, NHL & college, sorted by start time" },
             { emoji: "\u{1F3AF}", name: "Betting Edges", desc: "Model read vs. market line, value detection, and Kelly stake sizing" },
             { emoji: "\u{1F4CA}", name: "Calibrated Models", desc: "A separate pre-tip-off model per sport, probability-calibrated for honesty" },
-            { emoji: "\u{1F4C8}", name: "Public Track Record", desc: "Every pick graded daily — recent and lifetime, every loss included" },
+            { emoji: "\u{1F4C8}", name: "Public Track Record", desc: "Every pick graded daily, recent and lifetime, every loss included" },
           ],
         },
         {
           title: "The Result",
           color: "#10B981",
-          body: "Oddsix is live at oddsix.app, posting picks every day and grading itself in the open: 72% accuracy over 290 completed picks (210–80), with NBA running at 73% across the last 30 days. The track record updates automatically and includes every loss — because a prediction system you can't audit isn't one worth trusting.",
+          body: "Oddsix is live at oddsix.app, posting picks every day and grading itself in the open: 72% accuracy over 290 completed picks (210-80), with NBA running at 73% over the last 30 days. The track record updates on its own and shows every loss, because a prediction system you can't check isn't worth trusting.",
         },
       ],
     },
@@ -132,7 +132,7 @@ const PROJECTS = [
     accentBg: "rgba(234,88,12,0.08)",
     featured: false,
     video: "QSooLoE32zk",
-    shortDescription: "The honest predictive-modeling foundation behind Oddsix — and the data-leakage trap I had to escape. Includes a recorded walkthrough of the project.",
+    shortDescription: "The honest predictive-modeling work that became the foundation for Oddsix, plus the data-leakage trap I had to escape. Includes a recorded walkthrough of the project.",
     url: "#",
     github: "#",
     tags: ["Python", "LightGBM", "scikit-learn", "K-Means", "NBA Stats API"],
@@ -149,27 +149,27 @@ const PROJECTS = [
       { display: "4", label: "Clusters" },
     ],
     caseStudy: {
-      hook: "An honest NBA win-prediction model — and the data-leakage trap I had to escape to build it. This MSBA 645 final is the predictive-modeling base layer that later grew into Oddsix.",
+      hook: "An honest NBA win-prediction model, and the data-leakage trap I had to escape to build it. This MSBA 645 final is the predictive-modeling base layer that later grew into Oddsix.",
       sections: [
         {
           title: "The Business Problem",
           color: "#06B6D4",
-          body: "Game prediction sits at the center of a multi-billion-dollar sports analytics industry — teams use it for prep, broadcasters build storylines around it, and bettors are always chasing an edge. For my MSBA 645 final, I set out to build a genuinely honest NBA win-prediction model on every game from the last five seasons: ~10,500 games across 30 teams, pulled directly from the NBA Stats API. Each row is one team's performance in one game, joined to its opponent and labeled with the outcome.",
+          body: "Game prediction sits at the center of a multi-billion-dollar sports analytics industry. Teams use it for prep, broadcasters build storylines around it, and bettors are always chasing an edge. For my MSBA 645 final, I set out to build a genuinely honest NBA win-prediction model on every game from the last five seasons: about 10,500 games across 30 teams, pulled straight from the NBA Stats API. Each row is one team's performance in one game, joined to its opponent and labeled with the outcome.",
         },
         {
           title: "Too Good to Be True",
           color: "#8B5CF6",
-          body: "My first attempt looked great — an 80/20 split with Logistic Regression and LightGBM, both landing around 85% accuracy and a 0.93 ROC-AUC. Then I caught the flaw. The features I was leaning on (field-goal %, rebounds, turnovers) only exist after a game is played. I wasn't predicting games; I was describing them. It's like predicting a race from each runner's finishing time — of course it works, but you've already seen the answer.",
+          body: "My first attempt looked great: an 80/20 split with Logistic Regression and LightGBM, both landing around 85% accuracy and a 0.93 ROC-AUC. Then I caught the flaw. The features I was leaning on (field-goal %, rebounds, turnovers) only exist after a game is played. I wasn't predicting games, I was describing them. It's like predicting a race from each runner's finishing time: of course it works, but you've already seen the answer.",
         },
         {
           title: "Making It Honest",
           color: "#10B981",
-          body: "I rebuilt the model with walk-forward validation — train on past seasons, test on the most recent, never train on the future — and engineered 26 features that are all knowable before tip-off: last-10-game rolling form, home/away win-rate splits, season-to-date averages, and team-vs-opponent matchup differentials. Accuracy dropped, and that drop is the point: the model was finally being honest. I then ran K-Means clustering to group teams by play style (Elite Efficiency, Pace & Pressure, Rebuilding, Middle of the Pack) — it even caught the Rockets' real franchise transformation across seasons. Folding those style clusters back into the model added a small but real lift of about 1.3 points of accuracy.",
+          body: "I rebuilt the model with walk-forward validation (train on past seasons, test on the most recent, never train on the future) and engineered 26 features that are all knowable before tip-off: last-10-game rolling form, home/away win-rate splits, season-to-date averages, and team-vs-opponent matchup differentials. Accuracy dropped, and that drop is the point: the model was finally being honest. I then ran K-Means clustering to group teams by play style (Elite Efficiency, Pace and Pressure, Rebuilding, Middle of the Pack), and it even caught the Rockets' real franchise transformation across seasons. Folding those style clusters back into the model added a small but real lift of about 1.3 points of accuracy.",
         },
         {
           title: "What It Taught Me",
           color: "#EA580C",
-          body: "The hardest part of analytics isn't running models — it's making sure they're solving the problem you think they are. High accuracy on a hard problem is a red flag for leakage. Validation has to mirror real deployment, which means test sets from the future. Simpler models often win (logistic regression beat LightGBM here). And unsupervised work can measurably feed supervised work. This project is the foundation Oddsix was built on — the same honest, pre-tip-off philosophy, scaled into a full production platform.",
+          body: "The hardest part of analytics isn't running models, it's making sure they're solving the problem you think they are. High accuracy on a hard problem is a red flag for leakage. Validation has to mirror real deployment, which means test sets from the future. Simpler models often win (logistic regression beat LightGBM here). And unsupervised work can feed supervised work. This project is the foundation Oddsix was built on, the same honest, pre-tip-off approach scaled into a full production platform.",
         },
       ],
     },
@@ -206,17 +206,17 @@ const PROJECTS = [
         {
           title: "The Challenge",
           color: "#06B6D4",
-          body: "Most open-source trading bots are toy scripts — a single strategy, no risk management, no testing. I wanted to build a production-grade system that could actually handle real money: multi-asset support, multiple signal sources, proper risk controls that can't be overridden, and enough test coverage to sleep at night.",
+          body: "Most open-source trading bots are toy scripts: a single strategy, no risk management, no testing. I wanted to build a production-grade system that could actually handle real money, with multi-asset support, multiple signal sources, risk controls that can't be overridden, and enough test coverage to sleep at night.",
         },
         {
           title: "What I Built",
           color: "#8B5CF6",
-          body: "A fully async Python trading system that trades stocks (via Alpaca) and crypto (via Kraken). 21 signal generators — technical indicators, ML predictions (LightGBM), FinBERT sentiment analysis, SEC insider filings, institutional 13F flows, and macro regime detection (FRED data) — are fused into a single confidence score. A 5-stage AI agent pipeline (Analyst → Risk Manager → Executor → Monitor → Researcher) evaluates every trade using Claude and Ollama with a hard $10/month LLM budget cap. Four-layer circuit breakers (per-trade, daily, weekly, kill switch) with immutable thresholds protect against catastrophic loss. The kill switch is permanent and cannot be overridden at runtime.",
+          body: "A fully async Python trading system that trades stocks (via Alpaca) and crypto (via Kraken). 21 signal generators (technical indicators, ML predictions with LightGBM, FinBERT sentiment analysis, SEC insider filings, institutional 13F flows, and macro regime detection from FRED data) are fused into a single confidence score. A 5-stage AI agent pipeline (Analyst, Risk Manager, Executor, Monitor, Researcher) evaluates every trade using Claude and Ollama with a hard $10/month LLM budget cap. Four-layer circuit breakers (per-trade, daily, weekly, kill switch) with immutable thresholds protect against catastrophic loss. The kill switch is permanent and cannot be overridden at runtime.",
         },
         {
           title: "The Result",
           color: "#10B981",
-          body: "31,000+ lines of production Python with 3,082 tests at 95% coverage. Real-time React/FastAPI dashboard for monitoring. Pushover mobile alerts for circuit breaker trips. HMAC-signed audit logs. Tax compliance with wash-sale detection. Graceful degradation — TimescaleDB, Redis, and push notifications are all optional; the system falls back to in-memory operation.",
+          body: "31,000+ lines of production Python with 3,082 tests at 95% coverage. Real-time React/FastAPI dashboard for monitoring. Pushover mobile alerts for circuit breaker trips. HMAC-signed audit logs. Tax compliance with wash-sale detection. Everything degrades gracefully: TimescaleDB, Redis, and push notifications are all optional, and the system falls back to in-memory operation.",
         },
       ],
     },
@@ -229,7 +229,7 @@ const PROJECTS = [
     accentBg: "rgba(37,99,235,0.08)",
     featured: false,
     status: "In Progress",
-    shortDescription: "A reproducible ETL pipeline that pulls ~6,000 films from the TMDB API into a 3NF PostgreSQL database and Power BI — asking whether higher-earning films actually rate higher.",
+    shortDescription: "A reproducible ETL pipeline that pulls about 6,000 films from the TMDB API into a 3NF PostgreSQL database and Power BI, asking whether higher-earning films actually rate higher.",
     url: "#",
     github: "https://github.com/SpencerGoss/box-office-vs-ratings",
     tags: ["Python", "pandas", "PostgreSQL", "SQLAlchemy", "Power BI", "TMDB API"],
@@ -251,22 +251,22 @@ const PROJECTS = [
         {
           title: "The Question",
           color: "#06B6D4",
-          body: "Do films that earn more also rate higher — and do certain genres show a consistent gap between revenue and reception that shifts across decades? That's the question this project answers end to end, from raw API data to a clean, reproducible pipeline. The source is the TMDB API: roughly 6,000 films from 2000 to 2026, each with budget, revenue, runtime, audience ratings, and genres.",
+          body: "Do films that earn more also rate higher? And do certain genres show a consistent gap between revenue and reception that shifts across decades? That's the question this project answers end to end, from raw API data to a clean, reproducible pipeline. The source is the TMDB API: roughly 6,000 films from 2000 to 2026, each with budget, revenue, runtime, audience ratings, and genres.",
         },
         {
           title: "The Pipeline",
           color: "#8B5CF6",
-          body: "A single self-contained Python script runs the whole thing end-to-end — extract, clean, validate, load, export — with no manual steps. A two-stage TMDB extract (discover films by year, then pull per-film financials) with retry and backoff feeds a pandas transform layer that derives profit, ROI, profit margin, budget tier, hit/flop performance, and decade. Before anything loads, 7 data-quality checks run — null required fields, duplicate keys, dtype coercion, range bounds, referential integrity, and row-count reconciliation — each logged PASS/FAIL, with critical failures aborting the run. The load is idempotent: ON CONFLICT upserts mean re-running never duplicates a row.",
+          body: "A single self-contained Python script runs the whole thing end to end (extract, clean, validate, load, export) with no manual steps. A two-stage TMDB extract (discover films by year, then pull per-film financials) with retry and backoff feeds a pandas transform layer that derives profit, ROI, profit margin, budget tier, hit/flop performance, and decade. Before anything loads, 7 data-quality checks run (null required fields, duplicate keys, dtype coercion, range bounds, referential integrity, and row-count reconciliation), each logged PASS/FAIL, with critical failures aborting the run. The load is idempotent: ON CONFLICT upserts mean re-running never duplicates a row.",
         },
         {
           title: "The Database",
           color: "#2563EB",
-          body: "Everything lands in a 3NF PostgreSQL schema — a films table, a genres lookup, and a many-to-many film_genres bridge, plus an enriched view that joins in profit, ROI, and a comma-separated genre list. The current load holds 6,008 films, 19 genres, and 15,811 film-genre links, fully documented with an ER diagram. Postgres is the source of truth and the Power BI CSV is derived from it, so the live database, the inlined DDL, and the ER diagram all describe exactly the same schema — no drift.",
+          body: "Everything lands in a 3NF PostgreSQL schema: a films table, a genres lookup, and a many-to-many film_genres bridge, plus an enriched view that joins in profit, ROI, and a comma-separated genre list. The current load holds 6,008 films, 19 genres, and 15,811 film-genre links, fully documented with an ER diagram. Postgres is the source of truth and the Power BI CSV is derived from it, so the live database, the inlined DDL, and the ER diagram all describe exactly the same schema, with no drift.",
         },
         {
           title: "The Dashboard",
           color: "#10B981",
-          body: "The final layer is a Power BI dashboard built on a genre × decade aggregation — average rating versus average ROI across 56 genre-decade cells — to surface where commercial success and critical reception line up, and where they pull apart. This piece is in active development, on track to wrap in the next couple of weeks.",
+          body: "The final layer is a Power BI dashboard built on a genre-by-decade aggregation (average rating versus average ROI across 56 genre-decade cells) to show where commercial success and critical reception line up, and where they pull apart. This piece is in active development and on track to wrap in the next couple of weeks.",
         },
       ],
     },
@@ -304,7 +304,7 @@ const PROJECTS = [
         {
           title: "What I Built",
           color: "#8B5CF6",
-          body: "A gradient-boosted ensemble model for churn prediction, combined with customer segmentation using clustering. The analysis revealed that tenure and contract type are the strongest churn predictors — customers in their first 6 months on month-to-month plans are at highest risk. Customers who refer others churn significantly less. Three distinct customer clusters emerged, each requiring a different retention strategy.",
+          body: "A gradient-boosted ensemble model for churn prediction, combined with customer segmentation using clustering. The analysis revealed that tenure and contract type are the strongest churn predictors: customers in their first 6 months on month-to-month plans are at highest risk. Customers who refer others churn significantly less. Three distinct customer clusters emerged, each requiring a different retention strategy.",
         },
         {
           title: "The Result",
@@ -390,10 +390,10 @@ const EXPERIENCE = [
     title: "M.S. Business Analytics",
     org: "University of Louisville",
     location: "Louisville, KY",
-    period: "Aug 2025 — Aug 2026",
+    period: "Aug 2025 - Aug 2026",
     description: "Pursuing a Master of Science in Business Analytics with a concentration in Artificial Intelligence. Building predictive models, ML pipelines, and data-driven tools that solve real business problems.",
     details: [
-      "Concentration in Artificial Intelligence — applying ML techniques to real-world business challenges",
+      "Concentration in Artificial Intelligence, applying ML techniques to real-world business challenges",
       "Developing expertise in Python, R, and SQL for advanced analytics and predictive modeling",
       "Building end-to-end machine learning pipelines from data collection through deployment",
       "Coursework spanning business analytics strategy, data mining, and applied AI",
@@ -410,12 +410,12 @@ const EXPERIENCE = [
     title: "Independent Projects",
     org: "Independent Projects",
     location: "Louisville, KY",
-    period: "2025 — Present",
+    period: "2025 - Present",
     description: "Shipping real products: a full-stack ML prediction platform, automated trading systems with risk management, and an autonomous multi-agent AI development environment.",
     details: [
-      "Built and deployed Oddsix — a live multi-sport ML prediction platform that grades itself in public at 72% accuracy over 290+ picks",
+      "Built and deployed Oddsix, a live multi-sport ML prediction platform that grades itself in public at 72% accuracy over 290+ picks",
       "Developed automated trading systems with real-time risk management and circuit breakers",
-      "Engineered a multi-agent AI development system — custom Claude skills, plugins, and autonomous overnight agents across multiple projects",
+      "Engineered a multi-agent AI development system with custom Claude skills, plugins, and autonomous overnight agents across multiple projects",
     ],
     highlights: ["ML Platform", "Automated Trading", "AI Agents"],
     type: "project" as const,
@@ -429,7 +429,7 @@ const EXPERIENCE = [
     title: "Accounts Payable Specialist",
     org: "Churchill Downs Incorporated",
     location: "Louisville, KY",
-    period: "Aug 2024 — Jul 2025",
+    period: "Aug 2024 - Jul 2025",
     description: "Reviewed and processed high-volume invoices for accuracy and documentation across 10+ properties. Coordinated with vendors to ensure timely and complete payments.",
     details: [
       "Processed 100+ invoices daily across 10+ Churchill Downs properties with high accuracy",
@@ -446,13 +446,13 @@ const EXPERIENCE = [
     bgImage: "/images/experience/churchill-downs.jpg",
   },
   {
-    title: "BBA — Finance, Marketing & Business Analytics",
+    title: "BBA in Finance, Marketing & Business Analytics",
     org: "University of Kentucky",
     location: "Lexington, KY",
-    period: "Aug 2020 — Mar 2024",
+    period: "Aug 2020 - Mar 2024",
     description: "Bachelor of Business Administration with focuses in Finance, Marketing, and a minor in Business Analytics. Built a strong foundation in quantitative analysis, business strategy, and data-driven decision making.",
     details: [
-      "Finance and Marketing majors with a minor in Business Analytics — combining quantitative and strategic skills",
+      "Finance and Marketing majors with a minor in Business Analytics, combining quantitative and strategic skills",
       "Developed strong foundations in data analysis, financial modeling, and marketing analytics",
       "Coursework in Business Analytics Strategy (AN 450G), Data Mining (AN 420G), and applied quantitative methods",
       "Active member of Delta Tau Delta fraternity",
@@ -469,7 +469,7 @@ const EXPERIENCE = [
     title: "Warehouse Associate",
     org: "Terex Corporation",
     location: "Louisville, KY",
-    period: "May 2020 — Aug 2023",
+    period: "May 2020 - Aug 2023",
     description: "Coordinated shipping and receiving operations for a global heavy equipment manufacturer over 3+ years. Resolved delivery disputes, monitored daily package flow, trained new hires, and earned forklift certification.",
     details: [
       "Coordinated and collaborated with warehouse staff, management, and transporters to resolve delivery disputes and ensure steady flow of operations",
@@ -489,7 +489,7 @@ const EXPERIENCE = [
     title: "High School Diploma",
     org: "Saint Xavier High School",
     location: "Louisville, KY",
-    period: "2016 — 2020",
+    period: "2016 - 2020",
     description: "All-boys Catholic college preparatory high school in Louisville, established in 1864. Active in athletics, leadership, and service organizations throughout all four years.",
     details: [
       "Member of the National Honors Society for academic excellence",
@@ -1218,7 +1218,7 @@ function ExperienceSlide({ entry, index, total }: { entry: typeof EXPERIENCE[0];
       ref={slideRef}
       className="exp-slide relative"
       role="article"
-      aria-label={`${entry.org} — ${entry.title}`}
+      aria-label={`${entry.org}, ${entry.title}`}
     >
       {/* ---- Full-screen background image ---- */}
       <div className="absolute inset-0 z-0">
@@ -1411,7 +1411,7 @@ function ExperienceTimeline() {
         </h3>
         <Separator className="w-12 bg-primary h-0.5 mx-auto mb-4" />
         <p className="text-muted-foreground mb-10 max-w-lg mx-auto">
-          From high school to grad school — scroll down to walk through each chapter.
+          From high school to grad school. Scroll down to walk through each chapter.
         </p>
 
         {/* Compact horizontal timeline */}
@@ -1463,17 +1463,17 @@ const COUNCIL_MODELS = [
 
 const COUNCIL_FLOW = [
   { icon: Network, title: "Dispatch", desc: "The same question goes to every model at once, in parallel." },
-  { icon: Repeat, title: "Cross-Review", desc: "Each model reads the others' answers — then revises its own." },
-  { icon: Swords, title: "Adversarial Audit", desc: "One model is forced to attack the idea, to catch groupthink." },
-  { icon: Scale, title: "Governance", desc: "Two or more blocking votes can automatically halt a decision." },
-  { icon: Users, title: "I Decide", desc: "Nothing ships without my review. The AI proposes; I dispose." },
-  { icon: BrainCircuit, title: "It Learns", desc: "The outcome is logged and the system updates itself for next time." },
+  { icon: Repeat, title: "Cross-Review", desc: "Each model reads the others' answers, then revises its own." },
+  { icon: Swords, title: "Adversarial Audit", desc: "One model has to attack the idea and try to break it, which catches groupthink." },
+  { icon: Scale, title: "Governance", desc: "Two or more blocking votes can stop a decision automatically." },
+  { icon: Users, title: "I Decide", desc: "Nothing ships without my review. The AI suggests, I make the call." },
+  { icon: BrainCircuit, title: "It Learns", desc: "The result gets logged and the system updates itself for next time." },
 ];
 
 const COUNCIL_PILLARS = [
-  { icon: ShieldCheck, color: "#EF4444", title: "Built to fight AI groupthink", body: "A room full of agreeable AIs is a liability. I engineered disagreement on purpose — independent “attack the premise” passes that surface flaws a consensus would sail right past. Grounded in current multi-agent-debate research, not hype." },
-  { icon: BrainCircuit, color: "#8B5CF6", title: "Learns from every mistake", body: "Each real mistake becomes a permanent safeguard. 233 of them — plus 279 triggers — are auto-injected into every AI call and weighted by how reliable each has proven. The system gets measurably harder to fool over time." },
-  { icon: Activity, color: "#10B981", title: "Measured, not vibes", body: "An outcome ledger records every recommendation, then checks it against what actually happened. I can tell you exactly how often the AI's advice changes a real decision — because I measure it instead of assuming it." },
+  { icon: ShieldCheck, color: "#EF4444", title: "It argues with itself on purpose", body: "A bunch of AIs that all agree isn't worth much. So one of them always has the job of attacking the idea and trying to break it. That catches problems the others would have agreed right past." },
+  { icon: BrainCircuit, color: "#8B5CF6", title: "It learns from every mistake", body: "When something goes wrong, it becomes a rule the system remembers. There are 233 of those now, plus 279 triggers, and they get fed into every AI call so the same mistake doesn't happen twice." },
+  { icon: Activity, color: "#10B981", title: "I track whether it actually works", body: "I keep a ledger of what the AI recommended and what actually happened afterward. So I know how often its advice was right, instead of just assuming it was." },
 ];
 
 function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
@@ -1512,10 +1512,10 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
             <span className="text-xs font-semibold text-cyan-300 tracking-wider uppercase">Multi-Agent AI Ecosystem</span>
           </div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white mb-5">
-            I don't just use AI — I orchestrate it.
+            I built my own AI system.
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-            Most people use one AI. I built a system where <span className="text-slate-200 font-medium">five models debate each other</span>, audit their own blind spots, learn from every mistake, and work autonomously across multiple production projects — all under my review.
+            Most people use one AI tool. I run <span className="text-slate-200 font-medium">five models that check each other's work</span>, catch their own mistakes, get better over time, and keep working across my projects while I review what they produce.
           </p>
         </ScrollReveal>
 
@@ -1542,7 +1542,7 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
           <div className="text-center mb-8">
             <div className="text-[11px] font-bold uppercase tracking-[3px] text-cyan-300/80 mb-2">The Council</div>
             <p className="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
-              Every hard decision is dispatched to a council of five AI models in parallel — each chosen for what it does best.
+              Every big decision goes to all five AI models at once, each picked for what it's best at.
             </p>
           </div>
 
@@ -1592,7 +1592,7 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
           <div className="text-center mb-8">
             <div className="text-[11px] font-bold uppercase tracking-[3px] text-violet-300/80 mb-2">How a verdict is reached</div>
             <p className="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
-              This is the part most “AI users” skip. Models that only agree with each other are dangerous — so disagreement is built in on purpose.
+              This is the part most people skip. If your AIs only ever agree with each other, they're not helping you. So I made them disagree on purpose.
             </p>
           </div>
 
@@ -1638,7 +1638,7 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
         {/* Bottom stats */}
         <div className="text-center mt-14">
           <p className="text-[10px] text-slate-600" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-            five AI services orchestrated  •  53 custom skills  •  self-improving since March 2026  •  human-in-the-loop on every change
+            five AI services  •  53 custom skills  •  gets better over time  •  I review every change
           </p>
         </div>
       </div>
@@ -2033,7 +2033,7 @@ export default function App() {
 
                 {/* Tagline */}
                 <p className="split-reveal split-reveal-delay-3 text-base md:text-lg text-muted-foreground max-w-lg leading-relaxed mb-8">
-                  <span className="font-medium text-foreground/70">From raw data to real results</span> — predictive models, automated systems, and analytics tools.
+                  <span className="font-medium text-foreground/70">From raw data to real results:</span> predictive models, automated systems, and analytics tools.
                 </p>
 
                 {/* CTA Buttons */}
@@ -2066,7 +2066,7 @@ export default function App() {
                   className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg border border-white/50"
                 >
                   {/* Placeholder — replace src with actual photo */}
-                  <div className="w-full h-full bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 flex items-center justify-center" role="img" aria-label="Spencer Goss — photo placeholder">
+                  <div className="w-full h-full bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 flex items-center justify-center" role="img" aria-label="Spencer Goss, photo placeholder">
                     <span className="text-4xl text-gray-300 font-bold select-none" aria-hidden="true">SG</span>
                   </div>
                 </div>
@@ -2103,7 +2103,7 @@ export default function App() {
                     <div className="flex flex-col gap-3">
                       {[
                         { Icon: MapPin, value: "Louisville, KY" },
-                        { Icon: GraduationCap, value: "MSBA, AI — UofL" },
+                        { Icon: GraduationCap, value: "MSBA in AI, UofL" },
                         { Icon: Briefcase, value: "Seeking BA & DA roles" },
                       ].map((fact, i) => (
                         <div key={i} className="flex items-center gap-3">
@@ -2122,7 +2122,7 @@ export default function App() {
                   {/* Right — bio + details */}
                   <div className="lg:w-3/5 lg:pl-12">
                     <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-10">
-                      I'm pursuing my MSBA at the University of Louisville with a concentration in AI. Outside of coursework, I'm usually building something — a prediction engine, an automated trading system, or whatever problem I'm trying to solve that week. I learn best by shipping real products, and every project sharpens how I approach data and decision-making.
+                      I'm pursuing my MSBA at the University of Louisville with a concentration in AI. Outside of coursework, I'm usually building something, whether a prediction engine, an automated trading system, or whatever problem I'm trying to solve that week. I learn best by shipping real products, and every project sharpens how I approach data and decision-making.
                     </p>
 
                     {/* Detail grid with left accent borders */}
@@ -2130,7 +2130,7 @@ export default function App() {
                       {[
                         { label: "Approach", value: "Research deeply, build deliberately, refine relentlessly", color: "#06B6D4" },
                         { label: "Strength", value: "Turning messy problems into working products", color: "#8B5CF6" },
-                        { label: "Education", value: "MSBA (AI) — UofL, BBA (Finance, Marketing, Analytics) — UK", color: "#10B981" },
+                        { label: "Education", value: "MSBA (AI) at UofL, BBA (Finance, Marketing, Analytics) at UK", color: "#10B981" },
                         { label: "Experience", value: "Churchill Downs, Terex Corporation, Independent Projects", color: "#F59E0B" },
                       ].map((item, i) => (
                         <div key={i} className="pl-4" style={{ borderLeft: `2px solid ${item.color}` }}>
