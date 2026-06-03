@@ -167,51 +167,6 @@ const PROJECTS = [
     },
   },
   {
-    id: "devtoolbox",
-    title: "DevToolbox",
-    subtitle: "AI Developer Tools Blog",
-    accent: "#0891B2",
-    accentBg: "rgba(8,145,178,0.08)",
-    featured: false,
-    shortDescription: "350+ articles reviewing AI coding tools. SEO-optimized Hugo site on Cloudflare Pages.",
-    url: "https://devtoolbox-blog.pages.dev",
-    github: "#",
-    tags: ["Hugo", "PaperMod", "Cloudflare Pages", "GoatCounter", "Fuse.js"],
-    screenshots: [
-      { label: "Homepage", desc: "Dark theme with category navigation" },
-      { label: "Tool Review", desc: "In-depth analysis with ratings" },
-      { label: "Comparison Table", desc: "Side-by-side feature breakdown" },
-    ],
-    metrics: [
-      { value: 350, suffix: "+", label: "Articles Published" },
-      { value: 38, suffix: "", label: "Tools Reviewed" },
-      { value: 3, suffix: "", label: "Content Types" },
-    ],
-    cardMetrics: [
-      { display: "350+", label: "Articles" },
-    ],
-    caseStudy: {
-      hook: "A comprehensive content platform reviewing and comparing 38+ AI-powered developer tools, with automated SEO, schema markup, and AI-friendly content distribution.",
-      sections: [
-        {
-          title: "The Challenge",
-          color: "#06B6D4",
-          body: "The AI developer tools landscape moves fast — new tools launch weekly, pricing changes constantly, and most review sites are either surface-level listicles or thinly disguised affiliate content. I wanted to build a resource with real depth: detailed reviews, honest comparisons, and practical guides that actually help developers choose the right tools.",
-        },
-        {
-          title: "What I Built",
-          color: "#8B5CF6",
-          body: "A Hugo static site with 43 in-depth reviews, 28 head-to-head comparisons, 27 practical guides, and 255+ auto-generated tool comparison pages. Every article has structured schema markup (TechArticle, Review, FAQPage) for search optimization. AI-friendly llms.txt endpoints serve content directly to language models. Beehiiv newsletter integration and transparent affiliate disclosures. The content pipeline auto-generates comparison pages from a central tools.json database — one data update creates dozens of pages.",
-        },
-        {
-          title: "The Result",
-          color: "#10B981",
-          body: "350+ published articles covering 38 AI developer tools across code editors, terminal AI, code completion, app builders, and code review categories. Live at devtoolbox-blog.pages.dev on Cloudflare Pages with GoatCounter privacy-first analytics. Designed for both human readers (dark theme, smooth transitions, full-text search) and AI consumption (llms.txt, structured data).",
-        },
-      ],
-    },
-  },
-  {
     id: "churn-model",
     title: "Churn Predictor",
     subtitle: "MSBA Capstone",
@@ -351,14 +306,13 @@ const EXPERIENCE = [
     org: "Independent Projects",
     location: "Louisville, KY",
     period: "2025 — Present",
-    description: "Shipping real products: a full-stack ML prediction platform, automated trading systems with risk management, and content platforms with AI-powered pipelines.",
+    description: "Shipping real products: a full-stack ML prediction platform, automated trading systems with risk management, and an autonomous multi-agent AI development environment.",
     details: [
-      "Built Oddsix — a full-stack NBA prediction engine with 390+ ML features and 72.6% accuracy",
+      "Built Oddsix — a full-stack NBA prediction engine with 490+ ML features and 73.5% accuracy",
       "Developed automated trading systems with real-time risk management and circuit breakers",
-      "Created DevToolbox — an SEO-optimized content platform with an AI-powered publishing pipeline",
-      "Designed and deployed Claude AI skills, plugins, and agent workflows for process automation",
+      "Engineered a multi-agent AI development system — custom Claude skills, plugins, and autonomous overnight agents across multiple projects",
     ],
-    highlights: ["ML Platform", "Automated Trading", "AI Pipelines"],
+    highlights: ["ML Platform", "Automated Trading", "AI Agents"],
     type: "project" as const,
     logo: "",
     color: "#06B6D4",
@@ -690,7 +644,6 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
 function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void }) {
   const oddsix = PROJECTS.find((p) => p.id === "oddsix")!;
   const tradingBot = PROJECTS.find((p) => p.id === "trading-bot")!;
-  const devtoolbox = PROJECTS.find((p) => p.id === "devtoolbox")!;
   const churnModel = PROJECTS.find((p) => p.id === "churn-model")!;
 
   return (
@@ -700,10 +653,7 @@ function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void 
       </div>
       <div className="bento-col-right">
         <BentoCard project={tradingBot} onClick={() => onSelectProject("trading-bot")} delay={120} />
-        <div className="bento-row-compact">
-          <BentoCard project={devtoolbox} onClick={() => onSelectProject("devtoolbox")} delay={240} />
-          <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} delay={300} />
-        </div>
+        <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} delay={240} />
       </div>
     </div>
   );
