@@ -94,7 +94,7 @@ const PROJECTS = [
     ],
     cardMetrics: [
       { display: "72%", label: "Win Rate" },
-      { display: "290+", label: "Picks Graded" },
+      { display: "0.74", label: "Model AUC" },
       { display: "6", label: "Sports" },
     ],
     caseStudy: {
@@ -108,7 +108,7 @@ const PROJECTS = [
         {
           title: "What I Built",
           color: "#8B5CF6",
-          body: "Oddsix is a live, multi-sport prediction platform covering the NBA, MLB, NFL, soccer, hockey and college. Each sport runs its own machine-learning model, trained only on information known before tip-off and probability-calibrated so that “60%” actually means 60%. The betting hub turns those probabilities into actionable edges — comparing the model's read to the market line, flagging value, and sizing stakes with the Kelly criterion. A daily pipeline pulls fresh data, regenerates every prediction, grades yesterday's results, and updates the site automatically.",
+          body: "Oddsix is a live, multi-sport prediction platform covering the NBA, MLB, NFL, soccer, hockey and college. Each sport runs its own machine-learning model, trained only on information known before tip-off and probability-calibrated so that “60%” actually means 60%. The NBA model alone is a three-model stacked ensemble over 490 engineered features — Elo ratings, clutch performance, lineup quality and opponent-adjusted stats — landing around 0.74 AUC on unseen games. The betting hub turns those probabilities into actionable edges — comparing the model's read to the market line, flagging value, and sizing stakes with the Kelly criterion. A daily pipeline pulls fresh data, regenerates every prediction, grades yesterday's results, and updates the site automatically.",
           features: [
             { emoji: "\u{1F3C0}", name: "Every Sport, One Slate", desc: "Daily picks across NBA, MLB, NFL, soccer, NHL & college, sorted by start time" },
             { emoji: "\u{1F3AF}", name: "Betting Edges", desc: "Model read vs. market line, value detection, and Kelly stake sizing" },
