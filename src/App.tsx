@@ -101,9 +101,9 @@ const PROJECTS = [
       hook: "A live, multi-sport prediction platform that posts daily ML picks across six sports — with real betting edges, Kelly stake sizing, and a fully transparent, auto-graded track record. 72% accuracy over 290 completed picks, losses included.",
       sections: [
         {
-          title: "The Challenge",
+          title: "Why I Built It",
           color: "#06B6D4",
-          body: "I'm a sports fan who got tired of two kinds of prediction sites: black-box “lock of the day” accounts that quietly bury their losses, and cluttered stats pages drowning in ads. I wanted to build the honest version — a clean platform that posts a real probability for every game, compares it to the betting market, and grades itself in public, win or lose.",
+          body: "I built Oddsix as a personal project, driven by a deep passion for the NBA. I've watched basketball for years and wanted to build something that combined that love for the game with the data science and machine learning skills I've been developing. It started simply — a place to dig into player stats and compare players across eras — and grew into something bigger: a real ML pipeline, game-outcome predictions, and a tool that explains every recommendation in plain English, so anyone can see why a pick might have value. It's not perfect, but it's real — real data, real models, real predictions. And it's something I actually use.",
         },
         {
           title: "What I Built",
@@ -251,7 +251,7 @@ const PROJECTS = [
         {
           title: "The Question",
           color: "#06B6D4",
-          body: "Do films that earn more also rate higher — and do certain genres show a consistent gap between revenue and reception that shifts across decades? I set out to answer that with real data, and to build the kind of reproducible pipeline a working analyst would actually trust. The source is the TMDB API: roughly 6,000 films from 2000 to 2026, each with budget, revenue, runtime, audience ratings, and genres.",
+          body: "Do films that earn more also rate higher — and do certain genres show a consistent gap between revenue and reception that shifts across decades? That's the question this project answers end to end, from raw API data to a clean, reproducible pipeline. The source is the TMDB API: roughly 6,000 films from 2000 to 2026, each with budget, revenue, runtime, audience ratings, and genres.",
         },
         {
           title: "The Pipeline",
