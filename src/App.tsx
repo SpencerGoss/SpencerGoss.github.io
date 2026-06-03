@@ -36,6 +36,12 @@ import {
   Users,
   Terminal,
   Download,
+  Network,
+  ShieldCheck,
+  Swords,
+  Activity,
+  Scale,
+  Repeat,
 } from "lucide-react";
 
 /* Inline SVG brand icons (removed from lucide-react v1.x) */
@@ -1435,224 +1441,192 @@ function ExperienceTimeline() {
 
 type SystemNodeData = { label: string; sub: string; color: string; icon: React.ReactNode; detail: string };
 
+const COUNCIL_MODELS = [
+  { name: "Claude", role: "Architecture, code & reasoning", color: "#D97757", icon: "https://api.iconify.design/simple-icons:anthropic.svg" },
+  { name: "GPT-5 / Codex", role: "Code review & second opinions", color: "#19C37D", icon: "https://api.iconify.design/simple-icons:openai.svg" },
+  { name: "Gemini", role: "Research & fact-grounding", color: "#4796E3", icon: "https://api.iconify.design/simple-icons:googlegemini.svg" },
+  { name: "Copilot", role: "Pattern recall & structure", color: "#C9D1D9", icon: "https://api.iconify.design/simple-icons:githubcopilot.svg" },
+  { name: "Llama", role: "Free local / offline tier", color: "#9CA3AF", icon: "https://api.iconify.design/simple-icons:ollama.svg" },
+];
+
+const COUNCIL_FLOW = [
+  { icon: Network, title: "Dispatch", desc: "The same question goes to every model at once, in parallel." },
+  { icon: Repeat, title: "Cross-Review", desc: "Each model reads the others' answers — then revises its own." },
+  { icon: Swords, title: "Adversarial Audit", desc: "One model is forced to attack the idea, to catch groupthink." },
+  { icon: Scale, title: "Governance", desc: "Two or more blocking votes can automatically halt a decision." },
+  { icon: Users, title: "I Decide", desc: "Nothing ships without my review. The AI proposes; I dispose." },
+  { icon: BrainCircuit, title: "It Learns", desc: "The outcome is logged and the system updates itself for next time." },
+];
+
+const COUNCIL_PILLARS = [
+  { icon: ShieldCheck, color: "#EF4444", title: "Built to fight AI groupthink", body: "A room full of agreeable AIs is a liability. I engineered disagreement on purpose — independent “attack the premise” passes that surface flaws a consensus would sail right past. Grounded in current multi-agent-debate research, not hype." },
+  { icon: BrainCircuit, color: "#8B5CF6", title: "Learns from every mistake", body: "Each real mistake becomes a permanent safeguard. 233 of them — plus 279 triggers — are auto-injected into every AI call and weighted by how reliable each has proven. The system gets measurably harder to fool over time." },
+  { icon: Activity, color: "#10B981", title: "Measured, not vibes", body: "An outcome ledger records every recommendation, then checks it against what actually happened. I can tell you exactly how often the AI's advice changes a real decision — because I measure it instead of assuming it." },
+];
+
 function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
-  const [expanded, setExpanded] = useState<string | null>(null);
-
-  const NODES: Record<string, SystemNodeData> = {
-    spencer: { label: "Spencer", sub: "Architect & decision-maker", color: "#06B6D4", icon: <Users size={20} />, detail: "I'm the one driving this system. I decide what gets built, set the goals for each project, design how the agents work together, and review everything they produce. The AI handles execution — I handle strategy and quality control." },
-    skillRouter: { label: "Skill Router", sub: "44 custom workflows", color: "#06B6D4", icon: <Terminal size={16} />, detail: "I built 44 step-by-step workflows that automatically kick in based on what I'm doing. Writing a feature? A planning workflow runs first. Fixing a bug? A debugging checklist activates. This means every task follows a proven process — nothing gets missed, and quality stays consistent across all my projects." },
-    cliTools: { label: "CLI Tools", sub: "12 Python utilities", color: "#06B6D4", icon: <Code2 size={16} />, detail: "I wrote 12 small Python scripts for things I need regularly — pulling stock data, searching research papers, generating charts, checking system health, and tracking progress across all my projects. They're fast, lightweight, and always available without any setup." },
-    sessionMemory: { label: "Session Memory", sub: "Persistent context", color: "#06B6D4", icon: <StickyNote size={16} />, detail: "At the end of every work session, the system saves what I was working on, what decisions were made, what didn't work, and what should happen next. When I start a new session — even days later — it picks up exactly where I left off with full context. Nothing is forgotten." },
-    orchestrator: { label: "Orchestrator", sub: "Scheduled at 2:35 AM", color: "#8B5CF6", icon: <BrainCircuit size={16} />, detail: "Every night at 2:35 AM, an automated scheduler launches 28 AI agents one after another across all my projects. Each agent has a specific job, knows which files it's allowed to touch, and works independently. By morning, they've completed hours of research, testing, and building — all while I sleep." },
-    researchAgents: { label: "Research Agents", sub: "Discover & analyze", color: "#8B5CF6", icon: <BookOpen size={16} />, detail: "These agents look for ways to improve my projects — scanning for better techniques, analyzing how well my models are performing, exploring new ideas, and flagging opportunities I might have missed. They document what they find so I can review it the next morning." },
-    buildAgents: { label: "Build Agents", sub: "Implement & test", color: "#8B5CF6", icon: <GitBranch size={16} />, detail: "These agents write code, run tests, and build new features. Each one has a defined workspace — specific parts of the project it's allowed to modify — so multiple agents can work on the same project without stepping on each other's changes." },
-    qaAgents: { label: "Quality Agents", sub: "Audit & enforce", color: "#8B5CF6", icon: <ClipboardCheck size={16} />, detail: "These agents act as quality control. They check that code meets standards, verify test coverage, review what other agents built overnight, and make sure nothing breaks. Work doesn't get merged into the project until it passes their checks." },
-    immuneMemory: { label: "Immune Memory", sub: "Learns from mistakes", color: "#EF4444", icon: <Sigma size={16} />, detail: "Every time a real mistake happens, the system creates a rule to prevent it from happening again — like an immune system building antibodies. Right now there are 20 active rules, and they've caught every recurring issue with zero false alarms. The system literally gets smarter from its own errors." },
-    vitalsMonitor: { label: "Vitals Monitor", sub: "9 health metrics", color: "#06B6D4", icon: <TrendingUp size={16} />, detail: "The system tracks 9 health indicators in real time — things like how often errors are happening, whether the AI is producing useful insights, how well predictions are holding up, and whether agents are completing their work. If any metric drops into a warning zone, the system automatically adjusts its behavior." },
-    worldModel: { label: "World Model", sub: "72% prediction accuracy", color: "#8B5CF6", icon: <LayoutDashboard size={16} />, detail: "The system maintains predictions about each project — what's likely to break, what needs attention, what will happen next. These predictions are checked against reality every session. When something unexpected happens, it gets prioritized for investigation. Currently running at 72% accuracy." },
-    dreamCycle: { label: "Dream Cycle", sub: "End-of-day learning", color: "#F59E0B", icon: <Sparkles size={16} />, detail: "At the end of each work session, the system processes everything that happened — extracting key facts, finding connections between discoveries, saving important lessons, and cleaning out outdated information. This is how knowledge compounds over time instead of getting lost between sessions." },
-    crossTransfer: { label: "Cross-Transfer", sub: "Knowledge sharing", color: "#10B981", icon: <Boxes size={16} />, detail: "When an agent working on one project discovers something useful, that finding gets shared with all the other projects automatically. For example, a calibration technique discovered in my analytics project was transferred and improved my trading system — without me having to manually connect the dots." },
-    morningBriefing: { label: "Morning Briefing", sub: "Daily summary report", color: "#F59E0B", icon: <FileSpreadsheet size={16} />, detail: "Every morning I wake up to an automatically generated report that summarizes everything the agents did overnight — what they built, what they found, any issues that came up, and what they recommend I focus on next. I review it, make decisions, and the whole cycle starts again." },
-  };
-
-  const NodeCard = ({ id }: { id: string }) => {
-    const n = NODES[id];
-    const isOpen = expanded === id;
-    return (
-      <button
-        onClick={() => setExpanded(isOpen ? null : id)}
-        className={`ai-node group flex items-center gap-3 px-4 py-3 rounded-xl border cursor-pointer transition-all duration-200 w-full text-left ${
-          isOpen ? "border-opacity-60 shadow-lg" : "hover:border-opacity-40 hover:bg-white/[0.03]"
-        }`}
-        style={{
-          borderColor: isOpen ? n.color + "60" : "rgba(255,255,255,0.08)",
-          background: isOpen ? n.color + "08" : "rgba(255,255,255,0.02)",
-        }}
-      >
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: n.color + "15" }}>
-          <div style={{ color: n.color }}>{n.icon}</div>
-        </div>
-        <div className="min-w-0">
-          <div className="text-[13px] font-semibold text-white leading-tight">{n.label}</div>
-          <div className="text-[10px] text-slate-500 leading-tight">{n.sub}</div>
-        </div>
-      </button>
-    );
-  };
-
-  const VLine = ({ h = 32, color = "rgba(255,255,255,0.08)" }: { h?: number; color?: string }) => (
-    <div className="flex justify-center" aria-hidden="true"><div style={{ width: 1, height: h, background: color }} /></div>
+  const ModelGlyph = ({ url, color }: { url: string; color: string }) => (
+    <span
+      aria-hidden="true"
+      style={{
+        display: "block",
+        width: 22,
+        height: 22,
+        backgroundColor: color,
+        WebkitMaskImage: `url(${url})`,
+        maskImage: `url(${url})`,
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+      }}
+    />
   );
-
-  const HLine = ({ color = "rgba(255,255,255,0.08)" }: { color?: string }) => (
-    <div className="hidden md:block" aria-hidden="true" style={{ height: 1, background: color }} />
-  );
-
-  const TierLabel = ({ text, color }: { text: string; color: string }) => (
-    <div className="flex justify-center mb-4">
-      <div className="px-4 py-1.5 rounded-full border text-[10px] font-bold uppercase tracking-[2px]" style={{ borderColor: color + "30", color, background: color + "08" }}>
-        {text}
-      </div>
-    </div>
-  );
-
-  const expandedNode = expanded ? NODES[expanded] : null;
 
   return (
     <section ref={sectionRef} aria-label="AI System" className="relative py-24 md:py-32 overflow-hidden" style={{ background: "linear-gradient(180deg, #e8ebf0 0%, #0f172a 6%, #1e293b 50%, #0f172a 94%, #e3e7ed 100%)" }}>
       {/* Ambient effects */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(6,182,212,0.04) 1px, transparent 0)", backgroundSize: "48px 48px" }} />
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none" aria-hidden="true" style={{ background: "radial-gradient(circle, rgba(6,182,212,0.06), transparent 70%)", filter: "blur(120px)" }} />
+      <div className="absolute top-1/3 right-1/4 w-[420px] h-[420px] rounded-full pointer-events-none" aria-hidden="true" style={{ background: "radial-gradient(circle, rgba(139,92,246,0.06), transparent 70%)", filter: "blur(120px)" }} />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6">
+      <div className="relative z-10 max-w-5xl mx-auto px-6">
         {/* Header */}
-        <ScrollReveal className="text-center mb-16">
+        <ScrollReveal className="text-center mb-14">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 mb-6">
             <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="text-xs font-semibold text-cyan-300 tracking-wider uppercase">Running Nightly</span>
+            <span className="text-xs font-semibold text-cyan-300 tracking-wider uppercase">Multi-Agent AI Ecosystem</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white mb-4">
-            AI System Architecture
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white mb-5">
+            I don't just use AI — I orchestrate it.
           </h2>
-          <p className="text-slate-400 max-w-xl mx-auto text-base md:text-lg leading-relaxed">
-            I don't just use AI — I architect autonomous systems that learn, adapt, and compound knowledge while I sleep.
+          <p className="text-slate-400 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+            Most people use one AI. I built a system where <span className="text-slate-200 font-medium">five models debate each other</span>, audit their own blind spots, learn from every mistake, and work autonomously across multiple production projects — all under my review.
           </p>
         </ScrollReveal>
 
         {/* Metrics */}
         <ScrollReveal className="mb-20">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             {[
-              { value: "28", label: "Autonomous Agents", color: "#06B6D4" },
-              { value: "44", label: "Custom Skills", color: "#8B5CF6" },
-              { value: "5", label: "Active Projects", color: "#10B981" },
-              { value: "6,100+", label: "Automated Tests", color: "#F59E0B" },
+              { value: "5", label: "AI Models in Council", color: "#06B6D4" },
+              { value: "53", label: "Custom AI Skills", color: "#8B5CF6" },
+              { value: "37", label: "Autonomous Agents", color: "#10B981" },
+              { value: "233", label: "Self-Learned Safeguards", color: "#EF4444" },
+              { value: "14K+", label: "Automated Tests", color: "#F59E0B" },
             ].map((s) => (
               <div key={s.label} className="text-center py-4 px-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
-                <div className="text-xl md:text-2xl font-extrabold tracking-tight" style={{ color: s.color }}>{s.value}</div>
+                <div className="text-2xl md:text-3xl font-extrabold tracking-tight" style={{ color: s.color }}>{s.value}</div>
                 <div className="text-[10px] text-slate-500 uppercase tracking-wider font-medium mt-1">{s.label}</div>
               </div>
             ))}
           </div>
         </ScrollReveal>
 
-        {/* ===== FLOW DIAGRAM ===== */}
-        <ScrollReveal>
-          <div className="text-center mb-6">
-            <span className="text-[10px] text-slate-600 uppercase tracking-[3px]">Click any node to explore</span>
+        {/* ===== THE COUNCIL ===== */}
+        <ScrollReveal className="mb-20">
+          <div className="text-center mb-8">
+            <div className="text-[11px] font-bold uppercase tracking-[3px] text-cyan-300/80 mb-2">The Council</div>
+            <p className="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
+              Every hard decision is dispatched to a council of five AI models in parallel — each chosen for what it does best.
+            </p>
           </div>
 
-          {/* TIER 0: Spencer — the hub */}
-          <div className="max-w-xs mx-auto mb-1">
-            <NodeCard id="spencer" />
-          </div>
-          <VLine h={28} color="rgba(6,182,212,0.15)" />
-
-          {/* Branch split indicator */}
-          <div className="hidden md:flex items-center justify-center gap-0 mb-1" aria-hidden="true">
-            <div style={{ width: "22%", height: 1, background: "linear-gradient(to right, transparent, rgba(6,182,212,0.2))" }} />
-            <div className="w-2 h-2 rounded-full bg-white/10 shrink-0" />
-            <div style={{ width: "22%", height: 1, background: "linear-gradient(to left, transparent, rgba(139,92,246,0.2))" }} />
-          </div>
-
-          {/* TIER 1: Two branches */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 mb-1">
-            {/* LEFT: Daytime */}
-            <div>
-              <TierLabel text="Daytime" color="#06B6D4" />
-              <div className="space-y-2">
-                <NodeCard id="skillRouter" />
-                <NodeCard id="cliTools" />
-                <NodeCard id="sessionMemory" />
-              </div>
-            </div>
-
-            {/* RIGHT: Overnight */}
-            <div>
-              <TierLabel text="Overnight" color="#8B5CF6" />
-              <div className="space-y-2">
-                <NodeCard id="orchestrator" />
-                <div className="pl-6 border-l border-white/[0.06] space-y-2 ml-4">
-                  <NodeCard id="researchAgents" />
-                  <NodeCard id="buildAgents" />
-                  <NodeCard id="qaAgents" />
+          {/* Hub */}
+          <div className="flex flex-col items-center">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-2xl blur-xl" aria-hidden="true" style={{ background: "radial-gradient(circle, rgba(6,182,212,0.35), transparent 70%)" }} />
+              <div className="relative flex items-center gap-3 px-6 py-3.5 rounded-2xl border border-cyan-400/30 bg-cyan-400/[0.06] backdrop-blur-sm">
+                <div className="w-9 h-9 rounded-xl bg-cyan-400/15 flex items-center justify-center">
+                  <Network size={18} className="text-cyan-300" />
+                </div>
+                <div className="text-left">
+                  <div className="text-sm font-bold text-white leading-tight">A hard decision</div>
+                  <div className="text-[10px] text-cyan-300/70 leading-tight">dispatched to the council</div>
                 </div>
               </div>
             </div>
+            {/* connector + parallel label */}
+            <div className="flex justify-center my-3" aria-hidden="true"><div style={{ width: 1, height: 26, background: "linear-gradient(rgba(6,182,212,0.4), rgba(255,255,255,0.08))" }} /></div>
+            <div className="text-[10px] uppercase tracking-[2px] text-slate-500 mb-5">consulted in parallel</div>
           </div>
 
-          {/* Converge */}
-          <div className="hidden md:flex items-center justify-center gap-0 mt-1 mb-1" aria-hidden="true">
-            <div style={{ width: "22%", height: 1, background: "linear-gradient(to right, transparent, rgba(16,185,129,0.2))" }} />
-            <div className="w-2 h-2 rounded-full bg-white/10 shrink-0" />
-            <div style={{ width: "22%", height: 1, background: "linear-gradient(to left, transparent, rgba(16,185,129,0.2))" }} />
-          </div>
-          <VLine h={20} color="rgba(16,185,129,0.15)" />
-
-          {/* TIER 2: Living System */}
-          <TierLabel text="Living System" color="#10B981" />
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-1">
-            <NodeCard id="immuneMemory" />
-            <NodeCard id="vitalsMonitor" />
-            <NodeCard id="worldModel" />
-            <NodeCard id="dreamCycle" />
-            <NodeCard id="crossTransfer" />
-          </div>
-          <VLine h={28} color="rgba(245,158,11,0.15)" />
-
-          {/* TIER 3: Morning Briefing */}
-          <TierLabel text="Output" color="#F59E0B" />
-          <div className="max-w-xs mx-auto mb-1">
-            <NodeCard id="morningBriefing" />
-          </div>
-
-          {/* Loop back */}
-          <div className="flex flex-col items-center mt-4 mb-2" aria-hidden="true">
-            <svg width="120" height="48" viewBox="0 0 120 48">
-              <path d="M60 0 L60 16 Q60 32, 60 32" stroke="rgba(6,182,212,0.15)" strokeWidth="1" fill="none" />
-              <path d="M40 36 Q60 48, 80 36" stroke="rgba(6,182,212,0.2)" strokeWidth="1" fill="none" strokeDasharray="4 3" />
-              <text x="60" y="44" textAnchor="middle" fill="rgba(6,182,212,0.3)" fontSize="8" fontFamily="JetBrains Mono, monospace">loop</text>
-            </svg>
-          </div>
-
-          {/* Spencer return node */}
-          <div className="flex flex-col items-center">
-            <div className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-cyan-400/15 bg-cyan-400/5">
-              <div className="w-6 h-6 rounded-full bg-cyan-400/10 flex items-center justify-center">
-                <span className="text-[10px] font-bold text-cyan-300">SG</span>
+          {/* 5 model chips */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+            {COUNCIL_MODELS.map((m) => (
+              <div
+                key={m.name}
+                className="group flex flex-col items-center text-center gap-2.5 px-3 py-5 rounded-2xl border transition-all duration-200"
+                style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.02)" }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = m.color + "55"; e.currentTarget.style.background = m.color + "0d"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
+              >
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: m.color + "1a" }}>
+                  <ModelGlyph url={m.icon} color={m.color} />
+                </div>
+                <div>
+                  <div className="text-[13px] font-bold leading-tight" style={{ color: m.color }}>{m.name}</div>
+                  <div className="text-[10px] text-slate-500 leading-snug mt-1">{m.role}</div>
+                </div>
               </div>
-              <span className="text-[11px] font-medium text-slate-400">Reviews, decides, improves — cycle restarts</span>
-            </div>
+            ))}
           </div>
         </ScrollReveal>
 
-        {/* Expanded detail panel — fixed at bottom of section viewport */}
-        {expandedNode && expanded && (
-          <div className="sticky bottom-6 z-30 mt-8 mb-4">
-            <div className="max-w-2xl mx-auto rounded-2xl border p-5 shadow-2xl shadow-black/40" style={{ borderColor: expandedNode.color + "30", background: "#1a2332ee", backdropFilter: "blur(20px)" }}>
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: expandedNode.color + "15" }}>
-                    <div style={{ color: expandedNode.color }}>{expandedNode.icon}</div>
+        {/* ===== HOW THE COUNCIL REACHES A VERDICT ===== */}
+        <ScrollReveal className="mb-20">
+          <div className="text-center mb-8">
+            <div className="text-[11px] font-bold uppercase tracking-[3px] text-violet-300/80 mb-2">How a verdict is reached</div>
+            <p className="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
+              This is the part most “AI users” skip. Models that only agree with each other are dangerous — so disagreement is built in on purpose.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            {COUNCIL_FLOW.map((step, i) => {
+              const Icon = step.icon;
+              return (
+                <div key={step.title} className="relative flex gap-3.5 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+                  <div className="flex flex-col items-center shrink-0">
+                    <div className="w-9 h-9 rounded-lg bg-violet-400/10 flex items-center justify-center">
+                      <Icon size={16} className="text-violet-300" />
+                    </div>
+                    <span className="mt-1.5 text-[9px] font-mono text-slate-600">0{i + 1}</span>
                   </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-white">{expandedNode.label}</h3>
-                    <p className="text-[10px] text-slate-500">{expandedNode.sub}</p>
+                  <div className="min-w-0">
+                    <div className="text-[13px] font-semibold text-white leading-tight mb-1">{step.title}</div>
+                    <div className="text-[11px] text-slate-400 leading-snug">{step.desc}</div>
                   </div>
                 </div>
-                <button onClick={() => setExpanded(null)} className="text-slate-500 hover:text-white transition-colors cursor-pointer p-1">
-                  <X size={16} />
-                </button>
-              </div>
-              <p className="text-[13px] text-slate-300 leading-relaxed">{expandedNode.detail}</p>
-            </div>
+              );
+            })}
           </div>
-        )}
+        </ScrollReveal>
+
+        {/* ===== PILLARS ===== */}
+        <ScrollReveal>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {COUNCIL_PILLARS.map((p) => {
+              const Icon = p.icon;
+              return (
+                <div key={p.title} className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6 transition-all duration-200 hover:bg-white/[0.04]" style={{ borderTop: `2px solid ${p.color}55` }}>
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: p.color + "1a" }}>
+                    <Icon size={20} style={{ color: p.color }} />
+                  </div>
+                  <h3 className="text-base font-bold text-white mb-2 leading-snug">{p.title}</h3>
+                  <p className="text-[13px] text-slate-400 leading-relaxed">{p.body}</p>
+                </div>
+              );
+            })}
+          </div>
+        </ScrollReveal>
 
         {/* Bottom stats */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-14">
           <p className="text-[10px] text-slate-600" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-            167,000+ tool calls  •  runs every night at 2:35 AM  •  self-improving since March 2026
+            five AI services orchestrated  •  53 custom skills  •  self-improving since March 2026  •  human-in-the-loop on every change
           </p>
         </div>
       </div>
