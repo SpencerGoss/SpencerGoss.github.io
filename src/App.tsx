@@ -73,54 +73,53 @@ const PROJECTS = [
   {
     id: "oddsix",
     title: "Oddsix",
-    subtitle: "NBA Analytics Platform",
+    subtitle: "Multi-Sport Prediction Platform",
     accent: "#06B6D4",
     accentBg: "rgba(6,182,212,0.08)",
     featured: true,
-    shortDescription: "Comprehensive NBA analytics dashboard with ML-powered predictions, player tracking, historical data, and interactive visualizations — built by a basketball enthusiast.",
+    shortDescription: "A live, multi-sport prediction platform — daily ML picks across the NBA, MLB, NFL, soccer, hockey and college, with real betting edges, Kelly sizing, and a fully transparent, auto-graded track record.",
     url: "https://oddsix.app",
     github: "https://github.com/SpencerGoss/nba-analytics-project",
-    tags: ["Python", "scikit-learn", "LightGBM", "Plotly", "Chart.js", "GitHub Pages", "SQL Server"],
+    tags: ["Python", "scikit-learn", "LightGBM", "Calibration", "Daily Pipeline", "Multi-Sport"],
     screenshots: [
-      { label: "Dashboard Home", desc: "Daily picks & live scores" },
-      { label: "Game Predictions", desc: "Confidence tiers & radar charts" },
-      { label: "Player Comparison", desc: "Stats, efficiency & career totals" },
-      { label: "League Standings", desc: "Power rankings & playoff picture" },
+      { label: "Today across all sports", desc: "Daily slate, top performers & tonight's edge", img: "/images/projects/oddsix-home.png" },
+      { label: "Betting hub", desc: "Model read vs. market line, point edges & Kelly sizing", img: "/images/projects/oddsix-betting.png" },
+      { label: "Transparent track record", desc: "Every pick graded daily — recent & lifetime, losses included", img: "/images/projects/oddsix-track.png" },
     ],
     metrics: [
-      { value: 73, suffix: ".5%", label: "Prediction Accuracy" },
-      { value: 490, suffix: "+", label: "ML Features" },
-      { value: 5, suffix: "", label: "Dashboard Sections" },
-      { value: 30, suffix: "", label: "NBA Teams Covered" },
+      { value: 72, suffix: "%", label: "Win Rate · All-Time" },
+      { value: 290, suffix: "+", label: "Picks Graded" },
+      { value: 6, suffix: "", label: "Sports Covered" },
+      { value: 210, suffix: "–80", label: "Won–Lost" },
     ],
     cardMetrics: [
-      { display: "73.5%", label: "Accuracy" },
-      { display: "490+", label: "ML Features" },
-      { display: "25+", label: "Years of Data" },
+      { display: "72%", label: "Win Rate" },
+      { display: "290+", label: "Picks Graded" },
+      { display: "6", label: "Sports" },
     ],
     caseStudy: {
-      hook: "A comprehensive NBA analytics platform with ML-powered predictions, player tracking, league standings, and interactive data visualizations — covering 25+ years of basketball history.",
+      hook: "A live, multi-sport prediction platform that posts daily ML picks across six sports — with real betting edges, Kelly stake sizing, and a fully transparent, auto-graded track record. 72% accuracy over 290 completed picks, losses included.",
       sections: [
         {
           title: "The Challenge",
           color: "#06B6D4",
-          body: "As a lifelong basketball fan, I wanted a single place to explore NBA data — player stats, team standings, historical trends, and game predictions — without the clutter and ads of existing sports sites. Most prediction models online use basic stats and single-model approaches. I wanted to build something comprehensive: a platform that combines rigorous ML with rich data exploration.",
+          body: "I'm a sports fan who got tired of two kinds of prediction sites: black-box “lock of the day” accounts that quietly bury their losses, and cluttered stats pages drowning in ads. I wanted to build the honest version — a clean platform that posts a real probability for every game, compares it to the betting market, and grades itself in public, win or lose.",
         },
         {
           title: "What I Built",
           color: "#8B5CF6",
-          body: "Oddsix is a free, open-source NBA analytics dashboard with five major sections: Home (daily picks, live scores), Games (ML predictions with confidence tiers, matchup radar charts, head-to-head history), League (conference standings, power rankings, playoff picture), Players (stats for all 30 teams, player comparisons, prop projections with conformal intervals), and Betting (odds tools, value detection, CLV tracking). The prediction engine uses a stacked ensemble (Gradient Boosting + Logistic Regression) trained on 490+ engineered features — Elo ratings, clutch performance, lineup net ratings, RAPM, and opponent-adjusted stats. Auto-calibrated with Platt/Isotonic scaling. Daily updates run automatically via scheduled pipelines.",
+          body: "Oddsix is a live, multi-sport prediction platform covering the NBA, MLB, NFL, soccer, hockey and college. Each sport runs its own machine-learning model, trained only on information known before tip-off and probability-calibrated so that “60%” actually means 60%. The betting hub turns those probabilities into actionable edges — comparing the model's read to the market line, flagging value, and sizing stakes with the Kelly criterion. A daily pipeline pulls fresh data, regenerates every prediction, grades yesterday's results, and updates the site automatically.",
           features: [
-            { emoji: "\u{1F3E0}", name: "Home", desc: "Daily picks, live scores carousel, season performance tracking" },
-            { emoji: "\u{1F3AE}", name: "Games", desc: "ML predictions with confidence tiers, matchup radar charts, head-to-head history" },
-            { emoji: "\u{1F3C6}", name: "League", desc: "Conference standings, power rankings, playoff picture, head-to-head matrix" },
-            { emoji: "\u{1F464}", name: "Players", desc: "Stats for all 30 teams, player comparisons, prop projections with conformal intervals" },
+            { emoji: "\u{1F3C0}", name: "Every Sport, One Slate", desc: "Daily picks across NBA, MLB, NFL, soccer, NHL & college, sorted by start time" },
+            { emoji: "\u{1F3AF}", name: "Betting Edges", desc: "Model read vs. market line, value detection, and Kelly stake sizing" },
+            { emoji: "\u{1F4CA}", name: "Calibrated Models", desc: "A separate pre-tip-off model per sport, probability-calibrated for honesty" },
+            { emoji: "\u{1F4C8}", name: "Public Track Record", desc: "Every pick graded daily — recent and lifetime, every loss included" },
           ],
         },
         {
           title: "The Result",
           color: "#10B981",
-          body: "73.5% moneyline prediction accuracy across 132+ tracked games. The live dashboard at oddsix.app serves daily predictions with confidence scores, model agreement indicators, and uncertainty quantification via Monte Carlo dropout. Every prediction comes with a plain-text explanation — not a black box.",
+          body: "Oddsix is live at oddsix.app, posting picks every day and grading itself in the open: 72% accuracy over 290 completed picks (210–80), with NBA running at 73% across the last 30 days. The track record updates automatically and includes every loss — because a prediction system you can't audit isn't one worth trusting.",
         },
       ],
     },
@@ -414,7 +413,7 @@ const EXPERIENCE = [
     period: "2025 — Present",
     description: "Shipping real products: a full-stack ML prediction platform, automated trading systems with risk management, and an autonomous multi-agent AI development environment.",
     details: [
-      "Built Oddsix — a full-stack NBA prediction engine with 490+ ML features and 73.5% accuracy",
+      "Built and deployed Oddsix — a live multi-sport ML prediction platform that grades itself in public at 72% accuracy over 290+ picks",
       "Developed automated trading systems with real-time risk management and circuit breakers",
       "Engineered a multi-agent AI development system — custom Claude skills, plugins, and autonomous overnight agents across multiple projects",
     ],
@@ -844,8 +843,9 @@ function VideoEmbed({ id }: { id: string }) {
   );
 }
 
-function Slideshow({ screenshots, accent }: { screenshots: { label: string; desc: string }[]; accent: string }) {
+function Slideshow({ screenshots, accent }: { screenshots: { label: string; desc: string; img?: string }[]; accent: string }) {
   const [current, setCurrent] = useState(0);
+  const hasImages = screenshots.some((s) => s.img);
 
   useEffect(() => {
     if (screenshots.length <= 1) return;
@@ -858,7 +858,7 @@ function Slideshow({ screenshots, accent }: { screenshots: { label: string; desc
   return (
     <div className="slideshow-container rounded-xl border border-border shadow-sm mb-6 overflow-hidden">
       {/* Slides */}
-      <div className="relative h-40 md:h-56">
+      <div className={`relative ${hasImages ? "h-48 md:h-72" : "h-40 md:h-56"}`}>
         {screenshots.map((shot, i) => (
           <div
             key={i}
@@ -866,14 +866,26 @@ function Slideshow({ screenshots, accent }: { screenshots: { label: string; desc
             style={{
               opacity: i === current ? 1 : 0,
               transform: i === current ? "translateX(0)" : i < current ? "translateX(-20px)" : "translateX(20px)",
-              background: `linear-gradient(135deg, ${accent}08, ${accent}15, ${accent}08)`,
+              background: shot.img ? "#0b1220" : `linear-gradient(135deg, ${accent}08, ${accent}15, ${accent}08)`,
             }}
           >
-            <div className="w-12 h-12 rounded-xl mb-3 flex items-center justify-center" style={{ background: `${accent}15` }}>
-              <div className="w-6 h-6 rounded" style={{ background: `${accent}30` }} />
-            </div>
-            <div className="text-sm font-semibold text-foreground">{shot.label}</div>
-            <div className="text-xs text-muted-foreground mt-1">{shot.desc}</div>
+            {shot.img ? (
+              <>
+                <img src={shot.img} alt={shot.label} loading="lazy" className="w-full h-full object-cover object-top" />
+                <div className="absolute bottom-0 inset-x-0 px-4 py-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent">
+                  <div className="text-xs font-semibold text-white">{shot.label}</div>
+                  <div className="text-[10px] text-white/70">{shot.desc}</div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="w-12 h-12 rounded-xl mb-3 flex items-center justify-center" style={{ background: `${accent}15` }}>
+                  <div className="w-6 h-6 rounded" style={{ background: `${accent}30` }} />
+                </div>
+                <div className="text-sm font-semibold text-foreground">{shot.label}</div>
+                <div className="text-xs text-muted-foreground mt-1">{shot.desc}</div>
+              </>
+            )}
           </div>
         ))}
       </div>
