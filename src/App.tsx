@@ -217,6 +217,56 @@ const PROJECTS = [
     },
   },
   {
+    id: "box-office",
+    title: "Box Office vs. Ratings",
+    subtitle: "Film Data Pipeline · ETL → PostgreSQL → Power BI",
+    accent: "#2563EB",
+    accentBg: "rgba(37,99,235,0.08)",
+    featured: false,
+    status: "In Progress",
+    shortDescription: "A reproducible ETL pipeline that pulls ~6,000 films from the TMDB API into a 3NF PostgreSQL database and Power BI — asking whether higher-earning films actually rate higher.",
+    url: "#",
+    github: "https://github.com/SpencerGoss/box-office-vs-ratings",
+    tags: ["Python", "pandas", "PostgreSQL", "SQLAlchemy", "Power BI", "TMDB API"],
+    screenshots: [],
+    metrics: [
+      { value: 6000, suffix: "+", label: "Films Pipelined" },
+      { value: 19, suffix: "", label: "Genres" },
+      { value: 7, suffix: "", label: "Data-Quality Checks" },
+      { value: 3, suffix: "NF", label: "PostgreSQL Schema" },
+    ],
+    cardMetrics: [
+      { display: "6,000+", label: "Films" },
+      { display: "7", label: "QA Checks" },
+      { display: "3NF", label: "Postgres" },
+    ],
+    caseStudy: {
+      hook: "Do films that earn more also rate higher? An end-to-end data-engineering project: extract ~6,000 films from the TMDB API, load them into a normalized PostgreSQL database, and explore the box-office-versus-ratings story in Power BI.",
+      sections: [
+        {
+          title: "The Question",
+          color: "#06B6D4",
+          body: "Do films that earn more also rate higher — and do certain genres show a consistent gap between revenue and reception that shifts across decades? I set out to answer that with real data, and to build the kind of reproducible pipeline a working analyst would actually trust. The source is the TMDB API: roughly 6,000 films from 2000 to 2026, each with budget, revenue, runtime, audience ratings, and genres.",
+        },
+        {
+          title: "The Pipeline",
+          color: "#8B5CF6",
+          body: "A single self-contained Python script runs the whole thing end-to-end — extract, clean, validate, load, export — with no manual steps. A two-stage TMDB extract (discover films by year, then pull per-film financials) with retry and backoff feeds a pandas transform layer that derives profit, ROI, profit margin, budget tier, hit/flop performance, and decade. Before anything loads, 7 data-quality checks run — null required fields, duplicate keys, dtype coercion, range bounds, referential integrity, and row-count reconciliation — each logged PASS/FAIL, with critical failures aborting the run. The load is idempotent: ON CONFLICT upserts mean re-running never duplicates a row.",
+        },
+        {
+          title: "The Database",
+          color: "#2563EB",
+          body: "Everything lands in a 3NF PostgreSQL schema — a films table, a genres lookup, and a many-to-many film_genres bridge, plus an enriched view that joins in profit, ROI, and a comma-separated genre list. The current load holds 6,008 films, 19 genres, and 15,811 film-genre links, fully documented with an ER diagram. Postgres is the source of truth and the Power BI CSV is derived from it, so the live database, the inlined DDL, and the ER diagram all describe exactly the same schema — no drift.",
+        },
+        {
+          title: "The Dashboard",
+          color: "#10B981",
+          body: "The final layer is a Power BI dashboard built on a genre × decade aggregation — average rating versus average ROI across 56 genre-decade cells — to surface where commercial success and critical reception line up, and where they pull apart. This piece is in active development, on track to wrap in the next couple of weeks.",
+        },
+      ],
+    },
+  },
+  {
     id: "churn-model",
     title: "Churn Predictor",
     subtitle: "MSBA Capstone",
@@ -656,14 +706,25 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
           <div className="flex items-center gap-2 mb-1.5">
             <div className="w-2 h-2 rounded-full" aria-hidden="true" style={{ background: project.accent }} />
             <h3 className="text-base md:text-lg font-extrabold text-foreground">{project.title}</h3>
-            {(project as { video?: string }).video && (
-              <span
-                className="ml-auto text-[9px] font-bold px-2 py-0.5 rounded-full inline-flex items-center gap-1 whitespace-nowrap"
-                style={{ background: project.accentBg, color: project.accent }}
-              >
-                ▶ Video
-              </span>
-            )}
+            <div className="ml-auto flex items-center gap-1.5">
+              {(project as { status?: string }).status && (
+                <span
+                  className="text-[9px] font-bold px-2 py-0.5 rounded-full inline-flex items-center gap-1 whitespace-nowrap"
+                  style={{ background: "rgba(245,158,11,0.14)", color: "#B45309" }}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#F59E0B" }} />
+                  {(project as { status?: string }).status}
+                </span>
+              )}
+              {(project as { video?: string }).video && (
+                <span
+                  className="text-[9px] font-bold px-2 py-0.5 rounded-full inline-flex items-center gap-1 whitespace-nowrap"
+                  style={{ background: project.accentBg, color: project.accent }}
+                >
+                  ▶ Video
+                </span>
+              )}
+            </div>
           </div>
           <p className="text-[11px] text-muted-foreground mb-2">{project.subtitle}</p>
           <p className="text-[11px] text-muted-foreground/70 leading-relaxed">{project.shortDescription}</p>
@@ -702,6 +763,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
 function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void }) {
   const oddsix = PROJECTS.find((p) => p.id === "oddsix")!;
   const tradingBot = PROJECTS.find((p) => p.id === "trading-bot")!;
+  const boxOffice = PROJECTS.find((p) => p.id === "box-office")!;
   const msbaNba = PROJECTS.find((p) => p.id === "msba-nba")!;
   const churnModel = PROJECTS.find((p) => p.id === "churn-model")!;
 
@@ -712,9 +774,10 @@ function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void 
       </div>
       <div className="bento-col-right">
         <BentoCard project={tradingBot} onClick={() => onSelectProject("trading-bot")} delay={120} />
+        <BentoCard project={boxOffice} onClick={() => onSelectProject("box-office")} delay={200} />
         <div className="bento-row-compact">
-          <BentoCard project={msbaNba} onClick={() => onSelectProject("msba-nba")} delay={240} />
-          <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} delay={300} />
+          <BentoCard project={msbaNba} onClick={() => onSelectProject("msba-nba")} delay={280} />
+          <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} delay={340} />
         </div>
       </div>
     </div>
@@ -869,8 +932,19 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
           style={{ background: `radial-gradient(circle, ${project.accentBg}, transparent 70%)`, filter: "blur(60px)" }}
         />
         <div className="relative z-10 max-w-2xl mx-auto px-6 pt-12 md:pt-16 pb-8 md:pb-10">
-          <div className="text-[10px] font-bold tracking-[2px] uppercase mb-2" style={{ color: project.accent }}>
-            Case Study
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-[10px] font-bold tracking-[2px] uppercase" style={{ color: project.accent }}>
+              Case Study
+            </span>
+            {(project as { status?: string }).status && (
+              <span
+                className="text-[9px] font-bold px-2 py-0.5 rounded-full inline-flex items-center gap-1 whitespace-nowrap"
+                style={{ background: "rgba(245,158,11,0.14)", color: "#B45309" }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#F59E0B" }} />
+                {(project as { status?: string }).status}
+              </span>
+            )}
           </div>
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground mb-1">
             {project.title}
@@ -881,9 +955,9 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
 
           {video ? (
             <VideoEmbed id={video} />
-          ) : (
+          ) : project.screenshots.length > 0 ? (
             <Slideshow screenshots={project.screenshots} accent={project.accent} />
-          )}
+          ) : null}
 
           <div className="flex gap-3">
             {video && (
@@ -949,7 +1023,9 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
                 <div key={i} className="h-8 rounded" style={{ width: w, background: `${project.accent}12` }} />
               ))}
             </div>
-            <div className="text-xs text-muted-foreground/50">More screenshots coming soon</div>
+            <div className="text-xs text-muted-foreground/50">
+              {(project as { status?: string }).status ? "Dashboard & visuals coming soon" : "More screenshots coming soon"}
+            </div>
           </div>
         )}
 
