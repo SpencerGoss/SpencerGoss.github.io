@@ -2144,10 +2144,10 @@ export default function App() {
                     {/* Detail grid with left accent borders */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       {[
-                        { label: "Approach", value: "Research deeply, build deliberately, refine relentlessly", color: "#06B6D4" },
-                        { label: "Strength", value: "Turning messy problems into working products", color: "#8B5CF6" },
-                        { label: "Education", value: "MSBA (AI) at UofL, BBA (Finance, Marketing, Analytics) at UK", color: "#10B981" },
-                        { label: "Experience", value: "Churchill Downs, Terex Corporation, Independent Projects", color: "#F59E0B" },
+                        { label: "Focus", value: "Predictive modeling, data pipelines, and analytics that drive decisions", color: "#06B6D4" },
+                        { label: "Toolkit", value: "Python, SQL, R, scikit-learn, and Power BI", color: "#06B6D4" },
+                        { label: "Education", value: "MSBA (AI) at UofL, BBA (Finance, Marketing, Analytics) at UK", color: "#06B6D4" },
+                        { label: "Experience", value: "Churchill Downs, Terex Corporation, Independent Projects", color: "#06B6D4" },
                       ].map((item, i) => (
                         <div key={i} className="pl-4" style={{ borderLeft: `2px solid ${item.color}` }}>
                           <div className="text-[11px] font-semibold uppercase tracking-wider mb-1" style={{ color: item.color }}>{item.label}</div>
