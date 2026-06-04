@@ -1146,12 +1146,8 @@ function TechIcon({ skill }: { skill: TechSkill }) {
 
 function BusinessSkillPill({ skill }: { skill: { name: string; featured?: boolean } }) {
   return (
-    <div className={`skill-badge inline-flex items-center gap-2 rounded-full px-4 py-2 cursor-default text-sm font-medium transition-all duration-200 ${
-      skill.featured
-        ? "bg-primary/8 border border-primary/25 text-foreground hover:border-primary/40 hover:shadow-md hover:shadow-primary/5"
-        : "bg-white border border-border text-foreground hover:border-primary/30 hover:shadow-sm"
-    }`}>
-      <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${skill.featured ? "bg-primary" : "bg-muted-foreground/30"}`} />
+    <div className="skill-badge inline-flex items-center gap-2 rounded-full px-4 py-2 cursor-default text-sm font-medium bg-white border border-border text-foreground transition-all duration-200 hover:border-primary/30 hover:shadow-sm">
+      <div className="w-1.5 h-1.5 rounded-full shrink-0 bg-primary" />
       {skill.name}
     </div>
   );
@@ -1159,11 +1155,11 @@ function BusinessSkillPill({ skill }: { skill: { name: string; featured?: boolea
 
 const SKILL_CATEGORIES = [
   { name: "Languages", color: "#06B6D4" },
-  { name: "AI & Automation", color: "#8B5CF6" },
-  { name: "Machine Learning", color: "#10B981" },
-  { name: "Visualization", color: "#0891B2" },
-  { name: "Analytics", color: "#F59E0B" },
-  { name: "Tools & Platforms", color: "#64748b" },
+  { name: "AI & Automation", color: "#06B6D4" },
+  { name: "Machine Learning", color: "#06B6D4" },
+  { name: "Visualization", color: "#06B6D4" },
+  { name: "Analytics", color: "#06B6D4" },
+  { name: "Tools & Platforms", color: "#06B6D4" },
 ];
 
 function SkillCategory({ category, delay }: { category: { name: string; color: string }; delay: number }) {
