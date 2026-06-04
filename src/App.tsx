@@ -82,9 +82,9 @@ const PROJECTS = [
     github: "https://github.com/SpencerGoss/nba-analytics-project",
     tags: ["Python", "scikit-learn", "LightGBM", "Calibration", "Daily Pipeline", "Multi-Sport"],
     screenshots: [
-      { label: "Today across all sports", desc: "Daily slate, top performers & tonight's edge", img: "/images/projects/oddsix-home.png" },
-      { label: "Betting hub", desc: "Model read vs. market line, point edges & Kelly sizing", img: "/images/projects/oddsix-betting.png" },
-      { label: "Track record", desc: "Every pick graded daily, recent and lifetime, losses included", img: "/images/projects/oddsix-track.png" },
+      { label: "Today across all sports", desc: "Daily slate, top performers, and tonight's edge", img: "/images/projects/oddsix-home.png" },
+      { label: "Betting hub", desc: "Model read vs. market line, point edges, and Kelly sizing", img: "/images/projects/oddsix-betting.png" },
+      { label: "Player analytics", desc: "Per-game averages, shooting splits, and recent form", img: "/images/projects/oddsix-player.png" },
     ],
     metrics: [
       { value: 72, suffix: "%", label: "Win Rate · All-Time" },
