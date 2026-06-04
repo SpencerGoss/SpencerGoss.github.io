@@ -639,8 +639,36 @@ function useCountUp(target: number, duration = 2000) {
    COMPONENTS
    ================================================================ */
 
+/* Oddsix wordmark — the "i" is rendered as a teal dot, matching oddsix.app */
+function OddsixWordmark() {
+  return (
+    <span aria-label="Oddsix">
+      <span aria-hidden="true">Odds</span>
+      <span
+        aria-hidden="true"
+        style={{
+          display: "inline-block",
+          width: "0.24em",
+          height: "0.24em",
+          borderRadius: "50%",
+          background: "#2DBA9A",
+          verticalAlign: "0.5em",
+          margin: "0 0.05em",
+        }}
+      />
+      <span aria-hidden="true">x</span>
+    </span>
+  );
+}
+
+function ProjectTitle({ project }: { project: typeof PROJECTS[0] }) {
+  if (project.id === "oddsix") return <OddsixWordmark />;
+  return <>{project.title}</>;
+}
+
 function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0]; onClick: () => void; delay?: number }) {
   const revealRef = useScrollReveal();
+  const heroShot = project.screenshots.find((s) => (s as { img?: string }).img) as { label: string; desc: string; img?: string } | undefined;
 
   if (project.featured) {
     return (
@@ -664,7 +692,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
               Featured Project
             </div>
             <h3 className="text-2xl md:text-[26px] font-extrabold tracking-tight text-foreground mb-1">
-              {project.title}
+              <ProjectTitle project={project} />
             </h3>
             <p className="text-sm text-muted-foreground mb-2">{project.subtitle}</p>
             <p className="text-xs text-muted-foreground/70 leading-relaxed max-w-[360px]">
@@ -672,21 +700,28 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
             </p>
           </div>
 
-          <div
-            className="my-4 rounded-xl border border-border/50 h-20 flex items-center justify-center overflow-hidden relative"
-            style={{ background: `linear-gradient(135deg, ${project.accent}08, ${project.accent}15, ${project.accent}06)` }}
-          >
-            <div className="flex gap-3 items-end">
-              {[24, 36, 28, 42, 20].map((h, i) => (
-                <div
-                  key={i}
-                  className="w-2 rounded-t-sm transition-all duration-500"
-                  style={{ height: h, background: `${project.accent}30`, animationDelay: `${i * 0.15}s` }}
-                />
-              ))}
+          {heroShot?.img ? (
+            <div className="my-4 rounded-xl border border-border/50 h-28 md:h-32 overflow-hidden relative">
+              <img src={heroShot.img} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-cover object-top" />
+              <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/15 to-transparent" />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/30" />
-          </div>
+          ) : (
+            <div
+              className="my-4 rounded-xl border border-border/50 h-20 flex items-center justify-center overflow-hidden relative"
+              style={{ background: `linear-gradient(135deg, ${project.accent}08, ${project.accent}15, ${project.accent}06)` }}
+            >
+              <div className="flex gap-3 items-end">
+                {[24, 36, 28, 42, 20].map((h, i) => (
+                  <div
+                    key={i}
+                    className="w-2 rounded-t-sm transition-all duration-500"
+                    style={{ height: h, background: `${project.accent}30`, animationDelay: `${i * 0.15}s` }}
+                  />
+                ))}
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/30" />
+            </div>
+          )}
 
           <div>
             <div className="flex gap-6 mb-3">
@@ -706,7 +741,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
                 ))}
               </div>
               <div className="flex items-center gap-1 ml-auto text-[11px] font-semibold whitespace-nowrap opacity-60 group-hover/card:opacity-100 transition-opacity duration-200" style={{ color: project.accent }}>
-                View Case Study <ArrowUpRight size={12} className="transition-transform duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
+                View Project <ArrowUpRight size={12} className="transition-transform duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
               </div>
             </div>
           </div>
@@ -730,7 +765,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
         <div>
           <div className="flex items-center gap-2 mb-1.5">
             <div className="w-2 h-2 rounded-full" aria-hidden="true" style={{ background: project.accent }} />
-            <h3 className="text-base md:text-lg font-extrabold text-foreground">{project.title}</h3>
+            <h3 className="text-base md:text-lg font-extrabold text-foreground"><ProjectTitle project={project} /></h3>
             <div className="ml-auto flex items-center gap-1.5">
               {(project as { status?: string }).status && (
                 <span
@@ -972,7 +1007,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
         <div className="relative z-10 max-w-2xl mx-auto px-6 pt-12 md:pt-16 pb-8 md:pb-10">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-[10px] font-bold tracking-[2px] uppercase" style={{ color: project.accent }}>
-              Case Study
+              {project.subtitle}
             </span>
             {(project as { status?: string }).status && (
               <span
@@ -985,7 +1020,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
             )}
           </div>
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground mb-1">
-            {project.title}
+            <ProjectTitle project={project} />
           </h2>
           <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6">
             {project.caseStudy.hook}
