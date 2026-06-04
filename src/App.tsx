@@ -204,9 +204,9 @@ const PROJECTS = [
       hook: "A production-grade automated trading system that fuses 21 signal types through an AI agent pipeline, with immutable circuit breakers and real-time risk monitoring.",
       sections: [
         {
-          title: "The Challenge",
+          title: "Why I Built It",
           color: "#06B6D4",
-          body: "Most open-source trading bots are toy scripts: a single strategy, no risk management, no testing. I wanted to build a production-grade system that could actually handle real money, with multi-asset support, multiple signal sources, risk controls that can't be overridden, and enough test coverage to sleep at night.",
+          body: "I wanted to find out if I could actually build something with AI that makes real money in live markets, not a demo, a real system. Markets are about as hard and unforgiving a problem as you can pick, so it was the best way I could think of to test my machine learning and engineering skills against something with real stakes and a clear scoreboard. That meant building it properly: multiple signal sources, risk controls that can't be overridden, and enough test coverage to actually trust it.",
         },
         {
           title: "What I Built",
@@ -274,7 +274,7 @@ const PROJECTS = [
   {
     id: "churn-model",
     title: "Churn Predictor",
-    subtitle: "MSBA Capstone",
+    subtitle: "MSBA Case Competition",
     accent: "#F59E0B",
     accentBg: "rgba(245,158,11,0.08)",
     featured: false,
@@ -297,9 +297,9 @@ const PROJECTS = [
       hook: "A predictive churn model that identifies at-risk customers and segments them into actionable clusters for targeted retention strategies.",
       sections: [
         {
-          title: "The Challenge",
+          title: "The Brief",
           color: "#06B6D4",
-          body: "For my MSBA capstone, we were given a real customer dataset of 5,636 records with demographics and behavioral characteristics. The goal: build a predictive model to identify churn risk, find the key factors driving churn, and provide data-driven recommendations for retention.",
+          body: "This was a case competition in my MSBA program. We were handed a real customer dataset of 5,636 records and a business problem: figure out who was likely to churn, pin down what was driving it, and turn that into retention recommendations the business could actually act on.",
         },
         {
           title: "What I Built",
