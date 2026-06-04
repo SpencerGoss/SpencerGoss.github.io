@@ -77,7 +77,7 @@ const PROJECTS = [
     accent: "#06B6D4",
     accentBg: "rgba(6,182,212,0.08)",
     featured: true,
-    cardImage: "/images/projects/oddsix-card.png",
+    cardImage: "/images/projects/oddsix-player.png",
     shortDescription: "A live multi-sport analytics platform covering the NBA, MLB, NFL, soccer, hockey and college: player stats and comparisons, historical data, league leaders, plus ML game predictions and a betting layer, all updated daily.",
     url: "https://oddsix.app",
     github: "https://github.com/SpencerGoss/nba-analytics-project",
@@ -715,7 +715,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
           </div>
 
           {cardImg ? (
-            <div className="my-4 rounded-xl border border-border/50 h-32 md:h-36 overflow-hidden relative bg-slate-100">
+            <div className="my-4 rounded-xl border border-border/50 flex-1 min-h-[180px] overflow-hidden relative bg-slate-100">
               <img src={cardImg} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-cover object-top" />
             </div>
           ) : (
