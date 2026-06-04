@@ -77,7 +77,7 @@ const PROJECTS = [
     accent: "#06B6D4",
     accentBg: "rgba(6,182,212,0.08)",
     featured: true,
-    cardImage: "/images/projects/oddsix-player.png",
+    cardImage: "/images/projects/oddsix-card.png",
     shortDescription: "A live multi-sport analytics platform covering the NBA, MLB, NFL, soccer, hockey and college: player stats and comparisons, historical data, league leaders, plus ML game predictions and a betting layer, all updated daily.",
     url: "https://oddsix.app",
     github: "https://github.com/SpencerGoss/nba-analytics-project",
@@ -708,14 +708,11 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
             <h3 className="text-2xl md:text-[26px] font-extrabold tracking-tight text-foreground mb-1">
               <ProjectTitle project={project} />
             </h3>
-            <p className="text-sm text-muted-foreground mb-2">{project.subtitle}</p>
-            <p className="text-xs text-muted-foreground/70 leading-relaxed max-w-[360px]">
-              {project.shortDescription}
-            </p>
+            <p className="text-sm text-muted-foreground">{project.subtitle}</p>
           </div>
 
           {cardImg ? (
-            <div className="my-4 rounded-xl border border-border/50 flex-1 min-h-[180px] overflow-hidden relative bg-slate-100">
+            <div className="my-4 rounded-xl border border-border/50 flex-1 min-h-[200px] overflow-hidden relative bg-white">
               <img src={cardImg} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-cover object-top" />
             </div>
           ) : (
@@ -745,16 +742,9 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
                 </div>
               ))}
             </div>
-            <div className="flex items-center gap-3">
-              <div className="flex gap-1.5 flex-wrap">
-                {project.tags.slice(0, 4).map((tag) => (
-                  <span key={tag} className="text-[11px] bg-secondary border border-border text-muted-foreground px-3 py-1 rounded-full">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="flex items-center gap-1 ml-auto text-[11px] font-semibold whitespace-nowrap opacity-60 group-hover/card:opacity-100 transition-opacity duration-200" style={{ color: project.accent }}>
-                View Project <ArrowUpRight size={12} className="transition-transform duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
+            <div className="flex items-center">
+              <div className="flex items-center gap-1 ml-auto text-xs font-semibold whitespace-nowrap opacity-70 group-hover/card:opacity-100 transition-opacity duration-200" style={{ color: project.accent }}>
+                View Project <ArrowUpRight size={13} className="transition-transform duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
               </div>
             </div>
           </div>
