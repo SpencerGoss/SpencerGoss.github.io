@@ -191,13 +191,14 @@ const PROJECTS = [
       { label: "Agent Pipeline", desc: "5-stage AI trade evaluation" },
     ],
     metrics: [
-      { value: 31, suffix: "K+", label: "Lines of Code" },
-      { value: 3082, suffix: "", label: "Tests" },
-      { value: 21, suffix: "", label: "Signal Types" },
+      { value: 21, suffix: "", label: "Signals Fused" },
+      { value: 5, suffix: "-Stage", label: "AI Agent Pipeline" },
+      { value: 4, suffix: "", label: "Risk-Control Layers" },
       { value: 95, suffix: "%", label: "Test Coverage" },
     ],
     cardMetrics: [
-      { display: "3K+", label: "Tests" },
+      { display: "21", label: "Signals" },
+      { display: "5-stage", label: "AI Pipeline" },
       { display: "95%", label: "Coverage" },
     ],
     caseStudy: {
@@ -216,7 +217,7 @@ const PROJECTS = [
         {
           title: "The Result",
           color: "#10B981",
-          body: "31,000+ lines of production Python with 3,082 tests at 95% coverage. Real-time React/FastAPI dashboard for monitoring. Pushover mobile alerts for circuit breaker trips. HMAC-signed audit logs. Tax compliance with wash-sale detection. Everything degrades gracefully: TimescaleDB, Redis, and push notifications are all optional, and the system falls back to in-memory operation.",
+          body: "A production-grade system trading stocks through Alpaca and crypto through Kraken, tested to 95% coverage. It has a real-time React and FastAPI dashboard for monitoring, Pushover mobile alerts on every circuit-breaker trip, HMAC-signed audit logs, and tax compliance with wash-sale detection. Everything degrades gracefully: TimescaleDB, Redis, and push notifications are all optional, and the system falls back to in-memory operation.",
         },
       ],
     },
