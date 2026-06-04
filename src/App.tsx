@@ -73,14 +73,15 @@ const PROJECTS = [
   {
     id: "oddsix",
     title: "Oddsix",
-    subtitle: "Multi-Sport Prediction Platform",
+    subtitle: "Multi-Sport Analytics Platform",
     accent: "#06B6D4",
     accentBg: "rgba(6,182,212,0.08)",
     featured: true,
-    shortDescription: "A live multi-sport prediction platform. Daily ML picks across the NBA, MLB, NFL, soccer, hockey and college, with real betting edges, Kelly sizing, and a public track record that grades itself every day.",
+    cardImage: "/images/projects/oddsix-card.png",
+    shortDescription: "A live multi-sport analytics platform covering the NBA, MLB, NFL, soccer, hockey and college: player stats and comparisons, historical data, league leaders, plus ML game predictions and a betting layer, all updated daily.",
     url: "https://oddsix.app",
     github: "https://github.com/SpencerGoss/nba-analytics-project",
-    tags: ["Python", "scikit-learn", "LightGBM", "Calibration", "Daily Pipeline", "Multi-Sport"],
+    tags: ["Python", "scikit-learn", "LightGBM", "Sports Analytics", "Daily Pipeline", "Multi-Sport"],
     screenshots: [
       { label: "Today across all sports", desc: "Daily slate, top performers, and tonight's edge", img: "/images/projects/oddsix-home.png" },
       { label: "Betting hub", desc: "Model read vs. market line, point edges, and Kelly sizing", img: "/images/projects/oddsix-betting.png" },
@@ -98,7 +99,7 @@ const PROJECTS = [
       { display: "6", label: "Sports" },
     ],
     caseStudy: {
-      hook: "A live multi-sport prediction platform that posts daily ML picks across six sports, with real betting edges, Kelly stake sizing, and a public track record that grades itself. 72% accuracy over 290 completed picks, losses included.",
+      hook: "A live multi-sport analytics platform covering six sports: player stats and comparisons, historical data and league leaders, plus daily ML game predictions and a betting layer. Everything updates daily, and the prediction track record grades itself in public at 72% over 290 picks.",
       sections: [
         {
           title: "Why I Built It",
@@ -108,11 +109,11 @@ const PROJECTS = [
         {
           title: "What I Built",
           color: "#8B5CF6",
-          body: "Oddsix is a live multi-sport prediction platform covering the NBA, MLB, NFL, soccer, hockey and college. Each sport runs its own machine-learning model, trained only on information known before tip-off and calibrated so that a 60% really means 60%. The NBA model alone is a three-model stacked ensemble over 490 engineered features (Elo ratings, clutch performance, lineup quality, opponent-adjusted stats) and lands around 0.74 AUC on games it hasn't seen. The betting hub turns those probabilities into real edges: it compares the model's read to the market line, flags value, and sizes the stake with the Kelly criterion. A daily pipeline pulls fresh data, regenerates every prediction, grades yesterday's results, and updates the site on its own.",
+          body: "Oddsix is a full sports-analytics hub covering the NBA, MLB, NFL, soccer, hockey and college. It pulls together player stats and cross-era comparisons, team standings and league leaders, historical data and interactive Elo timelines, and on top of all that, daily ML game predictions with a betting layer. Each sport runs its own machine-learning model, trained only on information known before tip-off and calibrated so a 60% really means 60%. The NBA model alone is a three-model stacked ensemble over 490 engineered features (Elo ratings, clutch performance, lineup quality, opponent-adjusted stats) and lands around 0.74 AUC on games it hasn't seen. The betting layer turns those probabilities into real edges: it compares the model's read to the market line, flags value, and sizes the stake with the Kelly criterion. A daily pipeline pulls fresh data, regenerates everything, grades yesterday's results, and updates the site on its own.",
           features: [
-            { emoji: "\u{1F3C0}", name: "Every Sport, One Slate", desc: "Daily picks across NBA, MLB, NFL, soccer, NHL & college, sorted by start time" },
-            { emoji: "\u{1F3AF}", name: "Betting Edges", desc: "Model read vs. market line, value detection, and Kelly stake sizing" },
-            { emoji: "\u{1F4CA}", name: "Calibrated Models", desc: "A separate pre-tip-off model per sport, probability-calibrated for honesty" },
+            { emoji: "\u{1F3C0}", name: "Every Sport, One Place", desc: "Player stats, standings, history, and predictions across NBA, MLB, NFL, soccer, NHL & college" },
+            { emoji: "\u{1F4CA}", name: "Player & Team Analytics", desc: "Per-game stats, cross-era player comparisons, league leaders, and Elo timelines" },
+            { emoji: "\u{1F3AF}", name: "ML Predictions + Betting", desc: "Calibrated pre-tip-off models, market-edge detection, and Kelly stake sizing" },
             { emoji: "\u{1F4C8}", name: "Public Track Record", desc: "Every pick graded daily, recent and lifetime, every loss included" },
           ],
         },
@@ -431,9 +432,9 @@ const EXPERIENCE = [
     org: "Independent Projects",
     location: "Louisville, KY",
     period: "2025 - Present",
-    description: "Shipping real products: a full-stack ML prediction platform, automated trading systems with risk management, and an autonomous multi-agent AI development environment.",
+    description: "Shipping real products: a full-stack multi-sport analytics platform, automated trading systems with risk management, and an autonomous multi-agent AI development environment.",
     details: [
-      "Built and deployed Oddsix, a live multi-sport ML prediction platform that grades itself in public at 72% accuracy over 290+ picks",
+      "Built and deployed Oddsix, a live multi-sport sports-analytics platform (player stats, historical data, ML predictions, and betting tools) whose picks grade themselves in public at 72% over 290+ picks",
       "Developed automated trading systems with real-time risk management and circuit breakers",
       "Engineered a multi-agent AI development system with custom Claude skills, plugins, and autonomous overnight agents across multiple projects",
     ],
@@ -639,23 +640,26 @@ function useCountUp(target: number, duration = 2000) {
    COMPONENTS
    ================================================================ */
 
-/* Oddsix wordmark — the "i" is rendered as a teal dot, matching oddsix.app */
+/* Oddsix wordmark — the "i" is a dotless-i stem with a teal dot on top, matching oddsix.app */
 function OddsixWordmark() {
   return (
     <span aria-label="Oddsix">
       <span aria-hidden="true">Odds</span>
-      <span
-        aria-hidden="true"
-        style={{
-          display: "inline-block",
-          width: "0.24em",
-          height: "0.24em",
-          borderRadius: "50%",
-          background: "#2DBA9A",
-          verticalAlign: "0.5em",
-          margin: "0 0.05em",
-        }}
-      />
+      <span aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>
+        {"ı"}
+        <span
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "-0.02em",
+            transform: "translateX(-50%)",
+            width: "0.24em",
+            height: "0.24em",
+            borderRadius: "50%",
+            background: "#2DBA9A",
+          }}
+        />
+      </span>
       <span aria-hidden="true">x</span>
     </span>
   );
@@ -666,9 +670,19 @@ function ProjectTitle({ project }: { project: typeof PROJECTS[0] }) {
   return <>{project.title}</>;
 }
 
+/* Pick a preview image for a project card: explicit cardImage, else first real screenshot, else a video thumbnail */
+function getCardImage(project: typeof PROJECTS[0]): string | undefined {
+  const p = project as { cardImage?: string; video?: string };
+  if (p.cardImage) return p.cardImage;
+  const shot = project.screenshots.find((s) => (s as { img?: string }).img) as { img?: string } | undefined;
+  if (shot?.img) return shot.img;
+  if (p.video) return `https://i.ytimg.com/vi/${p.video}/mqdefault.jpg`;
+  return undefined;
+}
+
 function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0]; onClick: () => void; delay?: number }) {
   const revealRef = useScrollReveal();
-  const heroShot = project.screenshots.find((s) => (s as { img?: string }).img) as { label: string; desc: string; img?: string } | undefined;
+  const cardImg = getCardImage(project);
 
   if (project.featured) {
     return (
@@ -700,10 +714,9 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
             </p>
           </div>
 
-          {heroShot?.img ? (
-            <div className="my-4 rounded-xl border border-border/50 h-28 md:h-32 overflow-hidden relative">
-              <img src={heroShot.img} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-cover object-top" />
-              <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/15 to-transparent" />
+          {cardImg ? (
+            <div className="my-4 rounded-xl border border-border/50 h-32 md:h-36 overflow-hidden relative bg-slate-100">
+              <img src={cardImg} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-cover object-top" />
             </div>
           ) : (
             <div
@@ -763,6 +776,11 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
     >
       <div className="flex flex-col justify-between h-full">
         <div>
+          {cardImg && (
+            <div className="mb-3 rounded-lg overflow-hidden h-24 border border-border/50 bg-slate-900">
+              <img src={cardImg} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-cover object-center" />
+            </div>
+          )}
           <div className="flex items-center gap-2 mb-1.5">
             <div className="w-2 h-2 rounded-full" aria-hidden="true" style={{ background: project.accent }} />
             <h3 className="text-base md:text-lg font-extrabold text-foreground"><ProjectTitle project={project} /></h3>
