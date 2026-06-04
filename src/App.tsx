@@ -359,31 +359,50 @@ const TECH_SKILLS: TechSkill[] = [
   { name: "Microsoft Teams", icon: "https://api.iconify.design/logos:microsoft-teams.svg", category: "Tools & Platforms" },
 ];
 
-/* Text-based business & professional skills — featured = stronger visual emphasis */
-const BUSINESS_SKILLS: { name: string; featured?: boolean }[] = [
-  { name: "Predictive Modeling", featured: true },
-  { name: "Machine Learning", featured: true },
-  { name: "Statistical Analysis", featured: true },
-  { name: "Feature Engineering", featured: true },
-  { name: "Data Pipeline Development", featured: true },
-  { name: "Financial Analysis" },
-  { name: "Marketing Analytics" },
-  { name: "Data Storytelling" },
-  { name: "Econometrics & Forecasting" },
-  { name: "Regression & Classification" },
-  { name: "A/B Testing" },
-  { name: "Data Cleaning & ETL" },
-  { name: "Customer Segmentation" },
-  { name: "Risk Analysis" },
-  { name: "SEO & Content Strategy" },
-  { name: "Dashboard Design" },
-  { name: "Data Wrangling" },
-  { name: "Stakeholder Communication" },
-  { name: "Requirements Gathering" },
-  { name: "Process Automation" },
-  { name: "Business Strategy" },
-  { name: "Cross-functional Collaboration" },
-  { name: "Project Management" },
+/* Business & professional skills, grouped by area. featured = stronger visual emphasis */
+const BUSINESS_SKILL_GROUPS: { label: string; skills: { name: string; featured?: boolean }[] }[] = [
+  {
+    label: "Machine Learning & Modeling",
+    skills: [
+      { name: "Predictive Modeling", featured: true },
+      { name: "Machine Learning", featured: true },
+      { name: "Statistical Analysis", featured: true },
+      { name: "Feature Engineering", featured: true },
+      { name: "Regression & Classification" },
+      { name: "Econometrics & Forecasting" },
+    ],
+  },
+  {
+    label: "Data Engineering",
+    skills: [
+      { name: "Data Pipeline Development", featured: true },
+      { name: "Data Cleaning & ETL" },
+      { name: "Data Wrangling" },
+      { name: "Process Automation" },
+    ],
+  },
+  {
+    label: "Analytics & Experimentation",
+    skills: [
+      { name: "A/B Testing" },
+      { name: "Customer Segmentation" },
+      { name: "Risk Analysis" },
+      { name: "Marketing Analytics" },
+      { name: "Financial Analysis" },
+      { name: "Dashboard Design" },
+      { name: "Data Storytelling" },
+    ],
+  },
+  {
+    label: "Business & Communication",
+    skills: [
+      { name: "Stakeholder Communication" },
+      { name: "Requirements Gathering" },
+      { name: "Business Strategy" },
+      { name: "Project Management" },
+      { name: "Cross-functional Collaboration" },
+    ],
+  },
 ];
 
 const EXPERIENCE = [
@@ -2216,7 +2235,7 @@ export default function App() {
             <SkillCategory key={cat.name} category={cat} delay={i * 80} />
           ))}
 
-          {/* Business & Professional skills */}
+          {/* Business & Professional skills, grouped by area */}
           <div className="mt-12 pt-8 border-t border-border/50">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-1 h-5 rounded-full bg-foreground/20" />
@@ -2224,9 +2243,18 @@ export default function App() {
                 Business & Professional
               </h3>
             </div>
-            <div className="flex flex-wrap gap-2.5">
-              {BUSINESS_SKILLS.map((skill) => (
-                <BusinessSkillPill key={skill.name} skill={skill} />
+            <div className="space-y-6">
+              {BUSINESS_SKILL_GROUPS.map((group) => (
+                <div key={group.label}>
+                  <div className="text-[10px] font-semibold text-muted-foreground/55 uppercase tracking-[1px] mb-3">
+                    {group.label}
+                  </div>
+                  <div className="flex flex-wrap gap-2.5">
+                    {group.skills.map((skill) => (
+                      <BusinessSkillPill key={skill.name} skill={skill} />
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
