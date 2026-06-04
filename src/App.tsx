@@ -1771,23 +1771,13 @@ export default function App() {
       } else {
         // Find which section is currently in view (first match wins)
         for (const [key, ref] of Object.entries(sectionRefs)) {
-          if (key === "hero" || key === "about") continue; // skip — handled above
+          if (key === "hero") continue; // hero handled above
           if (ref.current) {
             const rect = ref.current.getBoundingClientRect();
             if (rect.top <= 200 && rect.bottom >= 200) {
               setActiveSection(key);
               break;
             }
-          }
-        }
-        // Check about separately — it's visible when scrolled past 1 viewport but before projects
-        const heroEl = sectionRefs.hero.current;
-        const projectsEl = sectionRefs.projects.current;
-        if (heroEl && projectsEl) {
-          const heroBottom = heroEl.getBoundingClientRect().bottom;
-          const projectsTop = projectsEl.getBoundingClientRect().top;
-          if (heroBottom < 300 && projectsTop > 200) {
-            setActiveSection("about");
           }
         }
       }
@@ -1800,13 +1790,6 @@ export default function App() {
   const scrollTo = (key: string) => {
     if (key === "hero") {
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } else if (key === "about") {
-      // About content lives inside the hero's scrollytelling zone (~65% through)
-      const heroEl = sectionRefs.hero.current;
-      if (heroEl) {
-        const aboutOffset = heroEl.offsetTop + heroEl.offsetHeight * 0.55;
-        window.scrollTo({ top: aboutOffset, behavior: "smooth" });
-      }
     } else {
       sectionRefs[key as keyof typeof sectionRefs]?.current?.scrollIntoView({
         behavior: "smooth",
@@ -1827,75 +1810,14 @@ export default function App() {
   const scrollCueRef = useRef<HTMLDivElement>(null);
   const aboutRevealRef = useRef<HTMLDivElement>(null);
 
+  // Fade the scroll cue out as the user scrolls past the hero
   useEffect(() => {
     const handleHeroScroll = () => {
-      if (!heroRef.current || !heroContentRef.current) return;
-
-      const heroRect = heroRef.current.getBoundingClientRect();
-      const sectionHeight = heroRef.current.offsetHeight - window.innerHeight;
-      const scrolled = Math.max(0, -heroRect.top);
-      const progress = sectionHeight > 0 ? Math.min(1, scrolled / sectionHeight) : 0;
-
-      // Phase 1: Hero exit (0% - 50% of scroll)
-      const heroExit = Math.min(1, progress / 0.5);
-      // Phase 2: About enter (35% - 60% of scroll)
-      const aboutEnter = Math.max(0, Math.min(1, (progress - 0.35) / 0.25));
-      // Phase 3: About exit (75% - 100% of scroll)
-      const aboutExit = Math.max(0, Math.min(1, (progress - 0.75) / 0.25));
-
-      if (heroTextRef.current) {
-        const textEl = heroTextRef.current.querySelector('[data-hero="text"]') as HTMLElement;
-        const photoEl = heroTextRef.current.querySelector('[data-hero="photo"]') as HTMLElement;
-
-        if (textEl) {
-          // Text: stays sharp until 20%, blurs out by 50%
-          const textProgress = Math.max(0, Math.min(1, (heroExit - 0.4) / 0.6));
-          const textBlur = textProgress * 16;
-          const textOpacity = Math.max(0, 1 - textProgress);
-          const textX = -textProgress * 80;
-          textEl.style.transform = `translateX(${textX}px)`;
-          textEl.style.opacity = `${textOpacity}`;
-          textEl.style.filter = textBlur > 0.5 ? `blur(${textBlur}px)` : "none";
-        }
-
-        if (photoEl) {
-          // Photo: starts later, blurs out by 50%
-          const photoProgress = Math.max(0, Math.min(1, (heroExit - 0.6) / 0.4));
-          const photoBlur = photoProgress * 16;
-          const photoOpacity = Math.max(0, 1 - photoProgress);
-          const photoX = photoProgress * 60;
-          photoEl.style.transform = `translateX(${photoX}px)`;
-          photoEl.style.opacity = `${photoOpacity}`;
-          photoEl.style.filter = photoBlur > 0.5 ? `blur(${photoBlur}px)` : "none";
-        }
-      }
-
-      // About content fades in, then fades out before releasing
-      if (aboutRevealRef.current) {
-        if (aboutExit > 0) {
-          // Phase 3: About fading out
-          aboutRevealRef.current.style.opacity = `${1 - aboutExit}`;
-          aboutRevealRef.current.style.transform = `translateY(${-aboutExit * 30}px)`;
-        } else {
-          // Phase 2: About fading in
-          aboutRevealRef.current.style.opacity = `${aboutEnter}`;
-          aboutRevealRef.current.style.transform = `translateY(${(1 - aboutEnter) * 40}px)`;
-        }
-        aboutRevealRef.current.style.pointerEvents = aboutEnter > 0.5 && aboutExit < 0.5 ? "auto" : "none";
-      }
-
-      // Scroll cue fade out
       if (scrollCueRef.current) {
-        scrollCueRef.current.style.opacity = `${Math.max(0, 1 - progress * 4)}`;
-      }
-
-      // Hide the entire hero sticky container once we've scrolled past the hero section
-      if (heroContentRef.current) {
-        heroContentRef.current.style.opacity = scrolled >= sectionHeight ? "0" : "1";
-        heroContentRef.current.style.pointerEvents = scrolled >= sectionHeight ? "none" : "auto";
+        const fade = Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.4));
+        scrollCueRef.current.style.opacity = `${fade}`;
       }
     };
-
     window.addEventListener("scroll", handleHeroScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleHeroScroll);
   }, []);
@@ -2005,16 +1927,10 @@ export default function App() {
       <section
         ref={heroRef}
         aria-label="Introduction"
-        className="relative"
-        style={{ minHeight: "280vh", background: "#e8ebf0" }}
+        className="relative overflow-hidden"
+        style={{ background: "#e8ebf0" }}
       >
-        {/* Sticky container */}
-        <div className="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden z-10">
-          <div
-            ref={heroContentRef}
-            className="w-full h-full flex flex-col items-center justify-center px-6 transition-none relative"
-            style={{ background: "#e8ebf0" }}
-          >
+        <div className="relative w-full min-h-screen flex flex-col items-center justify-center px-6">
             {/* Ambient background blobs */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
               <div className="hero-blob hero-blob-1" />
@@ -2094,78 +2010,67 @@ export default function App() {
               <ChevronDown size={28} />
             </div>
 
-            {/* About content — fades in as hero fades out */}
-            <div
-              ref={aboutRevealRef}
-              className="absolute inset-0 flex items-center justify-center px-6"
-              style={{ opacity: 0, willChange: "opacity, transform", pointerEvents: "none" }}
-            >
-              <div className="max-w-6xl mx-auto w-full">
-                {/* Split layout with vertical divider */}
-                <div className="flex flex-col lg:flex-row items-start">
-
-                  {/* Left — headline + statement */}
-                  <div className="lg:w-2/5 lg:pr-12 mb-12 lg:mb-0">
-                    <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
-                      About Me
-                    </h2>
-                    <Separator className="w-12 bg-primary h-0.5 mb-8" />
-                    <p className="text-xl md:text-2xl font-semibold tracking-tight text-foreground/80 leading-snug mb-8">
-                      Turning raw data into<br />
-                      <span style={{ color: "#06B6D4" }}>real-world solutions</span>
-                    </p>
-
-                    {/* Quick facts */}
-                    <div className="flex flex-col gap-3">
-                      {[
-                        { Icon: MapPin, value: "Louisville, KY" },
-                        { Icon: GraduationCap, value: "MSBA in AI, UofL" },
-                        { Icon: Briefcase, value: "Seeking BA & DA roles" },
-                      ].map((fact, i) => (
-                        <div key={i} className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(6,182,212,0.1)" }}>
-                            <fact.Icon size={15} className="text-primary" />
-                          </div>
-                          <span className="text-sm font-medium text-foreground">{fact.value}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Vertical divider */}
-                  <div className="hidden lg:block w-px self-stretch" style={{ background: "linear-gradient(to bottom, transparent, #cbd5e1, transparent)" }} />
-
-                  {/* Right — bio + details */}
-                  <div className="lg:w-3/5 lg:pl-12">
-                    <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-10">
-                      I'm pursuing my MSBA at the University of Louisville with a concentration in AI. Outside of coursework, I'm usually building something, whether a prediction engine, an automated trading system, or whatever problem I'm trying to solve that week. I learn best by shipping real products, and every project sharpens how I approach data and decision-making.
-                    </p>
-
-                    {/* Detail grid with left accent borders */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      {[
-                        { label: "Focus", value: "Predictive modeling, data pipelines, and analytics that drive decisions", color: "#06B6D4" },
-                        { label: "Toolkit", value: "Python, SQL, R, scikit-learn, and Power BI", color: "#06B6D4" },
-                        { label: "Education", value: "MSBA (AI) at UofL, BBA (Finance, Marketing, Analytics) at UK", color: "#06B6D4" },
-                        { label: "Experience", value: "Churchill Downs, Terex Corporation, Independent Projects", color: "#06B6D4" },
-                      ].map((item, i) => (
-                        <div key={i} className="pl-4" style={{ borderLeft: `2px solid ${item.color}` }}>
-                          <div className="text-[11px] font-semibold uppercase tracking-wider mb-1" style={{ color: item.color }}>{item.label}</div>
-                          <div className="text-sm font-medium text-foreground leading-relaxed">{item.value}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* ===== ABOUT (anchor for nav tracking) ===== */}
-      <section ref={sectionRefs.about} className="relative" style={{ marginTop: "-1px" }}>
-        <div className="h-1" />
+      {/* ===== ABOUT ===== */}
+      <section ref={sectionRefs.about} aria-label="About" className="relative py-24 md:py-28" style={{ background: "#e8ebf0" }}>
+        <ScrollReveal className="max-w-6xl mx-auto w-full px-6">
+          <div className="flex flex-col lg:flex-row items-start">
+            {/* Left — headline + statement */}
+            <div className="lg:w-2/5 lg:pr-12 mb-12 lg:mb-0">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
+                About Me
+              </h2>
+              <Separator className="w-12 bg-primary h-0.5 mb-8" />
+              <p className="text-xl md:text-2xl font-semibold tracking-tight text-foreground/80 leading-snug mb-8">
+                Turning raw data into<br />
+                <span style={{ color: "#06B6D4" }}>real-world solutions</span>
+              </p>
+
+              {/* Quick facts */}
+              <div className="flex flex-col gap-3">
+                {[
+                  { Icon: MapPin, value: "Louisville, KY" },
+                  { Icon: GraduationCap, value: "MSBA in AI, UofL" },
+                  { Icon: Briefcase, value: "Seeking BA & DA roles" },
+                ].map((fact, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(6,182,212,0.1)" }}>
+                      <fact.Icon size={15} className="text-primary" />
+                    </div>
+                    <span className="text-sm font-medium text-foreground">{fact.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Vertical divider */}
+            <div className="hidden lg:block w-px self-stretch" style={{ background: "linear-gradient(to bottom, transparent, #cbd5e1, transparent)" }} />
+
+            {/* Right — bio + details */}
+            <div className="lg:w-3/5 lg:pl-12">
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-10">
+                I'm pursuing my MSBA at the University of Louisville with a concentration in AI. Outside of coursework, I'm usually building something, whether a prediction engine, an automated trading system, or whatever problem I'm trying to solve that week. I learn best by shipping real products, and every project sharpens how I approach data and decision-making.
+              </p>
+
+              {/* Detail grid with left accent borders */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {[
+                  { label: "Focus", value: "Predictive modeling, data pipelines, and analytics that drive decisions", color: "#06B6D4" },
+                  { label: "Toolkit", value: "Python, SQL, R, scikit-learn, and Power BI", color: "#06B6D4" },
+                  { label: "Education", value: "MSBA (AI) at UofL, BBA (Finance, Marketing, Analytics) at UK", color: "#06B6D4" },
+                  { label: "Experience", value: "Churchill Downs, Terex Corporation, Independent Projects", color: "#06B6D4" },
+                ].map((item, i) => (
+                  <div key={i} className="pl-4" style={{ borderLeft: `2px solid ${item.color}` }}>
+                    <div className="text-[11px] font-semibold uppercase tracking-wider mb-1" style={{ color: item.color }}>{item.label}</div>
+                    <div className="text-sm font-medium text-foreground leading-relaxed">{item.value}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
       </section>
 
       {/* ===== PROJECTS ===== */}

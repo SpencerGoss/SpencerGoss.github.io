@@ -26,13 +26,13 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 - Light theme throughout — dark theme was rejected
 - `portfolio.html` is the deliverable, not a deployed app
 - Build with `vite build`, never `tsc -b`
-- Hero uses `min-height: 280vh` outer + `sticky top-0` inner for scrollytelling (hero→about crossfade)
+- Hero is a normal full-screen section (`min-h-screen`); About is its own section below it that fades in via ScrollReveal. (The old 280vh sticky scrollytelling crossfade was removed 2026-06-04 — Spencer found it disorienting; simplified to a normal scroll so recruiters reach the projects faster.)
 - Hero subtitle pills must stay static — no rotating/animated words there
 - Don't use card-based layouts for About section — multiple attempts rejected as bland
 
 ## Design Decisions
-- Hero: split layout (text left, photo right), parallax blur exit (text left, photo right, staggered)
-- Hero→About: scrollytelling crossfade in same sticky viewport (hero blurs out, about fades in, about fades out)
+- Hero: split layout (text left, photo right), staggered `split-reveal` entrance on load
+- Hero→About: normal scroll. Hero is `min-h-screen`, then About is a standard section that fades in via ScrollReveal. (Replaced the scrollytelling crossfade 2026-06-04.)
 - Hero ambient blobs: standalone `.hero-blob` class (NOT `.blob` parent — opacity stacking issue)
 - Hero staggered entrance: `split-reveal` classes with delays on badge→name→subtitle→tagline→buttons→photo
 - Tagline: "From raw data to real results — predictive models, automated systems, and analytics tools."
