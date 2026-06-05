@@ -1,47 +1,46 @@
 # HANDOFF — Spencer Portfolio Website
 
-## Session Summary — 2026-06-04 (big content + design session)
-Branch: master. Clean tree (only `.claude/` untracked, expected). ~20 commits this session.
+## Session Summary — 2026-06-05 (polish + accessibility + build-fix session)
+Branch: master. 6 commits this session. Tree clean except local scratch (now gitignored) + `.claude/`.
 
-## What this session did (all committed)
-- **Removed DevToolbox** (dead/obsolete project).
-- **Added two projects:**
-  - **From Box Scores to Predictions** — the MSBA 645 NBA presentation, with an embedded YouTube video (`QSooLoE32zk`) and a case study built from Spencer's real slides. Card shows the YouTube thumbnail.
-  - **Box Office vs. Ratings** — MSBA ETL project (TMDB API → 3NF PostgreSQL → Power BI), tagged **In Progress** (status badge). Public repo: github.com/SpencerGoss/box-office-vs-ratings. NOTE: course number is ambiguous (folder says MSBA-962, the project docs/DB say MSBA 692) — I deliberately left the course number OFF the card; confirm with Spencer if he wants it shown.
-- **Redesigned the AI System section** around the multi-model **council** (Claude, GPT-5/Codex, Gemini, Copilot, Llama — real brand logos via CSS mask). Three pillars: argues-with-itself, learns-from-mistakes, measured-not-vibes. Verified numbers from the living system (5 models, 53 skills, 37 agents, 233 safeguards, 14K+ tests). The section is intentionally DARK (it always was).
-- **Oddsix reframed** from "prediction platform" → **multi-sport ANALYTICS platform** (player stats, comparisons, historical data, league leaders, Elo timelines, PLUS ML predictions + betting). Spencer corrected this multiple times — do NOT call it just a prediction platform.
-- **Oddsix wordmark**: the "i" renders as a dotless-i stem (ı) + a teal dot (#2DBA9A) on top, matching oddsix.app. Component `OddsixWordmark` / `ProjectTitle`. aria-label keeps it readable as "Oddsix".
-- **Real Oddsix screenshots** (captured from oddsix.app): slideshow = home / betting / player. Featured card uses a tall, focused player-analytics shot (`oddsix-card.png`) that fills the card and stays legible.
-- **Stats**: card shows 72% Win Rate / 0.74 Model AUC / 6 Sports (the live, public, auto-graded track record + model quality). 290+ picks, 210-80 in the case study.
-- **De-em-dashed + de-AI'd ALL visible copy** (project case studies, AI System, hero tagline, About, experience, timeline). No em dashes, no AI tells ("I don't just X, I Y", "proposes; I dispose", alliterative triads). Plain, first-person.
-- **Skills section**: business skills grouped into 4 labeled buckets (ML & Modeling, Data Engineering, Analytics & Experimentation, Business & Communication). Dropped "SEO & Content Strategy". All category labels + business pills unified to the cyan accent; tool logos keep their brand colors.
-- **About section**: replaced fluffy grid items ("Research deeply, build deliberately…") with factual Focus / Toolkit / Education / Experience; unified to cyan.
-- **Hero → About simplified**: removed the 280vh sticky scrollytelling crossfade (Spencer found it disorienting). Hero is now a normal `min-h-screen` section; About is its own section that fades in via ScrollReveal. Lenis smooth-scroll + section reveals kept. CLAUDE.md updated.
-- **Favicon** added (inline SVG SG monogram). Zero console errors.
-- **Project cards**: featured Oddsix card is image-led (big legible product image fills it) and decluttered (removed the long description + the tech-tag row). Supporting card descriptions tightened to one line each.
-
-## Provenance rules SAVED to memory (~/.claude/projects/C--Users-Spencer-OneDrive-Career-Personal-Website/memory/)
-- **Never fabricate Spencer's motivation** — use his real words (e.g. oddsix.app About page "Why I built this") or ask. He called this out hard this session.
-- **No em dashes, no AI voice** — plain, first-person, no curly quotes, no AI tells.
-Read MEMORY.md there at session start.
+## Completed (all committed)
+1. **Supporting project cards now have the accent glow** (HANDOFF #1 from last session — the edit that errored out before). Each non-featured BentoCard gets a soft per-card radial accent blob (top-right, clipped by `overflow:hidden`), content wrapped in `relative z-10`. Blob is smaller/softer than the featured card's (w-40, blur-34, opacity-70→100 on hover). Trading Bot reads cyan, Box Office purple, Churn amber. Verified on desktop + mobile.
+2. **Build/deliverable fix — `bundle.py`** (replaces the hardcoded-head one-liner in CLAUDE.md). `portfolio.html` was being built from a hardcoded `<head>` that had a stale title (“Spencer Goss - Portfolio”) and was **missing the meta description, all Open Graph / Twitter tags, author, theme-color** — so every share of the actual file had no preview text. `bundle.py` now reads `dist/index.html` (Vite already injects the full correct head) and inlines the built CSS/JS → drift is impossible. Inline app script is placed at end of `<body>` (a plain inline script isn’t deferred like `type=module`; running it in `<head>` hit React #299). Has a guard that aborts if Vite’s output shape changes. CLAUDE.md bundle section updated to `npx vite build && python bundle.py`.
+3. **Accessibility — full axe-core (WCAG AA) audit + fixes.**
+   - aria: Oddsix wordmark span got `role="img"` so its `aria-label` is valid (was a prohibited-attr violation). Zero visual change.
+   - **Targeted contrast pass — Spencer chose “targeted” (not full AA):** fix the genuinely illegible text, keep the main gray body text + soft look. Added `accentText()` helper mapping each accent hex to a deeper text-safe shade of the same hue (cyan #0E7490, orange #C2410C, amber #B45309, violet #7C3AED, emerald #047857), applied ONLY where an accent renders as small text (eyebrows, View Project, tag pills, video badge, About labels, skill-category headers, “real-world solutions”). Accent backgrounds / dots / bars / borders + `--primary` (CTA button) stay bright. Faint `/55`–`/50` labels de-faded (skill-group labels + “Business & Professional” → slate `#475569`; card desc /70, captions → full gray). **Result: 66 → 6 failing nodes.**
+   - Case-study modal: slideshow pagination dots were unlabeled `<button>`s (critical button-name). Added `aria-label` + `aria-current`.
+   - **Final audit: only 6 contrast nodes remain — all `#65758b` nav links, the exact body gray Spencer chose to keep (3.93).** Everything else (alt text, ARIA, headings, labels, landmarks, keyboard, button-name) passes.
+4. **De-em-dashed the SEO/social meta tags** (Spencer’s no-em-dash rule — last session did visible copy but missed the meta). Title separators → `·` (his existing style), description prose → colon phrasing. Deliverable verified 0 em-dashes in head.
 
 ## Current State
-- `npx vite build` passes clean (never `tsc -b`). Then run the Python bundle script in CLAUDE.md → regenerates `portfolio.html` (the deliverable). portfolio.html is REBUILT and current.
-- Dev server: `npm run dev` → localhost:5173. **View via the dev server**, not by opening portfolio.html as a file (local `/images/...` paths only resolve when served).
-- Zero console errors.
+- `npx vite build` clean (never `tsc -b`). `python bundle.py` regenerates `portfolio.html` (rebuilt + current).
+- Dev server: `npm run dev` → localhost:5173. View there (local `/images/...` only resolve when served).
+- Zero JS console errors. App mounts correctly from the bundled single file (verified over HTTP).
+- Site verified well-built: reduced-motion handled (Lenis off + CSS block), `:focus-visible` ring, skip link, responsive (checked 390px), lean deps.
 
-## What's Next (in priority order)
-1. **Make the supporting (non-featured) cards more visually attractive.** This session I tried adding a subtle accent-glow blob to them but the edit hit an internal error and did NOT apply — only the description-tightening landed. Next: add a subtle accent radial glow (like the featured card's blob) + wrap content in `relative z-10`, to the non-featured BentoCard branch (around src/App.tsx line ~767). Spencer explicitly wants ALL cards attractive, not just the featured one.
-2. **Featured card height** — it's tall (~999px; the big image fills it to match the right column). Spencer was asked keep-as-is vs cap; he said "do what looks best." Currently as-is. If it feels too tall, cap the image or rebalance the bento.
-3. **Real screenshots for Trading Bot / Box Office / Churn cards** — only Oddsix (real shots) and From Box Scores (YouTube thumb) have card images; the other three use the abstract placeholder. `getCardImage()` will auto-show real images if added to a project's `screenshots` with an `img` path.
-4. **Spencer-only assets:** hero photo (still "SG" placeholder — he said deprioritize), resume PDF at `/Spencer_Goss_Resume.pdf` (download button wired), and deploying to a shareable URL.
-5. **Trading Bot numbers** — I removed the lines-of-code vanity metric; card now shows 21 Signals / 5-stage AI Pipeline / 95% Coverage. The repo actually has ~5,220 tests / 96% per the living system — Spencer to confirm if he wants updated numbers anywhere.
+## Things I verified were ALREADY good (no change needed)
+- `prefers-reduced-motion` support (App.tsx:1784 + index.css:555) — comprehensive.
+- Keyboard focus indicators (`:focus-visible` outline, index.css:549).
+- Mobile layout at 390px — bento stacks cleanly, cards keep glow + readable accent text.
+- Bundle size (100KB gzip) + deps — fine for a React 19 SPA; lucide uses tree-shakeable named imports. (`vite-plugin-singlefile` is an unused dep — harmless, left alone.)
+
+## Needs Spencer’s input (did NOT act — flagged)
+1. **og:image / twitter:image still missing** — social shares show no preview thumbnail. Highest-remaining SEO gap for a job-search portfolio. Blocked on: (a) needs an absolute hosted URL (so depends on deploying), and (b) an OG card shows his name/title → “representing him,” needs sign-off. Recommendation: deploy to Netlify (config already present), then add a branded 1200×630 OG card.
+2. **Violet accent text** was darkened too (not just the cyan/orange Spencer named) so tag pills stay consistent — one-line revert in the `ACCENT_TEXT` map if unwanted.
+3. **Nav-link gray (#65758b, 3.93)** left as-is per his “keep gray” choice — flip to a darker slate if he wants full AA.
+4. **Hero “SG” placeholder** — still the weak spot, but he deprioritized the photo. Option: a more interesting on-brand placeholder (data motif) instead of the empty box — visual decision, needs his OK.
+
+## Blocked on assets (unchanged from last session)
+- Resume PDF at `/Spencer_Goss_Resume.pdf` (download button wired).
+- Real screenshots for Trading Bot / Box Office / Churn cards (`getCardImage()` auto-shows them once added to a project’s `screenshots` with an `img` path).
 
 ## Key conventions / rules
-- Spencer is very particular about design — the recent direction: light theme, soft/subtle, cyan accent, plain non-AI copy, real product imagery, no clutter.
-- Build = `vite build` + Python bundle → portfolio.html. Never `tsc -b`.
-- Single file: `src/App.tsx` (~2200 lines, all data + components).
-- Oddsix logo dot color: `#2DBA9A` (teal). Site accent: cyan `#06B6D4`.
+- Build = `npx vite build && python bundle.py` → `portfolio.html`. Never `tsc -b`.
+- Single file: `src/App.tsx` (~2240 lines, all data + components).
+- Accent-as-text now goes through `accentText()` (App.tsx, just after `ProjectTitle`). Backgrounds/bars/dots keep the bright accent.
+- Light theme, soft/subtle, cyan accent (`#06B6D4`), Oddsix dot teal `#2DBA9A`, plain non-AI em-dash-free copy.
+- Not pushed (local master; no remote/PR workflow set up). CLAUDE.md was edited (bundle section) — flag if a push is ever wired up.
 
-## Failed / didn't-apply this session
-- The non-featured-card accent-glow edit returned an internal error and was not written. Re-attempt next session (see What's Next #1).
+## What's Next (exact first action)
+Deploy decision: ask Spencer whether to deploy to Netlify (config ready) so the og:image can get an absolute URL — then build a branded 1200×630 OG card (needs his sign-off on the name/title artifact). If he’d rather keep iterating locally, next-best autonomous item: design a more interesting on-brand hero placeholder to replace the empty “SG” box (propose options first per his ask-before-visual-changes rule).
