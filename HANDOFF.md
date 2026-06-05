@@ -35,6 +35,22 @@ Branch: master. 14 commits this session. Tree clean except `.claude/` (root scra
 3. **Nav-link gray (#65758b, 3.93)** left as-is per his “keep gray” choice — flip to a darker slate if he wants full AA.
 4. ~~Hero “SG” placeholder~~ — DONE this session (gradient monogram). Swaps for a photo when he has one.
 
+## Content review (2026-06-05)
+**Done:**
+- Resume download was a 404 → wired in his master resume at `public/Spencer_Goss_Resume.pdf` (dated May 6 — he should verify it's the version he wants before deploy).
+- Churchill Downs reframed to lead with the analytics/Relish-AI angle (not "processed invoices"). Honest title kept.
+- About degree label fixed to match the timeline/resume ("BBA Finance & Marketing (Analytics minor)").
+
+**Spencer passed on (don't re-push unless he asks):**
+- Trimming the Terex warehouse entry from 4 bullets to 2.
+- Adding a recruiter-facing positioning line (role + Louisville + open-to) in the hero/contact.
+
+**Open content items flagged, need his input:**
+- **AI System section — strategic question:** it's high-variance for traditional BA roles (impressive but could read as over-engineering to a non-technical hiring manager). He should decide on purpose whether it serves the specific roles he wants. Not changed.
+- **Quantified impact:** day-job bullets say "streamlined a manual process" with no number. If he has any metric (time/error reduction), add it.
+- **New-grad credibility signals not shown:** GPA (if good), Dean's List/honors, certifications (Google Data Analytics, Tableau, Power BI, SQL). Add if he has them.
+- **Real dashboard screenshots** (Box Office Power BI, Trading Bot React dashboard) — highest-value DA proof; blocked on his assets.
+
 ## Grad photo — decided, deferred (2026-06-05)
 Spencer has a UK cap-and-gown grad photo to add. Decision: put it in the **About section** (which currently has no photo) as a supporting image — keep the hero monogram. He'll drop the file into `public/images/spencer-grad.jpg` later, then I crop/fit it into the right side of About (rounded + subtle accent glow), screenshot, commit on approval. The lacrosse action shot is REJECTED (VictoryViews watermark = licensing block, and high school JV lacrosse doesn't serve a data-analyst portfolio).
 
