@@ -1,7 +1,7 @@
 # HANDOFF — Spencer Portfolio Website
 
-## Session Summary — 2026-06-05 (polish + accessibility + build-fix session)
-Branch: master. 6 commits this session. Tree clean except local scratch (now gitignored) + `.claude/`.
+## Session Summary — 2026-06-05 (polish + accessibility + build-fix + perf session)
+Branch: master. 14 commits this session. Tree clean except `.claude/` (root scratch PNGs now gitignored).
 
 ## Completed (all committed)
 1. **Supporting project cards now have the accent glow** (HANDOFF #1 from last session — the edit that errored out before). Each non-featured BentoCard gets a soft per-card radial accent blob (top-right, clipped by `overflow:hidden`), content wrapped in `relative z-10`. Blob is smaller/softer than the featured card's (w-40, blur-34, opacity-70→100 on hover). Trading Bot reads cyan, Box Office purple, Churn amber. Verified on desktop + mobile.
@@ -13,6 +13,9 @@ Branch: master. 6 commits this session. Tree clean except local scratch (now git
    - **Final audit: only 6 contrast nodes remain — all `#65758b` nav links, the exact body gray Spencer chose to keep (3.93).** Everything else (alt text, ARIA, headings, labels, landmarks, keyboard, button-name) passes.
 4. **De-em-dashed the SEO/social meta tags** (Spencer’s no-em-dash rule — last session did visible copy but missed the meta). Title separators → `·` (his existing style), description prose → colon phrasing. Deliverable verified 0 em-dashes in head.
 5. **Hero placeholder → cyan→purple SG monogram** (replaced the empty gray “SG” box). Mocked up two options (data-growth-curve motif vs gradient monogram) as real renders; Spencer picked the monogram. Gradient card + soft sheen + bold white SG, matching the favicon. `role="img"` labeled; glyph aria-hidden. Single block, swaps out for a photo later.
+6. **Image performance — `public/images` 15MB → 3.4MB.** `terex.jpg` (7445×5859, 7.37MB) and `saint-xavier.jpg` (5184×2592, 3.69MB) were full-screen-bg images resized to 1920px wide @ JPEG q82 progressive (→349KB / 458KB; verified sharp). Removed 3 unreferenced dead files (`churchill-downs.webp`, `saint-xavier-logo.png`, `uofl-logo.jpg`). ~11MB saved — big on mobile/LTE. (Originals recoverable from git history.)
+7. **SEO — Person JSON-LD** added to index.html (name, jobTitle, education, knowsAbout, real LinkedIn/GitHub/email). Education honest: UK in `alumniOf`, UofL MSBA as “candidate” in description. Flows into the deliverable via bundle.py; validated it parses.
+8. **Case-study keyboard a11y** — opening a case study now moves focus to the “Back to Projects” button (was stranded on the hidden card) and **Escape** returns to the projects grid. Verified live.
 
 ## Current State
 - `npx vite build` clean (never `tsc -b`). `python bundle.py` regenerates `portfolio.html` (rebuilt + current).
