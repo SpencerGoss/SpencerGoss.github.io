@@ -670,6 +670,21 @@ function ProjectTitle({ project }: { project: typeof PROJECTS[0] }) {
   return <>{project.title}</>;
 }
 
+/* Accent hexes are tuned for fills, dots, and blobs. Used as small text on the
+   light theme they fall below WCAG AA contrast, so map each to a deeper shade
+   of the same hue for TEXT only. Backgrounds, borders, and bars keep the bright
+   accent. */
+const ACCENT_TEXT: Record<string, string> = {
+  "#06B6D4": "#0E7490", // cyan
+  "#EA580C": "#C2410C", // orange
+  "#F59E0B": "#B45309", // amber
+  "#8B5CF6": "#7C3AED", // violet
+  "#10B981": "#047857", // emerald
+};
+function accentText(hex: string): string {
+  return ACCENT_TEXT[(hex || "").toUpperCase()] ?? hex;
+}
+
 /* Pick a preview image for a project card: explicit cardImage, else first real screenshot, else a video thumbnail */
 function getCardImage(project: typeof PROJECTS[0]): string | undefined {
   const p = project as { cardImage?: string; video?: string };
@@ -702,7 +717,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
         />
         <div className="relative z-10 flex flex-col justify-between h-full">
           <div>
-            <div className="text-[10px] font-bold tracking-[2px] uppercase mb-2" style={{ color: project.accent }}>
+            <div className="text-[10px] font-bold tracking-[2px] uppercase mb-2" style={{ color: accentText(project.accent) }}>
               Featured Project
             </div>
             <h3 className="text-2xl md:text-[26px] font-extrabold tracking-tight text-foreground mb-1">
@@ -743,7 +758,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
               ))}
             </div>
             <div className="flex items-center">
-              <div className="flex items-center gap-1 ml-auto text-xs font-semibold whitespace-nowrap opacity-70 group-hover/card:opacity-100 transition-opacity duration-200" style={{ color: project.accent }}>
+              <div className="flex items-center gap-1 ml-auto text-xs font-semibold whitespace-nowrap opacity-70 group-hover/card:opacity-100 transition-opacity duration-200" style={{ color: accentText(project.accent) }}>
                 View Project <ArrowUpRight size={13} className="transition-transform duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
               </div>
             </div>
@@ -791,7 +806,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
               {(project as { video?: string }).video && (
                 <span
                   className="text-[9px] font-bold px-2 py-0.5 rounded-full inline-flex items-center gap-1 whitespace-nowrap"
-                  style={{ background: project.accentBg, color: project.accent }}
+                  style={{ background: project.accentBg, color: accentText(project.accent) }}
                 >
                   ▶ Video
                 </span>
@@ -799,7 +814,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
             </div>
           </div>
           <p className="text-[11px] text-muted-foreground mb-2">{project.subtitle}</p>
-          <p className="text-[11px] text-muted-foreground/70 leading-relaxed">{project.shortDescription}</p>
+          <p className="text-[11px] text-muted-foreground leading-relaxed">{project.shortDescription}</p>
         </div>
         {project.cardMetrics.length > 0 && (
           <div className="flex gap-4 mt-3">
@@ -817,7 +832,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
               <span
                 key={tag}
                 className="text-[10px] px-2.5 py-0.5 rounded-full border"
-                style={{ background: project.accentBg, color: project.accent, borderColor: `${project.accent}20` }}
+                style={{ background: project.accentBg, color: accentText(project.accent), borderColor: `${project.accent}20` }}
               >
                 {tag}
               </span>
@@ -1108,7 +1123,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
                 <div key={i} className="h-8 rounded" style={{ width: w, background: `${project.accent}12` }} />
               ))}
             </div>
-            <div className="text-xs text-muted-foreground/50">
+            <div className="text-xs text-muted-foreground/80">
               {(project as { status?: string }).status ? "Dashboard & visuals coming soon" : "More screenshots coming soon"}
             </div>
           </div>
@@ -1220,7 +1235,7 @@ function SkillCategory({ category, delay }: { category: { name: string; color: s
         <div className="w-1 h-5 rounded-full" style={{ background: category.color }} />
         <h3
           className="text-[11px] font-bold uppercase tracking-[1.5px]"
-          style={{ color: category.color }}
+          style={{ color: accentText(category.color) }}
         >
           {category.name}
         </h3>
@@ -2072,7 +2087,7 @@ export default function App() {
               <Separator className="w-12 bg-primary h-0.5 mb-8" />
               <p className="text-xl md:text-2xl font-semibold tracking-tight text-foreground/80 leading-snug mb-8">
                 Turning raw data into<br />
-                <span style={{ color: "#06B6D4" }}>real-world solutions</span>
+                <span style={{ color: accentText("#06B6D4") }}>real-world solutions</span>
               </p>
 
               {/* Quick facts */}
@@ -2110,7 +2125,7 @@ export default function App() {
                   { label: "Experience", value: "Churchill Downs, Terex Corporation, Independent Projects", color: "#06B6D4" },
                 ].map((item, i) => (
                   <div key={i} className="pl-4" style={{ borderLeft: `2px solid ${item.color}` }}>
-                    <div className="text-[11px] font-semibold uppercase tracking-wider mb-1" style={{ color: item.color }}>{item.label}</div>
+                    <div className="text-[11px] font-semibold uppercase tracking-wider mb-1" style={{ color: accentText(item.color) }}>{item.label}</div>
                     <div className="text-sm font-medium text-foreground leading-relaxed">{item.value}</div>
                   </div>
                 ))}
@@ -2187,14 +2202,14 @@ export default function App() {
           <div className="mt-12 pt-8 border-t border-border/50">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-1 h-5 rounded-full bg-foreground/20" />
-              <h3 className="text-[11px] font-bold text-muted-foreground uppercase tracking-[1.5px]">
+              <h3 className="text-[11px] font-bold text-[#475569] uppercase tracking-[1.5px]">
                 Business & Professional
               </h3>
             </div>
             <div className="space-y-6">
               {BUSINESS_SKILL_GROUPS.map((group) => (
                 <div key={group.label}>
-                  <div className="text-[10px] font-semibold text-muted-foreground/55 uppercase tracking-[1px] mb-3">
+                  <div className="text-[10px] font-semibold text-[#475569] uppercase tracking-[1px] mb-3">
                     {group.label}
                   </div>
                   <div className="flex flex-wrap gap-2.5">
@@ -2258,7 +2273,7 @@ export default function App() {
               <Download size={20} aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-0.5" />
               Download Resume
             </a>
-            <p className="text-xs text-muted-foreground/50 mt-3">PDF • Updated March 2026</p>
+            <p className="text-xs text-muted-foreground mt-3">PDF • Updated March 2026</p>
           </ScrollReveal>
 
           <ScrollReveal>
