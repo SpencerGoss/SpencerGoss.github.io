@@ -451,14 +451,14 @@ const EXPERIENCE = [
     org: "Churchill Downs Incorporated",
     location: "Louisville, KY",
     period: "Aug 2024 - Jul 2025",
-    description: "Reviewed and processed high-volume invoices for accuracy and documentation across 10+ properties. Coordinated with vendors to ensure timely and complete payments.",
+    description: "Managed the full accounts-payable cycle across 10+ properties and used Relish AI to train invoice-analysis models that streamlined a manual, high-volume review process. Worked across SAP and JD Edwards to keep vendor data accurate end to end.",
     details: [
+      "Used Relish AI to train invoice-analysis models that streamlined a manual, high-volume review process",
+      "Worked cross-functionally across SAP and JD Edwards to manage the full accounts-payable cycle",
       "Processed 100+ invoices daily across 10+ Churchill Downs properties with high accuracy",
       "Coordinated with vendors to resolve discrepancies and ensure timely, complete payments",
-      "Leveraged Relish AI to train invoice analysis models, streamlining business processes",
-      "Worked cross-functionally using JD Edwards and SAP to manage the full AP cycle",
     ],
-    highlights: ["100+ Invoices Daily", "AI-Powered Automation", "SAP & JD Edwards"],
+    highlights: ["AI-Powered Automation", "SAP & JD Edwards", "100+ Invoices Daily"],
     type: "work" as const,
     logo: "https://www.google.com/s2/favicons?domain=churchilldowns.com&sz=128",
     color: "#1B5E20",
@@ -2150,7 +2150,7 @@ export default function App() {
                 {[
                   { label: "Focus", value: "Predictive modeling, data pipelines, and analytics that drive decisions", color: "#06B6D4" },
                   { label: "Toolkit", value: "Python, SQL, R, scikit-learn, and Power BI", color: "#06B6D4" },
-                  { label: "Education", value: "MSBA (AI) at UofL, BBA (Finance, Marketing, Analytics) at UK", color: "#06B6D4" },
+                  { label: "Education", value: "MSBA (AI) at UofL, BBA Finance & Marketing (Analytics minor) at UK", color: "#06B6D4" },
                   { label: "Experience", value: "Churchill Downs, Terex Corporation, Independent Projects", color: "#06B6D4" },
                 ].map((item, i) => (
                   <div key={i} className="pl-4" style={{ borderLeft: `2px solid ${item.color}` }}>
