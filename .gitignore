@@ -9,9 +9,7 @@ Thumbs.db
 .claude/
 
 # Local dev/preview scratch artifacts (screenshots, server logs)
+# Real site images live in public/ — root-level PNGs are throwaway previews.
 .playwright-mcp/
 *.log
-/hero.png
-/cards-right.png
-/projects-glow.png
-/s-*.png
+/*.png
