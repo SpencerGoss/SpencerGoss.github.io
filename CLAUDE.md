@@ -53,14 +53,16 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 
 ## Bundle Script (run after vite build)
 ```bash
-python3 -c "
-import os
-dist = 'dist/assets'
-css_file = [f for f in os.listdir(dist) if f.endswith('.css')][0]
-js_file = [f for f in os.listdir(dist) if f.endswith('.js')][0]
-with open(os.path.join(dist, css_file)) as f: css = f.read()
-with open(os.path.join(dist, js_file)) as f: js = f.read()
-html = '<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\" /><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /><title>Spencer Goss - Portfolio</title><link rel=\"icon\" type=\"image/svg+xml\" href=\"data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><defs><linearGradient id=%27g%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27><stop offset=%270%27 stop-color=%27%2306B6D4%27/><stop offset=%271%27 stop-color=%27%238B5CF6%27/></linearGradient></defs><rect width=%27100%27 height=%27100%27 rx=%2722%27 fill=%27url(%23g)%27/><text x=%2750%27 y=%2755%27 font-family=%27Arial,Helvetica,sans-serif%27 font-size=%2744%27 font-weight=%27700%27 fill=%27%23ffffff%27 text-anchor=%27middle%27 dominant-baseline=%27central%27>SG</text></svg>\" /><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" /><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin /><link href=\"https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap\" rel=\"stylesheet\" /><style>' + css + '</style></head><body><div id=\"root\"></div><script>' + js.replace('</script>','<\\/script>') + '</script></body></html>'
-with open('portfolio.html','w') as f: f.write(html)
-"
+npx vite build && python bundle.py
 ```
+`bundle.py` reads `dist/index.html` (which already has the full `<head>` —
+title, meta description, Open Graph / Twitter tags, favicon, straight from
+`index.html`) and inlines the built CSS/JS into a single self-contained
+`portfolio.html`. Bundling FROM the built HTML means any meta tag added to
+`index.html` flows into the deliverable automatically — no drift. (Replaced the
+old hardcoded-head one-liner 2026-06-04, which had a stale `<title>` and was
+missing all SEO/social meta tags.)
+
+Note: `portfolio.html` still references `/images/...` for project/experience
+images, so it must be served alongside the `public/images/` directory (or
+deployed) — opening the file directly shows broken images. Same as before.
