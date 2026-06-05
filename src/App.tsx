@@ -979,6 +979,8 @@ function Slideshow({ screenshots, accent }: { screenshots: { label: string; desc
             <button
               key={i}
               onClick={() => setCurrent(i)}
+              aria-label={`Go to screenshot ${i + 1} of ${screenshots.length}`}
+              aria-current={i === current}
               className="transition-all duration-300 rounded-full cursor-pointer"
               style={{
                 width: i === current ? 20 : 6,
