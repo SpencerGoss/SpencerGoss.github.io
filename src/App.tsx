@@ -996,11 +996,21 @@ function Slideshow({ screenshots, accent }: { screenshots: { label: string; desc
 }
 
 function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: typeof PROJECTS[0]; onBack: () => void; sectionRef?: React.RefObject<HTMLElement | null>; onSelectProject: (id: string) => void }) {
+  const backRef = useRef<HTMLButtonElement>(null);
+  // On open: jump to the top of the case study and move keyboard focus into it
+  // (otherwise focus is stranded on the now-hidden project card).
   useEffect(() => {
     if (sectionRef?.current) {
       sectionRef.current.scrollIntoView({ behavior: "instant" as ScrollBehavior, block: "start" });
     }
+    backRef.current?.focus();
   }, []);
+  // Escape returns to the projects list, matching the Back button.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onBack(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onBack]);
 
   const heroRef = useScrollReveal();
   const metricsRef = useScrollReveal();
@@ -1013,6 +1023,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
       <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-lg border-b border-border">
         <div className="max-w-6xl mx-auto px-6 py-3 flex items-center gap-2">
           <button
+            ref={backRef}
             onClick={onBack}
             aria-label="Back to projects list"
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer"
