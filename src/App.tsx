@@ -643,7 +643,7 @@ function useCountUp(target: number, duration = 2000) {
 /* Oddsix wordmark — the "i" is a dotless-i stem with a teal dot on top, matching oddsix.app */
 function OddsixWordmark() {
   return (
-    <span aria-label="Oddsix">
+    <span role="img" aria-label="Oddsix">
       <span aria-hidden="true">Odds</span>
       <span aria-hidden="true" style={{ position: "relative", display: "inline-block" }}>
         {"ı"}
