@@ -762,9 +762,13 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
       role="button"
       tabIndex={0}
       aria-label={`View ${project.title} case study`}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ ["--accent" as string]: project.accent, transitionDelay: `${delay}ms` }}
     >
-      <div className="flex flex-col justify-between h-full">
+      <div
+        className="absolute -top-12 -right-12 w-40 h-40 rounded-full pointer-events-none opacity-70 transition-opacity duration-300 group-hover/card:opacity-100"
+        style={{ background: `radial-gradient(circle, ${project.accentBg}, transparent 70%)`, filter: "blur(34px)" }}
+      />
+      <div className="relative z-10 flex flex-col justify-between h-full">
         <div>
           {cardImg && (
             <div className="mb-3 rounded-lg overflow-hidden h-24 border border-border/50 bg-slate-900">
