@@ -32,6 +32,9 @@ Branch: master. 6 commits this session. Tree clean except local scratch (now git
 3. **Nav-link gray (#65758b, 3.93)** left as-is per his “keep gray” choice — flip to a darker slate if he wants full AA.
 4. ~~Hero “SG” placeholder~~ — DONE this session (gradient monogram). Swaps for a photo when he has one.
 
+## Grad photo — decided, deferred (2026-06-05)
+Spencer has a UK cap-and-gown grad photo to add. Decision: put it in the **About section** (which currently has no photo) as a supporting image — keep the hero monogram. He'll drop the file into `public/images/spencer-grad.jpg` later, then I crop/fit it into the right side of About (rounded + subtle accent glow), screenshot, commit on approval. The lacrosse action shot is REJECTED (VictoryViews watermark = licensing block, and high school JV lacrosse doesn't serve a data-analyst portfolio).
+
 ## Blocked on assets (unchanged from last session)
 - Resume PDF at `/Spencer_Goss_Resume.pdf` (download button wired).
 - Real screenshots for Trading Bot / Box Office / Churn cards (`getCardImage()` auto-shows them once added to a project’s `screenshots` with an `img` path).
