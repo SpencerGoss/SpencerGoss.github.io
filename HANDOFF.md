@@ -12,6 +12,7 @@ Branch: master. 6 commits this session. Tree clean except local scratch (now git
    - Case-study modal: slideshow pagination dots were unlabeled `<button>`s (critical button-name). Added `aria-label` + `aria-current`.
    - **Final audit: only 6 contrast nodes remain — all `#65758b` nav links, the exact body gray Spencer chose to keep (3.93).** Everything else (alt text, ARIA, headings, labels, landmarks, keyboard, button-name) passes.
 4. **De-em-dashed the SEO/social meta tags** (Spencer’s no-em-dash rule — last session did visible copy but missed the meta). Title separators → `·` (his existing style), description prose → colon phrasing. Deliverable verified 0 em-dashes in head.
+5. **Hero placeholder → cyan→purple SG monogram** (replaced the empty gray “SG” box). Mocked up two options (data-growth-curve motif vs gradient monogram) as real renders; Spencer picked the monogram. Gradient card + soft sheen + bold white SG, matching the favicon. `role="img"` labeled; glyph aria-hidden. Single block, swaps out for a photo later.
 
 ## Current State
 - `npx vite build` clean (never `tsc -b`). `python bundle.py` regenerates `portfolio.html` (rebuilt + current).
@@ -29,7 +30,7 @@ Branch: master. 6 commits this session. Tree clean except local scratch (now git
 1. **og:image / twitter:image still missing** — social shares show no preview thumbnail. Highest-remaining SEO gap for a job-search portfolio. Blocked on: (a) needs an absolute hosted URL (so depends on deploying), and (b) an OG card shows his name/title → “representing him,” needs sign-off. Recommendation: deploy to Netlify (config already present), then add a branded 1200×630 OG card.
 2. **Violet accent text** was darkened too (not just the cyan/orange Spencer named) so tag pills stay consistent — one-line revert in the `ACCENT_TEXT` map if unwanted.
 3. **Nav-link gray (#65758b, 3.93)** left as-is per his “keep gray” choice — flip to a darker slate if he wants full AA.
-4. **Hero “SG” placeholder** — still the weak spot, but he deprioritized the photo. Option: a more interesting on-brand placeholder (data motif) instead of the empty box — visual decision, needs his OK.
+4. ~~Hero “SG” placeholder~~ — DONE this session (gradient monogram). Swaps for a photo when he has one.
 
 ## Blocked on assets (unchanged from last session)
 - Resume PDF at `/Spencer_Goss_Resume.pdf` (download button wired).
@@ -43,4 +44,4 @@ Branch: master. 6 commits this session. Tree clean except local scratch (now git
 - Not pushed (local master; no remote/PR workflow set up). CLAUDE.md was edited (bundle section) — flag if a push is ever wired up.
 
 ## What's Next (exact first action)
-Deploy decision: ask Spencer whether to deploy to Netlify (config ready) so the og:image can get an absolute URL — then build a branded 1200×630 OG card (needs his sign-off on the name/title artifact). If he’d rather keep iterating locally, next-best autonomous item: design a more interesting on-brand hero placeholder to replace the empty “SG” box (propose options first per his ask-before-visual-changes rule).
+Ask Spencer about deploying to Netlify (config ready) so the og:image can get an absolute URL — then build a branded 1200×630 OG card (needs his sign-off on the name/title artifact). That OG preview image is the single highest-value remaining SEO item for his job search. If he’d rather keep iterating locally, next-best autonomous polish: review case-study copy for tightening, or refine hover/micro-interactions.

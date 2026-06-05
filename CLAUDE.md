@@ -46,7 +46,7 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 
 ## Redesign Status (2026-03-30)
 - All sections redesigned: Hero ✅ → Nav ✅ → About ✅ → Projects ✅ → Skills ✅ → Experience ✅ → Contact ✅ → Global ✅
-- Photo placeholder in hero — Spencer will take a casual photo to replace "SG" placeholder
+- Hero right side: a cyan→purple gradient "SG" monogram card (chosen 2026-06-05 over a data-motif option). It's a branded placeholder — Spencer will swap the single block for a casual photo when he has one.
 - Resume PDF placeholder — download button wired up, needs actual file at `/Spencer_Goss_Resume.pdf`
 - Project slideshow screenshots are placeholders — swap real screenshots into PROJECTS data when ready
 - Experience slide images are local files at `public/images/experience/` — real campus/building photos
