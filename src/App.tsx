@@ -84,8 +84,10 @@ const PROJECTS = [
     tags: ["Python", "scikit-learn", "LightGBM", "Sports Analytics", "Daily Pipeline", "Multi-Sport"],
     screenshots: [
       { label: "Today across all sports", desc: "Daily slate, top performers, and tonight's edge", img: "/images/projects/oddsix-home.png" },
-      { label: "Betting hub", desc: "Model read vs. market line, point edges, and Kelly sizing", img: "/images/projects/oddsix-betting.png" },
       { label: "Player analytics", desc: "Per-game averages, shooting splits, and recent form", img: "/images/projects/oddsix-player.png" },
+      { label: "Team pages", desc: "Standings, home/away splits, and how they're playing", img: "/images/projects/oddsix-team.png" },
+      { label: "Playoff bracket", desc: "The full playoff picture, round by round", img: "/images/projects/oddsix-bracket.png" },
+      { label: "Betting hub", desc: "Model read vs. market line, point edges, and Kelly sizing", img: "/images/projects/oddsix-betting.png" },
     ],
     metrics: [
       { value: 72, suffix: "%", label: "Win Rate · All-Time" },
