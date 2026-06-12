@@ -178,54 +178,6 @@ const PROJECTS = [
     },
   },
   {
-    id: "trading-bot",
-    title: "Trading Bot",
-    subtitle: "Automated Trading System",
-    accent: "#8B5CF6",
-    accentBg: "rgba(139,92,246,0.08)",
-    featured: false,
-    shortDescription: "Async stock and crypto trading: 21 fused signals, a 5-stage AI agent pipeline, and risk controls that can't be overridden.",
-    url: "#",
-    github: "#",
-    tags: ["Python", "asyncio", "FastAPI", "LightGBM", "Pydantic v2", "React", "SQLAlchemy"],
-    screenshots: [
-      { label: "Signal Dashboard", desc: "21 signals fused in real-time" },
-      { label: "Risk Monitor", desc: "Circuit breakers & drawdown tracking" },
-      { label: "Agent Pipeline", desc: "5-stage AI trade evaluation" },
-    ],
-    metrics: [
-      { value: 21, suffix: "", label: "Signals Fused" },
-      { value: 5, suffix: "-Stage", label: "AI Agent Pipeline" },
-      { value: 4, suffix: "", label: "Risk-Control Layers" },
-      { value: 95, suffix: "%", label: "Test Coverage" },
-    ],
-    cardMetrics: [
-      { display: "21", label: "Signals" },
-      { display: "5-stage", label: "AI Pipeline" },
-      { display: "95%", label: "Coverage" },
-    ],
-    caseStudy: {
-      hook: "A production-grade automated trading system that fuses 21 signal types through an AI agent pipeline, with immutable circuit breakers and real-time risk monitoring.",
-      sections: [
-        {
-          title: "Why I Built It",
-          color: "#06B6D4",
-          body: "I wanted to find out if I could actually build something with AI that makes real money in live markets, not a demo, a real system. Markets are about as hard and unforgiving a problem as you can pick, so it was the best way I could think of to test my machine learning and engineering skills against something with real stakes and a clear scoreboard. That meant building it properly: multiple signal sources, risk controls that can't be overridden, and enough test coverage to actually trust it.",
-        },
-        {
-          title: "What I Built",
-          color: "#8B5CF6",
-          body: "A fully async Python trading system that trades stocks (via Alpaca) and crypto (via Kraken). 21 signal generators (technical indicators, ML predictions with LightGBM, FinBERT sentiment analysis, SEC insider filings, institutional 13F flows, and macro regime detection from FRED data) are fused into a single confidence score. A 5-stage AI agent pipeline (Analyst, Risk Manager, Executor, Monitor, Researcher) evaluates every trade using Claude and Ollama with a hard $10/month LLM budget cap. Four-layer circuit breakers (per-trade, daily, weekly, kill switch) with immutable thresholds protect against catastrophic loss. The kill switch is permanent and cannot be overridden at runtime.",
-        },
-        {
-          title: "The Result",
-          color: "#10B981",
-          body: "A production-grade system trading stocks through Alpaca and crypto through Kraken, tested to 95% coverage. It has a real-time React and FastAPI dashboard for monitoring, Pushover mobile alerts on every circuit-breaker trip, HMAC-signed audit logs, and tax compliance with wash-sale detection. Everything degrades gracefully: TimescaleDB, Redis, and push notifications are all optional, and the system falls back to in-memory operation.",
-        },
-      ],
-    },
-  },
-  {
     id: "box-office",
     title: "Box Office vs. Ratings",
     subtitle: "Film Analytics · ETL → PostgreSQL → Dash App",
@@ -287,19 +239,23 @@ const PROJECTS = [
     accent: "#F59E0B",
     accentBg: "rgba(245,158,11,0.08)",
     featured: false,
-    shortDescription: "Customer retention prediction with cluster segmentation.",
+    shortDescription: "Churn prediction on 5,636 customers: four models benchmarked, SHAP driver analysis, and three actionable retention segments.",
     url: "#",
     github: "https://github.com/SpencerGoss/msba-portfolio-SpencerGoss",
-    tags: ["Python", "scikit-learn", "Jupyter", "pandas"],
+    tags: ["Python", "scikit-learn", "CatBoost", "SHAP", "Jupyter", "pandas"],
     screenshots: [
-      { label: "Cluster Analysis", desc: "3 customer segments identified" },
-      { label: "Churn Factors", desc: "Key drivers of customer attrition" },
+      { label: "Churn by tenure", desc: "New customers churn at 53%; long-tenure customers at 14%", img: "/images/projects/churn-tenure.png" },
+      { label: "Model benchmark", desc: "Random Forest vs. XGBoost vs. LightGBM vs. CatBoost", img: "/images/projects/churn-roc.png" },
+      { label: "What drives churn", desc: "Referrals, dependents, and month-to-month contracts top the list", img: "/images/projects/churn-features.png" },
+      { label: "SHAP driver analysis", desc: "Direction and strength of every churn driver", img: "/images/projects/churn-shap.png" },
     ],
     metrics: [
       { value: 3, suffix: "", label: "Customer Clusters" },
       { value: 5636, suffix: "", label: "Data Points" },
+      { value: 4, suffix: "", label: "Models Benchmarked" },
     ],
     cardMetrics: [
+      { display: "0.899", label: "Best AUC" },
       { display: "3", label: "Clusters" },
     ],
     caseStudy: {
@@ -313,7 +269,7 @@ const PROJECTS = [
         {
           title: "What I Built",
           color: "#8B5CF6",
-          body: "A gradient-boosted ensemble model for churn prediction, combined with customer segmentation using clustering. The analysis revealed that tenure and contract type are the strongest churn predictors: customers in their first 6 months on month-to-month plans are at highest risk. Customers who refer others churn significantly less. Three distinct customer clusters emerged, each requiring a different retention strategy.",
+          body: "I benchmarked four models for churn prediction (Random Forest, XGBoost, LightGBM, and CatBoost), with CatBoost winning at 0.899 AUC, and combined the winner with customer segmentation using clustering. SHAP driver analysis revealed that referrals, contract type, and tenure dominate: customers in their first 6 months on month-to-month plans are at highest risk (53% churn versus 14% for long-tenure customers), and customers who refer others churn significantly less. Three distinct customer clusters emerged, each requiring a different retention strategy.",
         },
         {
           title: "The Result",
@@ -856,7 +812,6 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
 
 function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void }) {
   const oddsix = PROJECTS.find((p) => p.id === "oddsix")!;
-  const tradingBot = PROJECTS.find((p) => p.id === "trading-bot")!;
   const boxOffice = PROJECTS.find((p) => p.id === "box-office")!;
   const msbaNba = PROJECTS.find((p) => p.id === "msba-nba")!;
   const churnModel = PROJECTS.find((p) => p.id === "churn-model")!;
@@ -867,11 +822,10 @@ function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void 
         <BentoCard project={oddsix} onClick={() => onSelectProject("oddsix")} delay={0} />
       </div>
       <div className="bento-col-right">
-        <BentoCard project={tradingBot} onClick={() => onSelectProject("trading-bot")} delay={120} />
-        <BentoCard project={boxOffice} onClick={() => onSelectProject("box-office")} delay={200} />
+        <BentoCard project={boxOffice} onClick={() => onSelectProject("box-office")} delay={120} />
         <div className="bento-row-compact">
-          <BentoCard project={msbaNba} onClick={() => onSelectProject("msba-nba")} delay={280} />
-          <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} delay={340} />
+          <BentoCard project={msbaNba} onClick={() => onSelectProject("msba-nba")} delay={200} />
+          <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} delay={280} />
         </div>
       </div>
     </div>
