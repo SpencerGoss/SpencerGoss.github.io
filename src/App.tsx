@@ -696,7 +696,7 @@ function getCardImage(project: typeof PROJECTS[0]): string | undefined {
   if (p.cardImage) return p.cardImage;
   const shot = project.screenshots.find((s) => (s as { img?: string }).img) as { img?: string } | undefined;
   if (shot?.img) return shot.img;
-  if (p.video) return `https://i.ytimg.com/vi/${p.video}/mqdefault.jpg`;
+  if (p.video) return `https://i.ytimg.com/vi/${p.video}/hqdefault.jpg`;
   return undefined;
 }
 
@@ -733,7 +733,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
 
           {cardImg ? (
             <div className="my-4 rounded-xl border border-border/50 flex-1 min-h-[200px] overflow-hidden relative bg-white">
-              <img src={cardImg} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-cover object-top" />
+              <img src={cardImg} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-contain" />
             </div>
           ) : (
             <div
@@ -791,7 +791,7 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
       <div className="relative z-10 flex flex-col justify-between h-full">
         <div>
           {cardImg && (
-            <div className="mb-3 rounded-lg overflow-hidden h-24 border border-border/50 bg-slate-900">
+            <div className="mb-3 rounded-lg overflow-hidden aspect-video border border-border/50 bg-slate-900">
               <img src={cardImg} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-cover object-center" />
             </div>
           )}
@@ -945,7 +945,7 @@ function Slideshow({ screenshots, accent }: { screenshots: { label: string; desc
   return (
     <div className="slideshow-container rounded-xl border border-border shadow-sm mb-6 overflow-hidden">
       {/* Slides */}
-      <div className={`relative ${hasImages ? "h-48 md:h-72" : "h-40 md:h-56"}`}>
+      <div className={`relative ${hasImages ? "aspect-[16/10]" : "h-40 md:h-56"}`}>
         {screenshots.map((shot, i) => (
           <div
             key={i}
@@ -958,7 +958,7 @@ function Slideshow({ screenshots, accent }: { screenshots: { label: string; desc
           >
             {shot.img ? (
               <>
-                <img src={shot.img} alt={shot.label} loading="lazy" className="w-full h-full object-cover object-top" />
+                <img src={shot.img} alt={shot.label} loading="lazy" className="w-full h-full object-contain" />
                 <div className="absolute bottom-0 inset-x-0 px-4 py-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent">
                   <div className="text-xs font-semibold text-white">{shot.label}</div>
                   <div className="text-[10px] text-white/70">{shot.desc}</div>
