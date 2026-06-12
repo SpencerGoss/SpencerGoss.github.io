@@ -1,5 +1,15 @@
 # HANDOFF — Spencer Portfolio Website
 
+## DECISION (2026-06-12, Spencer's explicit call): Trading Bot CUT, Churn Predictor KEPT
+Portfolio is 4 projects now: Oddsix (featured), Box Office, From Box Scores (NBA), Churn.
+Rationale: BA/DA role targeting. Trading Bot duplicated Oddsix's "real ML systems" signal with zero clickable proof (no repo link/demo/screenshots) and over-engineering perception risk; Churn is the only project whose deliverable is business recommendations to a stakeholder. Trading Bot data is deleted from PROJECTS (recoverable from git, commit 3ea1d26). Don't re-add without Spencer's say-so.
+
+## Session Summary — 2026-06-12 (continued: Oddsix slideshow, project cut, churn evidence)
+1. **Oddsix card = home page now** (Spencer's request); slideshow expanded to 5 slides (home, player, team page OKC, playoff bracket, betting) — fresh 1440×900 captures from the live site (commit b33458e).
+2. **Image-fit fixes** (commit 2a7bff3): small cards aspect-video + hqdefault thumbs; featured card object-contain; slideshow aspect-[16/10] + object-contain.
+3. **Box Office numbers corrected** (Spencer flagged): 5,659 films (NOT ~6,000), 2000-2025 (NOT 2026). Verified against films_enriched.csv. All other case-study claims spot-checked against the data and hold (commit 342c53e).
+4. **Churn Predictor got real evidence** (commit 3ea1d26): 4 charts extracted from `C:/Users/Spencer/OneDrive/Documents/Presentations/CustomerChurn.pptx` (the case-competition deck) → padded to 16:10 white canvases in `public/images/projects/churn-*.png`. Slideshow: tenure churn (53/31/14%), ROC benchmark (CatBoost 0.899 AUC best of 4), CatBoost feature importances (referrals #1), SHAP beeswarm. Copy/tags/metrics updated to match. NOTE: local churn repo at `OneDrive/Documents/GitHub/MSBA-Customer-Churn-Case` is an empty working tree (only .git) — the pptx is the asset source.
+
 ## Session Summary — 2026-06-12 (Box Office completion + image-fit fixes)
 Branch: master, 2 commits, tree clean. Built + bundled (`portfolio.html` current).
 
