@@ -1,5 +1,25 @@
 # HANDOFF — Spencer Portfolio Website
 
+## Session Summary — 2026-06-12 (Box Office completion + image-fit fixes)
+Branch: master, 2 commits, tree clean. Built + bundled (`portfolio.html` current).
+
+1. **Box Office vs. Ratings marked complete** (commit a90ec08). The project changed shape since the site copy was written: the final deliverable is a live **Dash + Plotly film explorer** (movie-theater theme), NOT the Power BI dashboard the case study described. Updated from the project's README at `C:/Users/Spencer/OneDrive/MSBA_692/box-office-vs-ratings/`:
+   - Added video walkthrough `video: "mFgFajpfPD8"` (https://youtu.be/mFgFajpfPD8) — embeds in the case study, ▶ Video badge + thumbnail on the card.
+   - Live dashboard wired to the Visit button: https://box-office-vs-ratings.onrender.com (Render free tier — sleeps after ~15 min idle, first hit takes 30-60s to wake).
+   - Removed `status: "In Progress"`, subtitle/tags now Dash + Plotly (Power BI removed from this project only; it stays in Skills).
+   - Data counts corrected to post-quality-filter reality: 5,659 films, 14,914 genre links, 349 rows dropped (placeholder budgets + streaming-only revenue).
+   - Case study sections now: The Question / The Pipeline / The Database / The Film Explorer / The Answer (real findings: ratings correlate with returns, blockbusters best ROI, ~47% hit rate).
+2. **Image-fit fixes across all project surfaces** (commit 2a7bff3) — Spencer flagged images not fitting their boxes, wanted per-surface sizing:
+   - Small cards: image block `aspect-video` (was fixed `h-24` strip that cropped 16:9 thumbs to a sliver).
+   - Video thumbs: `hqdefault.jpg` (480px, sharper) — its 4:3 letterbox bars crop away exactly under object-cover in the 16:9 box.
+   - Featured Oddsix card: `object-contain` on white (was object-cover object-top, cut the bottom off the 760×820 card image).
+   - Case-study slideshow: `aspect-[16/10]` (matches the 1440×900 Oddsix screenshots) + `object-contain` (was fixed h-48/h-72 + object-cover, cropped screenshot bottoms).
+   - All verified in the browser (grid, Oddsix slideshow, both video case studies).
+
+Stale-item updates: "Real dashboard screenshots — Box Office" is now covered by the video + live app link (Trading Bot screenshots still missing). The case-study line "Dashboard & visuals coming soon" no longer renders for Box Office (it keys off `status`, which was removed).
+
+---
+
 ## Session Summary — 2026-06-05 (polish + accessibility + build-fix + perf session)
 Branch: master. 14 commits this session. Tree clean except `.claude/` (root scratch PNGs now gitignored).
 
