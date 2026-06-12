@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1200px; height: 630px; overflow: hidden; }
+  .card {
+    width: 1200px; height: 630px; position: relative;
+    background: #F7F9FC;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    display: flex; align-items: center;
+    padding: 0 88px;
+  }
+  .blob1, .blob2 { position: absolute; border-radius: 50%; filter: blur(80px); }
+  .blob1 { width: 460px; height: 460px; right: -120px; top: -160px; background: rgba(6,182,212,0.16); }
+  .blob2 { width: 420px; height: 420px; right: 140px; bottom: -220px; background: rgba(139,92,246,0.13); }
+  .left { position: relative; z-index: 2; flex: 1; }
+  .eyebrow {
+    font-size: 21px; font-weight: 700; letter-spacing: 4px; color: #0E7490;
+    text-transform: uppercase; margin-bottom: 22px;
+  }
+  .name { font-size: 96px; font-weight: 800; color: #0F172A; letter-spacing: -3px; line-height: 1; margin-bottom: 26px; }
+  .pills { display: flex; gap: 14px; margin-bottom: 34px; }
+  .pill {
+    font-size: 24px; font-weight: 600; color: #334155;
+    background: #fff; border: 1.5px solid #E2E8F0; border-radius: 999px;
+    padding: 10px 24px;
+  }
+  .tagline { font-size: 28px; font-weight: 500; color: #475569; margin-bottom: 44px; }
+  .url { font-family: "JetBrains Mono", monospace; font-size: 24px; font-weight: 500; color: #0E7490; }
+  .mono {
+    position: relative; z-index: 2;
+    width: 300px; height: 300px; border-radius: 56px;
+    background: linear-gradient(135deg, #06B6D4, #8B5CF6);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 30px 60px rgba(15,23,42,0.18);
+  }
+  .mono span { font-size: 124px; font-weight: 800; color: #fff; letter-spacing: -2px; }
+  .bottombar { position: absolute; left: 0; right: 0; bottom: 0; height: 10px; background: linear-gradient(90deg, #06B6D4, #8B5CF6); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="blob1"></div>
+    <div class="blob2"></div>
+    <div class="left">
+      <div class="eyebrow">Portfolio</div>
+      <div class="name">Spencer Goss</div>
+      <div class="pills">
+        <div class="pill">Business Analyst</div>
+        <div class="pill">Data Analyst</div>
+        <div class="pill">MSBA · AI</div>
+      </div>
+      <div class="tagline">From raw data to real results: predictive models,<br/>automated systems, and analytics tools.</div>
+      <div class="url">spencergoss.github.io</div>
+    </div>
+    <div class="mono"><span>SG</span></div>
+    <div class="bottombar"></div>
+  </div>
+</body>
+</html>

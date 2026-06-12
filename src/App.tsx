@@ -638,7 +638,7 @@ function ProjectTitle({ project }: { project: typeof PROJECTS[0] }) {
    of the same hue for TEXT only. Backgrounds, borders, and bars keep the bright
    accent. */
 const ACCENT_TEXT: Record<string, string> = {
-  "#06B6D4": "#0E7490", // cyan
+  "#06B6D4": "#0D6B86", // cyan (passes AA on white AND the case-study tinted bg)
   "#EA580C": "#C2410C", // orange
   "#F59E0B": "#B45309", // amber
   "#8B5CF6": "#7C3AED", // violet
@@ -1917,7 +1917,7 @@ export default function App() {
                   aria-current={activeSection === key ? "true" : undefined}
                   className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ${
                     activeSection === key
-                      ? "text-primary bg-primary/10"
+                      ? "text-[#0D6B86] bg-primary/10"
                       : "text-muted-foreground hover:text-foreground hover:bg-black/5"
                   }`}
                 >
