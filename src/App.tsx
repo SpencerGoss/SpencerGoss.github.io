@@ -80,7 +80,7 @@ const PROJECTS = [
     cardImage: "/images/projects/oddsix-card.png",
     shortDescription: "A live multi-sport analytics platform covering the NBA, MLB, NFL, soccer, hockey and college: player stats and comparisons, historical data, league leaders, plus ML game predictions and a betting layer, all updated daily.",
     url: "https://oddsix.app",
-    github: "https://github.com/SpencerGoss/nba-analytics-project",
+    github: "#",
     tags: ["Python", "scikit-learn", "LightGBM", "Sports Analytics", "Daily Pipeline", "Multi-Sport"],
     screenshots: [
       { label: "Today across all sports", desc: "Daily slate, top performers, and tonight's edge", img: "/images/projects/oddsix-home.png" },
