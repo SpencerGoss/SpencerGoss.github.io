@@ -237,23 +237,23 @@ const PROJECTS = [
     tags: ["Python", "pandas", "PostgreSQL", "SQLAlchemy", "Dash", "Plotly", "TMDB API"],
     screenshots: [],
     metrics: [
-      { value: 6000, suffix: "+", label: "Films Pipelined" },
+      { value: 5659, suffix: "", label: "Films Pipelined" },
       { value: 19, suffix: "", label: "Genres" },
       { value: 7, suffix: "", label: "Data-Quality Checks" },
       { value: 3, suffix: "NF", label: "PostgreSQL Schema" },
     ],
     cardMetrics: [
-      { display: "6,000+", label: "Films" },
+      { display: "5,659", label: "Films" },
       { display: "7", label: "QA Checks" },
       { display: "3NF", label: "Postgres" },
     ],
     caseStudy: {
-      hook: "Do films that earn more also rate higher? An end-to-end data-engineering project: extract ~6,000 films from the TMDB API, load them into a normalized PostgreSQL database, and explore the box-office-versus-ratings story in a live, movie-theater-themed interactive film explorer.",
+      hook: "Do films that earn more also rate higher? An end-to-end data-engineering project: extract 5,659 films (2000-2025) from the TMDB API, load them into a normalized PostgreSQL database, and explore the box-office-versus-ratings story in a live, movie-theater-themed interactive film explorer.",
       sections: [
         {
           title: "The Question",
           color: "#06B6D4",
-          body: "Do films that earn more also rate higher? And do certain genres show a consistent gap between revenue and reception that shifts across decades? That's the question this project answers end to end, from raw API data to a clean, reproducible pipeline. The source is the TMDB API: roughly 6,000 films from 2000 to 2026, each with budget, revenue, runtime, audience ratings, and genres.",
+          body: "Do films that earn more also rate higher? And do certain genres show a consistent gap between revenue and reception that shifts across decades? That's the question this project answers end to end, from raw API data to a clean, reproducible pipeline. The source is the TMDB API: 5,659 films from 2000 to 2025, each with budget, revenue, runtime, audience ratings, and genres.",
         },
         {
           title: "The Pipeline",
