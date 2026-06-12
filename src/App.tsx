@@ -226,15 +226,15 @@ const PROJECTS = [
   {
     id: "box-office",
     title: "Box Office vs. Ratings",
-    subtitle: "Film Data Pipeline · ETL → PostgreSQL → Power BI",
+    subtitle: "Film Analytics · ETL → PostgreSQL → Dash App",
     accent: "#2563EB",
     accentBg: "rgba(37,99,235,0.08)",
     featured: false,
-    status: "In Progress",
-    shortDescription: "An end-to-end ETL pipeline (TMDB API to a 3NF PostgreSQL database to Power BI) exploring whether higher-earning films rate higher.",
-    url: "#",
+    video: "mFgFajpfPD8",
+    shortDescription: "An end-to-end film analytics project: an ETL pipeline (TMDB API to a 3NF PostgreSQL database) powering a live interactive film explorer built with Dash. Includes a recorded walkthrough.",
+    url: "https://box-office-vs-ratings.onrender.com",
     github: "https://github.com/SpencerGoss/box-office-vs-ratings",
-    tags: ["Python", "pandas", "PostgreSQL", "SQLAlchemy", "Power BI", "TMDB API"],
+    tags: ["Python", "pandas", "PostgreSQL", "SQLAlchemy", "Dash", "Plotly", "TMDB API"],
     screenshots: [],
     metrics: [
       { value: 6000, suffix: "+", label: "Films Pipelined" },
@@ -248,7 +248,7 @@ const PROJECTS = [
       { display: "3NF", label: "Postgres" },
     ],
     caseStudy: {
-      hook: "Do films that earn more also rate higher? An end-to-end data-engineering project: extract ~6,000 films from the TMDB API, load them into a normalized PostgreSQL database, and explore the box-office-versus-ratings story in Power BI.",
+      hook: "Do films that earn more also rate higher? An end-to-end data-engineering project: extract ~6,000 films from the TMDB API, load them into a normalized PostgreSQL database, and explore the box-office-versus-ratings story in a live, movie-theater-themed interactive film explorer.",
       sections: [
         {
           title: "The Question",
@@ -258,17 +258,22 @@ const PROJECTS = [
         {
           title: "The Pipeline",
           color: "#8B5CF6",
-          body: "A single self-contained Python script runs the whole thing end to end (extract, clean, validate, load, export) with no manual steps. A two-stage TMDB extract (discover films by year, then pull per-film financials) with retry and backoff feeds a pandas transform layer that derives profit, ROI, profit margin, budget tier, hit/flop performance, and decade. Before anything loads, 7 data-quality checks run (null required fields, duplicate keys, dtype coercion, range bounds, referential integrity, and row-count reconciliation), each logged PASS/FAIL, with critical failures aborting the run. The load is idempotent: ON CONFLICT upserts mean re-running never duplicates a row.",
+          body: "A single self-contained Python script runs the whole thing end to end (extract, clean, validate, load, export) with no manual steps. A two-stage TMDB extract (discover films by year, then pull per-film financials) with retry and backoff feeds a pandas transform layer that derives profit, ROI, profit margin, budget tier, hit/flop performance, and decade. A stricter quality filter drops 349 rows with placeholder budgets or streaming-only revenue (Netflix originals report token theatrical runs, so they masquerade as nine-figure flops). Before anything loads, 7 data-quality checks run (null required fields, duplicate keys, dtype coercion, range bounds, referential integrity, and row-count reconciliation), each logged PASS/FAIL, with critical failures aborting the run. The load is idempotent: ON CONFLICT upserts mean re-running never duplicates a row.",
         },
         {
           title: "The Database",
           color: "#2563EB",
-          body: "Everything lands in a 3NF PostgreSQL schema: a films table, a genres lookup, and a many-to-many film_genres bridge, plus an enriched view that joins in profit, ROI, and a comma-separated genre list. The current load holds 6,008 films, 19 genres, and 15,811 film-genre links, fully documented with an ER diagram. Postgres is the source of truth and the Power BI CSV is derived from it, so the live database, the inlined DDL, and the ER diagram all describe exactly the same schema, with no drift.",
+          body: "Everything lands in a 3NF PostgreSQL schema: a films table, a genres lookup, and a many-to-many film_genres bridge, plus an enriched view that joins in profit, ROI, and a comma-separated genre list. The current load holds 5,659 films (after the quality filter), 19 genres, and 14,914 film-genre links, fully documented with an ER diagram. Postgres is the source of truth and the app's CSV fallback is derived from it, so the live database, the inlined DDL, and the ER diagram all describe exactly the same schema, with no drift.",
         },
         {
-          title: "The Dashboard",
+          title: "The Film Explorer",
+          color: "#2563EB",
+          body: "The final layer is a live interactive web app built with Dash and Plotly, themed like a movie theater with real movie posters throughout. Search any film (or click any chart point) and the page becomes a full breakdown: poster, budget-to-revenue-to-profit, percentile rankings, and where that film sits on the ratings-vs-returns scatter of every film. Tabs cover top-10 poster walls (biggest box office, most profitable, best return, biggest flops), head-to-head film comparisons, a sortable table of every film, and the core ratings-versus-returns analysis. Six KPI cards recompute live with genre, decade, budget-tier, and release-year filters. The app queries PostgreSQL directly and falls back to a bundled CSV snapshot when the database isn't reachable, which is what lets it run free in the cloud.",
+        },
+        {
+          title: "The Answer",
           color: "#10B981",
-          body: "The final layer is a Power BI dashboard built on a genre-by-decade aggregation (average rating versus average ROI across 56 genre-decade cells) to show where commercial success and critical reception line up, and where they pull apart. This piece is in active development and on track to wrap in the next couple of weeks.",
+          body: "Yes: better-rated films are far more profitable. Median return climbs steadily with rating: films rated under 5 lose money, while films rated 8+ return several times their budget. Blockbusters (over $150M) post the highest median ROI and the best ratings, animation is the sweet spot of high ratings and strong returns, and about 47% of films are outright hits (returning at least 2x their budget). The project reports medians throughout, because a few micro-budget viral hits would skew any average.",
         },
       ],
     },
