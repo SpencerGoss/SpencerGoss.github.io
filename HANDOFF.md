@@ -1,6 +1,10 @@
 # HANDOFF — Spencer Portfolio Website
 
 ## 🟢 LIVE: https://spencergoss.github.io/  (deployed 2026-06-13)
+
+### Resume updated + redeployed (2026-06-13)
+Master resume (`OneDrive/Career/Spencer_Goss_Master_Resume.docx` + `.pdf`) refreshed and synced to the live site PDF (`public/Spencer_Goss_Resume.pdf`). Changes: added **Box Office** project (ETL→PostgreSQL→Dash), synced **Oddsix** (72% / 290+ picks / 6 sports / 0.74 AUC), upgraded **Churn** (4-model benchmark, CatBoost 0.899 AUC, SHAP drivers: referrals/contract/tenure), reframed **Churchill** to lead with the Relish-AI data-tagging work, **trimmed Trading to one line and moved it last** (kept on the master as a tailoring option for ML/quant roles; it's cut from the website). Projects ordered Oddsix → Box Office → Churn → Trading. Kept to **one page** by tightening bullets. Backups: `Spencer_Goss_Master_Resume.{docx,pdf}.bak-20260613` in OneDrive/Career. PDF regenerated from docx via Word COM (`powershell` SaveAs wdFormatPDF=17) — Word is installed; no LibreOffice/docx2pdf. To re-edit: edit the .docx (python-docx works), re-run the Word-COM SaveAs, copy PDF to `public/`, redeploy.
+
 Repo: `github.com/SpencerGoss/SpencerGoss.github.io` (public). `origin` is wired to it; `master` = source.
 
 **How deploy works right now (deploy-from-branch, MANUAL):**
