@@ -1,5 +1,27 @@
 # HANDOFF — Spencer Portfolio Website
 
+## 🟢 LIVE: https://spencergoss.github.io/  (deployed 2026-06-13)
+Repo: `github.com/SpencerGoss/SpencerGoss.github.io` (public). `origin` is wired to it; `master` = source.
+
+**How deploy works right now (deploy-from-branch, MANUAL):**
+- `master` branch holds the source. GitHub Pages serves the **`gh-pages`** branch (root), which holds the **built `dist/`**.
+- The GitHub CLI token has `repo` scope but NOT `workflow` scope, so the auto-deploy Action (`.github/workflows/deploy.yml`) could not be pushed — it was removed from master (recoverable from commit 2185018).
+- **To redeploy after changing the site:** rebuild and force-push dist to gh-pages:
+  ```bash
+  cd "C:/Users/Spencer/OneDrive/Career/Personal Website"
+  npx vite build && python bundle.py          # bundle.py only needed for portfolio.html deliverable, not the live site
+  touch dist/.nojekyll && rm -f dist/og-card-source.html
+  cd dist && rm -rf .git && git init -q && git checkout -q -b gh-pages && git add -A \
+    && git -c user.name="Spencer" -c user.email="spencer.goss@outlook.com" commit -q -m "Deploy" \
+    && git push -q -f https://github.com/SpencerGoss/SpencerGoss.github.io.git gh-pages && rm -rf .git
+  ```
+  Also push the source change to master normally (`git push`).
+- **Upgrade to auto-deploy-on-push (optional, ~30s):** `gh auth refresh -h github.com -s workflow`, then restore `.github/workflows/deploy.yml` (from commit 2185018), push it to master, and in repo **Settings → Pages → Source** switch from "Deploy from a branch" to **GitHub Actions**. After that, every `git push` to master auto-builds and deploys; no more manual gh-pages step.
+
+**Verified live (2026-06-13):** page renders, 0 console errors, all assets 200 (JS/CSS bundles, og-card.png, resume PDF, robots.txt, sitemap.xml, project images), og:url + og:image tags present.
+
+**Still open before/after launch (not blockers):** (1) Resume PDF is the June 5 file — Spencer should confirm it's the version he wants (it's what recruiters download now). (2) OG card design awaiting Spencer's final OK (shipped as-is). (3) Pre-existing content calls: AI System section keep/trim, quantified day-job metrics, GPA/certs, grad photo for About.
+
 ## DECISION (2026-06-12, Spencer's explicit call): Trading Bot CUT, Churn Predictor KEPT
 Portfolio is 4 projects now: Oddsix (featured), Box Office, From Box Scores (NBA), Churn.
 Rationale: BA/DA role targeting. Trading Bot duplicated Oddsix's "real ML systems" signal with zero clickable proof (no repo link/demo/screenshots) and over-engineering perception risk; Churn is the only project whose deliverable is business recommendations to a stakeholder. Trading Bot data is deleted from PROJECTS (recoverable from git, commit 3ea1d26). Don't re-add without Spencer's say-so.
