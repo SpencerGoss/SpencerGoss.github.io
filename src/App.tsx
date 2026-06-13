@@ -1567,7 +1567,7 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
             I built my own AI system.
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-            Most people use one AI tool. I run <span className="text-slate-200 font-medium">five models that check each other's work</span>, catch their own mistakes, get better over time, and keep working across my projects while I review what they produce.
+            Most people use one AI tool. I run <span className="text-slate-200 font-medium">five models that check each other's work</span>, catch their own mistakes, and get better over time, with every recommendation reviewed by me before anything ships.
           </p>
         </ScrollReveal>
 
@@ -1687,10 +1687,10 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
           </div>
         </ScrollReveal>
 
-        {/* Bottom stats */}
+        {/* Technical translation: the real techniques behind the plain-English design */}
         <div className="text-center mt-14">
-          <p className="text-[10px] text-slate-600" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-            five AI services  •  53 custom skills  •  gets better over time  •  I review every change
+          <p className="text-[10px] text-slate-500" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+            multi-agent orchestration  ·  adversarial verification  ·  cross-model debate  ·  outcome-based evaluation  ·  human-in-the-loop
           </p>
         </div>
       </div>
