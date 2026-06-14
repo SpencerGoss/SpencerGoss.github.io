@@ -1,5 +1,20 @@
 # HANDOFF — Spencer Portfolio Website
 
+## ▶ NEXT SESSION STARTS HERE (2026-06-13 wrap)
+**Job-search prep is the active workstream. Website + resume are DONE and live.** Next up: **finish LinkedIn.**
+- Headline + About are DRAFTED and saved in `OneDrive/Career/LinkedIn_REFRESH_2026-06-13.md` (synced to current resume, trading cut, dual BA/DA + AI positioning, no AI tells).
+- **TODO:** write the LinkedIn **Experience** (Churchill + Terex), **Featured** (portfolio, Oddsix, videos), and **Skills** (up to 50, dual BA/DA + AI). All detailed in that file.
+- **Spencer still owes:** pick a headline (2 options in the file), change the custom URL, add a photo, turn on "Open to Work" (recruiters-only). Settings checklist in the file.
+- The May `LinkedIn_About_Draft.md` / `LinkedIn_Optimization.md` are SUPERSEDED (stale: trading bot, old numbers).
+
+**Other open job-search items (after LinkedIn), priority order:**
+1. **Real photo** — hero is still the "SG" monogram; About has no photo. Needs Spencer's file (`public/images/spencer-grad.jpg` was the plan). Then Claude crops/fits + redeploys.
+2. **Application dry run** — run one real posting through job-posting-analyzer → resume-tailor → cover-letter-writer. `applications/` folder is empty. Proves the workflow + builds templates.
+3. **Interview STAR stories** — buildable now from Oddsix / Box Office / Churn / Churchill.
+4. **AI-leaning resume variant** — for AI-role applications, feature the AI-systems work + keywords (multi-agent, LLM orchestration, agent design, RAG, eval). The pure-BA/DA master is the default.
+
+**This session (2026-06-13) shipped (all live + committed):** GitHub Pages deploy + go-live; resume full rewrite + ATS pass; cut Trading Bot from site (was already cut) consistency; Box Office project completion (video + live dashboard); Oddsix card=home + 5-slide slideshow; Churn real charts; image-fit fixes; OG card + SEO meta; **AI System section** tightened (accuracy fix on paused agents, technical-vocabulary line, real-result proof callout from the NBA-model 6-bugs-caught story, honestly attributed to project safety checks not the council). See detailed sections below.
+
 ## 🟢 LIVE: https://spencergoss.github.io/  (deployed 2026-06-13)
 
 ### Resume updated + redeployed (2026-06-13)
