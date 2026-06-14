@@ -1687,6 +1687,16 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
           </div>
         </ScrollReveal>
 
+        {/* Concrete result — the verify-your-output principle paying off in a real project */}
+        <ScrollReveal className="mt-12">
+          <div className="max-w-3xl mx-auto rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 text-center" style={{ borderTop: "2px solid rgba(6,182,212,0.4)" }}>
+            <div className="text-[11px] font-bold uppercase tracking-[2px] text-cyan-300/80 mb-2">A real result</div>
+            <p className="text-[13px] md:text-sm text-slate-300 leading-relaxed">
+              The same principle runs in my actual projects: don't trust the output, verify it. On my NBA model, automated safety checks caught <span className="text-white font-semibold">six real bugs in a single pass</span>, including a "model improvement" that was actually overfit to its own test data (blocked before it shipped) and a crash that had gone unnoticed for seven weeks.
+            </p>
+          </div>
+        </ScrollReveal>
+
         {/* Technical translation: the real techniques behind the plain-English design */}
         <div className="text-center mt-14">
           <p className="text-[10px] text-slate-500" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
