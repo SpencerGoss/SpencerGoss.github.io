@@ -1,10 +1,13 @@
 # HANDOFF — Spencer Portfolio Website
 
-## ▶ NEXT SESSION STARTS HERE (2026-06-18 wrap)
-**The website is DONE, LIVE, and fully audited. Nothing pending on the site.** Active job-search workstream is now **finish LinkedIn** (still the highest-leverage open item — the live site links to it, and it was left half-drafted on 2026-06-13).
+## ▶ NEXT SESSION STARTS HERE (updated 2026-06-18, post-crash recovery)
+**The website is DONE, LIVE, and fully audited. Nothing pending on the site.** The previous session crashed AFTER its wrap; on recovery, verified TWO post-wrap items had completed cleanly before the crash and nothing was lost: (1) the hero headshot was made circular + zoomed (`9c7f5ef`, committed + deployed, live JS = source), and (2) **LinkedIn drafting is COMPLETE** — `OneDrive/Career/LinkedIn_REFRESH_2026-06-13.md` is marked complete (2026-06-18 11:53) with Headline, About, Experience (Churchill + Terex), Featured, Skills, Education all written and voice-clean (0 em-dashes / curly quotes in the copy-paste blocks). The old "finish LinkedIn" next-action is DONE.
+
+### What actually remains (LinkedIn = Spencer-only UI now)
+All Claude-writable LinkedIn content is done. Remaining LinkedIn items are Spencer-only in the UI (Section 7 of the refresh file): pick a headline (2 options), keep custom URL `/in/spencergoss1234` (CONFIRMED correct — site links to it), upload photo (reuse `public/images/spencer-headshot.jpg`), turn on "Open to Work" (recruiters-only), upload banner. The May `LinkedIn_About_Draft.md` / `LinkedIn_Optimization.md` are SUPERSEDED.
 
 ### Exact first action next session
-Finish the LinkedIn profile: drafts are in `OneDrive/Career/LinkedIn_REFRESH_2026-06-13.md`. Write the **Experience** (Churchill + Terex), **Featured** (portfolio, Oddsix, videos), and **Skills** (up to 50, dual BA/DA + AI). Then Spencer owes: pick a headline (2 options in the file), set the custom URL to match the site link (`/in/spencergoss1234` — CONFIRMED correct 2026-06-18), add a photo (can reuse `public/images/spencer-headshot.jpg`), turn on "Open to Work" (recruiters-only). The May `LinkedIn_About_Draft.md` / `LinkedIn_Optimization.md` are SUPERSEDED. Use the `linkedin-optimizer` skill.
+AUTONOMOUS-DISCOVERY MODE for job-search support. Highest-leverage Claude-doable items, in order: (1) **Interview STAR stories** — buildable now from Oddsix / Box Office / Churn / Churchill via the `interview-prep` skill; (2) **AI-leaning resume variant** — feature the multi-agent/LLM-orchestration work + keywords for AI-role applications (the BA/DA master stays default); (3) **Application dry run** — needs a REAL job posting from Spencer, then job-posting-analyzer → resume-tailor → cover-letter-writer (the `applications/` folder is empty). Pick (1) or (2) autonomously; (3) is blocked on Spencer providing a posting.
 
 ### Site status: COMPLETE ✅ — https://spencergoss.github.io/ (verified 200, 0 console errors, 0 broken images live)
 This session (2026-06-18) finished the site end-to-end:
