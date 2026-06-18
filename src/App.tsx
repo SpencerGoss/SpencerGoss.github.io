@@ -113,7 +113,7 @@ const PROJECTS = [
           color: "#8B5CF6",
           body: "Oddsix is a full sports-analytics hub covering the NBA, MLB, NFL, soccer, hockey and college. It pulls together player stats and cross-era comparisons, team standings and league leaders, historical data and interactive Elo timelines, and on top of all that, daily ML game predictions with a betting layer. Each sport runs its own machine-learning model, trained only on information known before tip-off and calibrated so a 60% really means 60%. The NBA model alone is a three-model stacked ensemble over 490 engineered features (Elo ratings, clutch performance, lineup quality, opponent-adjusted stats) and lands around 0.74 AUC on games it hasn't seen. The betting layer turns those probabilities into real edges: it compares the model's read to the market line, flags value, and sizes the stake with the Kelly criterion. A daily pipeline pulls fresh data, regenerates everything, grades yesterday's results, and updates the site on its own.",
           features: [
-            { emoji: "\u{1F3C0}", name: "Every Sport, One Place", desc: "Player stats, standings, history, and predictions across NBA, MLB, NFL, soccer, NHL & college" },
+            { emoji: "\u{1F3C0}", name: "Every Sport, One Place", desc: "Player stats, standings, history, and predictions across NBA, MLB, NFL, soccer, hockey & college" },
             { emoji: "\u{1F4CA}", name: "Player & Team Analytics", desc: "Per-game stats, cross-era player comparisons, league leaders, and Elo timelines" },
             { emoji: "\u{1F3AF}", name: "ML Predictions + Betting", desc: "Calibrated pre-tip-off models, market-edge detection, and Kelly stake sizing" },
             { emoji: "\u{1F4C8}", name: "Public Track Record", desc: "Every pick graded daily, recent and lifetime, every loss included" },
@@ -143,7 +143,7 @@ const PROJECTS = [
     metrics: [
       { value: 10500, suffix: "+", label: "Games Analyzed" },
       { value: 5, suffix: "", label: "NBA Seasons" },
-      { value: 26, suffix: "", label: "Pre-Tipoff Features" },
+      { value: 26, suffix: "", label: "Pre-Tip-Off Features" },
       { value: 4, suffix: "", label: "Play-Style Clusters" },
     ],
     cardMetrics: [
@@ -435,7 +435,7 @@ const EXPERIENCE = [
     org: "University of Kentucky",
     location: "Lexington, KY",
     period: "Aug 2020 - Mar 2024",
-    description: "Bachelor of Business Administration with focuses in Finance, Marketing, and a minor in Business Analytics. Built a strong foundation in quantitative analysis, business strategy, and data-driven decision making.",
+    description: "Bachelor of Business Administration with focuses in Finance, Marketing, and a minor in Business Analytics. Built a strong foundation in quantitative analysis, business strategy, and data-driven decision-making.",
     details: [
       "Graduated with a 3.61 GPA and Dean's List honors most semesters; UK Provost Scholarship and Humana Foundation Scholarship recipient",
       "Finance and Marketing majors with a minor in Business Analytics, combining quantitative and strategic skills",
