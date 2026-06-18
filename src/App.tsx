@@ -106,7 +106,7 @@ const PROJECTS = [
         {
           title: "Why I Built It",
           color: "#06B6D4",
-          body: "I built Oddsix as a personal project, driven by a deep passion for the NBA. I've watched basketball for years and wanted to build something that combined that love for the game with the data science and machine learning skills I've been developing. It started simply, as a place to dig into player stats and compare players across eras, and grew into something bigger: a real ML pipeline, game-outcome predictions, and a tool that explains every recommendation in plain English, so anyone can see why a pick might have value. It's not perfect, but it's real. Real data, real models, real predictions. And it's something I actually use.",
+          body: "I built Oddsix as a personal project, mostly because I'm a big basketball fan. I've watched the NBA for years and wanted to build something that combined that with the data science and machine learning skills I've been developing. It started simply, as a place to dig into player stats and compare players across eras, and grew into something bigger: a real ML pipeline, game-outcome predictions, and a tool that explains every recommendation in plain English, so anyone can see why a pick might have value. It's not perfect, but it's real. Real data, real models, real predictions. And it's something I actually use.",
         },
         {
           title: "What I Built",
