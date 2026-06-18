@@ -2043,9 +2043,11 @@ export default function App() {
                 <div className="absolute -inset-6 rounded-full opacity-30" aria-hidden="true" style={{ background: "radial-gradient(circle, #06B6D4 0%, transparent 70%)", filter: "blur(40px)" }} />
                 <div
                   ref={mediaCardRef}
-                  className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg border border-white/50"
+                  className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-lg border border-white/50"
                 >
-                  {/* Headshot. Swap the src for a casual photo later if desired. */}
+                  {/* Headshot. Swap the src for a casual photo later if desired.
+                      Circular crop + zoomed in on the face (transform scale) so the
+                      blazer/shoulders crop out. Tune scale/origin to reframe. */}
                   <img
                     src="/images/spencer-headshot.jpg"
                     alt="Spencer Goss"
@@ -2053,6 +2055,7 @@ export default function App() {
                     height={800}
                     loading="eager"
                     className="w-full h-full object-cover object-center select-none"
+                    style={{ transform: "scale(1.4)", transformOrigin: "50% 34%" }}
                     draggable={false}
                   />
                 </div>
