@@ -1,19 +1,29 @@
 # HANDOFF — Spencer Portfolio Website
 
-## ▶ NEXT SESSION STARTS HERE (2026-06-13 wrap)
-**Job-search prep is the active workstream. Website + resume are DONE and live.** Next up: **finish LinkedIn.**
-- Headline + About are DRAFTED and saved in `OneDrive/Career/LinkedIn_REFRESH_2026-06-13.md` (synced to current resume, trading cut, dual BA/DA + AI positioning, no AI tells).
-- **TODO:** write the LinkedIn **Experience** (Churchill + Terex), **Featured** (portfolio, Oddsix, videos), and **Skills** (up to 50, dual BA/DA + AI). All detailed in that file.
-- **Spencer still owes:** pick a headline (2 options in the file), change the custom URL, add a photo, turn on "Open to Work" (recruiters-only). Settings checklist in the file.
-- The May `LinkedIn_About_Draft.md` / `LinkedIn_Optimization.md` are SUPERSEDED (stale: trading bot, old numbers).
+## ▶ NEXT SESSION STARTS HERE (2026-06-18 wrap)
+**The website is DONE, LIVE, and fully audited. Nothing pending on the site.** Active job-search workstream is now **finish LinkedIn** (still the highest-leverage open item — the live site links to it, and it was left half-drafted on 2026-06-13).
 
-**Other open job-search items (after LinkedIn), priority order:**
-1. **Real photo** — hero is still the "SG" monogram; About has no photo. Needs Spencer's file (`public/images/spencer-grad.jpg` was the plan). Then Claude crops/fits + redeploys.
-2. **Application dry run** — run one real posting through job-posting-analyzer → resume-tailor → cover-letter-writer. `applications/` folder is empty. Proves the workflow + builds templates.
-3. **Interview STAR stories** — buildable now from Oddsix / Box Office / Churn / Churchill.
-4. **AI-leaning resume variant** — for AI-role applications, feature the AI-systems work + keywords (multi-agent, LLM orchestration, agent design, RAG, eval). The pure-BA/DA master is the default.
+### Exact first action next session
+Finish the LinkedIn profile: drafts are in `OneDrive/Career/LinkedIn_REFRESH_2026-06-13.md`. Write the **Experience** (Churchill + Terex), **Featured** (portfolio, Oddsix, videos), and **Skills** (up to 50, dual BA/DA + AI). Then Spencer owes: pick a headline (2 options in the file), set the custom URL to match the site link (`/in/spencergoss1234` — CONFIRMED correct 2026-06-18), add a photo (can reuse `public/images/spencer-headshot.jpg`), turn on "Open to Work" (recruiters-only). The May `LinkedIn_About_Draft.md` / `LinkedIn_Optimization.md` are SUPERSEDED. Use the `linkedin-optimizer` skill.
 
-**This session (2026-06-13) shipped (all live + committed):** GitHub Pages deploy + go-live; resume full rewrite + ATS pass; cut Trading Bot from site (was already cut) consistency; Box Office project completion (video + live dashboard); Oddsix card=home + 5-slide slideshow; Churn real charts; image-fit fixes; OG card + SEO meta; **AI System section** tightened (accuracy fix on paused agents, technical-vocabulary line, real-result proof callout from the NBA-model 6-bugs-caught story, honestly attributed to project safety checks not the council). See detailed sections below.
+### Site status: COMPLETE ✅ — https://spencergoss.github.io/ (verified 200, 0 console errors, 0 broken images live)
+This session (2026-06-18) finished the site end-to-end:
+- **Real headshot in the hero** (replaced the SG monogram). The ChatGPT-retouched photo had a tan backdrop clashing with the blue hero → cut Spencer out with `rembg` (u2net) + composited onto a soft cool-gray studio backdrop. File: `public/images/spencer-headshot.jpg` (800px). NOTE: the About section still has NO photo — optional add later if wanted.
+- **Full employer audit** — links live, mobile clean at 390px, SEO/meta good, live oddsix metrics match the site (72% / ~290 picks). The OG share card (`public/og-card.png`) was verified clean/on-brand (uses the SG monogram — fine for a banner).
+- **Academic honors added** to education slides (4.0 MSBA GPA + College of Business scholarship; 3.61 UK GPA, Dean's List, UK Provost + Humana scholarships) — were resume-only before.
+- **Resume synced**: date label March→June 2026; churn "MSBA Capstone" → **"MSBA Case Competition"** (Spencer confirmed). Master docx + master PDF + `public/Spencer_Goss_Resume.pdf` all regenerated via Word COM. Backups: `Spencer_Goss_Master_Resume.{docx,pdf}.bak-churnfix` in OneDrive/Career (safe to delete).
+- **AI-voice + tone pass**: zero em/en dashes + zero curly quotes in visible copy (only invisible code comments have em dashes); "driven by a deep passion for the NBA" → "mostly because I'm a big basketball fan"; sport naming unified to "hockey"; "decision-making"/"Pre-Tip-Off" hyphenation; "Real projects, real data, real impact." → "Real projects, real data."; trading-bot bullet sharpened (multi-asset / hybrid ML / AI agents / risk controls, engineering-framed).
+- **Trading Bot decision**: keep UNDERSTATED (one engineering-framed bullet in Independent Projects), NOT a featured case study — off-target for BA/DA + real-money-crypto carries downside with conservative employers. Feature it only if Spencer targets ML-engineer / quant / fintech roles.
+- **Experience timeline**: kept full (incl. Terex + Saint X) per Spencer's call — the "journey" narrative stays.
+
+### Deploy: LIVE on GitHub Pages (manual, gh-pages branch)
+Canonical redeploy + auto-deploy instructions are in **CLAUDE.md → "## LIVE — Deployment"**. Short version: rebuild `dist/`, force-push it to the `gh-pages` branch, push source to `master`. The auto-deploy Action is written at `.github/workflows/deploy.yml` but **UNTRACKED** (gh token lacks `workflow` scope). To enable one-click deploys: `gh auth refresh -h github.com -s workflow`, commit the workflow, `gh api -X PUT repos/SpencerGoss/SpencerGoss.github.io/pages -f build_type=workflow`, push master.
+
+**Other job-search items (after LinkedIn), priority order:**
+1. **Application dry run** — run one real posting through job-posting-analyzer → resume-tailor → cover-letter-writer. `applications/` folder is empty. Proves the workflow + builds templates.
+2. **Interview STAR stories** — buildable now from Oddsix / Box Office / Churn / Churchill.
+3. **AI-leaning resume variant** — for AI-role applications, feature the AI-systems work + keywords (multi-agent, LLM orchestration, agent design, RAG, eval). The pure-BA/DA master is the default.
+4. **Optional site polish:** add an About-section photo; enable auto-deploy (above).
 
 ## 🟢 LIVE: https://spencergoss.github.io/  (deployed 2026-06-13)
 
