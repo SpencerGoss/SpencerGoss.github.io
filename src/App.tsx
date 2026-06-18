@@ -476,12 +476,12 @@ const EXPERIENCE = [
     period: "2016 - 2020",
     description: "All-boys Catholic college preparatory high school in Louisville, established in 1864. Active in athletics, leadership, and service organizations throughout all four years.",
     details: [
-      "Member of the National Honors Society for academic excellence",
+      "Member of the National Honor Society for academic excellence",
       "Served on the Student Activity Council, helping plan and coordinate school events",
       "Member of the Lacrosse and Powerlifting teams",
       "Active in Ryken Service Club, contributing to community service initiatives",
     ],
-    highlights: ["National Honors Society", "Lacrosse", "Student Activity Council"],
+    highlights: ["National Honor Society", "Lacrosse", "Student Activity Council"],
     type: "education" as const,
     logo: "/images/experience/saint-xavier-logo.jpg",
     color: "#6A1B9A",
@@ -2263,7 +2263,7 @@ export default function App() {
               <Download size={20} aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-0.5" />
               Download Resume
             </a>
-            <p className="text-xs text-muted-foreground mt-3">PDF • Updated March 2026</p>
+            <p className="text-xs text-muted-foreground mt-3">PDF • Updated June 2026</p>
           </ScrollReveal>
 
           <ScrollReveal>
