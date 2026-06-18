@@ -2154,7 +2154,7 @@ export default function App() {
               </h2>
               <Separator className="w-12 bg-primary h-0.5 mb-4" />
               <p className="text-muted-foreground">
-                Real projects, real data, real impact. Click any to see the full case study.
+                Real projects, real data. Click any to see the full case study.
               </p>
             </ScrollReveal>
             <BentoGrid onSelectProject={setSelectedProject} />
