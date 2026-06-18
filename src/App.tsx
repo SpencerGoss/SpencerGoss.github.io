@@ -399,7 +399,7 @@ const EXPERIENCE = [
     description: "Shipping real products: a full-stack multi-sport analytics platform, automated trading systems with risk management, and an autonomous multi-agent AI development environment.",
     details: [
       "Built and deployed Oddsix, a live multi-sport sports-analytics platform (player stats, historical data, ML predictions, and betting tools) whose picks grade themselves in public at 72% over 290+ picks",
-      "Developed automated trading systems with real-time risk management and circuit breakers",
+      "Built and deployed a multi-asset algorithmic trading system with hybrid ML signals, autonomous AI agents, and real-time risk controls (per-trade and daily circuit breakers)",
       "Engineered a multi-agent AI development system with custom Claude skills, plugins, and autonomous overnight agents across multiple projects",
     ],
     highlights: ["ML Platform", "Automated Trading", "AI Agents"],
