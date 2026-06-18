@@ -2043,26 +2043,16 @@ export default function App() {
                   ref={mediaCardRef}
                   className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg border border-white/50"
                 >
-                  {/* Placeholder — cyan→purple SG monogram. Swap this whole block for a photo later. */}
-                  <div
-                    className="w-full h-full relative flex items-center justify-center overflow-hidden"
-                    style={{ background: "linear-gradient(135deg, #06B6D4 0%, #8B5CF6 100%)" }}
-                    role="img"
-                    aria-label="Spencer Goss monogram"
-                  >
-                    <div
-                      className="absolute inset-0"
-                      aria-hidden="true"
-                      style={{ background: "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.28), transparent 55%)" }}
-                    />
-                    <span
-                      className="relative text-white font-extrabold tracking-tight select-none"
-                      style={{ fontSize: "8.5rem", lineHeight: 1 }}
-                      aria-hidden="true"
-                    >
-                      SG
-                    </span>
-                  </div>
+                  {/* Headshot. Swap the src for a casual photo later if desired. */}
+                  <img
+                    src="/images/spencer-headshot.jpg"
+                    alt="Spencer Goss"
+                    width={800}
+                    height={800}
+                    loading="eager"
+                    className="w-full h-full object-cover object-center select-none"
+                    draggable={false}
+                  />
                 </div>
               </div>
             </div>
