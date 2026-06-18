@@ -47,11 +47,20 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 ## Redesign Status (2026-03-30)
 - All sections redesigned: Hero ✅ → Nav ✅ → About ✅ → Projects ✅ → Skills ✅ → Experience ✅ → Contact ✅ → Global ✅
 - Hero right side: Spencer's professional headshot (navy blazer) at `public/images/spencer-headshot.jpg` — an 800px progressive JPEG. Swapped in 2026-06-17, replacing the cyan→purple "SG" monogram placeholder card. The original ChatGPT-retouched photo had a warm tan studio backdrop that clashed with the cool blue hero; cut Spencer out with `rembg` (u2net) and composited him onto a soft cool-gray radial studio backdrop (#f0f2f6 center → #cdd5e1 edge) with a subtle drop shadow, so it sits in the site palette. To regenerate with a different backdrop, re-run from the cutout (process noted in commit). Sits in a fixed square card (`w-64 h-64 md:w-80 md:h-80`, rounded-2xl, shadow, border, decorative cyan blob behind); `<img>` uses `object-cover` so there's no crop. To swap for a different/casual photo later, just replace the `src` (and the file). The photo is a ChatGPT-retouched real photo; Spencer judged it reads as a normal retouched headshot, not AI.
-- Resume PDF placeholder — download button wired up, needs actual file at `/Spencer_Goss_Resume.pdf`
-- Project slideshow screenshots are placeholders — swap real screenshots into PROJECTS data when ready
+- Resume PDF is live at `public/Spencer_Goss_Resume.pdf` (real, 1-page, current). Download button in Contact wired to it. The "Updated [month] 2026" label in Contact is manual — bump it when the PDF changes.
+- Project screenshots are REAL (not placeholders): `public/images/projects/oddsix-*.png` + `churn-*.png`. msba-nba and box-office use YouTube video embeds instead of screenshots.
 - Experience slide images are local files at `public/images/experience/` — real campus/building photos
 - Lenis smooth scroll + cursor spotlight are active
 - Icons use Iconify API (reliable) — do NOT switch back to Simple Icons CDN (broken)
+
+## Pre-Launch Checklist (audit 2026-06-17)
+Full employer's-eye audit run 2026-06-17. Site is in strong shape: clean console, no mobile breaks, all external links live, live oddsix metrics match the site (72% / ~290 picks), copy in Spencer's voice with no AI tells. Fixed in that pass: hero headshot + studio-gray backdrop, resume date label, "National Honor Society" naming, added academic honors (4.0 / 3.61 GPA, Dean's List, scholarships) to education slides.
+- [ ] **DEPLOY URL UNDECIDED** — canonical/OG/Twitter/JSON-LD in `index.html`, the sitemap, and the resume all assume `https://spencergoss.github.io/`. If launching on a custom domain, update all of those before go-live. This is the main open item.
+- [ ] Confirm `public/sitemap.xml` URL matches the final deploy domain.
+- LinkedIn handle `spencergoss1234` CONFIRMED correct by Spencer (2026-06-17).
+- Note: oddsix metrics ("290 picks", "210-80") are a static snapshot of a daily-grading platform — they slowly drift. Either refresh on rebuilds or accept they trail the live site slightly. Headline 72% is stable.
+- Note: box-office Render link works but free-tier cold-starts ~30s on first hit after idle.
+- Note: AI System "37 Autonomous Agents" — built but currently suspended (quota); fine on-site, be ready to speak to it in interviews.
 
 ## Bundle Script (run after vite build)
 ```bash
