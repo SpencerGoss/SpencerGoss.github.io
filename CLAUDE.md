@@ -46,7 +46,7 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 
 ## Redesign Status (2026-03-30)
 - All sections redesigned: Hero ✅ → Nav ✅ → About ✅ → Projects ✅ → Skills ✅ → Experience ✅ → Contact ✅ → Global ✅
-- Hero right side: a cyan→purple gradient "SG" monogram card (chosen 2026-06-05 over a data-motif option). It's a branded placeholder — Spencer will swap the single block for a casual photo when he has one.
+- Hero right side: Spencer's professional headshot (navy blazer, tan backdrop) at `public/images/spencer-headshot.jpg` — an 800px progressive JPEG. Swapped in 2026-06-17, replacing the cyan→purple "SG" monogram placeholder card. Sits in a fixed square card (`w-64 h-64 md:w-80 md:h-80`, rounded-2xl, shadow, border, decorative cyan blob behind); `<img>` uses `object-cover` so there's no crop. To swap for a different/casual photo later, just replace the `src` (and the file). The photo is a ChatGPT-retouched real photo; Spencer judged it reads as a normal retouched headshot, not AI.
 - Resume PDF placeholder — download button wired up, needs actual file at `/Spencer_Goss_Resume.pdf`
 - Project slideshow screenshots are placeholders — swap real screenshots into PROJECTS data when ready
 - Experience slide images are local files at `public/images/experience/` — real campus/building photos
