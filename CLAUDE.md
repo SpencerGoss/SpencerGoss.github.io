@@ -53,10 +53,23 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 - Lenis smooth scroll + cursor spotlight are active
 - Icons use Iconify API (reliable) — do NOT switch back to Simple Icons CDN (broken)
 
-## Pre-Launch Checklist (audit 2026-06-17)
-Full employer's-eye audit run 2026-06-17. Site is in strong shape: clean console, no mobile breaks, all external links live, live oddsix metrics match the site (72% / ~290 picks), copy in Spencer's voice with no AI tells. Fixed in that pass: hero headshot + studio-gray backdrop, resume date label, "National Honor Society" naming, added academic honors (4.0 / 3.61 GPA, Dean's List, scholarships) to education slides.
-- [ ] **DEPLOY URL UNDECIDED** — canonical/OG/Twitter/JSON-LD in `index.html`, the sitemap, and the resume all assume `https://spencergoss.github.io/`. If launching on a custom domain, update all of those before go-live. This is the main open item.
-- [ ] Confirm `public/sitemap.xml` URL matches the final deploy domain.
+## LIVE — Deployment (launched 2026-06-17)
+**The site is LIVE at https://spencergoss.github.io/** (GitHub Pages). Full employer's-eye audit run 2026-06-17 before launch: clean console, no mobile breaks, all external links live, live oddsix metrics match the site (72% / ~290 picks), copy in Spencer's voice. Pre-launch fixes: hero headshot + studio-gray backdrop, resume date label, "National Honor Society" naming, academic honors (4.0 / 3.61 GPA, Dean's List, scholarships) added to education slides.
+
+### How deploy works (current mechanism)
+- Repo `SpencerGoss/SpencerGoss.github.io` is THIS repo's `origin`. `master` = source. Pages serves from the **`gh-pages` branch** (legacy "deploy from a branch" mode).
+- **To redeploy after changes:** rebuild and force-push `dist/` to `gh-pages`:
+  ```bash
+  npx vite build && touch dist/.nojekyll
+  rm -rf /tmp/ghpages && cp -r dist /tmp/ghpages && cd /tmp/ghpages
+  git init -q -b gh-pages && git add -A && git -c user.email=spencer.goss@outlook.com -c user.name="Spencer Goss" commit -qm "Deploy"
+  git push -f "https://github.com/SpencerGoss/SpencerGoss.github.io.git" gh-pages
+  ```
+  Pages rebuilds in ~20s. Push source commits to `master` separately (`git push origin master`).
+- **Optional upgrade to auto-deploy:** an Actions workflow exists at `.github/workflows/deploy.yml` (UNTRACKED — not committed, because the gh token lacks `workflow` scope). To enable: run `gh auth refresh -h github.com -s workflow` (device code), commit the workflow, `gh api -X PUT repos/SpencerGoss/SpencerGoss.github.io/pages -f build_type=workflow`, then `git push origin master`. After that, every push to master auto-rebuilds + deploys.
+
+### Pre-launch notes (still relevant)
+- Deploy URL = `spencergoss.github.io` (decided 2026-06-17). canonical/OG/Twitter/JSON-LD/sitemap/resume all match. If a custom domain is ever added, update those + add a CNAME.
 - LinkedIn handle `spencergoss1234` CONFIRMED correct by Spencer (2026-06-17).
 - Note: oddsix metrics ("290 picks", "210-80") are a static snapshot of a daily-grading platform — they slowly drift. Either refresh on rebuilds or accept they trail the live site slightly. Headline 72% is stable.
 - Note: box-office Render link works but free-tier cold-starts ~30s on first hit after idle.
