@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Archivo:wdth,wght@112,800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -40,6 +40,15 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Headline face: Archivo Expanded 800 (Spencer's pick, 2026-08-14).
+     Display only -- body stays Plus Jakarta Sans. Revert = delete this rule
+     and the &family=Archivo term in the @import above. */
+  h1 {
+    font-family: 'Archivo', 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 800;
+    font-stretch: 112%;
   }
 }
 
