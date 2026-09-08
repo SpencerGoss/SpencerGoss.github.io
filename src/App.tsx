@@ -78,51 +78,54 @@ const PROJECTS = [
     accentBg: "rgba(6,182,212,0.08)",
     featured: true,
     cardImage: "/images/projects/oddsix-card.png",
-    shortDescription: "A live multi-sport analytics platform covering the NBA, MLB, NFL, soccer, hockey and college: player stats and comparisons, historical data, league leaders, plus ML game predictions and a betting layer, all updated daily.",
+    shortDescription: "A live multi-sport analytics platform covering the NBA, NFL, MLB, soccer, hockey and college: live scores, player stats, standings, 25+ years of history, and daily ML game predictions benchmarked against published market lines.",
     url: "https://oddsix.app",
     github: "#",
     tags: ["Python", "scikit-learn", "LightGBM", "Sports Analytics", "Daily Pipeline", "Multi-Sport"],
     screenshots: [
-      { label: "Today across all sports", desc: "Daily slate, top performers, and tonight's edge", img: "/images/projects/oddsix-home.png" },
+      { label: "Today across all sports", desc: "Daily slate, top performers, and where the model leans tonight", img: "/images/projects/oddsix-home.png" },
       { label: "Player analytics", desc: "Per-game averages, shooting splits, and recent form", img: "/images/projects/oddsix-player.png" },
       { label: "Team pages", desc: "Standings, home/away splits, and how they're playing", img: "/images/projects/oddsix-team.png" },
       { label: "Playoff bracket", desc: "The full playoff picture, round by round", img: "/images/projects/oddsix-bracket.png" },
-      { label: "Betting hub", desc: "Model read vs. market line, point edges, and Kelly sizing", img: "/images/projects/oddsix-betting.png" },
+      // SPENCER-DECIDE: this screenshot is the platform's market-comparison page (the file is still
+      // named oddsix-betting.png). Captioned neutrally for the bank/insurer readers of this site;
+      // if you would rather call it what the product calls it, change the label back.
+      { label: "Market comparison", desc: "Model read vs. published line, side by side, for every game", img: "/images/projects/oddsix-betting.png" },
     ],
     metrics: [
-      { value: 72, suffix: "%", label: "Win Rate · All-Time" },
-      { value: 290, suffix: "+", label: "Picks Graded" },
+      { value: 72, suffix: "%", label: "Accuracy · All-Time" },
+      { value: 290, suffix: "+", label: "Predictions Scored" },
       { value: 6, suffix: "", label: "Sports Covered" },
-      { value: 210, suffix: "-80", label: "Won-Lost" },
+      { value: 210, suffix: "-80", label: "Right-Wrong" },
     ],
     cardMetrics: [
-      { display: "72%", label: "Win Rate" },
+      { display: "72%", label: "Accuracy" },
       { display: "0.74", label: "Model AUC" },
       { display: "6", label: "Sports" },
     ],
     caseStudy: {
-      hook: "A live multi-sport analytics platform covering six sports: player stats and comparisons, historical data and league leaders, plus daily ML game predictions and a betting layer. Everything updates daily, and the prediction track record grades itself in public at 72% over 290 picks.",
+      hook: "A live analytics platform covering six sports: live scores, player stats, standings, 25+ years of historical data, and daily ML game predictions with confidence scores. Every prediction is benchmarked against the published market line and scored in public. The record stands at 72% over 290 completed predictions.",
       sections: [
         {
           title: "Why I Built It",
           color: "#06B6D4",
-          body: "I built Oddsix as a personal project, mostly because I'm a big basketball fan. I've watched the NBA for years and wanted to build something that combined that with the data science and machine learning skills I've been developing. It started simply, as a place to dig into player stats and compare players across eras, and grew into something bigger: a real ML pipeline, game-outcome predictions, and a tool that explains every recommendation in plain English, so anyone can see why a pick might have value. It's not perfect, but it's real. Real data, real models, real predictions. And it's something I actually use.",
+          body: "I built Oddsix as a personal project, mostly because I'm a big basketball fan. I've watched the NBA for years and wanted to build something that combined that with the data science and machine learning skills I've been developing. It started simply, as a place to dig into player stats and compare players across eras, and grew into something bigger: a real ML pipeline, game-outcome predictions, and a tool that explains every prediction in plain English, so anyone can see why the model leans the way it does. It's not perfect, but it's real. Real data, real models, real predictions. And it's something I actually use.",
         },
         {
           title: "What I Built",
           color: "#8B5CF6",
-          body: "Oddsix is a full sports-analytics hub covering the NBA, MLB, NFL, soccer, hockey and college. It pulls together player stats and cross-era comparisons, team standings and league leaders, historical data and interactive Elo timelines, and on top of all that, daily ML game predictions with a betting layer. Each sport runs its own machine-learning model, trained only on information known before tip-off and calibrated so a 60% really means 60%. The NBA model alone is a three-model stacked ensemble over 490 engineered features (Elo ratings, clutch performance, lineup quality, opponent-adjusted stats) and lands around 0.74 AUC on games it hasn't seen. The betting layer turns those probabilities into real edges: it compares the model's read to the market line, flags value, and sizes the stake with the Kelly criterion. A daily pipeline pulls fresh data, regenerates everything, grades yesterday's results, and updates the site on its own.",
+          body: "Oddsix is a full sports-analytics hub covering the NBA, NFL, MLB, soccer, hockey and college, with 25+ years of historical data alongside the current season. It pulls together live scores, player stats and cross-era comparisons, team standings and league leaders, and interactive Elo timelines, and on top of all that, daily ML game predictions. Each sport runs its own machine-learning model, trained only on information known before tip-off, with a confidence score on every prediction. The NBA model is a stacked ensemble over 490+ engineered features (Elo ratings, RAPM, clutch performance, opponent-adjusted stats) and lands around 0.74 AUC on games it hasn't seen. Every prediction is then benchmarked against the published market line, so you can see exactly where the model and the market disagree. A daily pipeline pulls fresh data, regenerates everything, scores yesterday's results, and updates the site on its own.",
           features: [
-            { emoji: "\u{1F3C0}", name: "Every Sport, One Place", desc: "Player stats, standings, history, and predictions across NBA, MLB, NFL, soccer, hockey & college" },
+            { emoji: "\u{1F3C0}", name: "Every Sport, One Place", desc: "Live scores, player stats, standings, history, and predictions across NBA, NFL, MLB, soccer, hockey & college" },
             { emoji: "\u{1F4CA}", name: "Player & Team Analytics", desc: "Per-game stats, cross-era player comparisons, league leaders, and Elo timelines" },
-            { emoji: "\u{1F3AF}", name: "ML Predictions + Betting", desc: "Calibrated pre-tip-off models, market-edge detection, and Kelly stake sizing" },
-            { emoji: "\u{1F4C8}", name: "Public Track Record", desc: "Every pick graded daily, recent and lifetime, every loss included" },
+            { emoji: "\u{1F3AF}", name: "ML Predictions vs. the Market", desc: "Pre-tip-off models with confidence scores, each prediction benchmarked against the published market line" },
+            { emoji: "\u{1F4C8}", name: "Public Track Record", desc: "Every prediction scored daily, recent and lifetime, every miss included" },
           ],
         },
         {
           title: "The Result",
           color: "#10B981",
-          body: "Oddsix is live at oddsix.app, posting picks every day and grading itself in the open: 72% accuracy over 290 completed picks (210-80), with NBA running at 73% over the last 30 days. The track record updates on its own and shows every loss, because a prediction system you can't check isn't worth trusting.",
+          body: "Oddsix is live at oddsix.app, posting predictions every day and scoring itself in the open: 72% accuracy over 290 completed predictions (210-80), with the NBA model running at 73% over the last 30 days. The track record updates on its own and shows every miss, because a prediction system you can't check isn't worth trusting.",
         },
       ],
     },
@@ -157,7 +160,7 @@ const PROJECTS = [
         {
           title: "The Business Problem",
           color: "#06B6D4",
-          body: "Game prediction sits at the center of a multi-billion-dollar sports analytics industry. Teams use it for prep, broadcasters build storylines around it, and bettors are always chasing an edge. For my MSBA 645 final, I set out to build a genuinely honest NBA win-prediction model on every game from the last five seasons: about 10,500 games across 30 teams, pulled straight from the NBA Stats API. Each row is one team's performance in one game, joined to its opponent and labeled with the outcome.",
+          body: "Game prediction sits at the center of a multi-billion-dollar sports analytics industry. Teams use it for prep, broadcasters build storylines around it, and fans argue about it every night. For my MSBA 645 final, I set out to build a genuinely honest NBA win-prediction model on every game from the last five seasons: about 10,500 games across 30 teams, pulled straight from the NBA Stats API. Each row is one team's performance in one game, joined to its opponent and labeled with the outcome.",
         },
         {
           title: "Too Good to Be True",
@@ -241,7 +244,7 @@ const PROJECTS = [
     featured: false,
     shortDescription: "Churn prediction on 5,636 customers: four models benchmarked, SHAP driver analysis, and three actionable retention segments.",
     url: "#",
-    github: "https://github.com/SpencerGoss/msba-portfolio-SpencerGoss",
+    github: "https://github.com/SpencerGoss/customer-churn-prediction",
     tags: ["Python", "scikit-learn", "CatBoost", "SHAP", "Jupyter", "pandas"],
     screenshots: [
       { label: "Churn by tenure", desc: "New customers churn at 53%; long-tenure customers at 14%", img: "/images/projects/churn-tenure.png" },
@@ -274,7 +277,47 @@ const PROJECTS = [
         {
           title: "The Result",
           color: "#10B981",
-          body: "Key actionable insights: new customers (0-6 months) on month-to-month contracts need immediate engagement. Referral programs are a high-leverage retention tool. Each of the three customer segments should receive a tailored retention approach based on their risk profile and behavioral patterns. The model provides a prioritized list of at-risk customers for the marketing team to act on.",
+          body: "The practical takeaways: new customers (0-6 months) on month-to-month contracts need immediate engagement. Referral programs are one of the strongest retention tools in the data. Each of the three customer segments gets its own retention approach based on risk profile and behavior. The model also produces a prioritized list of at-risk customers for the marketing team to act on.",
+        },
+      ],
+    },
+  },
+  {
+    id: "chest-xray",
+    title: "Chest X-ray Classifier",
+    subtitle: "Deep Learning · Medical Imaging",
+    accent: "#8B5CF6",
+    accentBg: "rgba(139,92,246,0.08)",
+    featured: false,
+    shortDescription: "A deep-learning classifier that reads a chest X-ray and flags 14 possible thoracic conditions, with Grad-CAM heat maps showing where the model is looking and a runnable Streamlit app.",
+    url: "#",
+    github: "https://github.com/SpencerGoss/chest-xray-classifier",
+    tags: ["Python", "TensorFlow", "Keras", "Grad-CAM", "Streamlit", "Google Colab"],
+    screenshots: [],
+    metrics: [
+      { value: 14, suffix: "", label: "Conditions Detected" },
+    ],
+    cardMetrics: [
+      { display: "14", label: "Conditions" },
+      { display: "Grad-CAM", label: "Explainability" },
+    ],
+    caseStudy: {
+      hook: "A multi-label image classifier trained on the public NIH ChestX-ray14 dataset. Give it a chest X-ray and it returns a probability for each of 14 thoracic conditions, plus a heat map of the regions that drove the call. The whole thing is packaged so anyone can read the results or reproduce them.",
+      sections: [
+        {
+          title: "The Problem",
+          color: "#06B6D4",
+          body: "A single chest X-ray can show several conditions at once, so this is a multi-label problem, not a pick-one classification. The NIH ChestX-ray14 dataset is public and large, and it comes with the kind of messy labels (mined from radiology reports) that make a model easy to overfit and hard to trust. I wanted a model that was honest about uncertainty and that could show its reasoning, not just a score.",
+        },
+        {
+          title: "What I Built",
+          color: "#8B5CF6",
+          body: "A convolutional network in TensorFlow and Keras, trained for multi-label output so each of the 14 conditions gets its own probability. On top of the model sits Grad-CAM, which produces a heat map over the X-ray showing which regions pushed the prediction, so a reader can sanity-check whether the model is looking at the lungs or at an artifact in the corner. The final piece is a small Streamlit app: upload an image, get the 14 probabilities and the heat map back.",
+        },
+        {
+          title: "Packaged to Run Anywhere",
+          color: "#10B981",
+          body: "The repo is built to be read or run. The notebook has every output baked in, so the results are visible without training anything. If you do want to reproduce it, the package downloads its own data, trains, and ships the working app, and there is a Colab badge so it runs in the browser with no setup. Computer vision, model explainability, and deployment in one self-contained project.",
         },
       ],
     },
@@ -295,11 +338,14 @@ const TECH_SKILLS: TechSkill[] = [
   // AI & Automation
   { name: "Claude AI", icon: "https://api.iconify.design/simple-icons:anthropic.svg", category: "AI & Automation" },
   { name: "ChatGPT", icon: "https://api.iconify.design/logos:openai-icon.svg", category: "AI & Automation" },
+  { name: "Gemini", icon: "https://api.iconify.design/simple-icons:googlegemini.svg", category: "AI & Automation" },
   { name: "GitHub Copilot", icon: "https://api.iconify.design/simple-icons:githubcopilot.svg", category: "AI & Automation" },
+  { name: "Microsoft Copilot", icon: "https://api.iconify.design/logos:microsoft-icon.svg", category: "AI & Automation" },
   { name: "Prompt Engineering", LucideIcon: Sparkles, iconColor: "#E8413C", category: "AI & Automation" },
   { name: "AI Agents", LucideIcon: Bot, iconColor: "#00B0D8", category: "AI & Automation" },
   // Machine Learning
   { name: "scikit-learn", icon: "https://api.iconify.design/devicon:scikitlearn.svg", category: "Machine Learning" },
+  { name: "TensorFlow", icon: "https://api.iconify.design/logos:tensorflow.svg", category: "Machine Learning" },
   { name: "pandas", icon: "https://api.iconify.design/logos:pandas-icon.svg", category: "Machine Learning" },
   { name: "NumPy", icon: "https://api.iconify.design/logos:numpy.svg", category: "Machine Learning" },
   { name: "Jupyter", icon: "https://api.iconify.design/devicon:jupyter-wordmark.svg", category: "Machine Learning" },
@@ -307,17 +353,23 @@ const TECH_SKILLS: TechSkill[] = [
   // Visualization
   { name: "Tableau", icon: "https://api.iconify.design/logos:tableau-icon.svg", category: "Visualization" },
   { name: "Power BI", icon: "https://api.iconify.design/logos:microsoft-power-bi.svg", category: "Visualization" },
+  { name: "Streamlit", icon: "https://api.iconify.design/simple-icons:streamlit.svg", category: "Visualization" },
+  // Data
+  { name: "PostgreSQL", icon: "https://api.iconify.design/logos:postgresql.svg", category: "Data" },
+  { name: "SQL Server", icon: "https://api.iconify.design/simple-icons:microsoftsqlserver.svg", category: "Data" },
   // Analytics
   { name: "JMP", LucideIcon: FlaskConical, iconColor: "#1E6FBA", category: "Analytics" },
   { name: "SPSS", LucideIcon: BarChart3, iconColor: "#1F70C1", category: "Analytics" },
   { name: "Qualtrics", icon: "https://api.iconify.design/simple-icons:qualtrics.svg", category: "Analytics" },
   { name: "SurveyMonkey", icon: "https://api.iconify.design/simple-icons:surveymonkey.svg", category: "Analytics" },
   // Tools & Platforms
-  { name: "Excel", icon: "https://api.iconify.design/simple-icons:microsoftexcel.svg", category: "Tools & Platforms" },
+  { name: "Excel (pivot tables, XLOOKUP, VLOOKUP)", icon: "https://api.iconify.design/simple-icons:microsoftexcel.svg", category: "Tools & Platforms" },
   { name: "PowerPoint", icon: "https://api.iconify.design/simple-icons:microsoftpowerpoint.svg", category: "Tools & Platforms" },
   { name: "Word", icon: "https://api.iconify.design/simple-icons:microsoftword.svg", category: "Tools & Platforms" },
   { name: "OneNote", icon: "https://api.iconify.design/simple-icons:microsoftonenote.svg", category: "Tools & Platforms" },
+  { name: "Azure (coursework)", icon: "https://api.iconify.design/logos:microsoft-azure.svg", category: "Tools & Platforms" },
   { name: "SAP", icon: "https://api.iconify.design/logos:sap.svg", category: "Tools & Platforms" },
+  { name: "JD Edwards", LucideIcon: FileSpreadsheet, iconColor: "#C74634", category: "Tools & Platforms" },
   { name: "GitHub", icon: "https://api.iconify.design/logos:github-icon.svg", category: "Tools & Platforms" },
   { name: "VS Code", icon: "https://api.iconify.design/logos:visual-studio-code.svg", category: "Tools & Platforms" },
   { name: "Microsoft Teams", icon: "https://api.iconify.design/logos:microsoft-teams.svg", category: "Tools & Platforms" },
@@ -333,7 +385,8 @@ const BUSINESS_SKILL_GROUPS: { label: string; skills: { name: string; featured?:
       { name: "Statistical Analysis", featured: true },
       { name: "Feature Engineering", featured: true },
       { name: "Regression & Classification" },
-      { name: "Econometrics & Forecasting" },
+      { name: "Deep Learning" },
+      { name: "Model Explainability (SHAP)" },
     ],
   },
   {
@@ -341,16 +394,16 @@ const BUSINESS_SKILL_GROUPS: { label: string; skills: { name: string; featured?:
     skills: [
       { name: "Data Pipeline Development", featured: true },
       { name: "Data Cleaning & ETL" },
+      { name: "Data Validation & Quality Checks" },
       { name: "Data Wrangling" },
       { name: "Process Automation" },
     ],
   },
   {
-    label: "Analytics & Experimentation",
+    label: "Analytics",
     skills: [
-      { name: "A/B Testing" },
       { name: "Customer Segmentation" },
-      { name: "Risk Analysis" },
+      { name: "Sports Analytics" },
       { name: "Marketing Analytics" },
       { name: "Financial Analysis" },
       { name: "Dashboard Design" },
@@ -361,9 +414,8 @@ const BUSINESS_SKILL_GROUPS: { label: string; skills: { name: string; featured?:
     label: "Business & Communication",
     skills: [
       { name: "Stakeholder Communication" },
-      { name: "Requirements Gathering" },
-      { name: "Business Strategy" },
-      { name: "Project Management" },
+      { name: "Process Documentation" },
+      { name: "Training & Onboarding" },
       { name: "Cross-functional Collaboration" },
     ],
   },
@@ -375,15 +427,15 @@ const EXPERIENCE = [
     org: "University of Louisville",
     location: "Louisville, KY",
     period: "Aug 2025 - Aug 2026",
-    description: "Pursuing a Master of Science in Business Analytics with a concentration in Artificial Intelligence. Building predictive models, ML pipelines, and data-driven tools that solve real business problems.",
+    description: "Completed a Master of Science in Business Analytics with a concentration in Artificial Intelligence in August 2026. Built predictive models, ML pipelines, and data tools that solve real business problems.",
     details: [
-      "Maintaining a 4.0 GPA and a recipient of the College of Business Graduate Programs Scholarship",
-      "Concentration in Artificial Intelligence, applying ML techniques to real-world business challenges",
-      "Developing expertise in Python, R, and SQL for advanced analytics and predictive modeling",
-      "Building end-to-end machine learning pipelines from data collection through deployment",
-      "Coursework spanning business analytics strategy, data mining, and applied AI",
+      "Graduated with a 3.94 GPA; recipient of the College of Business Graduate Programs Scholarship",
+      "Concentration in Artificial Intelligence, applying ML techniques to real business problems",
+      "Python, R, and SQL for advanced analytics and predictive modeling",
+      "Built machine learning pipelines from data collection through deployment",
+      "Coursework in machine learning, predictive modeling, data mining, database systems, cloud (Azure), and applied AI; case competition on customer churn",
     ],
-    highlights: ["4.0 GPA", "AI Concentration", "Predictive Modeling", "Machine Learning Pipelines"],
+    highlights: ["3.94 GPA", "AI Concentration", "Predictive Modeling", "Machine Learning Pipelines"],
     type: "education" as const,
     logo: "/images/experience/uofl-logo.png",
     color: "#AD0000",
@@ -396,13 +448,14 @@ const EXPERIENCE = [
     org: "Independent Projects",
     location: "Louisville, KY",
     period: "2025 - Present",
-    description: "Shipping real products: a full-stack multi-sport analytics platform, automated trading systems with risk management, and an autonomous multi-agent AI development environment.",
+    description: "Shipping real products: a live multi-sport analytics platform, a multi-model AI development system, a film-analytics data pipeline, and a deep-learning image classifier.",
     details: [
-      "Built and deployed Oddsix, a live multi-sport sports-analytics platform (player stats, historical data, ML predictions, and betting tools) whose picks grade themselves in public at 72% over 290+ picks",
-      "Built and deployed a multi-asset algorithmic trading system with hybrid ML signals, autonomous AI agents, and real-time risk controls (per-trade and daily circuit breakers)",
-      "Engineered a multi-agent AI development system with custom Claude skills, plugins, and autonomous overnight agents across multiple projects",
+      "Built and run Oddsix, a live six-sport analytics platform with 25+ years of data and daily ML predictions that are scored in public: 72% across 290+ predictions",
+      "Built a multi-model AI development system where independent AI reviewers check each other's work, with a guardrail layer that turns past mistakes into enforced checks; the patterns and skills are published at github.com/SpencerGoss/agent-engineering",
+      "Built a film-analytics pipeline pulling 5,659 films from the TMDB API into a 3NF PostgreSQL database behind 7 data-quality checks, feeding a live Dash dashboard",
+      "Built a deep-learning classifier for 14 thoracic conditions on the NIH ChestX-ray14 dataset in TensorFlow, with Grad-CAM explainability and a runnable Streamlit app",
     ],
-    highlights: ["ML Platform", "Automated Trading", "AI Agents"],
+    highlights: ["ML Platform", "AI Agents", "Data Pipelines", "Deep Learning"],
     type: "project" as const,
     logo: "",
     color: "#06B6D4",
@@ -415,14 +468,14 @@ const EXPERIENCE = [
     org: "Churchill Downs Incorporated",
     location: "Louisville, KY",
     period: "Aug 2024 - Jul 2025",
-    description: "Managed the full accounts-payable cycle across 10+ properties and used Relish AI to train invoice-analysis models that streamlined a manual, high-volume review process. Worked across SAP and JD Edwards to keep vendor data accurate end to end.",
+    description: "Accounts payable across 10+ Churchill Downs properties, working every day in SAP and JD Edwards at a publicly traded company.",
     details: [
-      "Used Relish AI to train invoice-analysis models that streamlined a manual, high-volume review process",
-      "Worked cross-functionally across SAP and JD Edwards to manage the full accounts-payable cycle",
-      "Processed 100+ invoices daily across 10+ Churchill Downs properties with high accuracy",
-      "Coordinated with vendors to resolve discrepancies and ensure timely, complete payments",
+      "Verified invoice data daily in SAP and JD Edwards across 10+ properties, checking amounts, vendor codes, and account classifications against source documentation and correcting errors before they reached reporting",
+      "Maintained vendor master data across subsidiary properties and resolved payment discrepancies directly with vendors",
+      "Created accounts payable procedures and onboarding documentation and trained new hires on the system workflows",
+      "Supported an automated invoice-processing rollout by validating the data behind it",
     ],
-    highlights: ["AI-Powered Automation", "SAP & JD Edwards", "100+ Invoices Daily"],
+    highlights: ["SAP & JD Edwards", "Data Validation", "Process Documentation"],
     type: "work" as const,
     logo: "https://www.google.com/s2/favicons?domain=churchilldowns.com&sz=128",
     color: "#1B5E20",
@@ -431,7 +484,7 @@ const EXPERIENCE = [
     bgImage: "/images/experience/churchill-downs.jpg",
   },
   {
-    title: "BBA in Finance, Marketing & Business Analytics",
+    title: "BBA in Finance & Marketing, Business Analytics Minor",
     org: "University of Kentucky",
     location: "Lexington, KY",
     period: "Aug 2020 - Mar 2024",
@@ -817,6 +870,7 @@ function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void 
   const boxOffice = PROJECTS.find((p) => p.id === "box-office")!;
   const msbaNba = PROJECTS.find((p) => p.id === "msba-nba")!;
   const churnModel = PROJECTS.find((p) => p.id === "churn-model")!;
+  const chestXray = PROJECTS.find((p) => p.id === "chest-xray")!;
 
   return (
     <div className="bento-grid">
@@ -829,6 +883,10 @@ function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void 
           <BentoCard project={msbaNba} onClick={() => onSelectProject("msba-nba")} delay={200} />
           <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} delay={280} />
         </div>
+        {/* SPENCER-DECIDE: the grid was hard-coded to four cards. The X-ray classifier is appended
+            here as a full-width card in the right column, using only existing classes (no CSS
+            change). Move it if you want a different arrangement. */}
+        <BentoCard project={chestXray} onClick={() => onSelectProject("chest-xray")} delay={360} />
       </div>
     </div>
   );
@@ -1196,6 +1254,7 @@ const SKILL_CATEGORIES = [
   { name: "AI & Automation", color: "#06B6D4" },
   { name: "Machine Learning", color: "#06B6D4" },
   { name: "Visualization", color: "#06B6D4" },
+  { name: "Data", color: "#06B6D4" },
   { name: "Analytics", color: "#06B6D4" },
   { name: "Tools & Platforms", color: "#06B6D4" },
 ];
@@ -1512,7 +1571,7 @@ const COUNCIL_MODELS = [
   { name: "GPT-5 / Codex", role: "Code review & second opinions", color: "#19C37D", icon: "https://api.iconify.design/simple-icons:openai.svg" },
   { name: "Gemini", role: "Research & fact-grounding", color: "#4796E3", icon: "https://api.iconify.design/simple-icons:googlegemini.svg" },
   { name: "Copilot", role: "Pattern recall & structure", color: "#C9D1D9", icon: "https://api.iconify.design/simple-icons:githubcopilot.svg" },
-  { name: "Llama", role: "Free local / offline tier", color: "#9CA3AF", icon: "https://api.iconify.design/simple-icons:ollama.svg" },
+  { name: "Ollama", role: "Free local / offline tier", color: "#9CA3AF", icon: "https://api.iconify.design/simple-icons:ollama.svg" },
 ];
 
 const COUNCIL_FLOW = [
@@ -1526,7 +1585,9 @@ const COUNCIL_FLOW = [
 
 const COUNCIL_PILLARS = [
   { icon: ShieldCheck, color: "#EF4444", title: "It argues with itself on purpose", body: "A bunch of AIs that all agree isn't worth much. So one of them always has the job of attacking the idea and trying to break it. That catches problems the others would have agreed right past." },
-  { icon: BrainCircuit, color: "#8B5CF6", title: "It learns from every mistake", body: "When something goes wrong, it becomes a rule the system remembers. There are 233 of those now, plus 279 triggers, and they get fed into every AI call so the same mistake doesn't happen twice." },
+  // SPENCER-DECIDE: this line used to state private-workspace counts (233 rules, 279 triggers).
+  // Removed because a reader cannot verify them from the public repo; restore if you want them back.
+  { icon: BrainCircuit, color: "#8B5CF6", title: "It learns from every mistake", body: "When something goes wrong, it becomes a rule the system remembers. Those rules get fed into every AI call as enforced checks, so the same mistake doesn't happen twice." },
   { icon: Activity, color: "#10B981", title: "I track whether it actually works", body: "I keep a ledger of what the AI recommended and what actually happened afterward. So I know how often its advice was right, instead of just assuming it was." },
 ];
 
@@ -1569,19 +1630,23 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
             I built my own AI system.
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-            Most people use one AI tool. I run <span className="text-slate-200 font-medium">five models that check each other's work</span>, catch their own mistakes, and get better over time, with every recommendation reviewed by me before anything ships.
+            Most people use one AI tool. I run <span className="text-slate-200 font-medium">five models that check each other's work</span>, a guardrail layer that turns past mistakes into enforced checks, and a running record of whether the advice actually held up. Every recommendation is reviewed by me before anything ships. The patterns and skills behind it are published at github.com/SpencerGoss/agent-engineering.
           </p>
         </ScrollReveal>
 
         {/* Metrics */}
+        {/* SPENCER-DECIDE: the old cells were private-workspace counts (53 skills, 37 agents,
+            233 safeguards, 14K+ tests). A reader who clicks the public repo sees 11 skill files and
+            3 pattern docs, so the counts now match what is public. Restore the old ones if you'd
+            rather state the private system's size. */}
         <ScrollReveal className="mb-20">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             {[
               { value: "5", label: "AI Models in Council", color: "#06B6D4" },
-              { value: "53", label: "Custom AI Skills", color: "#8B5CF6" },
-              { value: "37", label: "Autonomous Agents", color: "#10B981" },
-              { value: "233", label: "Self-Learned Safeguards", color: "#EF4444" },
-              { value: "14K+", label: "Automated Tests", color: "#F59E0B" },
+              { value: "11", label: "Portable Skills Published", color: "#8B5CF6" },
+              { value: "3", label: "Pattern Write-ups Published", color: "#10B981" },
+              { value: "6", label: "Steps to a Verdict", color: "#EF4444" },
+              { value: "0", label: "Ships Without My Review", color: "#F59E0B" },
             ].map((s) => (
               <div key={s.label} className="text-center py-4 px-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
                 <div className="text-2xl md:text-3xl font-extrabold tracking-tight" style={{ color: s.color }}>{s.value}</div>
@@ -1690,6 +1755,10 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
         </ScrollReveal>
 
         {/* Concrete result — the verify-your-output principle paying off in a real project */}
+        {/* SPENCER-DECIDE: the "six real bugs" / "seven weeks" anecdote below is not in
+            SPENCER_PROJECT_CONTEXT.md, so it could not be checked against the source of truth.
+            Left as-is because it is your own project and not disprovable by clicking; cut it if
+            you would not want to walk through it in an interview. */}
         <ScrollReveal className="mt-12">
           <div className="max-w-3xl mx-auto rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 text-center" style={{ borderTop: "2px solid rgba(6,182,212,0.4)" }}>
             <div className="text-[11px] font-bold uppercase tracking-[2px] text-cyan-300/80 mb-2">A real result</div>
@@ -2090,7 +2159,7 @@ export default function App() {
                 {[
                   { Icon: MapPin, value: "Louisville, KY" },
                   { Icon: GraduationCap, value: "MSBA in AI, UofL" },
-                  { Icon: Briefcase, value: "Seeking BA & DA roles" },
+                  { Icon: Briefcase, value: "Open to BA, DA & AI Specialist roles" },
                 ].map((fact, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(6,182,212,0.1)" }}>
@@ -2108,15 +2177,15 @@ export default function App() {
             {/* Right — bio + details */}
             <div className="lg:w-3/5 lg:pl-12">
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-10">
-                I'm pursuing my MSBA at the University of Louisville with a concentration in AI. Outside of coursework, I'm usually building something, whether a prediction engine, an automated trading system, or whatever problem I'm trying to solve that week. I learn best by shipping real products, and every project sharpens how I approach data and decision-making.
+                I completed my MSBA at the University of Louisville in August 2026 with a concentration in AI. I came up through operations and accounts payable, taught myself modeling and engineering by building real projects, and now I work on analytics and AI systems. I'm usually building something, whether a prediction engine, a data pipeline, or whatever problem I'm trying to solve that week. I learn best by shipping real products, and every project sharpens how I approach data and decision-making.
               </p>
 
               {/* Detail grid with left accent borders */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {[
                   { label: "Focus", value: "Predictive modeling, data pipelines, and analytics that drive decisions", color: "#06B6D4" },
-                  { label: "Toolkit", value: "Python, SQL, R, scikit-learn, and Power BI", color: "#06B6D4" },
-                  { label: "Education", value: "MSBA (AI) at UofL, BBA Finance & Marketing (Analytics minor) at UK", color: "#06B6D4" },
+                  { label: "Toolkit", value: "Python, SQL, R, scikit-learn, TensorFlow, Tableau, and Power BI", color: "#06B6D4" },
+                  { label: "Education", value: "MSBA (AI) from UofL, 3.94 GPA; BBA Finance & Marketing (Analytics minor) from UK", color: "#06B6D4" },
                   { label: "Experience", value: "Churchill Downs, Terex Corporation, Independent Projects", color: "#06B6D4" },
                 ].map((item, i) => (
                   <div key={i} className="pl-4" style={{ borderLeft: `2px solid ${item.color}` }}>
@@ -2252,7 +2321,7 @@ export default function App() {
             </h2>
             <Separator className="w-12 bg-primary h-0.5 mx-auto mb-6" />
             <p className="text-muted-foreground mb-12 text-lg max-w-md mx-auto">
-              Open to Business Analyst and Data Analyst roles. Let's talk.
+              Open to Business Analyst, Data Analyst, and AI Specialist roles. Let's talk.
             </p>
           </ScrollReveal>
 
