@@ -2377,7 +2377,7 @@ export default function App() {
               <Download size={20} aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-0.5" />
               Download Resume
             </a>
-            <p className="text-xs text-muted-foreground mt-3">PDF • Updated June 2026</p>
+            <p className="text-xs text-muted-foreground mt-3">PDF • Updated October 2026</p>
           </ScrollReveal>
 
           <ScrollReveal>
