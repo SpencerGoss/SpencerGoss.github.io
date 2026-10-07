@@ -13,7 +13,7 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 - Do NOT run `tsc -b` — unused shadcn components cause TS errors, Vite builds fine without it
 
 ## Key Paths
-- `src/App.tsx` — entire app (~1355 lines, single file with all components/hooks/data)
+- `src/App.tsx` — entire app (~2400 lines, single file with all components/hooks/data)
 - `src/index.css` — global styles, experience slide animations, scroll effects
 - `src/main.tsx` — React entry point
 - `src/components/ui/` — shadcn/ui components (only badge, button, card, separator are used)
@@ -42,19 +42,21 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 - Soft gray bg, cyan/purple accents
 - Spencer prefers subtle/soft visual effects over bold/vibrant
 - Accent-as-TEXT goes through `accentText()` (src/App.tsx, just after `ProjectTitle`): maps each bright accent hex to a deeper, WCAG-AA-legible shade of the same hue. Backgrounds, dots, bars, and borders keep the bright accent; `--primary` (CTA button) untouched. When adding accent-colored small text, wrap the color in `accentText(...)`.
+- 2026-10-06 visual pass (Spencer asked for "make it look a lot better", stayed inside the existing language): slideshow captions moved from a black scrim to a light one (every product shot on this site is light-theme, white-on-black floated badly); card hover now glows in each project's own `--accent` via `color-mix`, with plain-colour fallbacks first; case-study metric cells got a small accent rule and `tabular-nums`; the featured bento card now carries its `shortDescription` and tag pills (it had neither, so the small cards described their project better than the flagship did, and the leftover height showed as a hole); the chest-xray card moved out of the right column into its own full-width row so the two columns balance; the "more screenshots coming soon" filler block was deleted (it fired even on projects that already had a slideshow, and only told a recruiter something was missing); `featured` on business-skill pills is finally wired up; the case-study subtitle now goes through `accentText()` like the rule says.
 - Accessibility: site passes axe-core WCAG AA except the muted-gray nav/body text (#65758b, ~3.9 — Spencer chose to keep the soft gray). Reduced-motion + `:focus-visible` + skip link all handled. Run a quick axe pass (load axe-core via CDN in the browser, `axe.run`) after layout/color changes.
 
 ## Redesign Status (2026-03-30)
 - All sections redesigned: Hero ✅ → Nav ✅ → About ✅ → Projects ✅ → Skills ✅ → Experience ✅ → Contact ✅ → Global ✅
 - Hero right side: Spencer's professional headshot (navy blazer) at `public/images/spencer-headshot.jpg` — an 800px progressive JPEG. Swapped in 2026-06-17, replacing the cyan→purple "SG" monogram placeholder card. The original ChatGPT-retouched photo had a warm tan studio backdrop that clashed with the cool blue hero; cut Spencer out with `rembg` (u2net) and composited him onto a soft cool-gray radial studio backdrop (#f0f2f6 center → #cdd5e1 edge) with a subtle drop shadow, so it sits in the site palette. To regenerate with a different backdrop, re-run from the cutout (process noted in commit). Sits in a fixed square card (`w-64 h-64 md:w-80 md:h-80`, rounded-2xl, shadow, border, decorative cyan blob behind); `<img>` uses `object-cover` so there's no crop. To swap for a different/casual photo later, just replace the `src` (and the file). The photo is a ChatGPT-retouched real photo; Spencer judged it reads as a normal retouched headshot, not AI.
 - Resume PDF is live at `public/Spencer_Goss_Resume.pdf` (real, 1-page, current). Download button in Contact wired to it. The "Updated [month] 2026" label in Contact is manual — bump it when the PDF changes.
-- Project screenshots are REAL (not placeholders): `public/images/projects/oddsix-*.png` + `churn-*.png`. msba-nba and box-office use YouTube video embeds instead of screenshots.
+- Project screenshots are REAL (not placeholders): `public/images/projects/oddsix-*.png`, `churn-*.png`, `boxoffice-app.png`. All oddsix shots were recaptured from the live site 2026-10-06 (home, accuracy, player, shot chart, franchise history, plus the card preview); the old `oddsix-betting.png` and `oddsix-bracket.png` were deleted because the site had been redesigned out from under them.
+- **Both YouTube walkthroughs are DEAD as of 2026-10-06** (`QSooLoE32zk` for msba-nba, `mFgFajpfPD8` for box-office both return "This video isn't available anymore"). The `video:` keys were removed so the site stops rendering a dead embed, a grey thumbnail and a "Watch on YouTube" button that goes nowhere. box-office got a live screenshot of the Render app instead; msba-nba now has no image. **To restore either: put `video: "<new id>",` back on the commented line in that project's entry in `src/App.tsx`.**
 - Experience slide images are local files at `public/images/experience/` — real campus/building photos
 - Lenis smooth scroll + cursor spotlight are active
 - Icons use Iconify API (reliable) — do NOT switch back to Simple Icons CDN (broken)
 
 ## LIVE — Deployment (launched 2026-06-17)
-**The site is LIVE at https://spencergoss.github.io/** (GitHub Pages). Full employer's-eye audit run 2026-06-17 before launch: clean console, no mobile breaks, all external links live, live oddsix metrics match the site (72% / ~290 picks), copy in Spencer's voice. Pre-launch fixes: hero headshot + studio-gray backdrop, resume date label, "National Honor Society" naming, academic honors (4.0 / 3.61 GPA, Dean's List, scholarships) added to education slides.
+**The site is LIVE at https://spencergoss.github.io/** (GitHub Pages). Full employer's-eye audit run 2026-06-17 before launch: clean console, no mobile breaks, all external links live, copy in Spencer's voice. (The oddsix metrics verified that day, 72% / ~290 picks, went stale and were corrected 2026-10-06; see the Oddsix numbers note below.) Pre-launch fixes: hero headshot + studio-gray backdrop, resume date label, "National Honor Society" naming, academic honors (4.0 / 3.61 GPA, Dean's List, scholarships) added to education slides.
 
 ### How deploy works (current mechanism)
 - Repo `SpencerGoss/SpencerGoss.github.io` is THIS repo's `origin`. `master` = source. Pages serves from the **`gh-pages` branch** (legacy "deploy from a branch" mode).
@@ -71,7 +73,7 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 ### Pre-launch notes (still relevant)
 - Deploy URL = `spencergoss.github.io` (decided 2026-06-17). canonical/OG/Twitter/JSON-LD/sitemap/resume all match. If a custom domain is ever added, update those + add a CNAME.
 - LinkedIn handle `spencergoss1234` CONFIRMED correct by Spencer (2026-06-17).
-- Note: oddsix metrics ("290 picks", "210-80") are a static snapshot of a daily-grading platform — they slowly drift. Either refresh on rebuilds or accept they trail the live site slightly. Headline 72% is stable.
+- **Oddsix numbers (verified against oddsix.app on 2026-10-06, use these):** six sports (five live, college coming) · 25+ years of history plus the current season, ~68,000 games · **563** engineered features · NBA model a stacked GBM + logistic ensemble at **0.75** test AUC, calibrated to about two points of expected error · published NBA calls **75%, 189-63 over 252** settled regular-season games. ⚠ Always put "NBA" next to the 75: the other sports grade lower (NHL 62.6%, NFL 60.0%, MLB 55.1%, soccer ~50% three-way) and a bare "75%" reads as platform-wide. **Superseded, never reuse: "72% over 290 (210-80)", "490+ features", "0.74 AUC".** These are a static snapshot of a daily-grading platform, so re-check oddsix.app/predictions/accuracy on any rebuild. Cross-check: `Career/SPENCER_PROJECT_CONTEXT.md` and `applications/_resume_lib.py::CANONICAL_ODDSIX`, which carry the same figures.
 - Note: box-office Render link works but free-tier cold-starts ~30s on first hit after idle.
 - Note: AI System "37 Autonomous Agents" — built but currently suspended (quota); fine on-site, be ready to speak to it in interviews.
 

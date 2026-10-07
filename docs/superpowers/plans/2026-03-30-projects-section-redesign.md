@@ -1,4 +1,10 @@
 # Projects Section Redesign — Implementation Plan
+> **Historical record, 2026-03-30.** The Oddsix figures below (73.5% accuracy, 490+ features,
+> 0.74 AUC) were correct when this plan was written and are now SUPERSEDED. Current verified
+> numbers: 563 engineered features, NBA model 0.75 test AUC, published NBA calls 75% over 252
+> graded games. Source of truth: `SPENCER_PROJECT_CONTEXT.md` in the Career folder and
+> oddsix.app/predictions/accuracy. Left unedited so the plan still reads as it was written.
+
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 

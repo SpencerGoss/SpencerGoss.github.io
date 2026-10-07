@@ -1,6 +1,37 @@
 # HANDOFF — Spencer Portfolio Website
 
-## ▶ NEXT SESSION STARTS HERE (updated 2026-06-18, post-crash recovery)
+## ▶ NEXT SESSION STARTS HERE (updated 2026-10-06)
+
+**State: work is built, tested and committed on branch `refresh/oddsix-stats-2026-10-06`. NOTHING IS DEPLOYED. `gh-pages` was not touched. The live site still shows the old content until Spencer reviews and deploys.**
+
+### Exact first action next session
+Preview the branch, then decide whether to deploy:
+```bash
+cd "C:/Users/Spencer/OneDrive/Career/Personal Website"
+git checkout refresh/oddsix-stats-2026-10-06
+npx vite build && npx vite preview --port 4317
+# open http://localhost:4317/
+```
+If Spencer approves: merge to `master`, then redeploy per **CLAUDE.md → "## LIVE — Deployment"** (rebuild `dist/`, force-push to `gh-pages`, push source to `master`).
+
+### What this session changed
+1. **Every stale Oddsix number is corrected.** The site claimed 72% over 290 predictions (210-80), 490+ features, 0.74 AUC. Verified live on oddsix.app 2026-10-06: **563 features · NBA model 0.75 test AUC · NBA calls 75%, 189-63 over 252 settled regular-season games · six sports · ~68,000 games · 25+ years of history plus the current season.** The Oddsix description was also rewritten so it reads as a multi-sport platform with a model per sport, not one NBA model. Figures and the "always say NBA next to the 75" rule are now recorded in CLAUDE.md.
+2. **All Oddsix screenshots recaptured from the live site.** New: `oddsix-home`, `oddsix-accuracy` (the 75.0% / 252-calls / calibration page), `oddsix-player`, `oddsix-shotchart`, `oddsix-team` (franchise history), plus a new `oddsix-card` preview. Deleted `oddsix-betting.png` and `oddsix-bracket.png`, whose pages no longer exist in that form.
+3. **⚠ Both YouTube walkthroughs are DEAD.** `QSooLoE32zk` (msba-nba) and `mFgFajpfPD8` (box-office) both return "This video isn't available anymore", so the live site has been serving two dead embeds, two grey broken thumbnails and a "Watch on YouTube" button that goes nowhere. The `video:` keys were removed. box-office got a real screenshot of the live Render app instead; **msba-nba now has no image at all**. To restore either, put `video: "<new id>",` back on the commented line in that project's entry in `src/App.tsx`. **This is the one thing that needs Spencer: re-upload the videos or decide to leave them off.**
+4. **Visual pass** across the projects grid, case studies and skills section. Full list in CLAUDE.md → Design Decisions, 2026-10-06 entry.
+
+### Verified, not assumed
+`npx vite build` clean · `python bundle.py` regenerated `portfolio.html` · axe-core WCAG 2.1 AA shows only the pre-existing muted-gray nav contrast items Spencer chose to keep, no new violations · Playwright at 390px and 768px: zero horizontal overflow, zero console errors · grep of `src/`, `index.html`, `public/`, `dist/` and `portfolio.html` finds none of the stale strings.
+
+### Known, left alone deliberately
+- The Box Office case study says **5,659 films** (the Postgres load, per `SPENCER_PROJECT_CONTEXT.md`) while the live Render app header reads **5,623** because Postgres is offline there and it falls back to the bundled CSV snapshot. A recruiter who clicks through sees the mismatch. Decide which number to publish.
+- Contact still reads "PDF • Updated June 2026". That label is manual and the PDF genuinely is from June, so bumping it would be a false claim. Refresh the PDF, then the label.
+- The AI System section's "six real bugs in a single pass / a crash unnoticed for seven weeks" claim is Spencer's own and is not in `SPENCER_PROJECT_CONTEXT.md`; it was left as-is, as the prior session decided.
+- `docs/superpowers/*` still contain the old 490+/73.5% figures. They are dated 2026-03-30 design records and are not deployed; each now carries a "superseded" banner at the top rather than being rewritten.
+
+---
+
+## ▶ Previous handoff (2026-06-18, post-crash recovery)
 **The website is DONE, LIVE, and fully audited. Nothing pending on the site.** The previous session crashed AFTER its wrap; on recovery, verified TWO post-wrap items had completed cleanly before the crash and nothing was lost: (1) the hero headshot was made circular + zoomed (`9c7f5ef`, committed + deployed, live JS = source), and (2) **LinkedIn drafting is COMPLETE** — `OneDrive/Career/LinkedIn_REFRESH_2026-06-13.md` is marked complete (2026-06-18 11:53) with Headline, About, Experience (Churchill + Terex), Featured, Skills, Education all written and voice-clean (0 em-dashes / curly quotes in the copy-paste blocks). The old "finish LinkedIn" next-action is DONE.
 
 ### What actually remains (LinkedIn = Spencer-only UI now)

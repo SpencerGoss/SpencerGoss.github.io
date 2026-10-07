@@ -78,33 +78,30 @@ const PROJECTS = [
     accentBg: "rgba(6,182,212,0.08)",
     featured: true,
     cardImage: "/images/projects/oddsix-card.png",
-    shortDescription: "A live multi-sport analytics platform covering the NBA, NFL, MLB, soccer, hockey and college: live scores, player stats, standings, 25+ years of history, and daily ML game predictions benchmarked against published market lines.",
+    shortDescription: "A live multi-sport analytics platform across six sports: NBA, NFL, MLB, soccer, hockey and college. It holds 25+ years of history alongside the current season and runs a separate model for every sport, each one graded in public.",
     url: "https://oddsix.app",
     github: "#",
     tags: ["Python", "scikit-learn", "LightGBM", "Sports Analytics", "Daily Pipeline", "Multi-Sport"],
     screenshots: [
-      { label: "Today across all sports", desc: "Daily slate, top performers, and where the model leans tonight", img: "/images/projects/oddsix-home.png" },
-      { label: "Player analytics", desc: "Per-game averages, shooting splits, and recent form", img: "/images/projects/oddsix-player.png" },
-      { label: "Team pages", desc: "Standings, home/away splits, and how they're playing", img: "/images/projects/oddsix-team.png" },
-      { label: "Playoff bracket", desc: "The full playoff picture, round by round", img: "/images/projects/oddsix-bracket.png" },
-      // SPENCER-DECIDE: this screenshot is the platform's market-comparison page (the file is still
-      // named oddsix-betting.png). Captioned neutrally for the bank/insurer readers of this site;
-      // if you would rather call it what the product calls it, change the label back.
-      { label: "Market comparison", desc: "Model read vs. published line, side by side, for every game", img: "/images/projects/oddsix-betting.png" },
+      { label: "Today across all sports", desc: "Daily slate, live scores, and the model's call of the day", img: "/images/projects/oddsix-home.png" },
+      { label: "Graded in the open", desc: "Every call logged and scored, wins and losses alike, with calibration checked band by band", img: "/images/projects/oddsix-accuracy.png" },
+      { label: "Player analytics", desc: "League ranks, per-game averages, shooting splits, and recent form", img: "/images/projects/oddsix-player.png" },
+      { label: "Career shot charts", desc: "Every zone graded against that season's league average, so eras compare fairly", img: "/images/projects/oddsix-shotchart.png" },
+      { label: "Franchise history", desc: "Season by season records and all-time marks going back decades", img: "/images/projects/oddsix-team.png" },
     ],
     metrics: [
-      { value: 72, suffix: "%", label: "Accuracy · All-Time" },
-      { value: 290, suffix: "+", label: "Predictions Scored" },
       { value: 6, suffix: "", label: "Sports Covered" },
-      { value: 210, suffix: "-80", label: "Right-Wrong" },
+      { value: 563, suffix: "", label: "Engineered Features" },
+      { value: 75, suffix: "%", label: "NBA Calls Correct" },
+      { value: 252, suffix: "", label: "NBA Calls Graded" },
     ],
     cardMetrics: [
-      { display: "72%", label: "Accuracy" },
-      { display: "0.74", label: "Model AUC" },
+      { display: "0.75", label: "NBA Test AUC" },
+      { display: "563", label: "Features" },
       { display: "6", label: "Sports" },
     ],
     caseStudy: {
-      hook: "A live analytics platform covering six sports: live scores, player stats, standings, 25+ years of historical data, and daily ML game predictions with confidence scores. Every prediction is benchmarked against the published market line and scored in public. The record stands at 72% over 290 completed predictions.",
+      hook: "A live analytics platform across six sports, holding 25+ years of history alongside the current season: live scores, player and franchise pages, standings, and a daily model call on every game. The NBA model lands at 0.75 test AUC, and its published calls grade at 75% over 252 games with every loss included.",
       sections: [
         {
           title: "Why I Built It",
@@ -114,18 +111,18 @@ const PROJECTS = [
         {
           title: "What I Built",
           color: "#8B5CF6",
-          body: "Oddsix is a full sports-analytics hub covering the NBA, NFL, MLB, soccer, hockey and college, with 25+ years of historical data alongside the current season. It pulls together live scores, player stats and cross-era comparisons, team standings and league leaders, and interactive Elo timelines, and on top of all that, daily ML game predictions. Each sport runs its own machine-learning model, trained only on information known before tip-off, with a confidence score on every prediction. The NBA model is a stacked ensemble over 490+ engineered features (Elo ratings, RAPM, clutch performance, opponent-adjusted stats) and lands around 0.74 AUC on games it hasn't seen. Every prediction is then benchmarked against the published market line, so you can see exactly where the model and the market disagree. A daily pipeline pulls fresh data, regenerates everything, scores yesterday's results, and updates the site on its own.",
+          body: "Oddsix is a full sports-analytics hub covering the NBA, NFL, MLB, soccer, hockey and college, holding 25+ years of historical data alongside the current season, roughly 68,000 games in all. It pulls together live scores, player and franchise pages going back decades, cross-era player comparisons, standings and league leaders, career shot charts, and on top of all that, a daily model call on every game. Each sport runs its own model, trained only on information known before tip-off, with a confidence score attached. 563 engineered features feed the platform (Elo ratings, rolling form, opponent-adjusted efficiency, RAPM, clutch splits). The NBA model is the deepest of them: a stacked ensemble that blends gradient boosting with logistic regression, lands at 0.75 AUC on games it hasn't seen, and is calibrated to within about two percentage points of what actually happens. Calls are also benchmarked against the published market line, so you can see where the model and the market disagree. A daily pipeline pulls fresh data, regenerates everything, grades yesterday's results, and updates the site on its own.",
           features: [
-            { emoji: "\u{1F3C0}", name: "Every Sport, One Place", desc: "Live scores, player stats, standings, history, and predictions across NBA, NFL, MLB, soccer, hockey & college" },
-            { emoji: "\u{1F4CA}", name: "Player & Team Analytics", desc: "Per-game stats, cross-era player comparisons, league leaders, and Elo timelines" },
-            { emoji: "\u{1F3AF}", name: "ML Predictions vs. the Market", desc: "Pre-tip-off models with confidence scores, each prediction benchmarked against the published market line" },
-            { emoji: "\u{1F4C8}", name: "Public Track Record", desc: "Every prediction scored daily, recent and lifetime, every miss included" },
+            { emoji: "\u{1F3C0}", name: "Every Sport, One Place", desc: "Live scores, player stats, standings, history, and model calls across NBA, NFL, MLB, soccer, hockey & college" },
+            { emoji: "\u{1F4CA}", name: "Player & Team Analytics", desc: "League ranks, cross-era player comparisons, career shot charts, and franchise records going back decades" },
+            { emoji: "\u{1F3AF}", name: "A Model Per Sport", desc: "Pre-tip-off models with confidence scores, each one benchmarked against the published market line" },
+            { emoji: "\u{1F4C8}", name: "Graded In The Open", desc: "Every call logged and scored daily, wins and losses alike, with calibration checked band by band" },
           ],
         },
         {
           title: "The Result",
           color: "#10B981",
-          body: "Oddsix is live at oddsix.app, posting predictions every day and scoring itself in the open: 72% accuracy over 290 completed predictions (210-80), with the NBA model running at 73% over the last 30 days. The track record updates on its own and shows every miss, because a prediction system you can't check isn't worth trusting.",
+          body: "Oddsix is live at oddsix.app, making a call on every game and grading itself in public, wins and losses alike. The NBA model sits at 75% over 252 settled regular-season calls; each of the other sports carries its own record on the same page, and playoffs are reported separately rather than folded in. The accuracy page goes further than a win rate and checks calibration directly: when the model said 55 to 65%, it shows what actually happened. The record updates itself every day and shows every miss, because a prediction system you can't check isn't worth trusting.",
         },
       ],
     },
@@ -137,8 +134,10 @@ const PROJECTS = [
     accent: "#EA580C",
     accentBg: "rgba(234,88,12,0.08)",
     featured: false,
-    video: "QSooLoE32zk",
-    shortDescription: "The honest NBA prediction model behind Oddsix, and the data-leakage trap I had to escape. Includes a recorded walkthrough.",
+    // VIDEO REMOVED 2026-10-06: YouTube id "QSooLoE32zk" now returns "This video isn't available
+    // anymore", so the embed, the card thumbnail and the "Watch on YouTube" button were all dead on
+    // the live site. To restore, put `video: "<new id>",` back on this line.
+    shortDescription: "The honest NBA prediction model behind Oddsix, and the data-leakage trap I had to escape.",
     url: "#",
     github: "#",
     tags: ["Python", "LightGBM", "scikit-learn", "K-Means", "NBA Stats API"],
@@ -187,12 +186,16 @@ const PROJECTS = [
     accent: "#2563EB",
     accentBg: "rgba(37,99,235,0.08)",
     featured: false,
-    video: "mFgFajpfPD8",
-    shortDescription: "An end-to-end film analytics project: an ETL pipeline (TMDB API to a 3NF PostgreSQL database) powering a live interactive film explorer built with Dash. Includes a recorded walkthrough.",
+    // VIDEO REMOVED 2026-10-06: YouTube id "mFgFajpfPD8" now returns "This video isn't available
+    // anymore". Replaced with a live screenshot of the running app. To restore the walkthrough,
+    // put `video: "<new id>",` back on this line.
+    shortDescription: "An end-to-end film analytics project: an ETL pipeline (TMDB API to a 3NF PostgreSQL database) powering a live interactive film explorer built with Dash.",
     url: "https://box-office-vs-ratings.onrender.com",
     github: "https://github.com/SpencerGoss/box-office-vs-ratings",
     tags: ["Python", "pandas", "PostgreSQL", "SQLAlchemy", "Dash", "Plotly", "TMDB API"],
-    screenshots: [],
+    screenshots: [
+      { label: "The film explorer, live", desc: "Spotlight any film: budget to revenue to profit, percentile ranks, and where it sits against every other film", img: "/images/projects/boxoffice-app.png" },
+    ],
     metrics: [
       { value: 5659, suffix: "", label: "Films Pipelined" },
       { value: 19, suffix: "", label: "Genres" },
@@ -325,7 +328,10 @@ const PROJECTS = [
 ];
 
 /* Tech skills — Iconify CDN for brand logos, Lucide for concepts */
-type TechSkill = { name: string; category: string } & (
+/* `shortName` is the label drawn under the icon when the full name is too long for the
+   grid. The full `name` stays in the img alt and the tooltip, so the keywords are still
+   in the DOM for anyone (or anything) reading the page. */
+type TechSkill = { name: string; category: string; shortName?: string } & (
   | { icon: string; LucideIcon?: never; iconColor?: never }
   | { icon?: never; LucideIcon: React.ComponentType<{ className?: string; size?: number }>; iconColor: string }
 );
@@ -363,7 +369,7 @@ const TECH_SKILLS: TechSkill[] = [
   { name: "Qualtrics", icon: "https://api.iconify.design/simple-icons:qualtrics.svg", category: "Analytics" },
   { name: "SurveyMonkey", icon: "https://api.iconify.design/simple-icons:surveymonkey.svg", category: "Analytics" },
   // Tools & Platforms
-  { name: "Excel (pivot tables, XLOOKUP, VLOOKUP)", icon: "https://api.iconify.design/simple-icons:microsoftexcel.svg", category: "Tools & Platforms" },
+  { name: "Excel (pivot tables, XLOOKUP, VLOOKUP)", shortName: "Excel", icon: "https://api.iconify.design/simple-icons:microsoftexcel.svg", category: "Tools & Platforms" },
   { name: "PowerPoint", icon: "https://api.iconify.design/simple-icons:microsoftpowerpoint.svg", category: "Tools & Platforms" },
   { name: "Word", icon: "https://api.iconify.design/simple-icons:microsoftword.svg", category: "Tools & Platforms" },
   { name: "OneNote", icon: "https://api.iconify.design/simple-icons:microsoftonenote.svg", category: "Tools & Platforms" },
@@ -450,7 +456,7 @@ const EXPERIENCE = [
     period: "2025 - Present",
     description: "Shipping real products: a live multi-sport analytics platform, a multi-model AI development system, a film-analytics data pipeline, and a deep-learning image classifier.",
     details: [
-      "Built and run Oddsix, a live six-sport analytics platform with 25+ years of data and daily ML predictions that are scored in public: 72% across 290+ predictions",
+      "Built and run Oddsix, a live six-sport analytics platform holding 25+ years of data and 563 engineered features, with a daily model call on every game; the NBA model lands at 0.75 test AUC and its published calls grade at 75% over 252 games",
       "Built a multi-model AI development system where independent AI reviewers check each other's work, with a guardrail layer that turns past mistakes into enforced checks; the patterns and skills are published at github.com/SpencerGoss/agent-engineering",
       "Built a film-analytics pipeline pulling 5,659 films from the TMDB API into a 3NF PostgreSQL database behind 7 data-quality checks, feeding a live Dash dashboard",
       "Built a deep-learning classifier for 14 thoracic conditions on the NIH ChestX-ray14 dataset in TensorFlow, with Grad-CAM explainability and a runnable Streamlit app",
@@ -732,7 +738,10 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
           className="absolute -top-16 -right-16 w-64 h-64 rounded-full pointer-events-none"
           style={{ background: `radial-gradient(circle, ${project.accentBg}, transparent 70%)`, filter: "blur(40px)" }}
         />
-        <div className="relative z-10 flex flex-col justify-between h-full">
+        {/* Not justify-between: the featured card stretches to match the right column, and
+            splitting that slack put a hole between the title and the screenshot. Header and image
+            stack at the top, metrics pin to the bottom with mt-auto, slack lands in one place. */}
+        <div className="relative z-10 flex flex-col h-full">
           <div>
             <div className="text-[10px] font-bold tracking-[2px] uppercase mb-2" style={{ color: accentText(project.accent) }}>
               Featured Project
@@ -744,8 +753,11 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
           </div>
 
           {cardImg ? (
-            <div className="my-4 rounded-xl border border-border/50 flex-1 min-h-[200px] overflow-hidden relative bg-white">
-              <img src={cardImg} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-contain" />
+            <div className="my-4 rounded-xl border border-border/50 aspect-[4/3] overflow-hidden relative bg-secondary">
+              {/* Fixed aspect, not flex-1. The featured card stretches to match the right column,
+                  and letting the image box eat that slack cropped a chunk off both sides of the
+                  screenshot. The leftover height goes above the tag row instead. */}
+              <img src={cardImg} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/card:scale-[1.02]" />
             </div>
           ) : (
             <div
@@ -765,7 +777,23 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
             </div>
           )}
 
-          <div>
+          {/* The featured card showed no description and no tags at all, so the small cards
+              actually said more about their project than the flagship did, and the leftover
+              height came out as dead space. */}
+          <p className="text-sm text-muted-foreground leading-relaxed">{project.shortDescription}</p>
+
+          <div className="mt-auto pt-5">
+            <div className="flex gap-1.5 flex-wrap mb-4">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-[10px] px-2.5 py-0.5 rounded-full border"
+                  style={{ background: project.accentBg, color: accentText(project.accent), borderColor: `${project.accent}20` }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
             <div className="flex gap-6 mb-3">
               {project.cardMetrics.map((m, i) => (
                 <div key={i}>
@@ -803,8 +831,8 @@ function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0
       <div className="relative z-10 flex flex-col justify-between h-full">
         <div>
           {cardImg && (
-            <div className="mb-3 rounded-lg overflow-hidden aspect-video border border-border/50 bg-slate-900">
-              <img src={cardImg} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-cover object-center" />
+            <div className="mb-3 rounded-lg overflow-hidden aspect-video border border-border/50 bg-secondary">
+              <img src={cardImg} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-cover object-center transition-transform duration-500 group-hover/card:scale-[1.03]" />
             </div>
           )}
           <div className="flex items-center gap-2 mb-1.5">
@@ -872,34 +900,37 @@ function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void 
   const chestXray = PROJECTS.find((p) => p.id === "chest-xray")!;
 
   return (
-    <div className="bento-grid">
-      <div className="bento-col-left">
-        <BentoCard project={oddsix} onClick={() => onSelectProject("oddsix")} delay={0} />
-      </div>
-      <div className="bento-col-right">
-        <BentoCard project={boxOffice} onClick={() => onSelectProject("box-office")} delay={120} />
-        <div className="bento-row-compact">
-          <BentoCard project={msbaNba} onClick={() => onSelectProject("msba-nba")} delay={200} />
-          <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} delay={280} />
+    <div className="flex flex-col gap-4">
+      <div className="bento-grid">
+        <div className="bento-col-left">
+          <BentoCard project={oddsix} onClick={() => onSelectProject("oddsix")} delay={0} />
         </div>
-        {/* SPENCER-DECIDE: the grid was hard-coded to four cards. The X-ray classifier is appended
-            here as a full-width card in the right column, using only existing classes (no CSS
-            change). Move it if you want a different arrangement. */}
-        <BentoCard project={chestXray} onClick={() => onSelectProject("chest-xray")} delay={360} />
+        <div className="bento-col-right">
+          <BentoCard project={boxOffice} onClick={() => onSelectProject("box-office")} delay={120} />
+          <div className="bento-row-compact">
+            <BentoCard project={msbaNba} onClick={() => onSelectProject("msba-nba")} delay={200} />
+            <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} delay={280} />
+          </div>
+        </div>
       </div>
+      {/* The X-ray classifier used to be stacked inside the right column, which made that column
+          taller than the featured card and left a hole in the Oddsix card. It gets its own
+          full-width row instead, so the two columns balance. */}
+      <BentoCard project={chestXray} onClick={() => onSelectProject("chest-xray")} delay={360} />
     </div>
   );
 }
 
-function CaseStudyMetric({ metric }: { metric: typeof PROJECTS[0]["metrics"][0] }) {
+function CaseStudyMetric({ metric, accent }: { metric: typeof PROJECTS[0]["metrics"][0]; accent: string }) {
   const { count, ref } = useCountUp(metric.value);
   if (!metric.label) return null;
   return (
     <div ref={ref} className="flex-1 py-5 md:py-6 text-center border-r border-border last:border-r-0">
-      <div className="text-2xl md:text-[26px] font-extrabold text-foreground tracking-tight">
+      <div className="w-6 h-[3px] rounded-full mx-auto mb-2.5 opacity-70" aria-hidden="true" style={{ background: accent }} />
+      <div className="text-2xl md:text-[26px] font-extrabold text-foreground tracking-tight tabular-nums">
         {count}{metric.suffix}
       </div>
-      <div className="text-[10px] text-muted-foreground uppercase tracking-[1px] mt-1">{metric.label}</div>
+      <div className="text-[10px] text-muted-foreground uppercase tracking-[1px] mt-1 px-1 leading-snug">{metric.label}</div>
     </div>
   );
 }
@@ -968,15 +999,17 @@ function Slideshow({ screenshots, accent }: { screenshots: { label: string; desc
             style={{
               opacity: i === current ? 1 : 0,
               transform: i === current ? "translateX(0)" : i < current ? "translateX(-20px)" : "translateX(20px)",
-              background: shot.img ? "#0b1220" : `linear-gradient(135deg, ${accent}08, ${accent}15, ${accent}08)`,
+              background: shot.img ? "#eceff4" : `linear-gradient(135deg, ${accent}08, ${accent}15, ${accent}08)`,
             }}
           >
             {shot.img ? (
               <>
                 <img src={shot.img} alt={shot.label} loading="lazy" className="w-full h-full object-contain" />
-                <div className="absolute bottom-0 inset-x-0 px-4 py-2.5 bg-gradient-to-t from-black/75 via-black/40 to-transparent">
-                  <div className="text-xs font-semibold text-white">{shot.label}</div>
-                  <div className="text-[10px] text-white/70">{shot.desc}</div>
+                {/* Caption sits on a light scrim, not a dark one: every screenshot on this
+                    site is a light-theme product shot, so white-on-black floated badly. */}
+                <div className="absolute bottom-0 inset-x-0 px-4 pt-6 pb-2.5 bg-gradient-to-t from-white via-white/85 to-transparent">
+                  <div className="text-xs font-semibold text-foreground">{shot.label}</div>
+                  <div className="text-[10px] text-muted-foreground">{shot.desc}</div>
                 </div>
               </>
             ) : (
@@ -1066,7 +1099,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
         />
         <div className="relative z-10 max-w-2xl mx-auto px-6 pt-12 md:pt-16 pb-8 md:pb-10">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-[10px] font-bold tracking-[2px] uppercase" style={{ color: project.accent }}>
+            <span className="text-[10px] font-bold tracking-[2px] uppercase" style={{ color: accentText(project.accent) }}>
               {project.subtitle}
             </span>
             {(project as { status?: string }).status && (
@@ -1134,7 +1167,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
         <div ref={metricsRef} className="scroll-reveal bg-white border-b border-border">
           <div className="max-w-2xl mx-auto flex">
             {visibleMetrics.map((m, i) => (
-              <CaseStudyMetric key={i} metric={m} />
+              <CaseStudyMetric key={i} metric={m} accent={project.accent} />
             ))}
           </div>
         </div>
@@ -1146,21 +1179,10 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
           <StorySection key={i} section={section} index={i} isLast={i === project.caseStudy.sections.length - 1} />
         ))}
 
-        {!video && (
-          <div
-            className="rounded-xl border border-border h-24 md:h-32 flex flex-col items-center justify-center shadow-sm mb-10 overflow-hidden"
-            style={{ background: `linear-gradient(135deg, ${project.accent}05, ${project.accent}12, ${project.accent}05)` }}
-          >
-            <div className="flex gap-3 mb-2">
-              {[40, 56, 48].map((w, i) => (
-                <div key={i} className="h-8 rounded" style={{ width: w, background: `${project.accent}12` }} />
-              ))}
-            </div>
-            <div className="text-xs text-muted-foreground/80">
-              {(project as { status?: string }).status ? "Dashboard & visuals coming soon" : "More screenshots coming soon"}
-            </div>
-          </div>
-        )}
+        {/* The old "more screenshots coming soon" filler block lived here. Removed 2026-10-06:
+            it fired on every project without a video (including ones that already had a five-shot
+            slideshow above it) and the only thing it told a recruiter was that something was
+            missing. */}
 
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
@@ -1188,19 +1210,27 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
               <div className="text-xs text-muted-foreground uppercase tracking-wider mb-3">Next Project</div>
               <button
                 onClick={() => onSelectProject(nextProject.id)}
-                className="w-full text-left bg-white border border-border rounded-xl p-5 cursor-pointer hover:shadow-md hover:border-primary/20 transition-all duration-200 group"
+                className="w-full text-left bg-white border border-border rounded-xl p-4 cursor-pointer hover:shadow-md hover:border-primary/20 transition-all duration-200 group"
               >
-                <div className="flex items-center justify-between">
-                  <div>
+                <div className="flex items-center gap-4">
+                  {(() => {
+                    const thumb = getCardImage(nextProject);
+                    return thumb ? (
+                      <div className="hidden sm:block w-28 h-20 shrink-0 rounded-lg overflow-hidden border border-border/60 bg-secondary">
+                        <img src={thumb} alt="" aria-hidden="true" loading="lazy" className="w-full h-full object-cover object-top" />
+                      </div>
+                    ) : null;
+                  })()}
+                  <div className="min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <div className="w-2 h-2 rounded-full" style={{ background: nextProject.accent }} />
+                      <div className="w-2 h-2 rounded-full shrink-0" aria-hidden="true" style={{ background: nextProject.accent }} />
                       <div className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">
-                        {nextProject.title}
+                        <ProjectTitle project={nextProject} />
                       </div>
                     </div>
                     <div className="text-sm text-muted-foreground">{nextProject.subtitle}</div>
                   </div>
-                  <ArrowUpRight size={18} className="text-muted-foreground group-hover:text-primary transition-colors" />
+                  <ArrowUpRight size={18} className="ml-auto shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
                 </div>
               </button>
             </div>
@@ -1215,6 +1245,7 @@ function TechIcon({ skill }: { skill: TechSkill }) {
   return (
     <div
       className="tech-icon-card relative group flex flex-col items-center gap-2 cursor-default"
+      title={skill.name}
     >
       <div className="relative flex items-center justify-center bg-white border border-border rounded-xl w-[72px] h-[72px] transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-1 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.12)]">
         {skill.icon ? (
@@ -1233,16 +1264,26 @@ function TechIcon({ skill }: { skill: TechSkill }) {
         )}
       </div>
       <span className="text-[10px] font-medium text-muted-foreground text-center leading-tight max-w-[80px] group-hover:text-foreground transition-colors duration-200">
-        {skill.name}
+        {skill.shortName ?? skill.name}
       </span>
     </div>
   );
 }
 
+/* `featured` marks the handful of skills Spencer leads with. It was in the data but
+   unused, so every pill looked identical; featured pills now carry a faint cyan wash
+   and a slightly stronger label. */
 function BusinessSkillPill({ skill }: { skill: { name: string; featured?: boolean } }) {
   return (
-    <div className="skill-badge inline-flex items-center gap-2 rounded-full px-4 py-2 cursor-default text-sm font-medium bg-white border border-border text-foreground transition-all duration-200 hover:border-primary/30 hover:shadow-sm">
-      <div className="w-1.5 h-1.5 rounded-full shrink-0 bg-primary" />
+    <div
+      className={`skill-badge inline-flex items-center gap-2 rounded-full px-4 py-2 cursor-default text-sm border transition-all duration-200 hover:border-primary/30 hover:shadow-sm ${
+        skill.featured
+          ? "font-semibold text-foreground border-primary/25"
+          : "font-medium text-foreground bg-white border-border"
+      }`}
+      style={skill.featured ? { background: "rgba(6,182,212,0.07)" } : undefined}
+    >
+      <div className={`w-1.5 h-1.5 rounded-full shrink-0 bg-primary ${skill.featured ? "" : "opacity-60"}`} />
       {skill.name}
     </div>
   );
