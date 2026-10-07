@@ -1,8 +1,90 @@
 # HANDOFF — Spencer Portfolio Website
 
-## ▶ NEXT SESSION STARTS HERE (updated 2026-10-06)
+## ▶ NEXT SESSION STARTS HERE (updated 2026-10-07)
 
-**State: work is built, tested and committed on branch `refresh/oddsix-stats-2026-10-06`. NOTHING IS DEPLOYED. `gh-pages` was not touched. The live site still shows the old content until Spencer reviews and deploys.**
+**State: DEPLOYED AND LIVE. Spencer approved the look ("yes good"), then said "merge and push".**
+`master` is at **38ba96b**, `gh-pages` at **e6251bc**, and the fix was **verified on the public URL**,
+not locally: `spencergoss.github.io` serves bundle `index-CMJTijOG.js` with **zero** instances of
+`72%`, `0.74`, `490+` or `over 290`, and it does carry `0.75`, `252` and "six sports".
+The branch `refresh/oddsix-stats-2026-10-06` is merged (fast-forward) and can be deleted.
+
+### ⚠⚠ HOW THIS SITE ACTUALLY DEPLOYS — not what the repo implies
+
+GitHub Pages here is `build_type: **legacy**` with `source: {branch: **gh-pages**, path: /}`.
+**`.github/workflows/deploy.yml` was NEVER COMMITTED and has never run.** Its own comment claims
+*"Future updates = just `git push`"* — **that is false today.** Pushing `master` alone changes nothing
+on the live site. The working sequence, used 2026-10-07:
+
+```bash
+npx vite build && python bundle.py          # bundle.py regenerates portfolio.html
+git add -A -- public src portfolio.html
+git commit -m "..." && git push origin master        # source of truth only
+# then publish the BUILD to the gh-pages branch:
+git worktree add /tmp/ghp gh-pages
+cd /tmp/ghp && find . -mindepth 1 -maxdepth 1 ! -name '.git' ! -name '.nojekyll' -exec rm -rf {} +
+cp -r "<repo>/dist/." . && touch .nojekyll
+git add -A && git commit -m "Deploy: ..." && git push origin gh-pages
+cd - && git worktree remove /tmp/ghp --force
+```
+No force-push is needed; an ordinary commit on `gh-pages` is enough. Live propagation took ~2 minutes
+(poll the bundle hash on the public URL to confirm, do not assume).
+
+**The workflow file is deliberately left UNCOMMITTED.** Committing it runs `actions/configure-pages`
+with `enablement: true`, which would flip the Pages source from the branch to Actions — a repo config
+change nobody asked for. Worth doing on purpose some time, so deploys become one push. Not as a side
+effect.
+
+### ✅ WHAT SHIPPED
+
+- **All stale Oddsix figures corrected sitewide** — now six sports, 563 features, 0.75 NBA test AUC,
+  75% over 252 settled calls, with "NBA" beside every 75%.
+- **Both YouTube embeds REMOVED because both videos are DEAD.** `QSooLoE32zk` and `mFgFajpfPD8` each
+  return **404 from the oembed endpoint** (verified independently, not taken on trust). The live site
+  had been serving two grey broken thumbnails and a "Watch on YouTube" button that went nowhere. Box
+  Office got a real screenshot instead; **the MSBA NBA project now has no image** — the one visible
+  hole left.
+- **Six fresh oddsix.app screenshots**; `oddsix-betting.png` and `oddsix-bracket.png` deleted (those
+  pages no longer exist in that form).
+- Visual pass: caption scrims (every product shot is light-theme, white-on-black was floating),
+  per-project accent on card hover, description + tag pills on the featured card, chest X-ray card
+  moved to its own full-width row.
+
+### ⭐ THE RESUME IS NO LONGER A SEPARATE COPY — this was the real bug
+
+The site kept its own hand-made resume PDF, so it drifted for **four months** with nobody noticing:
+the live download still claimed **490+ features and 72% over 290** while the resumes Spencer was
+actively submitting said **563 and 75% over 252**, and its summary opened *"Business and data analyst
+who builds analytics end to end"* — the **title-claiming shape he explicitly rejected on 2026-09-11**
+(he has never held an analyst title). A recruiter clicking from his resume to his site saw two
+different sets of numbers from the same person.
+
+It is now generated from the single source of truth, `Career/applications/_resume_lib.py`:
+
+```bash
+python Career/tools/refresh_site_resume.py      # then build, commit, push, publish to gh-pages
+```
+
+Conservative build (a public download cannot know its reader). The script **refuses to copy a PDF that
+still contains a stale figure or runs to two pages**, and it rewrites the "PDF • Updated &lt;month&gt;"
+label from the file it just built, so the label cannot rot either. This answers Spencer's
+*"fix resume to be correct but this number will always change"*: there is one place to change now.
+
+### STILL OPEN
+
+- **Box Office says 5,659 films; the live app header says 5,623** (Postgres offline, CSV fallback).
+  A recruiter can click through and see the mismatch. Pick one number.
+- **The AI System page claims "six real bugs / seven weeks"** — not supported by anything in
+  `Career/SPENCER_PROJECT_CONTEXT.md`. He would have to defend it in an interview. Verify or cut.
+- MSBA NBA project has no image since the dead video came out.
+- `.github/` is untracked on purpose (see above).
+
+---
+
+## (historical) 2026-10-06 handover (updated 2026-10-06)
+
+> **SUPERSEDED 2026-10-07 - this paragraph is now FALSE. The work WAS deployed; see the top of this file. Kept only as the record of what the 2026-10-06 session handed over.**
+>
+> **State: work is built, tested and committed on branch `refresh/oddsix-stats-2026-10-06`. NOTHING IS DEPLOYED. `gh-pages` was not touched. The live site still shows the old content until Spencer reviews and deploys.**
 
 ### Exact first action next session
 Preview the branch, then decide whether to deploy:

@@ -1,5 +1,33 @@
 # Project Journal — Spencer Portfolio Website
 
+## 2026-10-07 — Deployed the Oddsix correction; found the deploy path is not what the repo claims
+
+**Shipped live** (verified on the public URL, not locally): all stale Oddsix figures corrected
+sitewide (six sports, 563 features, 0.75 NBA test AUC, 75% over 252), both YouTube embeds removed
+because both videos are dead (oembed 404 on each — the live site had been serving two broken
+thumbnails and a dead button), six fresh screenshots, and a visual pass. `master` 38ba96b,
+`gh-pages` e6251bc.
+
+**Decision: deploy by publishing `dist/` to the gh-pages branch, not by pushing master.**
+Pages here is `build_type: legacy` with source `gh-pages`. The `.github/workflows/deploy.yml` sitting
+in the repo folder was never committed and has never run, so its own promise that "future updates =
+just git push" is false. Rejected alternative: commit the workflow and let Actions deploy. That runs
+`configure-pages` with `enablement: true`, which flips the Pages source from the branch to Actions —
+a repo config change nobody asked for, and a bad thing to do as a side effect of a content fix. Left
+uncommitted deliberately; worth doing on purpose later.
+
+**Root cause worth remembering: the site kept its own copy of the resume.** It drifted for four
+months — the live download claimed 490+ features and 72% over 290 while submitted resumes said 563
+and 75% over 252, and its summary opened by claiming the "business and data analyst" title Spencer
+has never held and explicitly rejected on 2026-09-11. Fixed by generating it from
+`Career/applications/_resume_lib.py` via `Career/tools/refresh_site_resume.py`, which refuses to copy
+a PDF containing a stale figure and rewrites the "Updated <month>" label from the file it just built.
+The general lesson: a second copy of a fact is a fact that will go stale silently.
+
+**Open:** Box Office says 5,659 films, the live app header says 5,623 (clickable mismatch). The AI
+System page's "six real bugs / seven weeks" claim is unsupported by SPENCER_PROJECT_CONTEXT.md. MSBA
+NBA project has no image since the dead video was removed.
+
 ## 2026-03-30 — Full Site Redesign: Projects, Skills, Experience, Contact, Global Polish
 
 ### What Was Done
