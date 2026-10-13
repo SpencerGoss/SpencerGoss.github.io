@@ -1,3 +1,15 @@
+# 2026-10-13: REDESIGN SHIPPED (live at spencergoss.github.io, master 1617d40)
+Spencer asked for projects to be "a huge part", "change everything that I can", and to drop gimmicks; he approved and
+said "publish". Shipped: ProjectShowcase (Oddsix feature + 4 large cards + NBA strip, new agent-engineering project,
+X-ray Grad-CAM image), compact ExperienceSection (high school kept), About with "Where I fit", Resume button in hero,
+icon-chip Skills, nav/page order Projects-About-AI-Experience-Skills-Contact, og-card with headshot, no job-title
+claims anywhere, NO Oddsix accuracy numbers, NO leakage story. Removed Lenis, cursor spotlight, noise, progress bar,
+typewriter, bounce/pulse, count-up metrics, footer credit. Details in CLAUDE.md "2026-10-13 redesign".
+Leftover: `.claude/worktrees/projects-redesign/` folder could not be deleted (Windows lock); safe to delete by hand.
+Next: (1) hide CLAUDE.md / HANDOFF.md / WORKING_NOTES.md / PROJECT_JOURNAL.md from the PUBLIC repo with
+`git rm --cached` + .gitignore (they are visible to anyone on GitHub); (2) when Oddsix's new models settle, consider a
+fresh accuracy screenshot only if Spencer wants numbers back.
+
 # HANDOFF — Spencer Portfolio Website
 
 ## ▶ NEXT SESSION STARTS HERE (updated 2026-10-07)
