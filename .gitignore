@@ -13,3 +13,9 @@ Thumbs.db
 .playwright-mcp/
 *.log
 /*.png
+
+# Internal working notes: keep local, not public
+CLAUDE.md
+HANDOFF.md
+WORKING_NOTES.md
+PROJECT_JOURNAL.md
