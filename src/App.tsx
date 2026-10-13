@@ -176,7 +176,7 @@ const PROJECTS = [
     // `video: "<new id>",` back on this line.
     shortDescription: "A game-outcome model on five NBA seasons using only information known before tip-off, with play-style clustering. The modeling foundation that grew into Oddsix.",
     url: "#",
-    github: "https://github.com/SpencerGoss/foundation_nba_analytics_project",
+    github: "#",
     tags: ["Python", "LightGBM", "scikit-learn", "K-Means", "NBA Stats API"],
     screenshots: [],
     metrics: [
