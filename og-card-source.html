@@ -39,6 +39,9 @@
     box-shadow: 0 30px 60px rgba(15,23,42,0.18);
   }
   .mono span { font-size: 124px; font-weight: 800; color: #fff; letter-spacing: -2px; }
+  .photo { position: relative; z-index: 2; width: 320px; height: 320px; border-radius: 50%; overflow: hidden;
+           box-shadow: 0 30px 60px rgba(15,23,42,0.18); border: 6px solid #fff; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.4); transform-origin: 50% 34%; }
   .bottombar { position: absolute; left: 0; right: 0; bottom: 0; height: 10px; background: linear-gradient(90deg, #06B6D4, #8B5CF6); }
 </style>
 </head>
@@ -50,14 +53,13 @@
       <div class="eyebrow">Portfolio</div>
       <div class="name">Spencer Goss</div>
       <div class="pills">
-        <div class="pill">Business Analyst</div>
-        <div class="pill">Data Analyst</div>
-        <div class="pill">MSBA · AI</div>
+        <div class="pill">M.S. Business Analytics</div>
+        <div class="pill">AI Concentration</div>
       </div>
-      <div class="tagline">From raw data to real results: predictive models,<br/>automated systems, and analytics tools.</div>
+      <div class="tagline">Data products, predictive models and<br/>AI workflows, built end to end.</div>
       <div class="url">spencergoss.github.io</div>
     </div>
-    <div class="mono"><span>SG</span></div>
+    <div class="photo"><img src="public/images/spencer-headshot.jpg" alt="" /></div>
     <div class="bottombar"></div>
   </div>
 </body>

@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import Lenis from "lenis";
 import {
   Mail,
   ExternalLink,
@@ -219,6 +218,7 @@ const PROJECTS = [
     accent: "#2563EB",
     accentBg: "rgba(37,99,235,0.08)",
     featured: false,
+    cardImage: "/images/projects/boxoffice-card.png",
     // VIDEO REMOVED 2026-10-06: YouTube id "mFgFajpfPD8" now returns "This video isn't available
     // anymore". Replaced with a live screenshot of the running app. To restore the walkthrough,
     // put `video: "<new id>",` back on this line.
@@ -278,6 +278,7 @@ const PROJECTS = [
     accent: "#F59E0B",
     accentBg: "rgba(245,158,11,0.08)",
     featured: false,
+    cardImage: "/images/projects/churn-card.png",
     shortDescription: "Churn prediction on 5,636 customers: four models benchmarked, SHAP driver analysis, and three actionable retention segments.",
     url: "#",
     github: "https://github.com/SpencerGoss/customer-churn-prediction",
@@ -578,11 +579,11 @@ const EXPERIENCE = [
 ];
 
 const NAV_ITEMS = [
-  { key: "about", label: "About" },
   { key: "projects", label: "Projects" },
-  { key: "aisystem", label: "AI System" },
-  { key: "skills", label: "Skills" },
+  { key: "about", label: "About" },
+  { key: "aisystem", label: "AI" },
   { key: "experience", label: "Experience" },
+  { key: "skills", label: "Skills" },
   { key: "contact", label: "Contact" },
 ];
 
@@ -1253,30 +1254,14 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
 
 function TechIcon({ skill }: { skill: TechSkill }) {
   return (
-    <div
-      className="tech-icon-card relative group flex flex-col items-center gap-2 cursor-default"
-      title={skill.name}
-    >
-      <div className="relative flex items-center justify-center bg-white border border-border rounded-xl w-[72px] h-[72px] transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-1 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.12)]">
-        {skill.icon ? (
-          <img
-            src={skill.icon}
-            alt={skill.name}
-            className="w-7 h-7 object-contain transition-transform duration-300 group-hover:scale-110"
-            loading="lazy"
-          />
-        ) : (
-          <skill.LucideIcon
-            size={28}
-            className="transition-transform duration-300 group-hover:scale-110"
-            style={{ color: skill.iconColor }}
-          />
-        )}
-      </div>
-      <span className="text-[10px] font-medium text-muted-foreground text-center leading-tight max-w-[80px] group-hover:text-foreground transition-colors duration-200">
-        {skill.shortName ?? skill.name}
-      </span>
-    </div>
+    <span className="inline-flex items-center gap-2 rounded-lg bg-white border border-border px-3 py-2 text-sm font-medium text-foreground" title={skill.name}>
+      {skill.icon ? (
+        <img src={skill.icon} alt="" aria-hidden="true" className="w-4 h-4 object-contain" loading="lazy" />
+      ) : (
+        <skill.LucideIcon size={16} style={{ color: skill.iconColor }} />
+      )}
+      {skill.shortName ?? skill.name}
+    </span>
   );
 }
 
@@ -1286,7 +1271,7 @@ function TechIcon({ skill }: { skill: TechSkill }) {
 function BusinessSkillPill({ skill }: { skill: { name: string; featured?: boolean } }) {
   return (
     <div
-      className={`skill-badge inline-flex items-center gap-2 rounded-full px-4 py-2 cursor-default text-sm border transition-all duration-200 hover:border-primary/30 hover:shadow-sm ${
+      className={`skill-badge inline-flex items-center gap-2 rounded-full px-3 py-1.5 cursor-default text-sm border transition-all duration-200 hover:border-primary/30 hover:shadow-sm ${
         skill.featured
           ? "font-semibold text-foreground border-primary/25"
           : "font-medium text-foreground bg-white border-border"
@@ -1308,23 +1293,13 @@ const SKILL_CATEGORIES = [
   { name: "Tools & Platforms", color: "#06B6D4" },
 ];
 
-function SkillCategory({ category, delay }: { category: { name: string; color: string }; delay: number }) {
-  const ref = useScrollReveal();
+function SkillCategory({ category }: { category: { name: string; color: string }; delay?: number }) {
   const skills = TECH_SKILLS.filter((s) => s.category === category.name);
   if (skills.length === 0) return null;
-
   return (
-    <div ref={ref} className="scroll-reveal mb-8" style={{ transitionDelay: `${delay}ms` }}>
-      <div className="flex items-center gap-3 mb-4">
-        <div className="w-1 h-5 rounded-full" style={{ background: category.color }} />
-        <h3
-          className="text-[11px] font-bold uppercase tracking-[1.5px]"
-          style={{ color: accentText(category.color) }}
-        >
-          {category.name}
-        </h3>
-      </div>
-      <div className="flex flex-wrap gap-4">
+    <div>
+      <h3 className="text-sm font-semibold text-foreground mb-3">{category.name}</h3>
+      <div className="flex flex-wrap gap-2">
         {skills.map((skill) => (
           <TechIcon key={skill.name} skill={skill} />
         ))}
@@ -1609,6 +1584,87 @@ function ExperienceTimeline() {
   );
 }
 
+/* ===== Experience & education (2026-10-13 redesign) =====
+   Replaces the six full-screen photo slides (about eight screens of scrolling) with a compact
+   timeline: each chapter keeps its real photo as a banner, its logo, the summary and the key
+   points, so the whole history reads in about two screens. High school stays, by request. */
+function ExperienceCard({ entry, index }: { entry: typeof EXPERIENCE[0]; index: number }) {
+  const revealRef = useScrollReveal();
+  const typeLabel = entry.type === "education" ? "Education" : entry.type === "work" ? "Work" : "Projects";
+  return (
+    <li ref={revealRef} className="scroll-reveal relative md:grid md:grid-cols-[150px_1fr] md:gap-8"
+        style={{ transitionDelay: `${(index % 2) * 80}ms` }}>
+      {/* Rail: period on desktop, a dot on the line */}
+      <div className="hidden md:flex flex-col items-end pt-6 text-right">
+        <span className="text-sm font-semibold text-foreground tabular-nums">{entry.period}</span>
+        <span className="text-xs text-muted-foreground mt-1">{entry.location}</span>
+      </div>
+      <span aria-hidden="true" className="hidden md:block absolute left-[150px] top-7 -translate-x-[calc(50%-16px)] w-3 h-3 rounded-full border-2 border-white shadow"
+            style={{ background: entry.color }} />
+      <article className="project-card !p-0 overflow-hidden" style={{ ["--accent" as string]: entry.color }}>
+        <div className="relative h-24 md:h-28 overflow-hidden">
+          <img src={entry.bgImage} alt="" aria-hidden="true" loading="lazy" className="w-full h-full object-cover" />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(15,23,42,0.15), rgba(15,23,42,0.55))" }} />
+          <div className="absolute left-5 bottom-3 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-white shadow flex items-center justify-center overflow-hidden">
+              {entry.logo ? (
+                <img src={entry.logo} alt={`${entry.org} logo`} className="w-7 h-7 object-contain" loading="lazy" />
+              ) : (
+                <Code2 size={18} className="text-foreground" />
+              )}
+            </div>
+            <div className="text-white">
+              <div className="text-base md:text-lg font-bold leading-tight">{entry.org}</div>
+              <div className="text-xs opacity-85 md:hidden">{entry.period}</div>
+            </div>
+          </div>
+          <span className="absolute right-4 top-3 text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white/90 text-foreground">{typeLabel}</span>
+        </div>
+        <div className="p-5 md:p-6">
+          <h3 className="text-lg font-bold text-foreground">{entry.title}</h3>
+          <p className="text-[15px] text-foreground/80 leading-relaxed mt-1.5">{entry.description}</p>
+          {entry.details.length > 0 && (
+            <ul className="mt-3 space-y-1.5">
+              {entry.details.slice(0, 3).map((d, i) => (
+                <li key={i} className="flex gap-2.5 text-sm text-muted-foreground leading-relaxed">
+                  <span aria-hidden="true" className="mt-2 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: entry.color }} />
+                  <span>{d}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          {entry.highlights.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mt-4">
+              {entry.highlights.map((h) => (
+                <span key={h} className="text-xs px-2.5 py-1 rounded-full border border-border bg-white text-foreground/80">{h}</span>
+              ))}
+            </div>
+          )}
+        </div>
+      </article>
+    </li>
+  );
+}
+
+function ExperienceSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
+  return (
+    <section ref={sectionRef} aria-label="Experience" className="py-24 md:py-28" style={{ background: "#e8ebf0" }}>
+      <div className="max-w-4xl mx-auto px-6">
+        <ScrollReveal className="mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">Experience & Education</h2>
+          <Separator className="w-12 bg-primary h-0.5 mb-4" />
+          <p className="text-muted-foreground">Work, school and independent projects, most recent first.</p>
+        </ScrollReveal>
+        <ol className="relative flex flex-col gap-6 md:before:content-[''] md:before:absolute md:before:left-[166px] md:before:top-2 md:before:bottom-2 md:before:w-px md:before:bg-border">
+          {EXPERIENCE.map((entry, i) => (
+            <ExperienceCard key={entry.org + entry.title} entry={entry} index={i} />
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
 /* ================================================================
    AI SYSTEM SECTION
    ================================================================ */
@@ -1809,38 +1865,6 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [navShrunk, setNavShrunk] = useState(false);
-  const { word: rotatingWord, visible: wordVisible } = useRotatingWord(TYPEWRITER_WORDS);
-
-  // Lenis smooth scroll (disabled when user prefers reduced motion)
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
-
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
-  }, []);
-
-  // Cursor spotlight
-  const spotlightRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (spotlightRef.current) {
-        spotlightRef.current.style.left = `${e.clientX}px`;
-        spotlightRef.current.style.top = `${e.clientY}px`;
-      }
-    };
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
 
   const sectionRefs = {
     hero: useRef<HTMLElement>(null),
@@ -1895,6 +1919,7 @@ export default function App() {
 
   const aboutReveal = useScrollReveal();
   const skillsReveal = useScrollReveal();
+  const skillsGridReveal = useScrollReveal();
 
   // Hero scroll expansion effect
   const heroRef = useRef<HTMLDivElement>(null);
@@ -1923,22 +1948,6 @@ export default function App() {
         Skip to main content
       </a>
 
-      {/* Noise overlay */}
-      <div className="noise-overlay" aria-hidden="true" />
-
-      {/* Cursor spotlight */}
-      <div ref={spotlightRef} className="cursor-spotlight" aria-hidden="true" />
-
-      {/* Scroll progress */}
-      <div
-        className="scroll-progress"
-        style={{ width: `${scrollProgress}%` }}
-        role="progressbar"
-        aria-valuenow={Math.round(scrollProgress)}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-label="Page scroll progress"
-      />
 
       {/* Navigation — floating pill */}
       <nav
@@ -1963,7 +1972,7 @@ export default function App() {
                 navShrunk ? "text-sm px-3" : "text-lg"
               }`}
             >
-              SG<span className="text-primary">.</span>
+              Spencer Goss
             </button>
 
             {/* Desktop nav */}
@@ -2024,7 +2033,7 @@ export default function App() {
         className="relative overflow-hidden"
         style={{ background: "#e8ebf0" }}
       >
-        <div className="relative w-full min-h-screen flex flex-col items-center justify-center px-6">
+        <div className="relative w-full min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 md:pt-0 md:pb-0">
             {/* Ambient background blobs */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
               <div className="hero-blob hero-blob-1" />
@@ -2038,7 +2047,7 @@ export default function App() {
                 {/* Status badge */}
                 <div className="split-reveal flex items-center justify-center md:justify-start gap-2 mb-6">
                   <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-border shadow-sm">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" aria-hidden="true" />
+                    <div className="w-2 h-2 rounded-full bg-green-500" aria-hidden="true" />
                     <span className="text-xs font-semibold text-muted-foreground">Open to opportunities</span>
                   </div>
                 </div>
@@ -2072,14 +2081,14 @@ export default function App() {
                   >
                     View Projects
                   </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    onClick={() => scrollTo("contact")}
-                    className="font-semibold tracking-tight cursor-pointer text-foreground border-foreground/20 hover:border-primary hover:bg-primary/5"
+                  <a
+                    href="/Spencer_Goss_Resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 h-10 px-6 rounded-md border border-foreground/20 bg-white/60 text-sm font-semibold tracking-tight text-foreground hover:border-primary hover:bg-primary/5 transition-colors"
                   >
-                    Get in Touch
-                  </Button>
+                    <Download size={16} aria-hidden="true" /> Resume
+                  </a>
                   <div className="flex items-center gap-1 ml-1">
                     <a href="https://linkedin.com/in/spencergoss1234" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
                        className="w-10 h-10 rounded-lg flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/70 transition-colors">
@@ -2118,72 +2127,9 @@ export default function App() {
               </div>
             </div>
 
-            {/* Scroll cue */}
-            <div ref={scrollCueRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 bounce-arrow text-muted-foreground/40 transition-opacity duration-100" aria-hidden="true" style={{ willChange: "opacity" }}>
-              <ChevronDown size={28} />
-            </div>
+
 
         </div>
-      </section>
-
-      {/* ===== ABOUT ===== */}
-      <section ref={sectionRefs.about} aria-label="About" className="relative py-24 md:py-28" style={{ background: "#e8ebf0" }}>
-        <ScrollReveal className="max-w-6xl mx-auto w-full px-6">
-          <div className="flex flex-col lg:flex-row items-start">
-            {/* Left — headline + statement */}
-            <div className="lg:w-2/5 lg:pr-12 mb-12 lg:mb-0">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
-                About Me
-              </h2>
-              <Separator className="w-12 bg-primary h-0.5 mb-8" />
-              <p className="text-xl md:text-2xl font-semibold tracking-tight text-foreground/80 leading-snug mb-8">
-                Turning raw data into<br />
-                <span style={{ color: accentText("#06B6D4") }}>real-world solutions</span>
-              </p>
-
-              {/* Quick facts */}
-              <div className="flex flex-col gap-3">
-                {[
-                  { Icon: MapPin, value: "Louisville, KY" },
-                  { Icon: GraduationCap, value: "MSBA in AI, UofL" },
-                  { Icon: Briefcase, value: "Open to BA, DA & AI Specialist roles" },
-                ].map((fact, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(6,182,212,0.1)" }}>
-                      <fact.Icon size={15} className="text-primary" />
-                    </div>
-                    <span className="text-sm font-medium text-foreground">{fact.value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Vertical divider */}
-            <div className="hidden lg:block w-px self-stretch" style={{ background: "linear-gradient(to bottom, transparent, #cbd5e1, transparent)" }} />
-
-            {/* Right — bio + details */}
-            <div className="lg:w-3/5 lg:pl-12">
-              <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-10">
-                I completed my MSBA at the University of Louisville in August 2026 with a concentration in AI. I came up through operations and accounts payable, taught myself modeling and engineering by building real projects, and now I work on analytics and AI systems. I'm usually building something, whether a prediction engine, a data pipeline, or whatever problem I'm trying to solve that week. I learn best by shipping real products, and every project sharpens how I approach data and decision-making.
-              </p>
-
-              {/* Detail grid with left accent borders */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {[
-                  { label: "Focus", value: "Predictive modeling, data pipelines, and analytics that drive decisions", color: "#06B6D4" },
-                  { label: "Toolkit", value: "Python, SQL, R, scikit-learn, TensorFlow, Tableau, and Power BI", color: "#06B6D4" },
-                  { label: "Education", value: "MSBA (AI) from UofL, 3.94 GPA; BBA Finance & Marketing (Analytics minor) from UK", color: "#06B6D4" },
-                  { label: "Experience", value: "Churchill Downs, Terex Corporation, Independent Projects", color: "#06B6D4" },
-                ].map((item, i) => (
-                  <div key={i} className="pl-4" style={{ borderLeft: `2px solid ${item.color}` }}>
-                    <div className="text-[11px] font-semibold uppercase tracking-wider mb-1" style={{ color: accentText(item.color) }}>{item.label}</div>
-                    <div className="text-sm font-medium text-foreground leading-relaxed">{item.value}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </ScrollReveal>
       </section>
 
       {/* ===== PROJECTS ===== */}
@@ -2221,22 +2167,78 @@ export default function App() {
         )}
       </section>
 
+      {/* ===== ABOUT ===== */}
+      <section ref={sectionRefs.about} aria-label="About" className="relative py-24 md:py-28" style={{ background: "#e8ebf0" }}>
+        <ScrollReveal className="max-w-6xl mx-auto w-full px-6">
+          <div className="flex flex-col lg:flex-row items-start">
+            {/* Left — headline + statement */}
+            <div className="lg:w-2/5 lg:pr-12 mb-12 lg:mb-0">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
+                About Me
+              </h2>
+              <Separator className="w-12 bg-primary h-0.5 mb-8" />
+              <p className="text-xl md:text-2xl font-semibold tracking-tight text-foreground/80 leading-snug mb-8">
+                Turning raw data into<br />
+                <span style={{ color: accentText("#06B6D4") }}>real-world solutions</span>
+              </p>
+
+              {/* Quick facts */}
+              <div className="flex flex-col gap-3">
+                {[
+                  { Icon: MapPin, value: "Louisville, KY · open to relocation and remote" },
+                  { Icon: GraduationCap, value: "M.S. Business Analytics (AI), 3.94 GPA" },
+                  { Icon: Briefcase, value: "Open to AI, analytics and finance roles" },
+                ].map((fact, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(6,182,212,0.1)" }}>
+                      <fact.Icon size={15} className="text-primary" />
+                    </div>
+                    <span className="text-sm font-medium text-foreground">{fact.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Vertical divider */}
+            <div className="hidden lg:block w-px self-stretch" style={{ background: "linear-gradient(to bottom, transparent, #cbd5e1, transparent)" }} />
+
+            {/* Right — bio + details */}
+            <div className="lg:w-3/5 lg:pl-12">
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-10">
+                I finished my M.S. in Business Analytics, with a concentration in AI, at the University of Louisville in August 2026. Before that I spent a year in accounts payable at Churchill Downs, checking invoice and vendor data across more than ten properties, and three years in shipping and receiving at Terex. Outside of work I build: a live sports data platform, AI agent workflows, data pipelines and predictive models. The work I enjoy most is taking a manual, error-prone process and making it reliable and automatic.
+              </p>
+
+              {/* Where I fit: one line per kind of team, each backed by real work */}
+              <h3 className="text-base font-semibold text-foreground mb-4">Where I fit</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                {[
+                  { label: "AI and automation", value: "Multi-agent AI workflows, Claude and Microsoft Copilot in daily use, and a Copilot agent that triages invoices.", color: "#8B5CF6" },
+                  { label: "Data and analytics", value: "SQL, Python, Power BI and Tableau, from data pipelines through to dashboards and live apps.", color: "#06B6D4" },
+                  { label: "Finance and operations", value: "A year validating invoice and vendor data in SAP and JD Edwards, plus a B.B.A. in Finance.", color: "#10B981" },
+                ].map((item, i) => (
+                  <div key={i} className="pl-4" style={{ borderLeft: `2px solid ${item.color}` }}>
+                    <div className="text-sm font-semibold mb-1" style={{ color: accentText(item.color) }}>{item.label}</div>
+                    <div className="text-sm text-foreground/80 leading-relaxed">{item.value}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
+      </section>
+
       {/* ===== AI SYSTEM ===== */}
       <AISystemSection sectionRef={sectionRefs.aisystem} />
+
+      {/* ===== EXPERIENCE ===== */}
+      <ExperienceSection sectionRef={sectionRefs.experience} />
 
       {/* ===== SKILLS ===== */}
       <section ref={sectionRefs.skills} aria-label="Skills" className="section-alt py-24 md:py-32">
         <div className="max-w-5xl mx-auto px-6">
           <div ref={skillsReveal} className="scroll-reveal mb-14">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-2">
-              Skills &{" "}
-              <span
-                className="inline-block transition-all duration-300"
-                style={{ opacity: wordVisible ? 1 : 0, transform: wordVisible ? "translateY(0)" : "translateY(8px)" }}
-              >
-                {rotatingWord}
-              </span>
-              <span className="typewriter-cursor" />
+              Skills
             </h2>
             <Separator className="w-12 bg-primary h-0.5 mb-6" />
             <p className="text-muted-foreground">
@@ -2245,22 +2247,19 @@ export default function App() {
           </div>
 
           {/* Tech skills by category */}
-          {SKILL_CATEGORIES.map((cat, i) => (
-            <SkillCategory key={cat.name} category={cat} delay={i * 80} />
-          ))}
+          <div ref={skillsGridReveal} className="scroll-reveal grid md:grid-cols-2 gap-x-10 gap-y-8">
+            {SKILL_CATEGORIES.map((cat) => (
+              <SkillCategory key={cat.name} category={cat} />
+            ))}
+          </div>
 
           {/* Business & Professional skills, grouped by area */}
           <div className="mt-12 pt-8 border-t border-border/50">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-1 h-5 rounded-full bg-foreground/20" />
-              <h3 className="text-[11px] font-bold text-[#475569] uppercase tracking-[1.5px]">
-                Business & Professional
-              </h3>
-            </div>
-            <div className="space-y-6">
+            <h3 className="text-lg font-semibold text-foreground mb-6">Business and professional skills</h3>
+            <div className="grid md:grid-cols-2 gap-x-10 gap-y-6">
               {BUSINESS_SKILL_GROUPS.map((group) => (
                 <div key={group.label}>
-                  <div className="text-[10px] font-semibold text-[#475569] uppercase tracking-[1px] mb-3">
+                  <div className="text-sm font-medium text-muted-foreground mb-2.5">
                     {group.label}
                   </div>
                   <div className="flex flex-wrap gap-2.5">
@@ -2273,17 +2272,6 @@ export default function App() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* ===== EXPERIENCE TIMELINE ===== */}
-      <ExperienceTimeline />
-
-      {/* ===== EXPERIENCE SLIDES ===== */}
-      <section ref={sectionRefs.experience} aria-label="Experience" className="relative" style={{ background: "#e8ebf0" }}>
-        {/* Individual experience slides */}
-        {EXPERIENCE.map((entry, i) => (
-          <ExperienceSlide key={i} entry={entry} index={i} total={EXPERIENCE.length} />
-        ))}
       </section>
 
       {/* ===== CONTACT ===== */}
@@ -2308,7 +2296,7 @@ export default function App() {
             </h2>
             <Separator className="w-12 bg-primary h-0.5 mx-auto mb-6" />
             <p className="text-muted-foreground mb-12 text-lg max-w-md mx-auto">
-              Open to Business Analyst, Data Analyst, and AI Specialist roles. Let's talk.
+              Open to AI, analytics and finance roles, on site or remote. The fastest way to reach me is email or LinkedIn.
             </p>
           </ScrollReveal>
 
@@ -2342,9 +2330,7 @@ export default function App() {
             </div>
           </ScrollReveal>
 
-          <p className="text-xs text-muted-foreground/40 mt-12">
-            Built with React, Tailwind CSS & shadcn/ui
-          </p>
+
         </div>
       </section>
       </main>

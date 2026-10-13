@@ -1,7 +1,7 @@
 # Spencer Portfolio Website
 
 ## What This Is
-Personal portfolio website for Spencer Goss (Business Analyst / Data Analyst / MSBA candidate). Single-page React app that bundles into a standalone `portfolio.html` file. Light theme, scroll-expansion hero, full-screen experience slides with glass cards.
+Personal portfolio website for Spencer Goss (M.S. Business Analytics, AI concentration, 2026; never describe him by a job title he has not held). Single-page React app that bundles into a standalone `portfolio.html` file. Light theme, scroll-expansion hero, full-screen experience slides with glass cards.
 
 ## Stack
 React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus Jakarta Sans + JetBrains Mono.
@@ -60,6 +60,15 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
   grid and the "six bugs" anecdote removed). Skills: dropped JMP, SPSS, Qualtrics, SurveyMonkey, Word, OneNote, VS Code,
   Teams, Colab and the Analytics category.
 - Resume PDF refreshed from `Career/Spencer_Goss_Master_Resume.pdf`.
+- Round 2 (same day, Spencer: "change everything that I can ... get rid of any of the gimmicky stuff"): Experience
+  slides REPLACED by `ExperienceSection` (compact timeline cards with photo banners; high school kept); hero "Get in
+  Touch" -> Resume button; About rewritten with a "Where I fit" block (AI and automation / Data and analytics /
+  Finance and operations); Skills = small icon chips in two columns, sentence-case headings; page + nav order is now
+  Projects, About, AI, Experience, Skills, Contact; nav brand "SG." -> "Spencer Goss"; "AI System" -> "AI".
+  REMOVED as gimmicks: Lenis smooth scroll, cursor spotlight, noise overlay, scroll progress bar, Skills typewriter
+  word, bouncing scroll cues, pulsing status dot, footer "Built with" credit. Kept: soft hero blobs, scroll reveals.
+  og-card.png re-rendered from og-card-source.html with the headshot and degree (no job titles); title/meta/JSON-LD
+  jobTitle no longer claim "Business Analyst & Data Analyst". Box Office and Churn cards use cropped card images.
 
 ## Redesign Status (2026-03-30)
 - All sections redesigned: Hero ✅ → Nav ✅ → About ✅ → Projects ✅ → Skills ✅ → Experience ✅ → Contact ✅ → Global ✅
@@ -68,7 +77,7 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 - Project screenshots are REAL (not placeholders): `public/images/projects/oddsix-*.png`, `churn-*.png`, `boxoffice-app.png`. All oddsix shots were recaptured from the live site 2026-10-06 (home, accuracy, player, shot chart, franchise history, plus the card preview); the old `oddsix-betting.png` and `oddsix-bracket.png` were deleted because the site had been redesigned out from under them.
 - **Both YouTube walkthroughs are DEAD as of 2026-10-06** (`QSooLoE32zk` for msba-nba, `mFgFajpfPD8` for box-office both return "This video isn't available anymore"). The `video:` keys were removed so the site stops rendering a dead embed, a grey thumbnail and a "Watch on YouTube" button that goes nowhere. box-office got a live screenshot of the Render app instead; msba-nba now has no image. **To restore either: put `video: "<new id>",` back on the commented line in that project's entry in `src/App.tsx`.**
 - Experience slide images are local files at `public/images/experience/` — real campus/building photos
-- Lenis smooth scroll + cursor spotlight are active
+- Lenis smooth scroll + cursor spotlight were REMOVED 2026-10-13 (gimmicks)
 - Icons use Iconify API (reliable) — do NOT switch back to Simple Icons CDN (broken)
 
 ## LIVE — Deployment (launched 2026-06-17)
