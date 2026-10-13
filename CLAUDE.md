@@ -35,7 +35,7 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 - Hero→About: normal scroll. Hero is `min-h-screen`, then About is a standard section that fades in via ScrollReveal. (Replaced the scrollytelling crossfade 2026-06-04.)
 - Hero ambient blobs: standalone `.hero-blob` class (NOT `.blob` parent — opacity stacking issue)
 - Hero staggered entrance: `split-reveal` classes with delays on badge→name→subtitle→tagline→buttons→photo
-- Tagline: "From raw data to real results — predictive models, automated systems, and analytics tools."
+- Tagline (2026-10-13): "I build data products, predictive models and AI-assisted workflows, from the data pipeline through to the finished app." Hero subtitle pills: "M.S. Business Analytics · AI Concentration · University of Louisville" (never a job title Spencer has not held). Hero also carries LinkedIn + GitHub icon links.
 - Nav: floating frosted-glass pill (`.nav-pill`) appears after scrolling past hero
 - About: split layout — statement + facts left, bio + detail grid right, vertical divider
 - Experience: full-screen slides with real bg images + frosted glass
@@ -44,6 +44,22 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 - Accent-as-TEXT goes through `accentText()` (src/App.tsx, just after `ProjectTitle`): maps each bright accent hex to a deeper, WCAG-AA-legible shade of the same hue. Backgrounds, dots, bars, and borders keep the bright accent; `--primary` (CTA button) untouched. When adding accent-colored small text, wrap the color in `accentText(...)`.
 - 2026-10-06 visual pass (Spencer asked for "make it look a lot better", stayed inside the existing language): slideshow captions moved from a black scrim to a light one (every product shot on this site is light-theme, white-on-black floated badly); card hover now glows in each project's own `--accent` via `color-mix`, with plain-colour fallbacks first; case-study metric cells got a small accent rule and `tabular-nums`; the featured bento card now carries its `shortDescription` and tag pills (it had neither, so the small cards described their project better than the flagship did, and the leftover height showed as a hole); the chest-xray card moved out of the right column into its own full-width row so the two columns balance; the "more screenshots coming soon" filler block was deleted (it fired even on projects that already had a slideshow, and only told a recruiter something was missing); `featured` on business-skill pills is finally wired up; the case-study subtitle now goes through `accentText()` like the rule says.
 - Accessibility: site passes axe-core WCAG AA except the muted-gray nav/body text (#65758b, ~3.9 — Spencer chose to keep the soft gray). Reduced-motion + `:focus-visible` + skip link all handled. Run a quick axe pass (load axe-core via CDN in the browser, `axe.run`) after layout/color changes.
+
+
+## 2026-10-13 redesign (Spencer: "projects should be a huge part of this", keep the look and the high school)
+- Projects: `BentoGrid`/`BentoCard` REMOVED, replaced by `ProjectShowcase` (FeaturedProject for Oddsix with its slideshow,
+  a 2-column grid of large `ProjectCard`s for agent-engineering / box-office / chest-xray / churn, and a slim `ProjectStrip`
+  for the MSBA NBA model). Styles: `.project-card` in index.css. Every card has Live site / GitHub / Read more links.
+- New project entry `agent-engineering`; X-ray got a real Grad-CAM image (`public/images/projects/xray-gradcam.png`,
+  cropped from the notebook) and its true numbers (8 models compared, best NN 0.73 macro AUC).
+- **Oddsix: NO accuracy / AUC / record numbers anywhere** (Spencer is resetting the models and the public record). Card
+  stats are 5 live leagues / 57K player pages / 25+ years. The "Oddsix numbers" section below is SUPERSEDED.
+- **No data-leakage / "honest rebuild" / lesson-learned story anywhere** (Spencer, 2026-10-13: it reads as AI-written).
+  The MSBA NBA case study was rewritten as Problem / Approach / Result.
+- AI System section trimmed to header + model council + three short points + GitHub link (metrics row, 6-step verdict
+  grid and the "six bugs" anecdote removed). Skills: dropped JMP, SPSS, Qualtrics, SurveyMonkey, Word, OneNote, VS Code,
+  Teams, Colab and the Analytics category.
+- Resume PDF refreshed from `Career/Spencer_Goss_Master_Resume.pdf`.
 
 ## Redesign Status (2026-03-30)
 - All sections redesigned: Hero ✅ → Nav ✅ → About ✅ → Projects ✅ → Skills ✅ → Experience ✅ → Contact ✅ → Global ✅
@@ -73,7 +89,7 @@ React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS 3.4 + shadcn/ui. Fonts: Plus J
 ### Pre-launch notes (still relevant)
 - Deploy URL = `spencergoss.github.io` (decided 2026-06-17). canonical/OG/Twitter/JSON-LD/sitemap/resume all match. If a custom domain is ever added, update those + add a CNAME.
 - LinkedIn handle `spencergoss1234` CONFIRMED correct by Spencer (2026-06-17).
-- **Oddsix numbers (verified against oddsix.app on 2026-10-06, use these):** six sports (five live, college coming) · 25+ years of history plus the current season, ~68,000 games · **563** engineered features · NBA model a stacked GBM + logistic ensemble at **0.75** test AUC, calibrated to about two points of expected error · published NBA calls **75%, 189-63 over 252** settled regular-season games. ⚠ Always put "NBA" next to the 75: the other sports grade lower (NHL 62.6%, NFL 60.0%, MLB 55.1%, soccer ~50% three-way) and a bare "75%" reads as platform-wide. **Superseded, never reuse: "72% over 290 (210-80)", "490+ features", "0.74 AUC".** These are a static snapshot of a daily-grading platform, so re-check oddsix.app/predictions/accuracy on any rebuild. Cross-check: `Career/SPENCER_PROJECT_CONTEXT.md` and `applications/_resume_lib.py::CANONICAL_ODDSIX`, which carry the same figures.
+- **⚠ SUPERSEDED 2026-10-13, do not use:** Oddsix numbers (verified against oddsix.app on 2026-10-06): six sports (five live, college coming) · 25+ years of history plus the current season, ~68,000 games · **563** engineered features · NBA model a stacked GBM + logistic ensemble at **0.75** test AUC, calibrated to about two points of expected error · published NBA calls **75%, 189-63 over 252** settled regular-season games. ⚠ Always put "NBA" next to the 75: the other sports grade lower (NHL 62.6%, NFL 60.0%, MLB 55.1%, soccer ~50% three-way) and a bare "75%" reads as platform-wide. **Superseded, never reuse: "72% over 290 (210-80)", "490+ features", "0.74 AUC".** These are a static snapshot of a daily-grading platform, so re-check oddsix.app/predictions/accuracy on any rebuild. Cross-check: `Career/SPENCER_PROJECT_CONTEXT.md` and `applications/_resume_lib.py::CANONICAL_ODDSIX`, which carry the same figures.
 - Note: box-office Render link works but free-tier cold-starts ~30s on first hit after idle.
 - Note: AI System "37 Autonomous Agents" — built but currently suspended (quota); fine on-site, be ready to speak to it in interviews.
 

@@ -12,8 +12,6 @@ import {
   Database,
   Sparkles,
   Bot,
-  BarChart3,
-  FlaskConical,
   ClipboardCheck,
   MessageSquare,
   MapPin,
@@ -73,79 +71,119 @@ const PROJECTS = [
   {
     id: "oddsix",
     title: "Oddsix",
-    subtitle: "Multi-Sport Analytics Platform",
+    subtitle: "Multi-Sport Data and Prediction Platform",
     accent: "#06B6D4",
     accentBg: "rgba(6,182,212,0.08)",
     featured: true,
     cardImage: "/images/projects/oddsix-card.png",
-    shortDescription: "A live multi-sport analytics platform across six sports: NBA, NFL, MLB, soccer, hockey and college. It holds 25+ years of history alongside the current season and runs a separate model for every sport, each one graded in public.",
+    shortDescription: "A live sports data and prediction site covering the NBA, NFL, MLB, NHL and soccer: scores, standings, team and player pages, record books going back to each league's early years, and a model prediction for every game. I designed, built and run all of it.",
     url: "https://oddsix.app",
-    github: "#",
-    tags: ["Python", "scikit-learn", "LightGBM", "Sports Analytics", "Daily Pipeline", "Multi-Sport"],
+    github: "https://github.com/SpencerGoss/oddsix",
+    tags: ["Python", "SQL", "scikit-learn", "LightGBM", "Astro", "Cloudflare"],
     screenshots: [
-      { label: "Today across all sports", desc: "Daily slate, live scores, and the model's call of the day", img: "/images/projects/oddsix-home.png" },
-      { label: "Graded in the open", desc: "Every call logged and scored, wins and losses alike, with calibration checked band by band", img: "/images/projects/oddsix-accuracy.png" },
-      { label: "Player analytics", desc: "League ranks, per-game averages, shooting splits, and recent form", img: "/images/projects/oddsix-player.png" },
+      { label: "Today across all sports", desc: "The daily slate, live scores and the model's view of every game", img: "/images/projects/oddsix-home.png" },
+      { label: "Franchise history", desc: "Season-by-season records and all-time marks going back decades", img: "/images/projects/oddsix-team.png" },
       { label: "Career shot charts", desc: "Every zone graded against that season's league average, so eras compare fairly", img: "/images/projects/oddsix-shotchart.png" },
-      { label: "Franchise history", desc: "Season by season records and all-time marks going back decades", img: "/images/projects/oddsix-team.png" },
     ],
     metrics: [
-      { value: 6, suffix: "", label: "Sports Covered" },
-      { value: 563, suffix: "", label: "Engineered Features" },
-      { value: 75, suffix: "%", label: "NBA Calls Correct" },
-      { value: 252, suffix: "", label: "NBA Calls Graded" },
+      { value: 5, suffix: "", label: "Live Leagues" },
+      { value: 57, suffix: "K", label: "Player Pages" },
+      { value: 25, suffix: "+", label: "Years of History" },
+      { value: 68, suffix: "K", label: "Games Stored" },
     ],
     cardMetrics: [
-      { display: "0.75", label: "NBA Test AUC" },
-      { display: "563", label: "Features" },
-      { display: "6", label: "Sports" },
+      { display: "5", label: "Live leagues" },
+      { display: "57K", label: "Player pages" },
+      { display: "25+", label: "Years of data" },
     ],
     caseStudy: {
-      hook: "A live analytics platform across six sports, holding 25+ years of history alongside the current season: live scores, player and franchise pages, standings, and a daily model call on every game. The NBA model lands at 0.75 test AUC, and its published calls grade at 75% over 252 games with every loss included.",
+      hook: "A live sports data and prediction platform covering five leagues, with 25+ years of history alongside the current season: live scores, standings, team and player pages, record books, and a model prediction on every game. Data updates continuously through the day.",
       sections: [
         {
           title: "Why I Built It",
           color: "#06B6D4",
-          body: "I built Oddsix as a personal project, mostly because I'm a big basketball fan. I've watched the NBA for years and wanted to build something that combined that with the data science and machine learning skills I've been developing. It started simply, as a place to dig into player stats and compare players across eras, and grew into something bigger: a real ML pipeline, game-outcome predictions, and a tool that explains every prediction in plain English, so anyone can see why the model leans the way it does. It's not perfect, but it's real. Real data, real models, real predictions. And it's something I actually use.",
+          body: "I built Oddsix as a personal project because I'm a big sports fan, especially basketball, and I wanted one place that combined the stats I care about with real predictive modeling. It started as a way to compare players across eras and grew into a full platform covering five leagues, with a prediction and a plain-English explanation for every game.",
         },
         {
           title: "What I Built",
           color: "#8B5CF6",
-          body: "Oddsix is a full sports-analytics hub covering the NBA, NFL, MLB, soccer, hockey and college, holding 25+ years of historical data alongside the current season, roughly 68,000 games in all. It pulls together live scores, player and franchise pages going back decades, cross-era player comparisons, standings and league leaders, career shot charts, and on top of all that, a daily model call on every game. Each sport runs its own model, trained only on information known before tip-off, with a confidence score attached. 563 engineered features feed the platform (Elo ratings, rolling form, opponent-adjusted efficiency, RAPM, clutch splits). The NBA model is the deepest of them: a stacked ensemble that blends gradient boosting with logistic regression, lands at 0.75 AUC on games it hasn't seen, and is calibrated to within about two percentage points of what actually happens. Calls are also benchmarked against the published market line, so you can see where the model and the market disagree. A daily pipeline pulls fresh data, regenerates everything, grades yesterday's results, and updates the site on its own.",
+          body: "Oddsix pulls from league data feeds and public odds through the day, validates everything on the way in, and rebuilds the site's data products automatically. It holds roughly 68,000 games and pages for about 57,000 players, with record books going back to each league's early years. Each sport has its own prediction model built from engineered features like team strength ratings, recent form, opponent-adjusted efficiency, rest and injuries. Models are validated on seasons they never trained on, their probabilities are calibrated, and every prediction is graded publicly after the game. A new generation of models is being evaluated live this season.",
           features: [
-            { emoji: "\u{1F3C0}", name: "Every Sport, One Place", desc: "Live scores, player stats, standings, history, and model calls across NBA, NFL, MLB, soccer, hockey & college" },
-            { emoji: "\u{1F4CA}", name: "Player & Team Analytics", desc: "League ranks, cross-era player comparisons, career shot charts, and franchise records going back decades" },
-            { emoji: "\u{1F3AF}", name: "A Model Per Sport", desc: "Pre-tip-off models with confidence scores, each one benchmarked against the published market line" },
-            { emoji: "\u{1F4C8}", name: "Graded In The Open", desc: "Every call logged and scored daily, wins and losses alike, with calibration checked band by band" },
+            { emoji: "\u{1F3C0}", name: "Five Leagues, One Place", desc: "Live scores, standings, team and player pages across the NBA, NFL, MLB, NHL and soccer" },
+            { emoji: "\u{1F4CA}", name: "Player and Team Analytics", desc: "Career stats and game logs for about 57,000 players, shot charts, and franchise records" },
+            { emoji: "\u{1F3AF}", name: "A Model Per Sport", desc: "Win probability and projected score for every game, explained in plain English" },
+            { emoji: "\u{1F4C8}", name: "Graded Publicly", desc: "Every prediction is scored after the game and shown on the accuracy page" },
           ],
         },
         {
-          title: "The Result",
+          title: "How It's Built",
           color: "#10B981",
-          body: "Oddsix is live at oddsix.app, making a call on every game and grading itself in public, wins and losses alike. The NBA model sits at 75% over 252 settled regular-season calls; each of the other sports carries its own record on the same page, and playoffs are reported separately rather than folded in. The accuracy page goes further than a win rate and checks calibration directly: when the model said 55 to 65%, it shows what actually happened. The record updates itself every day and shows every miss, because a prediction system you can't check isn't worth trusting.",
+          body: "The pipeline is Python and SQL, with relational databases and versioned data files, and large archives on Cloudflare R2. The front end is an Astro static site on Cloudflare Pages, where a single template serves every player page. Thousands of automated tests run on every change, and the platform is built and maintained by one developer working with AI coding tools.",
+        },
+      ],
+    },
+  },
+  {
+    id: "agent-engineering",
+    title: "AI Agent Workflows",
+    subtitle: "Multi-Agent Engineering · Open Patterns",
+    accent: "#8B5CF6",
+    accentBg: "rgba(139,92,246,0.08)",
+    featured: false,
+    shortDescription: "The method I use to run AI coding agents on real work: tasks split across parallel agents, every result checked by an independent reviewer, and recurring errors turned into enforced rules. Published as reusable patterns and skills.",
+    url: "#",
+    github: "https://github.com/SpencerGoss/agent-engineering",
+    tags: ["Claude", "Codex", "Gemini", "Copilot", "Prompt Engineering", "Multi-Agent"],
+    screenshots: [],
+    metrics: [
+      { value: 11, suffix: "", label: "Reusable Skills" },
+      { value: 3, suffix: "", label: "Published Patterns" },
+      { value: 5, suffix: "", label: "AI Models Coordinated" },
+    ],
+    cardMetrics: [
+      { display: "11", label: "Reusable skills" },
+      { display: "3", label: "Patterns" },
+      { display: "5", label: "AI models" },
+    ],
+    caseStudy: {
+      hook: "A working method for using AI coding agents on real projects, built and refined while developing Oddsix and my other work, and published as open patterns and skills that run in Claude Code, Codex, Gemini CLI and Copilot.",
+      sections: [
+        {
+          title: "The Approach",
+          color: "#8B5CF6",
+          body: "Work is routed by its shape. Independent pieces go to parallel agents, open design questions get several competing attempts and a judge panel, and simple sequential work stays with a single agent. Every result is checked by an independent reviewer that re-does the work rather than voting, and important decisions go to several different AI models at once so the answers are genuinely independent.",
+        },
+        {
+          title: "What's Published",
+          color: "#06B6D4",
+          body: "Three engineering patterns (multi-agent orchestration, a multi-model review council, and learned guardrails) and eleven installable skills covering code review, debugging, planning, testing, security review, refactoring and decision records. Each skill is prompt-only, so it works in any compatible AI coding tool without extra software.",
+        },
+        {
+          title: "Where It's Used",
+          color: "#10B981",
+          body: "This is how I build day to day: Oddsix, its data pipeline and front end, and my other projects are developed with these workflows, with automated checks and tests gating each change before it ships.",
         },
       ],
     },
   },
   {
     id: "msba-nba",
-    title: "From Box Scores to Predictions",
-    subtitle: "NBA Prediction Model · MSBA 645",
+    title: "NBA Win Prediction Model",
+    subtitle: "Predictive Modeling · MSBA 645",
     accent: "#EA580C",
     accentBg: "rgba(234,88,12,0.08)",
     featured: false,
-    // VIDEO REMOVED 2026-10-06: YouTube id "QSooLoE32zk" now returns "This video isn't available
-    // anymore", so the embed, the card thumbnail and the "Watch on YouTube" button were all dead on
-    // the live site. To restore, put `video: "<new id>",` back on this line.
-    shortDescription: "The honest NBA prediction model behind Oddsix, and the data-leakage trap I had to escape.",
+    // VIDEO REMOVED 2026-10-06: YouTube id "QSooLoE32zk" no longer exists. To restore, put
+    // `video: "<new id>",` back on this line.
+    shortDescription: "A game-outcome model on five NBA seasons using only information known before tip-off, with play-style clustering. The modeling foundation that grew into Oddsix.",
     url: "#",
-    github: "#",
+    github: "https://github.com/SpencerGoss/foundation_nba_analytics_project",
     tags: ["Python", "LightGBM", "scikit-learn", "K-Means", "NBA Stats API"],
     screenshots: [],
     metrics: [
       { value: 10500, suffix: "+", label: "Games Analyzed" },
       { value: 5, suffix: "", label: "NBA Seasons" },
-      { value: 26, suffix: "", label: "Pre-Tip-Off Features" },
+      { value: 26, suffix: "", label: "Pre-Game Features" },
       { value: 4, suffix: "", label: "Play-Style Clusters" },
     ],
     cardMetrics: [
@@ -154,27 +192,22 @@ const PROJECTS = [
       { display: "4", label: "Clusters" },
     ],
     caseStudy: {
-      hook: "An honest NBA win-prediction model, and the data-leakage trap I had to escape to build it. This MSBA 645 final is the predictive-modeling base layer that later grew into Oddsix.",
+      hook: "A win-prediction model for every NBA game across five seasons, built for my MSBA 645 final and later scaled into Oddsix.",
       sections: [
         {
-          title: "The Business Problem",
+          title: "The Problem",
           color: "#06B6D4",
-          body: "Game prediction sits at the center of a multi-billion-dollar sports analytics industry. Teams use it for prep, broadcasters build storylines around it, and fans argue about it every night. For my MSBA 645 final, I set out to build a genuinely honest NBA win-prediction model on every game from the last five seasons: about 10,500 games across 30 teams, pulled straight from the NBA Stats API. Each row is one team's performance in one game, joined to its opponent and labeled with the outcome.",
+          body: "Game prediction is central to sports analytics: teams use it for preparation, broadcasters for storylines, and fans for every argument. The goal was a model that predicts NBA game outcomes using only what is known before tip-off. The data covers about 10,500 games across 30 teams over five seasons, pulled from the NBA Stats API, with each row one team's game joined to its opponent and labeled with the result.",
         },
         {
-          title: "Too Good to Be True",
+          title: "The Approach",
           color: "#8B5CF6",
-          body: "My first attempt looked great: an 80/20 split with Logistic Regression and LightGBM, both landing around 85% accuracy and a 0.93 ROC-AUC. Then I caught the flaw. The features I was leaning on (field-goal %, rebounds, turnovers) only exist after a game is played. I wasn't predicting games, I was describing them. It's like predicting a race from each runner's finishing time: of course it works, but you've already seen the answer.",
+          body: "I engineered 26 pre-game features: last-10-game rolling form, home and away win-rate splits, season-to-date averages, and team-versus-opponent matchup differentials. Models were trained on past seasons and tested on the most recent one (walk-forward validation), comparing logistic regression with LightGBM. I also used K-Means clustering to group teams by play style (Elite Efficiency, Pace and Pressure, Rebuilding, Middle of the Pack), which picked up real franchise shifts across seasons.",
         },
         {
-          title: "Making It Honest",
+          title: "The Result",
           color: "#10B981",
-          body: "I rebuilt the model with walk-forward validation (train on past seasons, test on the most recent, never train on the future) and engineered 26 features that are all knowable before tip-off: last-10-game rolling form, home/away win-rate splits, season-to-date averages, and team-vs-opponent matchup differentials. Accuracy dropped, and that drop is the point: the model was finally being honest. I then ran K-Means clustering to group teams by play style (Elite Efficiency, Pace and Pressure, Rebuilding, Middle of the Pack), and it even caught the Rockets' real franchise transformation across seasons. Folding those style clusters back into the model added a small but real lift of about 1.3 points of accuracy.",
-        },
-        {
-          title: "What It Taught Me",
-          color: "#EA580C",
-          body: "The hardest part of analytics isn't running models, it's making sure they're solving the problem you think they are. High accuracy on a hard problem is a red flag for leakage. Validation has to mirror real deployment, which means test sets from the future. Simpler models often win (logistic regression beat LightGBM here). And unsupervised work can feed supervised work. This project is the foundation Oddsix was built on, the same honest, pre-tip-off approach scaled into a full production platform.",
+          body: "Logistic regression edged out LightGBM, and adding the play-style clusters as features added about 1.3 points of accuracy. The same pre-game feature approach and walk-forward testing became the foundation of the Oddsix prediction models.",
         },
       ],
     },
@@ -296,12 +329,16 @@ const PROJECTS = [
     url: "#",
     github: "https://github.com/SpencerGoss/chest-xray-classifier",
     tags: ["Python", "TensorFlow", "Keras", "Grad-CAM", "Streamlit", "Google Colab"],
-    screenshots: [],
+    screenshots: [
+      { label: "Where the model looks", desc: "Grad-CAM heat map over a chest X-ray, highlighting the regions behind the prediction", img: "/images/projects/xray-gradcam.png" },
+    ],
     metrics: [
       { value: 14, suffix: "", label: "Conditions Detected" },
+      { value: 8, suffix: "", label: "Models Compared" },
     ],
     cardMetrics: [
       { display: "14", label: "Conditions" },
+      { display: "8", label: "Models compared" },
       { display: "Grad-CAM", label: "Explainability" },
     ],
     caseStudy: {
@@ -310,12 +347,12 @@ const PROJECTS = [
         {
           title: "The Problem",
           color: "#06B6D4",
-          body: "A single chest X-ray can show several conditions at once, so this is a multi-label problem, not a pick-one classification. The NIH ChestX-ray14 dataset is public and large, and it comes with the kind of messy labels (mined from radiology reports) that make a model easy to overfit and hard to trust. I wanted a model that was honest about uncertainty and that could show its reasoning, not just a score.",
+          body: "A single chest X-ray can show several conditions at once, so this is a multi-label problem, not a pick-one classification. The NIH ChestX-ray14 dataset is public and large, and it comes with the kind of messy labels (mined from radiology reports) that make a model easy to overfit and hard to trust, so the goal was a model that gives a probability for each condition and can show its reasoning, not just a score.",
         },
         {
           title: "What I Built",
           color: "#8B5CF6",
-          body: "A convolutional network in TensorFlow and Keras, trained for multi-label output so each of the 14 conditions gets its own probability. On top of the model sits Grad-CAM, which produces a heat map over the X-ray showing which regions pushed the prediction, so a reader can sanity-check whether the model is looking at the lungs or at an artifact in the corner. The final piece is a small Streamlit app: upload an image, get the 14 probabilities and the heat map back.",
+          body: "A pretrained EfficientNetB0 network (transfer learning from ImageNet) turns each X-ray into 1,280 image features, and eight models are trained and compared on top of them, from logistic regression and random forests to neural networks, scored on macro AUC across all 14 conditions. The best, a neural network, reached 0.73 macro AUC, with per-condition decision thresholds tuned for recall. Grad-CAM produces a heat map over the X-ray showing which regions drove each prediction, and a small Streamlit app returns the 14 probabilities and the heat map for any uploaded image.",
         },
         {
           title: "Packaged to Run Anywhere",
@@ -355,7 +392,6 @@ const TECH_SKILLS: TechSkill[] = [
   { name: "pandas", icon: "https://api.iconify.design/logos:pandas-icon.svg", category: "Machine Learning" },
   { name: "NumPy", icon: "https://api.iconify.design/logos:numpy.svg", category: "Machine Learning" },
   { name: "Jupyter", icon: "https://api.iconify.design/devicon:jupyter-wordmark.svg", category: "Machine Learning" },
-  { name: "Google Colab", icon: "https://api.iconify.design/devicon:googlecolab.svg", category: "Machine Learning" },
   // Visualization
   { name: "Tableau", icon: "https://api.iconify.design/logos:tableau-icon.svg", category: "Visualization" },
   { name: "Power BI", icon: "https://api.iconify.design/logos:microsoft-power-bi.svg", category: "Visualization" },
@@ -364,21 +400,13 @@ const TECH_SKILLS: TechSkill[] = [
   { name: "PostgreSQL", icon: "https://api.iconify.design/logos:postgresql.svg", category: "Data" },
   { name: "SQL Server", icon: "https://api.iconify.design/simple-icons:microsoftsqlserver.svg", category: "Data" },
   // Analytics
-  { name: "JMP", LucideIcon: FlaskConical, iconColor: "#1E6FBA", category: "Analytics" },
-  { name: "SPSS", LucideIcon: BarChart3, iconColor: "#1F70C1", category: "Analytics" },
-  { name: "Qualtrics", icon: "https://api.iconify.design/simple-icons:qualtrics.svg", category: "Analytics" },
-  { name: "SurveyMonkey", icon: "https://api.iconify.design/simple-icons:surveymonkey.svg", category: "Analytics" },
   // Tools & Platforms
   { name: "Excel (pivot tables, XLOOKUP, VLOOKUP)", shortName: "Excel", icon: "https://api.iconify.design/simple-icons:microsoftexcel.svg", category: "Tools & Platforms" },
   { name: "PowerPoint", icon: "https://api.iconify.design/simple-icons:microsoftpowerpoint.svg", category: "Tools & Platforms" },
-  { name: "Word", icon: "https://api.iconify.design/simple-icons:microsoftword.svg", category: "Tools & Platforms" },
-  { name: "OneNote", icon: "https://api.iconify.design/simple-icons:microsoftonenote.svg", category: "Tools & Platforms" },
   { name: "Azure (coursework)", icon: "https://api.iconify.design/logos:microsoft-azure.svg", category: "Tools & Platforms" },
   { name: "SAP", icon: "https://api.iconify.design/logos:sap.svg", category: "Tools & Platforms" },
   { name: "JD Edwards", LucideIcon: FileSpreadsheet, iconColor: "#C74634", category: "Tools & Platforms" },
   { name: "GitHub", icon: "https://api.iconify.design/logos:github-icon.svg", category: "Tools & Platforms" },
-  { name: "VS Code", icon: "https://api.iconify.design/logos:visual-studio-code.svg", category: "Tools & Platforms" },
-  { name: "Microsoft Teams", icon: "https://api.iconify.design/logos:microsoft-teams.svg", category: "Tools & Platforms" },
 ];
 
 /* Business & professional skills, grouped by area. featured = stronger visual emphasis */
@@ -401,7 +429,6 @@ const BUSINESS_SKILL_GROUPS: { label: string; skills: { name: string; featured?:
       { name: "Data Pipeline Development", featured: true },
       { name: "Data Cleaning & ETL" },
       { name: "Data Validation & Quality Checks" },
-      { name: "Data Wrangling" },
       { name: "Process Automation" },
     ],
   },
@@ -422,7 +449,6 @@ const BUSINESS_SKILL_GROUPS: { label: string; skills: { name: string; featured?:
       { name: "Stakeholder Communication" },
       { name: "Process Documentation" },
       { name: "Training & Onboarding" },
-      { name: "Cross-functional Collaboration" },
     ],
   },
 ];
@@ -456,7 +482,7 @@ const EXPERIENCE = [
     period: "2025 - Present",
     description: "Shipping real products: a live multi-sport analytics platform, a multi-model AI development system, a film-analytics data pipeline, and a deep-learning image classifier.",
     details: [
-      "Built and run Oddsix, a live six-sport analytics platform holding 25+ years of data and 563 engineered features, with a daily model call on every game; the NBA model lands at 0.75 test AUC and its published calls grade at 75% over 252 games",
+      "Built and run Oddsix, a live sports data and prediction platform covering five leagues with 25+ years of history, pages for about 57,000 players, and a prediction model for every sport, updated continuously through the day",
       "Built a multi-model AI development system where independent AI reviewers check each other's work, with a guardrail layer that turns past mistakes into enforced checks; the patterns and skills are published at github.com/SpencerGoss/agent-engineering",
       "Built a film-analytics pipeline pulling 5,659 films from the TMDB API into a 3NF PostgreSQL database behind 7 data-quality checks, feeding a live Dash dashboard",
       "Built a deep-learning classifier for 14 thoracic conditions on the NIH ChestX-ray14 dataset in TensorFlow, with Grad-CAM explainability and a runnable Streamlit app",
@@ -718,205 +744,189 @@ function getCardImage(project: typeof PROJECTS[0]): string | undefined {
   return undefined;
 }
 
-function BentoCard({ project, onClick, delay = 0 }: { project: typeof PROJECTS[0]; onClick: () => void; delay?: number }) {
-  const revealRef = useScrollReveal();
-  const cardImg = getCardImage(project);
+/* ===== Project showcase (2026-10-13 redesign) =====
+   Projects are the centerpiece: Oddsix gets a full-width feature with its screenshot slideshow,
+   four projects sit in a two-column grid of large readable cards, and the class model that grew
+   into Oddsix closes the section as a slim row. Every card opens the existing case study, and the
+   links inside a card stop propagation so "Live site" and "GitHub" never open the case study. */
 
-  if (project.featured) {
-    return (
-      <div
-        ref={revealRef}
-        className="scroll-reveal bento-card bento-featured group/card"
-        onClick={onClick}
-        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); } }}
-        role="button"
-        tabIndex={0}
-        aria-label={`View ${project.title} case study`}
-        style={{ ["--accent" as string]: project.accent, transitionDelay: `${delay}ms` }}
-      >
-        <div
-          className="absolute -top-16 -right-16 w-64 h-64 rounded-full pointer-events-none"
-          style={{ background: `radial-gradient(circle, ${project.accentBg}, transparent 70%)`, filter: "blur(40px)" }}
-        />
-        {/* Not justify-between: the featured card stretches to match the right column, and
-            splitting that slack put a hole between the title and the screenshot. Header and image
-            stack at the top, metrics pin to the bottom with mt-auto, slack lands in one place. */}
-        <div className="relative z-10 flex flex-col h-full">
-          <div>
-            <div className="text-[10px] font-bold tracking-[2px] uppercase mb-2" style={{ color: accentText(project.accent) }}>
-              Featured Project
-            </div>
-            <h3 className="text-2xl md:text-[26px] font-extrabold tracking-tight text-foreground mb-1">
-              <ProjectTitle project={project} />
-            </h3>
-            <p className="text-sm text-muted-foreground">{project.subtitle}</p>
-          </div>
+type ShowcaseProject = typeof PROJECTS[0] & { github?: string; url?: string };
 
-          {cardImg ? (
-            <div className="my-4 rounded-xl border border-border/50 aspect-[4/3] overflow-hidden relative bg-secondary">
-              {/* Fixed aspect, not flex-1. The featured card stretches to match the right column,
-                  and letting the image box eat that slack cropped a chunk off both sides of the
-                  screenshot. The leftover height goes above the tag row instead. */}
-              <img src={cardImg} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/card:scale-[1.02]" />
-            </div>
-          ) : (
-            <div
-              className="my-4 rounded-xl border border-border/50 h-20 flex items-center justify-center overflow-hidden relative"
-              style={{ background: `linear-gradient(135deg, ${project.accent}08, ${project.accent}15, ${project.accent}06)` }}
-            >
-              <div className="flex gap-3 items-end">
-                {[24, 36, 28, 42, 20].map((h, i) => (
-                  <div
-                    key={i}
-                    className="w-2 rounded-t-sm transition-all duration-500"
-                    style={{ height: h, background: `${project.accent}30`, animationDelay: `${i * 0.15}s` }}
-                  />
-                ))}
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/30" />
-            </div>
-          )}
-
-          {/* The featured card showed no description and no tags at all, so the small cards
-              actually said more about their project than the flagship did, and the leftover
-              height came out as dead space. */}
-          <p className="text-sm text-muted-foreground leading-relaxed">{project.shortDescription}</p>
-
-          <div className="mt-auto pt-5">
-            <div className="flex gap-1.5 flex-wrap mb-4">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[10px] px-2.5 py-0.5 rounded-full border"
-                  style={{ background: project.accentBg, color: accentText(project.accent), borderColor: `${project.accent}20` }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <div className="flex gap-6 mb-3">
-              {project.cardMetrics.map((m, i) => (
-                <div key={i}>
-                  <div className="text-xl md:text-[22px] font-extrabold text-foreground">{m.display}</div>
-                  <div className="text-[9px] text-muted-foreground uppercase tracking-[1px]">{m.label}</div>
-                </div>
-              ))}
-            </div>
-            <div className="flex items-center">
-              <div className="flex items-center gap-1 ml-auto text-xs font-semibold whitespace-nowrap opacity-70 group-hover/card:opacity-100 transition-opacity duration-200" style={{ color: accentText(project.accent) }}>
-                View Project <ArrowUpRight size={13} className="transition-transform duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+function ProjectLinks({ project, onOpen }: { project: ShowcaseProject; onOpen: () => void }) {
+  const linkClass = "inline-flex items-center gap-1.5 text-sm font-semibold px-3.5 py-2 rounded-lg border transition-colors duration-200";
   return (
-    <div
-      ref={revealRef}
-      className="scroll-reveal bento-card group/card"
-      onClick={onClick}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); } }}
-      role="button"
-      tabIndex={0}
-      aria-label={`View ${project.title} case study`}
-      style={{ ["--accent" as string]: project.accent, transitionDelay: `${delay}ms` }}
-    >
-      <div
-        className="absolute -top-12 -right-12 w-40 h-40 rounded-full pointer-events-none opacity-70 transition-opacity duration-300 group-hover/card:opacity-100"
-        style={{ background: `radial-gradient(circle, ${project.accentBg}, transparent 70%)`, filter: "blur(34px)" }}
-      />
-      <div className="relative z-10 flex flex-col justify-between h-full">
-        <div>
-          {cardImg && (
-            <div className="mb-3 rounded-lg overflow-hidden aspect-video border border-border/50 bg-secondary">
-              <img src={cardImg} alt={`${project.title} preview`} loading="lazy" className="w-full h-full object-cover object-center transition-transform duration-500 group-hover/card:scale-[1.03]" />
-            </div>
-          )}
-          <div className="flex items-center gap-2 mb-1.5">
-            <div className="w-2 h-2 rounded-full" aria-hidden="true" style={{ background: project.accent }} />
-            <h3 className="text-base md:text-lg font-extrabold text-foreground"><ProjectTitle project={project} /></h3>
-            <div className="ml-auto flex items-center gap-1.5">
-              {(project as { status?: string }).status && (
-                <span
-                  className="text-[9px] font-bold px-2 py-0.5 rounded-full inline-flex items-center gap-1 whitespace-nowrap"
-                  style={{ background: "rgba(245,158,11,0.14)", color: "#B45309" }}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#F59E0B" }} />
-                  {(project as { status?: string }).status}
-                </span>
-              )}
-              {(project as { video?: string }).video && (
-                <span
-                  className="text-[9px] font-bold px-2 py-0.5 rounded-full inline-flex items-center gap-1 whitespace-nowrap"
-                  style={{ background: project.accentBg, color: accentText(project.accent) }}
-                >
-                  ▶ Video
-                </span>
-              )}
-            </div>
-          </div>
-          <p className="text-[11px] text-muted-foreground mb-2">{project.subtitle}</p>
-          <p className="text-[11px] text-muted-foreground leading-relaxed">{project.shortDescription}</p>
+    <div className="flex flex-wrap items-center gap-2.5" onClick={(e) => e.stopPropagation()}>
+      {project.url && project.url !== "#" && (
+        <a href={project.url} target="_blank" rel="noopener noreferrer" className={linkClass}
+           style={{ background: project.accent, color: "#fff", borderColor: project.accent }}>
+          <ExternalLink size={14} aria-hidden="true" /> Live site
+        </a>
+      )}
+      {project.github && project.github !== "#" && (
+        <a href={project.github} target="_blank" rel="noopener noreferrer"
+           className={`${linkClass} bg-white text-foreground border-border hover:border-foreground/30`}>
+          <Github size={14} /> GitHub
+        </a>
+      )}
+      <button type="button" onClick={onOpen}
+              className={`${linkClass} bg-transparent border-transparent cursor-pointer`}
+              style={{ color: accentText(project.accent) }}>
+        Read more <ArrowUpRight size={14} aria-hidden="true" />
+      </button>
+    </div>
+  );
+}
+
+function ProjectStats({ project, size = "md" }: { project: ShowcaseProject; size?: "md" | "lg" }) {
+  if (!project.cardMetrics.length) return null;
+  return (
+    <dl className={`grid gap-4 ${size === "lg" ? "grid-cols-3" : "grid-cols-3"}`}>
+      {project.cardMetrics.map((m, i) => (
+        <div key={i} className="pl-3" style={{ borderLeft: `2px solid ${project.accent}` }}>
+          <dd className={`${size === "lg" ? "text-2xl md:text-3xl" : "text-xl"} font-extrabold text-foreground tabular-nums leading-tight`}>{m.display}</dd>
+          <dt className="text-xs text-muted-foreground mt-0.5">{m.label}</dt>
         </div>
-        {project.cardMetrics.length > 0 && (
-          <div className="flex gap-4 mt-3">
-            {project.cardMetrics.map((m, i) => (
-              <div key={i}>
-                <div className="text-base font-extrabold text-foreground">{m.display}</div>
-                <div className="text-[8px] text-muted-foreground uppercase tracking-[1px]">{m.label}</div>
-              </div>
-            ))}
-          </div>
-        )}
-        <div className="flex items-center gap-2 mt-2">
-          <div className="flex gap-1.5 flex-wrap">
-            {project.tags.slice(0, 3).map((tag) => (
-              <span
-                key={tag}
-                className="text-[10px] px-2.5 py-0.5 rounded-full border"
-                style={{ background: project.accentBg, color: accentText(project.accent), borderColor: `${project.accent}20` }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <div className="ml-auto opacity-50 group-hover/card:opacity-100 transition-opacity duration-200">
-            <ArrowUpRight size={14} className="transition-transform duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" style={{ color: project.accent }} />
-          </div>
+      ))}
+    </dl>
+  );
+}
+
+/* Projects with no screenshot get a quiet visual built from their own content instead of an
+   empty grey box: the agent workflow is drawn as its actual flow. */
+function AgentFlowVisual({ accent }: { accent: string }) {
+  const node = "rounded-lg bg-white border px-3 py-2 text-xs font-semibold text-foreground shadow-sm text-center";
+  return (
+    <div className="w-full h-full flex items-center justify-center p-6"
+         style={{ background: `linear-gradient(135deg, ${accent}0d, ${accent}1f)` }}>
+      <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-3 gap-y-3 text-center">
+        <div className={node} style={{ borderColor: `${accent}40` }}>Task</div>
+        <div className="text-muted-foreground text-xs">routed to</div>
+        <div className="flex flex-col gap-2">
+          <div className={node} style={{ borderColor: `${accent}40` }}>Parallel agents</div>
+          <div className={node} style={{ borderColor: `${accent}40` }}>Competing attempts</div>
         </div>
+        <div />
+        <div />
+        <div className="text-muted-foreground text-xs">checked by</div>
+        <div />
+        <div />
+        <div className={node} style={{ borderColor: accent, color: accentText(accent) }}>Independent reviewer</div>
       </div>
     </div>
   );
 }
 
-function BentoGrid({ onSelectProject }: { onSelectProject: (id: string) => void }) {
-  const oddsix = PROJECTS.find((p) => p.id === "oddsix")!;
-  const boxOffice = PROJECTS.find((p) => p.id === "box-office")!;
-  const msbaNba = PROJECTS.find((p) => p.id === "msba-nba")!;
-  const churnModel = PROJECTS.find((p) => p.id === "churn-model")!;
-  const chestXray = PROJECTS.find((p) => p.id === "chest-xray")!;
-
+function ProjectVisual({ project, className = "" }: { project: ShowcaseProject; className?: string }) {
+  const img = getCardImage(project);
+  if (project.id === "agent-engineering") {
+    return <div className={`overflow-hidden ${className}`}><AgentFlowVisual accent={project.accent} /></div>;
+  }
+  if (!img) return null;
   return (
-    <div className="flex flex-col gap-4">
-      <div className="bento-grid">
-        <div className="bento-col-left">
-          <BentoCard project={oddsix} onClick={() => onSelectProject("oddsix")} delay={0} />
+    <div className={`overflow-hidden bg-[#eceff4] ${className}`}>
+      <img src={img} alt={`${project.title} screenshot`} loading="lazy"
+           className="w-full h-full object-cover object-top transition-transform duration-700 group-hover/card:scale-[1.02]" />
+    </div>
+  );
+}
+
+function FeaturedProject({ project, onOpen }: { project: ShowcaseProject; onOpen: () => void }) {
+  const revealRef = useScrollReveal();
+  return (
+    <article ref={revealRef} className="scroll-reveal project-card project-featured"
+             style={{ ["--accent" as string]: project.accent }}>
+      <div className="grid lg:grid-cols-[1.25fr_1fr] gap-8 lg:gap-10 items-center">
+        <div className="[&_.slideshow-container]:mb-0">
+          <Slideshow screenshots={project.screenshots} accent={project.accent} />
         </div>
-        <div className="bento-col-right">
-          <BentoCard project={boxOffice} onClick={() => onSelectProject("box-office")} delay={120} />
-          <div className="bento-row-compact">
-            <BentoCard project={msbaNba} onClick={() => onSelectProject("msba-nba")} delay={200} />
-            <BentoCard project={churnModel} onClick={() => onSelectProject("churn-model")} delay={280} />
+        <div className="flex flex-col gap-5">
+          <div>
+            <p className="text-sm font-semibold mb-1.5" style={{ color: accentText(project.accent) }}>Featured project</p>
+            <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground">
+              <ProjectTitle project={project} />
+            </h3>
+            <p className="text-base text-muted-foreground mt-1">{project.subtitle}</p>
           </div>
+          <p className="text-base text-foreground/80 leading-relaxed">{project.shortDescription}</p>
+          <ProjectStats project={project} size="lg" />
+          <div className="flex gap-1.5 flex-wrap">
+            {project.tags.map((tag) => (
+              <span key={tag} className="text-xs px-2.5 py-1 rounded-full border"
+                    style={{ background: project.accentBg, color: accentText(project.accent), borderColor: `${project.accent}25` }}>
+                {tag}
+              </span>
+            ))}
+          </div>
+          <ProjectLinks project={project} onOpen={onOpen} />
         </div>
       </div>
-      {/* The X-ray classifier used to be stacked inside the right column, which made that column
-          taller than the featured card and left a hole in the Oddsix card. It gets its own
-          full-width row instead, so the two columns balance. */}
-      <BentoCard project={chestXray} onClick={() => onSelectProject("chest-xray")} delay={360} />
+    </article>
+  );
+}
+
+function ProjectCard({ project, onOpen, delay = 0 }: { project: ShowcaseProject; onOpen: () => void; delay?: number }) {
+  const revealRef = useScrollReveal();
+  return (
+    <article
+      ref={revealRef}
+      className="scroll-reveal project-card group/card cursor-pointer flex flex-col"
+      onClick={onOpen}
+      onKeyDown={(e) => { if (e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onOpen(); } }}
+      tabIndex={0}
+      aria-label={`${project.title}: open the full write-up`}
+      style={{ ["--accent" as string]: project.accent, transitionDelay: `${delay}ms` }}
+    >
+      <ProjectVisual project={project} className="aspect-[16/9] rounded-xl border border-border/60 mb-5" />
+      <div className="flex flex-col gap-3 flex-1">
+        <div>
+          <h3 className="text-xl md:text-2xl font-extrabold tracking-tight text-foreground"><ProjectTitle project={project} /></h3>
+          <p className="text-sm text-muted-foreground mt-0.5">{project.subtitle}</p>
+        </div>
+        <p className="text-[15px] text-foreground/80 leading-relaxed">{project.shortDescription}</p>
+        <div className="mt-auto pt-3 flex flex-col gap-4">
+          <ProjectStats project={project} />
+          <ProjectLinks project={project} onOpen={onOpen} />
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function ProjectStrip({ project, onOpen }: { project: ShowcaseProject; onOpen: () => void }) {
+  const revealRef = useScrollReveal();
+  return (
+    <article ref={revealRef} className="scroll-reveal project-card group/card cursor-pointer"
+             onClick={onOpen}
+             onKeyDown={(e) => { if (e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onOpen(); } }}
+             tabIndex={0} aria-label={`${project.title}: open the full write-up`}
+             style={{ ["--accent" as string]: project.accent }}>
+      <div className="grid md:grid-cols-[1.4fr_1fr] gap-6 items-center">
+        <div className="flex flex-col gap-2">
+          <h3 className="text-xl font-extrabold tracking-tight text-foreground"><ProjectTitle project={project} /></h3>
+          <p className="text-sm text-muted-foreground">{project.subtitle}</p>
+          <p className="text-[15px] text-foreground/80 leading-relaxed">{project.shortDescription}</p>
+        </div>
+        <div className="flex flex-col gap-4">
+          <ProjectStats project={project} />
+          <ProjectLinks project={project} onOpen={onOpen} />
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function ProjectShowcase({ onSelectProject }: { onSelectProject: (id: string) => void }) {
+  const get = (id: string) => PROJECTS.find((p) => p.id === id)! as ShowcaseProject;
+  const grid = ["agent-engineering", "box-office", "chest-xray", "churn-model"];
+  return (
+    <div className="flex flex-col gap-6 md:gap-8">
+      <FeaturedProject project={get("oddsix")} onOpen={() => onSelectProject("oddsix")} />
+      <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+        {grid.map((id, i) => (
+          <ProjectCard key={id} project={get(id)} onOpen={() => onSelectProject(id)} delay={(i % 2) * 120} />
+        ))}
+      </div>
+      <ProjectStrip project={get("msba-nba")} onOpen={() => onSelectProject("msba-nba")} />
     </div>
   );
 }
@@ -1295,7 +1305,6 @@ const SKILL_CATEGORIES = [
   { name: "Machine Learning", color: "#06B6D4" },
   { name: "Visualization", color: "#06B6D4" },
   { name: "Data", color: "#06B6D4" },
-  { name: "Analytics", color: "#06B6D4" },
   { name: "Tools & Platforms", color: "#06B6D4" },
 ];
 
@@ -1624,11 +1633,9 @@ const COUNCIL_FLOW = [
 ];
 
 const COUNCIL_PILLARS = [
-  { icon: ShieldCheck, color: "#EF4444", title: "It argues with itself on purpose", body: "A bunch of AIs that all agree isn't worth much. So one of them always has the job of attacking the idea and trying to break it. That catches problems the others would have agreed right past." },
-  // SPENCER-DECIDE: this line used to state private-workspace counts (233 rules, 279 triggers).
-  // Removed because a reader cannot verify them from the public repo; restore if you want them back.
-  { icon: BrainCircuit, color: "#8B5CF6", title: "It learns from every mistake", body: "When something goes wrong, it becomes a rule the system remembers. Those rules get fed into every AI call as enforced checks, so the same mistake doesn't happen twice." },
-  { icon: Activity, color: "#10B981", title: "I track whether it actually works", body: "I keep a ledger of what the AI recommended and what actually happened afterward. So I know how often its advice was right, instead of just assuming it was." },
+  { icon: ShieldCheck, color: "#EF4444", title: "Independent review", body: "One model is always assigned to challenge the result and look for what breaks, so problems surface before anything is accepted." },
+  { icon: BrainCircuit, color: "#8B5CF6", title: "Errors become rules", body: "When something goes wrong, it is written down as a rule that is checked automatically on later work." },
+  { icon: Activity, color: "#10B981", title: "Outcomes are tracked", body: "Recommendations are logged against what actually happened, so I know which advice held up." },
 ];
 
 function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
@@ -1662,46 +1669,20 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
       <div className="relative z-10 max-w-5xl mx-auto px-6">
         {/* Header */}
         <ScrollReveal className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 mb-6">
-            <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="text-xs font-semibold text-cyan-300 tracking-wider uppercase">Multi-Agent AI Ecosystem</span>
-          </div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-white mb-5">
-            I built my own AI system.
+            How I work with AI
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-            Most people use one AI tool. I run <span className="text-slate-200 font-medium">five models that check each other's work</span>, a guardrail layer that turns past mistakes into enforced checks, and a running record of whether the advice actually held up. Every recommendation is reviewed by me before anything ships. The patterns and skills behind it are published at github.com/SpencerGoss/agent-engineering.
+            I use five AI models together on real work. Each has a defined job, an independent reviewer checks results before they are accepted, and recurring errors become enforced rules. Every change is reviewed by me before it ships.
           </p>
-        </ScrollReveal>
-
-        {/* Metrics */}
-        {/* SPENCER-DECIDE: the old cells were private-workspace counts (53 skills, 37 agents,
-            233 safeguards, 14K+ tests). A reader who clicks the public repo sees 11 skill files and
-            3 pattern docs, so the counts now match what is public. Restore the old ones if you'd
-            rather state the private system's size. */}
-        <ScrollReveal className="mb-20">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-            {[
-              { value: "5", label: "AI Models in Council", color: "#06B6D4" },
-              { value: "11", label: "Portable Skills Published", color: "#8B5CF6" },
-              { value: "3", label: "Pattern Write-ups Published", color: "#10B981" },
-              { value: "6", label: "Steps to a Verdict", color: "#EF4444" },
-              { value: "0", label: "Ships Without My Review", color: "#F59E0B" },
-            ].map((s) => (
-              <div key={s.label} className="text-center py-4 px-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
-                <div className="text-2xl md:text-3xl font-extrabold tracking-tight" style={{ color: s.color }}>{s.value}</div>
-                <div className="text-[10px] text-slate-500 uppercase tracking-wider font-medium mt-1">{s.label}</div>
-              </div>
-            ))}
-          </div>
         </ScrollReveal>
 
         {/* ===== THE COUNCIL ===== */}
         <ScrollReveal className="mb-20">
           <div className="text-center mb-8">
-            <div className="text-[11px] font-bold uppercase tracking-[3px] text-cyan-300/80 mb-2">The Council</div>
+            <h3 className="text-lg font-semibold text-white mb-2">The model council</h3>
             <p className="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
-              Every big decision goes to all five AI models at once, each picked for what it's best at.
+              Important decisions go to all five models at once, each chosen for what it does best.
             </p>
           </div>
 
@@ -1746,36 +1727,6 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
           </div>
         </ScrollReveal>
 
-        {/* ===== HOW THE COUNCIL REACHES A VERDICT ===== */}
-        <ScrollReveal className="mb-20">
-          <div className="text-center mb-8">
-            <div className="text-[11px] font-bold uppercase tracking-[3px] text-violet-300/80 mb-2">How a verdict is reached</div>
-            <p className="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
-              This is the part most people skip. If your AIs only ever agree with each other, they're not helping you. So I made them disagree on purpose.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-            {COUNCIL_FLOW.map((step, i) => {
-              const Icon = step.icon;
-              return (
-                <div key={step.title} className="relative flex gap-3.5 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
-                  <div className="flex flex-col items-center shrink-0">
-                    <div className="w-9 h-9 rounded-lg bg-violet-400/10 flex items-center justify-center">
-                      <Icon size={16} className="text-violet-300" />
-                    </div>
-                    <span className="mt-1.5 text-[9px] font-mono text-slate-600">0{i + 1}</span>
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-[13px] font-semibold text-white leading-tight mb-1">{step.title}</div>
-                    <div className="text-[11px] text-slate-400 leading-snug">{step.desc}</div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </ScrollReveal>
-
         {/* ===== PILLARS ===== */}
         <ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -1794,25 +1745,11 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
           </div>
         </ScrollReveal>
 
-        {/* Concrete result — the verify-your-output principle paying off in a real project */}
-        {/* SPENCER-DECIDE: the "six real bugs" / "seven weeks" anecdote below is not in
-            SPENCER_PROJECT_CONTEXT.md, so it could not be checked against the source of truth.
-            Left as-is because it is your own project and not disprovable by clicking; cut it if
-            you would not want to walk through it in an interview. */}
-        <ScrollReveal className="mt-12">
-          <div className="max-w-3xl mx-auto rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 text-center" style={{ borderTop: "2px solid rgba(6,182,212,0.4)" }}>
-            <div className="text-[11px] font-bold uppercase tracking-[2px] text-cyan-300/80 mb-2">A real result</div>
-            <p className="text-[13px] md:text-sm text-slate-300 leading-relaxed">
-              The same principle runs in my actual projects: don't trust the output, verify it. On my NBA model, automated safety checks caught <span className="text-white font-semibold">six real bugs in a single pass</span>, including a "model improvement" that was actually overfit to its own test data (blocked before it shipped) and a crash that had gone unnoticed for seven weeks.
-            </p>
-          </div>
-        </ScrollReveal>
-
-        {/* Technical translation: the real techniques behind the plain-English design */}
-        <div className="text-center mt-14">
-          <p className="text-[10px] text-slate-500" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-            multi-agent orchestration  ·  adversarial verification  ·  cross-model debate  ·  outcome-based evaluation  ·  human-in-the-loop
-          </p>
+        <div className="text-center mt-12">
+          <a href="https://github.com/SpencerGoss/agent-engineering" target="_blank" rel="noopener noreferrer"
+             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/15 text-sm font-semibold text-white hover:bg-white/5 transition-colors">
+            <Github size={16} /> See the patterns and skills on GitHub
+          </a>
         </div>
       </div>
     </section>
@@ -2113,27 +2050,27 @@ export default function App() {
 
                 {/* Subtitle pills */}
                 <div className="split-reveal split-reveal-delay-2 flex items-center justify-center md:justify-start gap-3 mb-6 flex-wrap">
-                  <span className="text-base md:text-lg font-semibold text-muted-foreground tracking-tight">Business Analyst</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  <span className="text-base md:text-lg font-semibold text-muted-foreground tracking-tight">MSBA</span>
+                  <span className="text-base md:text-lg font-semibold text-muted-foreground tracking-tight">M.S. Business Analytics</span>
                   <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                   <span className="text-base md:text-lg font-semibold text-muted-foreground tracking-tight">AI Concentration</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <span className="text-base md:text-lg font-semibold text-muted-foreground tracking-tight">University of Louisville</span>
                 </div>
 
                 {/* Tagline */}
                 <p className="split-reveal split-reveal-delay-3 text-base md:text-lg text-muted-foreground max-w-lg leading-relaxed mb-8">
-                  <span className="font-medium text-foreground/70">From raw data to real results:</span> predictive models, automated systems, and analytics tools.
+                  I build data products, predictive models and AI-assisted workflows, from the data pipeline through to the finished app.
                 </p>
 
                 {/* CTA Buttons */}
-                <div className="split-reveal flex items-center justify-center md:justify-start gap-4" style={{ animationDelay: "0.55s" }}>
+                <div className="split-reveal flex flex-wrap items-center justify-center md:justify-start gap-3 md:gap-4" style={{ animationDelay: "0.55s" }}>
                   <Button
                     size="lg"
                     onClick={() => scrollTo("projects")}
                     className="font-semibold tracking-tight cursor-pointer border-0"
                     style={{ background: "#06B6D4", color: "#e8ebf0" }}
                   >
-                    View My Work
+                    View Projects
                   </Button>
                   <Button
                     size="lg"
@@ -2143,6 +2080,16 @@ export default function App() {
                   >
                     Get in Touch
                   </Button>
+                  <div className="flex items-center gap-1 ml-1">
+                    <a href="https://linkedin.com/in/spencergoss1234" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+                       className="w-10 h-10 rounded-lg flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/70 transition-colors">
+                      <Linkedin size={20} />
+                    </a>
+                    <a href="https://github.com/SpencerGoss" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
+                       className="w-10 h-10 rounded-lg flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/70 transition-colors">
+                      <Github size={20} />
+                    </a>
+                  </div>
                 </div>
               </div>
 
@@ -2266,10 +2213,10 @@ export default function App() {
               </h2>
               <Separator className="w-12 bg-primary h-0.5 mb-4" />
               <p className="text-muted-foreground">
-                Real projects, real data. Click any to see the full case study.
+                Things I have designed, built and shipped. Open any project for the full write-up.
               </p>
             </ScrollReveal>
-            <BentoGrid onSelectProject={setSelectedProject} />
+            <ProjectShowcase onSelectProject={setSelectedProject} />
           </div>
         )}
       </section>
