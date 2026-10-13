@@ -74,15 +74,15 @@ const PROJECTS = [
     accent: "#06B6D4",
     accentBg: "rgba(6,182,212,0.08)",
     featured: true,
-    cardImage: "/images/projects/oddsix-card.png",
+    cardImage: "/images/projects/oddsix-card.webp",
     shortDescription: "A live sports data and prediction site covering the NBA, NFL, MLB, NHL and soccer: scores, standings, team and player pages, record books going back to each league's early years, and a model prediction for every game. I designed, built and run all of it.",
     url: "https://oddsix.app",
     github: "https://github.com/SpencerGoss/oddsix",
     tags: ["Python", "SQL", "scikit-learn", "LightGBM", "Astro", "Cloudflare"],
     screenshots: [
-      { label: "Today across all sports", desc: "The daily slate, live scores and the model's view of every game", img: "/images/projects/oddsix-home.png" },
-      { label: "Franchise history", desc: "Season-by-season records and all-time marks going back decades", img: "/images/projects/oddsix-team.png" },
-      { label: "Career shot charts", desc: "Every zone graded against that season's league average, so eras compare fairly", img: "/images/projects/oddsix-shotchart.png" },
+      { label: "Today across all sports", desc: "The daily slate, live scores and the model's view of every game", img: "/images/projects/oddsix-home.webp" },
+      { label: "Franchise history", desc: "Season-by-season records and all-time marks going back decades", img: "/images/projects/oddsix-team.webp" },
+      { label: "Career shot charts", desc: "Every zone graded against that season's league average, so eras compare fairly", img: "/images/projects/oddsix-shotchart.webp" },
     ],
     metrics: [
       { value: 5, suffix: "", label: "Live Leagues" },
@@ -218,7 +218,7 @@ const PROJECTS = [
     accent: "#2563EB",
     accentBg: "rgba(37,99,235,0.08)",
     featured: false,
-    cardImage: "/images/projects/boxoffice-card.png",
+    cardImage: "/images/projects/boxoffice-card.webp",
     // VIDEO REMOVED 2026-10-06: YouTube id "mFgFajpfPD8" now returns "This video isn't available
     // anymore". Replaced with a live screenshot of the running app. To restore the walkthrough,
     // put `video: "<new id>",` back on this line.
@@ -227,7 +227,7 @@ const PROJECTS = [
     github: "https://github.com/SpencerGoss/box-office-vs-ratings",
     tags: ["Python", "pandas", "PostgreSQL", "SQLAlchemy", "Dash", "Plotly", "TMDB API"],
     screenshots: [
-      { label: "The film explorer, live", desc: "Spotlight any film: budget to revenue to profit, percentile ranks, and where it sits against every other film", img: "/images/projects/boxoffice-app.png" },
+      { label: "The film explorer, live", desc: "Spotlight any film: budget to revenue to profit, percentile ranks, and where it sits against every other film", img: "/images/projects/boxoffice-app.webp" },
     ],
     metrics: [
       { value: 5659, suffix: "", label: "Films Pipelined" },
@@ -278,16 +278,16 @@ const PROJECTS = [
     accent: "#F59E0B",
     accentBg: "rgba(245,158,11,0.08)",
     featured: false,
-    cardImage: "/images/projects/churn-card.png",
+    cardImage: "/images/projects/churn-card.webp",
     shortDescription: "Churn prediction on 5,636 customers: four models benchmarked, SHAP driver analysis, and three actionable retention segments.",
     url: "#",
     github: "https://github.com/SpencerGoss/customer-churn-prediction",
     tags: ["Python", "scikit-learn", "CatBoost", "SHAP", "Jupyter", "pandas"],
     screenshots: [
-      { label: "Churn by tenure", desc: "New customers churn at 53%; long-tenure customers at 14%", img: "/images/projects/churn-tenure.png" },
-      { label: "Model benchmark", desc: "Random Forest vs. XGBoost vs. LightGBM vs. CatBoost", img: "/images/projects/churn-roc.png" },
-      { label: "What drives churn", desc: "Referrals, dependents, and month-to-month contracts top the list", img: "/images/projects/churn-features.png" },
-      { label: "SHAP driver analysis", desc: "Direction and strength of every churn driver", img: "/images/projects/churn-shap.png" },
+      { label: "Churn by tenure", desc: "New customers churn at 53%; long-tenure customers at 14%", img: "/images/projects/churn-tenure.webp" },
+      { label: "Model benchmark", desc: "Random Forest vs. XGBoost vs. LightGBM vs. CatBoost", img: "/images/projects/churn-roc.webp" },
+      { label: "What drives churn", desc: "Referrals, dependents, and month-to-month contracts top the list", img: "/images/projects/churn-features.webp" },
+      { label: "SHAP driver analysis", desc: "Direction and strength of every churn driver", img: "/images/projects/churn-shap.webp" },
     ],
     metrics: [
       { value: 3, suffix: "", label: "Customer Clusters" },
@@ -331,7 +331,7 @@ const PROJECTS = [
     github: "https://github.com/SpencerGoss/chest-xray-classifier",
     tags: ["Python", "TensorFlow", "Keras", "Grad-CAM", "Streamlit", "Google Colab"],
     screenshots: [
-      { label: "Where the model looks", desc: "Grad-CAM heat map over a chest X-ray, highlighting the regions behind the prediction", img: "/images/projects/xray-gradcam.png" },
+      { label: "Where the model looks", desc: "Grad-CAM heat map over a chest X-ray, highlighting the regions behind the prediction", img: "/images/projects/xray-gradcam.webp" },
     ],
     metrics: [
       { value: 14, suffix: "", label: "Conditions Detected" },
@@ -474,7 +474,7 @@ const EXPERIENCE = [
     color: "#AD0000",
     gradient: "from-[#AD0000] to-[#D32F2F]",
     year: "2025",
-    bgImage: "/images/experience/uofl-campus.jpg",
+    bgImage: "/images/experience/uofl-campus.webp",
   },
   {
     title: "Independent Projects",
@@ -494,7 +494,7 @@ const EXPERIENCE = [
     color: "#06B6D4",
     gradient: "from-[#0891B2] to-[#06B6D4]",
     year: "2025",
-    bgImage: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1920&h=1080&fit=crop&q=80",
+    bgImage: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1400&h=788&fit=crop&q=70&fm=webp",
   },
   {
     title: "Accounts Payable Specialist",
@@ -514,7 +514,7 @@ const EXPERIENCE = [
     color: "#1B5E20",
     gradient: "from-[#1B5E20] to-[#388E3C]",
     year: "2024",
-    bgImage: "/images/experience/churchill-downs.jpg",
+    bgImage: "/images/experience/churchill-downs.webp",
   },
   {
     title: "BBA in Finance & Marketing, Business Analytics Minor",
@@ -535,7 +535,7 @@ const EXPERIENCE = [
     color: "#0033A0",
     gradient: "from-[#001F6D] to-[#0033A0]",
     year: "2020",
-    bgImage: "/images/experience/uk-campus.jpg",
+    bgImage: "/images/experience/uk-campus.webp",
   },
   {
     title: "Warehouse Associate",
@@ -554,7 +554,7 @@ const EXPERIENCE = [
     color: "#1565C0",
     gradient: "from-[#0D47A1] to-[#1565C0]",
     year: "2020",
-    bgImage: "/images/experience/terex.jpg",
+    bgImage: "/images/experience/terex.webp",
   },
   {
     title: "High School Diploma",
@@ -574,7 +574,7 @@ const EXPERIENCE = [
     color: "#6A1B9A",
     gradient: "from-[#4A148C] to-[#6A1B9A]",
     year: "2016",
-    bgImage: "/images/experience/saint-xavier.jpg",
+    bgImage: "/images/experience/saint-xavier.webp",
   },
 ];
 
