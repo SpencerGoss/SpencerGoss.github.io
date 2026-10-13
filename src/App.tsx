@@ -587,36 +587,11 @@ const NAV_ITEMS = [
   { key: "contact", label: "Contact" },
 ];
 
-const TYPEWRITER_WORDS = [
-  "Business Analytics",
-  "Artificial Intelligence",
-  "Data Science",
-  "Machine Learning",
-  "Predictive Modeling",
-  "Data Visualization",
-];
 
 /* ================================================================
    HOOKS
    ================================================================ */
 
-function useRotatingWord(words: string[], interval = 3000) {
-  const [index, setIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setVisible(false);
-      setTimeout(() => {
-        setIndex((i) => (i + 1) % words.length);
-        setVisible(true);
-      }, 300);
-    }, interval);
-    return () => clearInterval(id);
-  }, [words.length, interval]);
-
-  return { word: words[index], visible };
-}
 
 function useScrollReveal() {
   const ref = useRef<HTMLDivElement>(null);
@@ -647,44 +622,6 @@ function ScrollReveal({ children, className = "" }: { children: React.ReactNode;
   return <div ref={ref} className={`scroll-reveal ${className}`}>{children}</div>;
 }
 
-function useCountUp(target: number, duration = 2000) {
-  const [count, setCount] = useState(0);
-  const [started, setStarted] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started) {
-          setStarted(true);
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [started]);
-
-  useEffect(() => {
-    if (!started) return;
-    const startTime = performance.now();
-    const animate = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(eased * target));
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
-  }, [started, target, duration]);
-
-  return { count, ref };
-}
 
 /* ================================================================
    COMPONENTS
@@ -933,15 +870,14 @@ function ProjectShowcase({ onSelectProject }: { onSelectProject: (id: string) =>
 }
 
 function CaseStudyMetric({ metric, accent }: { metric: typeof PROJECTS[0]["metrics"][0]; accent: string }) {
-  const { count, ref } = useCountUp(metric.value);
   if (!metric.label) return null;
   return (
-    <div ref={ref} className="flex-1 py-5 md:py-6 text-center border-r border-border last:border-r-0">
+    <div className="flex-1 py-5 md:py-6 text-center border-r border-border last:border-r-0">
       <div className="w-6 h-[3px] rounded-full mx-auto mb-2.5 opacity-70" aria-hidden="true" style={{ background: accent }} />
       <div className="text-2xl md:text-[26px] font-extrabold text-foreground tracking-tight tabular-nums">
-        {count}{metric.suffix}
+        {metric.value.toLocaleString("en-US")}{metric.suffix}
       </div>
-      <div className="text-[10px] text-muted-foreground uppercase tracking-[1px] mt-1 px-1 leading-snug">{metric.label}</div>
+      <div className="text-xs text-muted-foreground mt-1 px-1 leading-snug">{metric.label}</div>
     </div>
   );
 }
@@ -1309,280 +1245,9 @@ function SkillCategory({ category }: { category: { name: string; color: string }
 }
 
 /* Full-viewport experience slide — full-screen bg image + glass card */
-function ExperienceSlide({ entry, index, total }: { entry: typeof EXPERIENCE[0]; index: number; total: number }) {
-  const slideRef = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  const [imgLoaded, setImgLoaded] = useState(false);
-  const [parallaxY, setParallaxY] = useState(0);
-  const typeLabel = entry.type === "education" ? "Education" : entry.type === "work" ? "Work" : "Projects";
-
-  useEffect(() => {
-    const el = slideRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVisible(true); else setVisible(false); },
-      { threshold: 0.25 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  // Preload image
-  useEffect(() => {
-    if (!entry.bgImage) return;
-    const img = new Image();
-    img.onload = () => setImgLoaded(true);
-    img.src = entry.bgImage;
-  }, [entry.bgImage]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!slideRef.current) return;
-      const rect = slideRef.current.getBoundingClientRect();
-      const viewHeight = window.innerHeight;
-      // Only compute when slide is near viewport
-      if (rect.bottom > -viewHeight && rect.top < viewHeight * 2) {
-        const offset = (rect.top / viewHeight) * -30; // subtle 30px max movement
-        setParallaxY(offset);
-      }
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return (
-    <div
-      ref={slideRef}
-      className="exp-slide relative"
-      role="article"
-      aria-label={`${entry.org}, ${entry.title}`}
-    >
-      {/* ---- Full-screen background image ---- */}
-      <div className="absolute inset-0 z-0">
-        {/* Gradient fallback (always present) */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${entry.gradient}`} />
-        {/* Actual image (fades in on load) */}
-        {entry.bgImage && (
-          <img
-            src={entry.bgImage}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-            style={{ opacity: imgLoaded ? 1 : 0, transform: `translateY(${parallaxY}px) scale(1.05)`, willChange: "transform" }}
-            loading="lazy"
-          />
-        )}
-        {/* Dark overlay for readability */}
-        <div className="absolute inset-0 bg-black/50" />
-        {/* Extra gradient at bottom for depth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
-      </div>
-
-      {/* ---- Slide number indicator ---- */}
-      <div className="absolute top-6 right-8 z-20 hidden md:flex flex-col items-end gap-2" aria-hidden="true">
-        <div className="flex items-center gap-2">
-          {Array.from({ length: total }, (_, i) => (
-            <div
-              key={i}
-              className="transition-all duration-500"
-              style={{
-                width: i === index ? 24 : 6,
-                height: 6,
-                borderRadius: 3,
-                background: i === index ? entry.color : "rgba(255,255,255,0.3)",
-              }}
-            />
-          ))}
-        </div>
-        <span className="text-[10px] text-white/40 font-medium" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-          {index + 1} / {total}
-        </span>
-      </div>
-
-      {/* ---- Content: logo + glass card ---- */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-12 w-full flex flex-col items-center justify-center h-full gap-6">
-
-        {/* Logo badge */}
-        <div className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-          {entry.logo ? (
-            <img
-              src={entry.logo}
-              alt={entry.org}
-              className="w-16 h-16 md:w-20 md:h-20 rounded-2xl object-contain bg-white/95 p-3 shadow-2xl"
-              loading="lazy"
-              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-            />
-          ) : (
-            <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-white/95 flex items-center justify-center shadow-2xl">
-              <Code2 size={28} className="text-foreground" />
-            </div>
-          )}
-        </div>
-
-        {/* Org name large */}
-        <div className={`text-center transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-          <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-1">{entry.org}</h3>
-          <p className="text-white/50 text-sm font-medium">{entry.location}</p>
-        </div>
-
-        {/* Glass card with details */}
-        <div
-          className={`w-full max-w-2xl transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-        >
-          <div
-            className="rounded-2xl p-6 md:p-8 border border-white/15 shadow-2xl"
-            style={{
-              background: "rgba(255, 255, 255, 0.08)",
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-            }}
-          >
-            {/* Type + period row */}
-            <div className="flex items-center gap-3 mb-4 flex-wrap">
-              <span
-                className="text-[11px] font-semibold tracking-wider uppercase px-3 py-1 rounded-full"
-                style={{ background: `${entry.color}30`, color: "#fff" }}
-              >
-                {typeLabel}
-              </span>
-              <span className="text-xs text-white/50 font-medium" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-                {entry.period}
-              </span>
-            </div>
-
-            {/* Title */}
-            <h4 className="text-xl md:text-2xl font-bold text-white tracking-tight mb-4 leading-tight">
-              {entry.title}
-            </h4>
-
-            {/* Description */}
-            <p className="text-sm md:text-base text-white/70 leading-relaxed mb-5">
-              {entry.description}
-            </p>
-
-            {/* Detail bullets */}
-            {entry.details && entry.details.length > 0 && (
-              <div className="space-y-2.5 mb-5">
-                {entry.details.map((detail, i) => (
-                  <div
-                    key={i}
-                    className={`flex items-start gap-3 transition-all duration-500 ${visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
-                    style={{ transitionDelay: `${400 + i * 100}ms` }}
-                  >
-                    <div
-                      className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                      style={{ background: entry.color, boxShadow: `0 0 6px ${entry.color}60` }}
-                    />
-                    <p className="text-sm text-white/60 leading-relaxed">
-                      {detail}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Highlight pills */}
-            <div className="flex flex-wrap gap-2">
-              {entry.highlights.map((h) => (
-                <span
-                  key={h}
-                  className="text-[11px] font-semibold px-3 py-1.5 rounded-full border border-white/15 text-white/80"
-                  style={{ background: "rgba(255,255,255,0.06)" }}
-                >
-                  {h}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Navigation arrows */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 hidden md:flex items-center gap-4">
-        {index > 0 && (
-          <button
-            onClick={() => {
-              const prev = slideRef.current?.previousElementSibling as HTMLElement;
-              prev?.scrollIntoView({ behavior: "smooth", block: "start" });
-            }}
-            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all duration-200 cursor-pointer"
-            aria-label="Previous experience"
-          >
-            <ChevronDown size={18} className="rotate-90" />
-          </button>
-        )}
-        {index === 0 && (
-          <div className="bounce-arrow text-white/30">
-            <ChevronDown size={24} />
-          </div>
-        )}
-        {index < total - 1 && (
-          <button
-            onClick={() => {
-              const next = slideRef.current?.nextElementSibling as HTMLElement;
-              next?.scrollIntoView({ behavior: "smooth", block: "start" });
-            }}
-            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all duration-200 cursor-pointer"
-            aria-label="Next experience"
-          >
-            <ChevronDown size={18} className="-rotate-90" />
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
 
 /* Experience timeline with scroll-based progress */
 /* Compact horizontal timeline — brief overview, ~half viewport */
-function ExperienceTimeline() {
-  const revealRef = useScrollReveal();
-
-  return (
-    <div ref={revealRef} className="scroll-reveal py-16 md:py-20" style={{ background: "linear-gradient(180deg, #e3e7ed 0%, #e8ebf0 100%)" }}>
-      <div className="max-w-5xl mx-auto px-6 text-center">
-        <h2 className="text-sm font-semibold text-primary uppercase tracking-wider mb-2">
-          Experience & Education
-        </h2>
-        <h3 className="text-3xl md:text-4xl font-bold tracking-tighter text-foreground mb-3">
-          My Journey
-        </h3>
-        <Separator className="w-12 bg-primary h-0.5 mx-auto mb-4" />
-        <p className="text-muted-foreground mb-10 max-w-lg mx-auto">
-          From high school to grad school. Scroll down to walk through each chapter.
-        </p>
-
-        {/* Compact horizontal timeline */}
-        <div className="relative flex items-center justify-center gap-0 flex-wrap max-w-3xl mx-auto">
-          {EXPERIENCE.map((entry, i) => (
-            <div key={i} className="flex items-center">
-              {/* Entry pill */}
-              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white border border-border shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-200 cursor-default group">
-                {entry.logo ? (
-                  <img src={entry.logo} alt={entry.org} className="w-5 h-5 rounded object-contain" loading="lazy" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
-                ) : (
-                  <Code2 size={14} className="text-muted-foreground" />
-                )}
-                <span className="text-[11px] font-semibold text-foreground whitespace-nowrap group-hover:text-primary transition-colors">
-                  {entry.org}
-                </span>
-                <span className="text-[10px] text-muted-foreground font-medium">{entry.year}</span>
-              </div>
-              {/* Connector line */}
-              {i < EXPERIENCE.length - 1 && (
-                <div className="w-4 h-[2px] bg-border hidden md:block" />
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Scroll hint */}
-        <div className="mt-8 bounce-arrow text-muted-foreground/30">
-          <ChevronDown size={24} />
-        </div>
-      </div>
-    </div>
-  );
-}
 
 /* ===== Experience & education (2026-10-13 redesign) =====
    Replaces the six full-screen photo slides (about eight screens of scrolling) with a compact
@@ -1679,14 +1344,6 @@ const COUNCIL_MODELS = [
   { name: "Ollama", role: "Free local / offline tier", color: "#9CA3AF", icon: "https://api.iconify.design/simple-icons:ollama.svg" },
 ];
 
-const COUNCIL_FLOW = [
-  { icon: Network, title: "Dispatch", desc: "The same question goes to every model at once, in parallel." },
-  { icon: Repeat, title: "Cross-Review", desc: "Each model reads the others' answers, then revises its own." },
-  { icon: Swords, title: "Adversarial Audit", desc: "One model has to attack the idea and try to break it, which catches groupthink." },
-  { icon: Scale, title: "Governance", desc: "Two or more blocking votes can stop a decision automatically." },
-  { icon: Users, title: "I Decide", desc: "Nothing ships without my review. The AI suggests, I make the call." },
-  { icon: BrainCircuit, title: "It Learns", desc: "The result gets logged and the system updates itself for next time." },
-];
 
 const COUNCIL_PILLARS = [
   { icon: ShieldCheck, color: "#EF4444", title: "Independent review", body: "One model is always assigned to challenge the result and look for what breaks, so problems surface before anything is accepted." },
