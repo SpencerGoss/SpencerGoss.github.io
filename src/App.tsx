@@ -174,8 +174,8 @@ const PROJECTS = [
     accent: "#EA580C",
     accentBg: "rgba(234,88,12,0.08)",
     featured: false,
-    // VIDEO REMOVED 2026-10-06: YouTube id "QSooLoE32zk" no longer exists. To restore, put
-    // `video: "<new id>",` back on this line.
+    // Re-uploaded 2026-11-19 to Spencer's own channel (the old id "QSooLoE32zk" was gone).
+    video: "hXty2b61JZU",
     shortDescription: "A game-outcome model on five NBA seasons using only information known before tip-off, with play-style clustering. The modeling foundation that grew into Oddsix.",
     url: "#",
     github: "#",
