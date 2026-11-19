@@ -75,14 +75,16 @@ const PROJECTS = [
     accentBg: "rgba(6,182,212,0.08)",
     featured: true,
     cardImage: "/images/projects/oddsix-card.webp",
-    shortDescription: "A live sports data and prediction site covering the NBA, NFL, MLB, NHL and soccer: scores, standings, team and player pages, record books going back to each league's early years, and a model prediction for every game. I designed, built and run all of it.",
+    shortDescription: "A live sports data and prediction site covering the NBA, NFL, MLB, NHL and soccer: scores, standings, team and player pages, record books going back to each league's early years, daily trivia games, and a prediction model for each sport. I designed, built and run all of it.",
     url: "https://oddsix.app",
     github: "https://github.com/SpencerGoss/oddsix",
     tags: ["Python", "SQL", "scikit-learn", "LightGBM", "Astro", "Cloudflare"],
     screenshots: [
-      { label: "Today across all sports", desc: "The daily slate, live scores and the model's view of every game", img: "/images/projects/oddsix-home.webp" },
-      { label: "Franchise history", desc: "Season-by-season records and all-time marks going back decades", img: "/images/projects/oddsix-team.webp" },
-      { label: "Career shot charts", desc: "Every zone graded against that season's league average, so eras compare fairly", img: "/images/projects/oddsix-shotchart.webp" },
+      { label: "Today across all sports", desc: "Tonight's featured game, every game on the slate, top performers, leaders and streaks", img: "/images/projects/oddsix-home.webp" },
+      { label: "League overview", desc: "Tonight's games, last night's scores, standings and stat leaders for each league", img: "/images/projects/oddsix-overview.webp" },
+      { label: "Team pages", desc: "Record, home and road splits, efficiency stats, recent games and the full roster", img: "/images/projects/oddsix-team.webp" },
+      { label: "Player pages", desc: "Season and career stats, game logs and shot data for about 57,000 players", img: "/images/projects/oddsix-player.webp" },
+      { label: "Daily trivia", desc: "Sports trivia games built on the same data, with a new daily challenge", img: "/images/projects/oddsix-trivia.webp" },
     ],
     metrics: [
       { value: 5, suffix: "", label: "Live Leagues" },
@@ -96,28 +98,28 @@ const PROJECTS = [
       { display: "25+", label: "Years of data" },
     ],
     caseStudy: {
-      hook: "A live sports data and prediction platform covering five leagues, with 25+ years of history alongside the current season: live scores, standings, team and player pages, record books, and a model prediction on every game. Data updates continuously through the day.",
+      hook: "A live sports data and prediction platform covering five leagues, with 25+ years of history alongside the current season: live scores, standings, team and player pages, record books, daily trivia games, and a prediction model for each sport. Data updates continuously through the day.",
       sections: [
         {
           title: "Why I Built It",
           color: "#06B6D4",
-          body: "I built Oddsix as a personal project because I'm a big sports fan, especially basketball, and I wanted one place that combined the stats I care about with real predictive modeling. It started as a way to compare players across eras and grew into a full platform covering five leagues, with a prediction and a plain-English explanation for every game.",
+          body: "I built Oddsix as a personal project because I'm a big sports fan, especially basketball, and I wanted one place that combined the stats I care about with real predictive modeling. It started as a way to compare players across eras and grew into a full platform covering five leagues.",
         },
         {
           title: "What I Built",
           color: "#8B5CF6",
-          body: "Oddsix pulls from league data feeds and public odds through the day, validates everything on the way in, and rebuilds the site's data products automatically. It holds roughly 68,000 games and pages for about 57,000 players, with record books going back to each league's early years. Each sport has its own prediction model built from engineered features like team strength ratings, recent form, opponent-adjusted efficiency, rest and injuries. Models are validated on seasons they never trained on, their probabilities are calibrated, and every prediction is graded publicly after the game. A new generation of models is being evaluated live this season.",
+          body: "Oddsix pulls from league data feeds and public odds through the day, validates everything on the way in, and rebuilds the site's data products automatically. It holds roughly 68,000 games and pages for about 57,000 players, with record books going back to each league's early years. Each sport has its own prediction model built from engineered features like team strength ratings, recent form, opponent-adjusted efficiency, rest and injuries. Models are validated on seasons they never trained on and their probabilities are calibrated. A new generation of models is in live testing this season.",
           features: [
             { emoji: "\u{1F3C0}", name: "Five Leagues, One Place", desc: "Live scores, standings, team and player pages across the NBA, NFL, MLB, NHL and soccer" },
-            { emoji: "\u{1F4CA}", name: "Player and Team Analytics", desc: "Career stats and game logs for about 57,000 players, shot charts, and franchise records" },
-            { emoji: "\u{1F3AF}", name: "A Model Per Sport", desc: "Win probability and projected score for every game, explained in plain English" },
-            { emoji: "\u{1F4C8}", name: "Graded Publicly", desc: "Every prediction is scored after the game and shown on the accuracy page" },
+            { emoji: "\u{1F4CA}", name: "Player and Team Analytics", desc: "Career stats and game logs for about 57,000 players, shot data, and franchise records" },
+            { emoji: "\u{1F3AF}", name: "A Model Per Sport", desc: "Win probability and projected score, validated on seasons the model never saw" },
+            { emoji: "\u{1F3AE}", name: "Daily Trivia", desc: "Sports trivia games like Higher or Lower and Grid Fill, built on the same data" },
           ],
         },
         {
           title: "How It's Built",
           color: "#10B981",
-          body: "The pipeline is Python and SQL, with relational databases and versioned data files, and large archives on Cloudflare R2. The front end is an Astro static site on Cloudflare Pages, where a single template serves every player page. Thousands of automated tests run on every change, and the platform is built and maintained by one developer working with AI coding tools.",
+          body: "The pipeline is Python and SQL, with relational databases and versioned data files, and large archives on Cloudflare R2. The front end is an Astro static site on Cloudflare Pages, where a single template serves every player page. Automated tests run on every change, and the platform is built and maintained by one developer working with AI coding tools.",
         },
       ],
     },
@@ -1969,7 +1971,7 @@ export default function App() {
               <Download size={20} aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-0.5" />
               Download Resume
             </a>
-            <p className="text-xs text-muted-foreground mt-3">PDF • Updated October 2026</p>
+            <p className="text-xs text-muted-foreground mt-3">PDF • Updated November 2026</p>
           </ScrollReveal>
 
           <ScrollReveal>
