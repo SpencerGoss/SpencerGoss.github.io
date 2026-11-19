@@ -40,6 +40,8 @@ import {
   Scale,
   Repeat,
 } from "lucide-react";
+import { PROJECT_STEPS, type Step } from "./projectSteps";
+import { ChurnExplorer, InvoiceWalkthrough, BoxOfficeExplorer } from "./projectWidgets";
 
 /* Inline SVG brand icons (removed from lucide-react v1.x) */
 const Github = ({ className = "", size = 24 }: { className?: string; size?: number }) => (
@@ -813,7 +815,7 @@ function ProjectLinks({ project, onOpen }: { project: ShowcaseProject; onOpen: (
       <button type="button" onClick={onOpen}
               className={`${linkClass} bg-transparent border-transparent cursor-pointer`}
               style={{ color: accentText(project.accent) }}>
-        Read more <ArrowUpRight size={14} aria-hidden="true" />
+        See the work <ArrowUpRight size={14} aria-hidden="true" />
       </button>
     </div>
   );
@@ -1011,6 +1013,122 @@ function StorySection({ section, index, isLast }: { section: { title: string; co
   );
 }
 
+/* Step-by-step project write-up (2026-11-19, Spencer picked the numbered-steps look):
+   a mono step number + label on the left, the work on the right. */
+function StepFigures({ figures }: { figures: NonNullable<Step["figures"]> }) {
+  const cols = figures.length === 1 ? "" : figures.length === 3 ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2";
+  return (
+    <div className={`grid gap-5 ${cols} mt-5`}>
+      {figures.map((f) => (
+        <figure key={f.img} className="m-0 min-w-0">
+          <a href={f.img} target="_blank" rel="noopener noreferrer" className="block rounded-xl border border-border bg-white overflow-hidden hover:shadow-md transition-shadow" aria-label={`${f.caption} (open full size)`}>
+            <img
+              src={f.img}
+              alt={f.alt ?? f.caption}
+              loading="lazy"
+              className={`w-full ${f.tall ? "h-[340px] md:h-[400px] object-cover object-top" : "h-auto"}`}
+            />
+          </a>
+          <figcaption className="font-mono text-[12px] text-muted-foreground mt-2 leading-snug">{f.caption}</figcaption>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
+function ProjectSteps({ steps, accent }: { steps: Step[]; accent: string }) {
+  return (
+    <div className="max-w-5xl mx-auto px-6 pt-4 md:pt-6">
+      {steps.map((s, i) => (
+        <section key={s.label} className="grid md:grid-cols-[150px_1fr] gap-3 md:gap-10 py-9 md:py-12 border-t border-border first:border-t-0">
+          <div className="font-mono text-xs text-muted-foreground md:pt-1">
+            <div className="text-[28px] leading-none mb-2 font-medium" style={{ color: accentText(accent) }}>
+              {String(i + 1).padStart(2, "0")}
+            </div>
+            {s.label}
+          </div>
+          <div className="min-w-0">
+            <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground mb-3">{s.title}</h3>
+            {s.body && <p className="text-[15px] md:text-base text-slate-600 leading-[1.75] max-w-[68ch]">{s.body}</p>}
+            {s.points && (
+              <ul className="mt-3 space-y-2.5 max-w-[68ch]">
+                {s.points.map((pt) => (
+                  <li key={pt} className="flex gap-3 text-[15px] text-slate-600 leading-[1.7]">
+                    <span className="mt-[11px] w-1.5 h-1.5 rounded-full shrink-0" style={{ background: accent }} aria-hidden="true" />
+                    <span>{pt}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {s.tools && (
+              <dl className="mt-2 border-t border-border">
+                {s.tools.map((t) => (
+                  <div key={t.name} className="grid sm:grid-cols-[230px_1fr] gap-1 sm:gap-6 py-3 border-b border-border">
+                    <dt className="text-[15px] font-semibold text-foreground">{t.name}</dt>
+                    <dd className="text-[15px] text-slate-600 m-0">{t.use}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+            {s.widget && (
+              <div className="mt-5 bg-white border border-border rounded-xl p-5 md:p-6">
+                {s.widget === "churn" && <ChurnExplorer accent={accent} />}
+                {s.widget === "invoice" && <InvoiceWalkthrough accent={accent} />}
+                {s.widget === "boxoffice" && <BoxOfficeExplorer accent={accent} />}
+              </div>
+            )}
+            {s.figures && s.table && s.table.head.length <= 2 ? (
+              <div className="grid lg:grid-cols-[1.25fr_1fr] gap-6 items-start">
+                <StepFigures figures={s.figures} />
+                <StepTableView table={s.table} accent={accent} />
+              </div>
+            ) : (
+              <>
+                {s.table && <StepTableView table={s.table} accent={accent} />}
+                {s.figures && <StepFigures figures={s.figures} />}
+              </>
+            )}
+            {s.note && (
+              <p className="mt-5 pl-3.5 border-l-2 text-[14px] text-slate-600 leading-relaxed max-w-[68ch]" style={{ borderColor: accent }}>
+                {s.note}
+              </p>
+            )}
+          </div>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+function StepTableView({ table, accent }: { table: NonNullable<Step["table"]>; accent: string }) {
+  return (
+    <div className="mt-5 min-w-0 overflow-x-auto">
+      <table className="w-full text-[14.5px] border-collapse">
+        <thead>
+          <tr>
+            {table.head.map((h) => (
+              <th key={h} className="text-left text-xs font-semibold text-muted-foreground py-2 pr-4 border-b border-border">{h}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {table.rows.map((r, ri) => (
+            <tr key={ri}>
+              {r.map((c, ci) => (
+                <td key={ci} className={`py-2.5 pr-4 border-b border-border ${ci > 0 && /^(\$|\d|about \$)/.test(c) ? "font-mono text-[13.5px]" : ""} ${ri === table.best ? "font-semibold text-foreground" : "text-slate-600"}`}>
+                  {c}
+                  {ri === table.best && ci === 0 && <span className="font-mono text-[11px] font-normal ml-2" style={{ color: accentText(accent) }}>best</span>}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {table.note && <p className="font-mono text-[12px] text-muted-foreground mt-2.5">{table.note}</p>}
+    </div>
+  );
+}
+
 function VideoEmbed({ id }: { id: string }) {
   return (
     <div className="aspect-video w-full rounded-xl border border-border shadow-sm mb-6 overflow-hidden bg-black">
@@ -1120,6 +1238,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
   const metricsRef = useScrollReveal();
   const visibleMetrics = project.metrics.filter((m) => m.label);
   const video = (project as { video?: string }).video;
+  const steps = PROJECT_STEPS[project.id];
 
   return (
     <div className="case-study-enter">
@@ -1148,7 +1267,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
           className="absolute -top-20 -right-20 w-80 h-80 pointer-events-none"
           style={{ background: `radial-gradient(circle, ${project.accentBg}, transparent 70%)`, filter: "blur(60px)" }}
         />
-        <div className="relative z-10 max-w-2xl mx-auto px-6 pt-12 md:pt-16 pb-8 md:pb-10">
+        <div className={`relative z-10 ${steps ? "max-w-5xl" : "max-w-2xl"} mx-auto px-6 pt-12 md:pt-16 pb-8 md:pb-10`}>
           <div className="flex items-center gap-2 mb-2">
             <span className="text-[10px] font-bold tracking-[2px] uppercase" style={{ color: accentText(project.accent) }}>
               {project.subtitle}
@@ -1166,13 +1285,13 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground mb-1">
             <ProjectTitle project={project} />
           </h2>
-          <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6">
+          <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6 max-w-[68ch]">
             {project.caseStudy.hook}
           </p>
 
           {video ? (
             <VideoEmbed id={video} />
-          ) : project.screenshots.length > 0 ? (
+          ) : !steps && project.screenshots.length > 0 ? (
             <Slideshow screenshots={project.screenshots} accent={project.accent} />
           ) : null}
 
@@ -1216,7 +1335,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
       {/* Metrics bar */}
       {visibleMetrics.length > 0 && (
         <div ref={metricsRef} className="scroll-reveal bg-white border-b border-border">
-          <div className="max-w-2xl mx-auto flex">
+          <div className={`${steps ? "max-w-5xl" : "max-w-2xl"} mx-auto flex`}>
             {visibleMetrics.map((m, i) => (
               <CaseStudyMetric key={i} metric={m} accent={project.accent} />
             ))}
@@ -1224,9 +1343,11 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
         </div>
       )}
 
-      {/* Story sections */}
-      <div className="max-w-2xl mx-auto px-6 py-10 md:py-14">
-        {project.caseStudy.sections.map((section, i) => (
+      {steps && <ProjectSteps steps={steps} accent={project.accent} />}
+
+      {/* Story sections (older write-up, used only when a project has no steps) */}
+      <div className={`${steps ? "max-w-5xl" : "max-w-2xl"} mx-auto px-6 ${steps ? "pb-10 md:pb-14" : "py-10 md:py-14"}`}>
+        {!steps && project.caseStudy.sections.map((section, i) => (
           <StorySection key={i} section={section} index={i} isLast={i === project.caseStudy.sections.length - 1} />
         ))}
 
@@ -1235,7 +1356,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
             slideshow above it) and the only thing it told a recruiter was that something was
             missing. */}
 
-        <div className="mb-6">
+        {!steps && <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
             <div className="w-1 h-5 md:h-6 rounded-full" style={{ background: "#F59E0B" }} />
             <h3 className="text-lg md:text-xl font-bold text-foreground">Tech Stack</h3>
@@ -1250,7 +1371,7 @@ function CaseStudy({ project, onBack, sectionRef, onSelectProject }: { project: 
               </span>
             ))}
           </div>
-        </div>
+        </div>}
 
         {/* Next Project */}
         {(() => {
@@ -1624,7 +1745,29 @@ export default function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  // Each project has its own link: #/projects/<id> (shareable, and Back works).
+  const projectFromHash = () => {
+    const m = window.location.hash.match(/^#\/projects\/([\w-]+)/);
+    return m && PROJECTS.some((p) => p.id === m[1]) ? m[1] : null;
+  };
+  const [selectedProject, setSelectedProjectState] = useState<string | null>(projectFromHash);
+  const setSelectedProject = useCallback((id: string | null) => {
+    setSelectedProjectState(id);
+    const target = id ? `#/projects/${id}` : "";
+    if (window.location.hash !== target) {
+      window.history.pushState(null, "", id ? target : window.location.pathname + window.location.search);
+    }
+  }, []);
+  useEffect(() => {
+    const sync = () => setSelectedProjectState(projectFromHash());
+    window.addEventListener("popstate", sync);
+    window.addEventListener("hashchange", sync);
+    return () => {
+      window.removeEventListener("popstate", sync);
+      window.removeEventListener("hashchange", sync);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [navShrunk, setNavShrunk] = useState(false);
 
   const sectionRefs = {
@@ -1920,7 +2063,7 @@ export default function App() {
               </h2>
               <Separator className="w-12 bg-primary h-0.5 mb-4" />
               <p className="text-muted-foreground">
-                Things I have designed, built and shipped. Open any project for the full write-up.
+                Things I have designed, built and shipped. Open any project to walk through the work step by step.
               </p>
             </ScrollReveal>
             <ProjectShowcase onSelectProject={setSelectedProject} />
