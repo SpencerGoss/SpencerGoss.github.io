@@ -168,6 +168,105 @@ const PROJECTS = [
     },
   },
   {
+    id: "invoice-agent",
+    title: "Invoice Triage Agent",
+    subtitle: "AI Agent Workflow · MSBA Capstone",
+    accent: "#059669",
+    accentBg: "rgba(5,150,105,0.08)",
+    featured: false,
+    cardImage: "/images/projects/invoice-agent-card.webp",
+    shortDescription: "An AI agent workflow for accounts payable invoice intake, built in Microsoft Copilot Studio: three agents read each invoice, check it against nine triage rules, and route it to an approver or an AP clerk. Includes the business case, a 40-case evaluation plan and a governance plan.",
+    url: "#",
+    github: "https://github.com/SpencerGoss/invoice-triage-agent",
+    tags: ["Copilot Studio", "AI Agents", "Prompt Design", "AI Governance", "NIST AI RMF", "Accounts Payable"],
+    screenshots: [
+      { label: "3-agent architecture", desc: "Intake, triage classifier and router, each with its own tools, model tier and blast radius, plus the human escalation points", img: "/images/projects/invoice-agent-architecture.webp" },
+    ],
+    metrics: [
+      { value: 3, suffix: "", label: "Agents" },
+      { value: 9, suffix: "", label: "Triage Rules" },
+      { value: 40, suffix: "", label: "Evaluation Cases" },
+      { value: 4, suffix: "", label: "Human Escalation Points" },
+    ],
+    cardMetrics: [
+      { display: "3", label: "Agents" },
+      { display: "9", label: "Triage rules" },
+      { display: "40", label: "Test cases" },
+    ],
+    caseStudy: {
+      hook: "My MSBA capstone: an AI agent workflow that takes over the routine part of accounts payable invoice intake, plus everything a company would need to decide whether to trust it. MidwestCorp is the course's case company, so the numbers come from that case.",
+      sections: [
+        {
+          title: "The Problem",
+          color: "#06B6D4",
+          body: "In the case, two AP clerks key about 1,200 vendor invoices a month into NetSuite by hand. That costs about $15,200 a month in labor and runs a 4 to 6% error rate from missed POs, duplicate payments and wrong amounts. Before my master's I spent a year in accounts payable at Churchill Downs, so this was a workflow I knew from the inside.",
+        },
+        {
+          title: "What I Built",
+          color: "#8B5CF6",
+          body: "I built a single-agent prototype in Microsoft Copilot Studio, then split it into a three-agent design. Agent 1 reads the PDF and pulls out the fields. Agent 2 applies nine triage rules (missing PO, totals over $50,000, line items that don't add up, dates in the future or more than 90 days old, likely duplicates and more) and labels each invoice CLEAN or ESCALATED with every reason that applies. Agent 3 sends the right notification: clean invoices to the approval queue, escalated ones to an AP clerk. None of the agents can approve or pay anything, and anything unreadable, under 90% confidence, over $100,000, or a request to override a rule goes to a person.",
+          features: [
+            { emoji: "\u{1F4C4}", name: "Read, Check, Route", desc: "Three agents with separate jobs, tools and limits, so one mistake can't spread" },
+            { emoji: "\u{1F9EA}", name: "40-Case Evaluation", desc: "Happy path, edge cases, prompt-injection attempts and compliance checks, run weekly" },
+            { emoji: "\u{1F6E1}\u{FE0F}", name: "Governance", desc: "NIST AI RMF mapping, EU AI Act risk tier, SOX, 1099 and OFAC considerations" },
+            { emoji: "\u{1F6A6}", name: "Deploy Decision", desc: "A conditional 30-day pilot with clear kill criteria" },
+          ],
+        },
+        {
+          title: "The Recommendation",
+          color: "#10B981",
+          body: "Conditional deploy. In the case numbers the agent saves about $150,000 to $170,000 a year with payback in about 2 months, and its blast radius is small because it only sends notifications. It runs as a 30-day pilot first and expands only after sanctions screening is tested end to end, clerks are trained to actually review its work instead of rubber-stamping it, and the 40-case evaluation passes every week.",
+        },
+      ],
+    },
+  },
+  {
+    id: "financial-research-assistant",
+    title: "Financial Research Assistant",
+    subtitle: "Azure AI Agent · Cloud Computing (team of 2)",
+    accent: "#6366F1",
+    accentBg: "rgba(99,102,241,0.08)",
+    featured: false,
+    cardImage: "/images/projects/fra-card.webp",
+    shortDescription: "An AI agent built in Microsoft Azure AI Foundry that pulls live stock data and news from the Finnhub API and explains what the numbers mean in plain English. It only uses real data, never guesses a missing number, and never says buy or sell.",
+    url: "#",
+    github: "#",
+    tags: ["Azure AI Foundry", "AI Agents", "OpenAPI Tool", "Finnhub API", "Responsible AI"],
+    screenshots: [
+      { label: "Built on Azure", desc: "Foundry project, model deployment, Agent Service, an OpenAPI tool for Finnhub, and a stored connection for the API key", img: "/images/projects/fra-azure.webp" },
+      { label: "Responsible AI", desc: "Grounded in API data only, no buy or sell advice, sources and timestamps on every report", img: "/images/projects/fra-responsible.webp" },
+    ],
+    metrics: [
+      { value: 5, suffix: "", label: "Azure Components" },
+      { value: 2, suffix: "", label: "Team Members" },
+    ],
+    cardMetrics: [
+      { display: "Live", label: "API data" },
+      { display: "5", label: "Azure parts" },
+      { display: "2", label: "Team" },
+    ],
+    caseStudy: {
+      hook: "A cloud computing class project with a classmate: type in a company or ticker, and an Azure AI agent pulls live financial data and recent news, then writes a short report explaining what it means.",
+      sections: [
+        {
+          title: "The Problem",
+          color: "#06B6D4",
+          body: "Financial data is easy to find and hard to read. Researching one company means jumping between several sites, and most tools either dump raw numbers on you or tell you what to buy. We wanted something that just explains.",
+        },
+        {
+          title: "How It Works",
+          color: "#8B5CF6",
+          body: "Everything runs inside Microsoft Azure AI Foundry. The user enters a company or ticker in the agent playground. The agent calls the Finnhub API through an OpenAPI tool and gets back the price and daily change, the company profile, metrics like P/E ratio, revenue growth and profit margins, and recent headlines. The model then writes the report, with the API key stored as an Azure connection rather than in the instructions. There is no static dataset: the data is pulled fresh every time.",
+        },
+        {
+          title: "Responsible AI",
+          color: "#10B981",
+          body: "The biggest risk with a financial AI tool is a wrong number said with confidence. So the agent is only allowed to use numbers that came back from the API, and if a metric is missing the report says it is not available instead of guessing. It never says buy, sell or hold, and if someone asks what to buy it offers to walk through the metrics instead. Every report names its source, shows when the data was pulled, and ends with a disclaimer.",
+        },
+      ],
+    },
+  },
+  {
     id: "msba-nba",
     title: "NBA Win Prediction Model",
     subtitle: "Predictive Modeling · MSBA 645",
@@ -469,6 +568,7 @@ const EXPERIENCE = [
       "Python, R, and SQL for advanced analytics and predictive modeling",
       "Built machine learning pipelines from data collection through deployment",
       "Coursework in machine learning, predictive modeling, data mining, database systems, cloud (Azure), and applied AI; case competition on customer churn",
+      "Capstone: designed an AI agent workflow for accounts payable invoice intake in Microsoft Copilot Studio, with a business case, evaluation plan and governance plan",
     ],
     highlights: ["3.94 GPA", "AI Concentration", "Predictive Modeling", "Machine Learning Pipelines"],
     type: "education" as const,
@@ -669,6 +769,8 @@ const ACCENT_TEXT: Record<string, string> = {
   "#F59E0B": "#B45309", // amber
   "#8B5CF6": "#7C3AED", // violet
   "#10B981": "#047857", // emerald
+  "#059669": "#047857", // green (invoice agent)
+  "#6366F1": "#4F46E5", // indigo (financial research assistant)
 };
 function accentText(hex: string): string {
   return ACCENT_TEXT[(hex || "").toUpperCase()] ?? hex;
@@ -857,7 +959,7 @@ function ProjectStrip({ project, onOpen }: { project: ShowcaseProject; onOpen: (
 
 function ProjectShowcase({ onSelectProject }: { onSelectProject: (id: string) => void }) {
   const get = (id: string) => PROJECTS.find((p) => p.id === id)! as ShowcaseProject;
-  const grid = ["agent-engineering", "box-office", "chest-xray", "churn-model"];
+  const grid = ["invoice-agent", "agent-engineering", "financial-research-assistant", "box-office", "chest-xray", "churn-model"];
   return (
     <div className="flex flex-col gap-6 md:gap-8">
       <FeaturedProject project={get("oddsix")} onOpen={() => onSelectProject("oddsix")} />
