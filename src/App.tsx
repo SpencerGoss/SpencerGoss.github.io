@@ -1097,6 +1097,20 @@ function ProjectSteps({ steps, accent }: { steps: Step[]; accent: string }) {
                 ))}
               </dl>
             )}
+            {s.video && (
+              <figure className="m-0 mt-5">
+                <video
+                  src={s.video.src}
+                  poster={s.video.poster}
+                  controls
+                  muted
+                  playsInline
+                  preload="none"
+                  className="w-full max-w-[560px] rounded-xl border border-border bg-slate-900"
+                />
+                <figcaption className="font-mono text-[12px] text-muted-foreground mt-2">{s.video.caption}</figcaption>
+              </figure>
+            )}
             {s.widget && (
               <div className="mt-5 bg-white border border-border rounded-xl p-5 md:p-6">
                 {s.widget === "churn" && <ChurnExplorer accent={accent} />}

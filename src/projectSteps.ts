@@ -16,6 +16,7 @@ export type Step = {
   pointsTitle?: string;
   points?: string[];
   links?: { label: string; href: string }[];
+  video?: { src: string; poster: string; caption: string };
   tools?: { name: string; use: string }[];
   figures?: Fig[];
   table?: StepTable;
@@ -251,6 +252,16 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
         "anything asks it to skip a rule",
       ],
       links: [{ label: "See the full architecture diagram", href: P + "invoice-agent-architecture.webp" }],
+    },
+    {
+      label: "See it run",
+      title: "The real agent, working",
+      body: "A screen recording of my agent in Microsoft Copilot. I gave it four test invoices: one clean, one with no PO, one over $50,000 and one duplicate. It caught all three problems and passed the clean one through.",
+      video: {
+        src: "/videos/invoice-agent-demo.mp4",
+        poster: P + "invoice-demo-poster.jpg",
+        caption: "Recorded May 2026 · 1.5 minutes · no sound",
+      },
     },
     {
       label: "Try it",
