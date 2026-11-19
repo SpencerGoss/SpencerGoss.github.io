@@ -308,89 +308,97 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
   oddsix: [
     {
       label: "Why I built it",
-      title: "One place for the stats I actually care about",
-      body: "I'm a big sports fan, especially basketball, and I wanted one place that combined real stats with real predictive modeling. It started as a way to compare players across eras and grew into a full site covering five leagues. I designed, built and run all of it.",
-      figures: [{ img: P + "oddsix-home.webp", caption: "The home page, across every league" }],
-    },
-    {
-      label: "The data",
-      title: "Five leagues, 25+ years, updated all day",
-      body: "League data feeds and public odds come in through the day and are validated on the way in. The site holds about 68,000 games and pages for about 57,000 players, with record books going back to each league's early years.",
-      figures: [{ img: P + "oddsix-overview.webp", caption: "A league overview: tonight's games, last night's scores, standings and leaders" }],
-    },
-    {
-      label: "What I used",
-      title: "The tools and what each one did",
-      tools: [
-        { name: "Python and SQL", use: "The data pipeline, feature engineering and the databases" },
-        { name: "scikit-learn and LightGBM", use: "A prediction model for each sport" },
-        { name: "Astro", use: "A static site where one template serves every player page" },
-        { name: "Cloudflare Pages and R2", use: "Hosting the site and storing the large archives" },
-        { name: "AI coding tools", use: "How one person builds and maintains all of it, with tests on every change" },
+      title: "One place for the stats I care about",
+      stats: [
+        { value: "5", label: "leagues live" },
+        { value: "57K", label: "player pages" },
+        { value: "25+", label: "years of history" },
       ],
+      body: "I'm a big sports fan, basketball most of all, and I wanted real stats and real predictions in one place. It started as a way to compare players across eras and grew into five leagues. I designed, built and run all of it.",
+      figures: [{ img: P + "oddsix-home.webp", caption: "The home page" }],
     },
     {
       label: "How it works",
-      title: "From raw feeds to a page",
-      points: [
-        "Ingest and validate each feed as it arrives.",
-        "Engineer features like team strength, recent form, opponent-adjusted efficiency, rest and injuries.",
-        "Run a separate model per sport, validated on seasons it never trained on, with calibrated probabilities.",
-        "Rebuild the static site automatically when the data changes.",
+      title: "Feeds in, pages out",
+      flow: [
+        { name: "Ingest", does: "League feeds and public odds come in all day and get checked on the way in.", limit: "Python" },
+        { name: "Store", does: "About 68,000 games, with the big archives kept in the cloud.", limit: "SQL, Cloudflare R2" },
+        { name: "Model", does: "A separate model for each sport, tested on seasons it never trained on.", limit: "scikit-learn, LightGBM" },
+        { name: "Publish", does: "The site rebuilds itself when the data changes.", limit: "Astro, Cloudflare Pages" },
       ],
     },
     {
       label: "Inside the site",
-      title: "Teams, players and daily games",
+      title: "Leagues, teams, players and games",
       figures: [
-        { img: P + "oddsix-team.webp", caption: "Team pages: record, splits, efficiency and roster" },
-        { img: P + "oddsix-player.webp", caption: "Player pages: career stats, game logs and shot data" },
-        { img: P + "oddsix-trivia.webp", caption: "Daily trivia games built on the same data" },
+        { img: P + "oddsix-overview.webp", caption: "League overview: tonight's games, scores, standings" },
+        { img: P + "oddsix-team.webp", caption: "Team page: record, splits, roster" },
+        { img: P + "oddsix-player.webp", caption: "Player page: career stats and shot data" },
+        { img: P + "oddsix-trivia.webp", caption: "Daily trivia built on the same data" },
       ],
     },
     {
-      label: "Where it's going",
-      title: "A new generation of models",
-      body: "A new generation of prediction models is in live testing this season. The site is live at oddsix.app.",
+      label: "What I used",
+      title: "Tools",
+      tools: [
+        { name: "Python and SQL", use: "The data pipeline and the databases" },
+        { name: "scikit-learn and LightGBM", use: "The prediction models" },
+        { name: "Astro", use: "The site, where one template serves every player page" },
+        { name: "Cloudflare Pages and R2", use: "Hosting and storage" },
+        { name: "AI coding tools", use: "How I build and maintain it alone, with tests on every change" },
+      ],
+    },
+    {
+      label: "What's next",
+      title: "New models this season",
+      body: "A new generation of prediction models is in live testing this season.",
+      links: [{ label: "Visit oddsix.app", href: "https://oddsix.app" }],
     },
   ],
 
   "agent-engineering": [
     {
       label: "The problem",
-      title: "AI agents are fast, and confidently wrong",
-      body: "AI coding agents can do real work quickly, but they also make mistakes with full confidence, and two agents agreeing doesn't make them right. I needed a way to use them on real projects without trusting every answer.",
-    },
-    {
-      label: "The approach",
-      title: "Route the work by its shape, then check it",
-      points: [
-        "Independent pieces go to parallel agents.",
-        "Open design questions get several competing attempts and a judge panel picks the best.",
-        "Simple, step-by-step work stays with one agent.",
-        "Every result is checked by an independent reviewer that redoes the work rather than voting.",
-        "Mistakes that repeat become written rules that are checked automatically next time.",
+      title: "AI agents are fast, and sometimes confidently wrong",
+      stats: [
+        { value: "11", label: "reusable skills" },
+        { value: "3", label: "written patterns" },
       ],
+      body: "AI coding agents get real work done quickly, but they also make mistakes with total confidence. Two of them agreeing doesn't make them right. I needed a way to use them on real projects without trusting every answer.",
     },
     {
-      label: "What I used",
-      title: "The tools and what each one did",
-      tools: [
-        { name: "Claude Code", use: "The main agent I build with day to day" },
-        { name: "Codex, Gemini CLI, Copilot", use: "Second opinions from different model families, so reviews are independent" },
-        { name: "Prompt engineering", use: "Each skill is a structured prompt with triggers, hard rules and a method" },
-        { name: "Git and GitHub", use: "Versioning the skills and publishing them" },
+      label: "How it works",
+      title: "Split it, check it, learn from it",
+      flow: [
+        { name: "Split", does: "Independent pieces run in parallel. Open questions get several attempts and a judge picks one.", limit: "Parallel agents" },
+        { name: "Check", does: "A separate reviewer redoes the work instead of just voting on it.", limit: "Independent review" },
+        { name: "Learn", does: "A mistake that repeats becomes a rule that gets checked automatically next time.", limit: "Guardrails" },
       ],
     },
     {
       label: "What's published",
-      title: "Three patterns and eleven skills",
-      body: "The patterns cover multi-agent orchestration, a multi-model review council and learned guardrails. The eleven skills cover code review, debugging, planning, testing, security review, refactoring and decision records. Each one is prompt-only, so it works in any compatible AI coding tool.",
+      title: "Patterns and skills anyone can use",
+      points: [
+        "Three patterns: running agents in parallel, a review council made of different AI models, and guardrails built from past mistakes.",
+        "Eleven skills, including code review, debugging, planning, testing, security review and refactoring.",
+        "Each skill is just a prompt, so it works in any compatible AI coding tool.",
+      ],
+      links: [{ label: "See it on GitHub", href: "https://github.com/SpencerGoss/agent-engineering" }],
     },
     {
-      label: "Where it's used",
-      title: "How I build everything else",
-      body: "Oddsix, its data pipeline and front end, and my other projects are built with these workflows, with automated checks and tests gating each change before it ships.",
+      label: "What I used",
+      title: "Tools",
+      tools: [
+        { name: "Claude Code", use: "The main agent I build with" },
+        { name: "Codex, Gemini CLI, Copilot", use: "Second opinions from different AI models" },
+        { name: "Prompt writing", use: "Each skill has triggers, hard rules and a method" },
+        { name: "Git and GitHub", use: "Versioning and publishing the skills" },
+      ],
+    },
+    {
+      label: "Where I use it",
+      title: "Everything else I build",
+      body: "Oddsix and my other projects are built this way, with checks and tests on each change before it ships.",
     },
   ],
 
@@ -398,66 +406,81 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
     {
       label: "The problem",
       title: "Financial data is easy to find and hard to read",
-      body: "A cloud computing class project with a classmate. Researching one company means jumping between several sites, and most tools either dump raw numbers on you or tell you what to buy. We wanted something that just explains.",
+      stats: [
+        { value: "Live", label: "data on every request" },
+        { value: "5", label: "Azure parts" },
+        { value: "2", label: "person team" },
+      ],
+      body: "A cloud computing class project with a classmate. Most tools either dump raw numbers on you or tell you what to buy. We wanted one that just explains.",
     },
     {
       label: "How it works",
-      title: "Ask about a company, get a plain-English report",
-      body: "The user types a company or ticker. The agent calls the Finnhub API and gets back the price and daily change, the company profile, metrics like P/E ratio, revenue growth and profit margins, and recent headlines. Then the model writes a short report. Nothing is stored ahead of time; the data is pulled fresh every time.",
-      figures: [{ img: P + "fra-azure.webp", caption: "The Azure setup: Foundry project, model, Agent Service, OpenAPI tool and stored connection" }],
+      title: "Ask, fetch, explain",
+      flow: [
+        { name: "Ask", does: "Type in a company name or ticker.", limit: "Agent playground" },
+        { name: "Fetch", does: "The agent pulls price, company profile, key metrics and recent news.", limit: "Finnhub API" },
+        { name: "Explain", does: "The model writes a short report in plain English.", limit: "Azure AI Foundry" },
+      ],
+      figures: [{ img: P + "fra-azure.webp", caption: "The Azure setup" }],
+    },
+    {
+      label: "Guardrails",
+      title: "No made-up numbers, no stock picks",
+      points: [
+        "It only uses numbers the API sent back. If one is missing, the report says so.",
+        "It never says buy, sell or hold.",
+        "Every report names its source and shows when the data was pulled.",
+      ],
+      figures: [{ img: P + "fra-responsible.webp", caption: "The rules built into the agent" }],
     },
     {
       label: "What we used",
-      title: "The tools and what each one did",
+      title: "Tools",
       tools: [
-        { name: "Azure AI Foundry", use: "The project, the model deployment and the agent" },
+        { name: "Azure AI Foundry", use: "The project, the model and the agent" },
         { name: "OpenAPI tool", use: "Lets the agent call the Finnhub API" },
-        { name: "Finnhub API", use: "Live prices, company profiles, metrics and news" },
-        { name: "Azure connection", use: "Stores the API key outside the agent's instructions" },
+        { name: "Finnhub API", use: "Live prices, profiles, metrics and news" },
+        { name: "Azure connection", use: "Keeps the API key out of the agent's instructions" },
       ],
-    },
-    {
-      label: "Responsible AI",
-      title: "No made-up numbers, no buy or sell",
-      points: [
-        "Only numbers that came back from the API. A missing metric is reported as not available instead of guessed.",
-        "Never says buy, sell or hold. Asked what to buy, it offers to walk through the metrics instead.",
-        "Every report names its source, shows when the data was pulled, and ends with a disclaimer.",
-      ],
-      figures: [{ img: P + "fra-responsible.webp", caption: "The responsible AI rules built into the agent" }],
     },
   ],
 
   "msba-nba": [
     {
       label: "The problem",
-      title: "Predict a game using only what's known before tip-off",
-      body: "My MSBA 645 final. Game prediction is central to sports analytics, and the hard part is honesty: the model can only use information available before the game starts.",
-    },
-    {
-      label: "The data",
-      title: "About 10,500 games over five seasons",
-      body: "Pulled from the NBA Stats API: 30 teams, five seasons, each row one team's game joined to its opponent and labeled with the result.",
-    },
-    {
-      label: "What I used",
-      title: "The tools and what each one did",
-      tools: [
-        { name: "Python and the NBA Stats API", use: "Pulling and joining five seasons of games" },
-        { name: "pandas", use: "26 pre-game features: rolling form, home and away splits, matchup differences" },
-        { name: "scikit-learn and LightGBM", use: "Logistic regression and gradient boosting, compared head to head" },
-        { name: "K-means", use: "Grouping teams by play style" },
+      title: "Pick the winner using only what's known before tip-off",
+      stats: [
+        { value: "10.5K", label: "games" },
+        { value: "5", label: "seasons" },
+        { value: "26", label: "pre-game features" },
       ],
+      body: "My MSBA 645 final. The hard part is staying honest: the model can only see what was known before the game started.",
     },
     {
-      label: "How I solved it",
-      title: "Train on the past, test on the next season",
-      body: "Models trained on earlier seasons and tested on the most recent one, the way they would be used for real. K-means grouped teams into four play styles (Elite Efficiency, Pace and Pressure, Rebuilding, Middle of the Pack), which picked up real franchise shifts across seasons.",
+      label: "How I did it",
+      title: "Features, testing, play styles",
+      flow: [
+        { name: "Features", does: "Recent form, home and away records, season averages and matchup gaps.", limit: "pandas" },
+        { name: "Test", does: "Train on earlier seasons, test on the next one, the way it would really be used.", limit: "Walk-forward" },
+        { name: "Cluster", does: "Group teams into four play styles.", limit: "K-means" },
+      ],
+      body: "The four styles were Elite Efficiency, Pace and Pressure, Rebuilding, and Middle of the Pack. They picked up real changes in teams from season to season.",
     },
     {
       label: "The result",
-      title: "Simple won, and the clusters helped",
-      body: "Logistic regression edged out LightGBM, and adding the play-style clusters as features added about 1.3 points of accuracy. The same pre-game approach and season-by-season testing became the foundation of the Oddsix models.",
+      title: "The simpler model won",
+      body: "Logistic regression edged out LightGBM, and adding the play-style groups added about 1.3 points of accuracy. This approach became the starting point for the Oddsix models.",
+    },
+    {
+      label: "What I used",
+      title: "Tools",
+      tools: [
+        { name: "Python and the NBA Stats API", use: "Pulling five seasons of games" },
+        { name: "pandas", use: "Building the 26 pre-game features" },
+        { name: "scikit-learn and LightGBM", use: "The models" },
+        { name: "K-means", use: "The play-style groups" },
+      ],
     },
   ],
 };
+

@@ -100,7 +100,7 @@ const PROJECTS = [
       { display: "25+", label: "Years of data" },
     ],
     caseStudy: {
-      hook: "A live sports data and prediction platform covering five leagues, with 25+ years of history alongside the current season: live scores, standings, team and player pages, record books, daily trivia games, and a prediction model for each sport. Data updates continuously through the day.",
+      hook: "A live sports data and prediction site covering five leagues. I designed, built and run all of it.",
       sections: [
         {
           title: "Why I Built It",
@@ -149,7 +149,7 @@ const PROJECTS = [
       { display: "5", label: "AI models" },
     ],
     caseStudy: {
-      hook: "A working method for using AI coding agents on real projects, built and refined while developing Oddsix and my other work, and published as open patterns and skills that run in Claude Code, Codex, Gemini CLI and Copilot.",
+      hook: "How I use AI coding agents on real projects without trusting every answer, published as patterns and skills anyone can use.",
       sections: [
         {
           title: "The Approach",
@@ -248,7 +248,7 @@ const PROJECTS = [
       { display: "2", label: "Team" },
     ],
     caseStudy: {
-      hook: "A cloud computing class project with a classmate: type in a company or ticker, and an Azure AI agent pulls live financial data and recent news, then writes a short report explaining what it means.",
+      hook: "Ask about any company, and an Azure AI agent pulls live data and explains it in plain English.",
       sections: [
         {
           title: "The Problem",
@@ -294,7 +294,7 @@ const PROJECTS = [
       { display: "4", label: "Clusters" },
     ],
     caseStudy: {
-      hook: "A win-prediction model for every NBA game across five seasons, built for my MSBA 645 final and later scaled into Oddsix.",
+      hook: "A model that predicts NBA games using only what's known before tip-off. It became the starting point for Oddsix.",
       sections: [
         {
           title: "The Problem",
