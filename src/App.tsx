@@ -344,7 +344,7 @@ const PROJECTS = [
       { display: "3NF", label: "Postgres" },
     ],
     caseStudy: {
-      hook: "Do films that earn more also rate higher? An end-to-end data-engineering project: extract 5,659 films (2000-2025) from the TMDB API, load them into a normalized PostgreSQL database, and explore the box-office-versus-ratings story in a live, movie-theater-themed interactive film explorer.",
+      hook: "Do films that earn more also rate higher? I built the data pipeline, the database and an app to find out.",
       sections: [
         {
           title: "The Question",
@@ -402,7 +402,7 @@ const PROJECTS = [
       { display: "3", label: "Clusters" },
     ],
     caseStudy: {
-      hook: "A predictive churn model that identifies at-risk customers and segments them into actionable clusters for targeted retention strategies.",
+      hook: "A case-competition model that finds which customers are likely to cancel, explains why, and shows a retention team where to start.",
       sections: [
         {
           title: "The Brief",
@@ -446,7 +446,7 @@ const PROJECTS = [
       { display: "Grad-CAM", label: "Explainability" },
     ],
     caseStudy: {
-      hook: "A multi-label image classifier trained on the public NIH ChestX-ray14 dataset. Give it a chest X-ray and it returns a probability for each of 14 thoracic conditions, plus a heat map of the regions that drove the call. The whole thing is packaged so anyone can read the results or reproduce them.",
+      hook: "A model that reads a chest X-ray, gives a probability for each of 14 conditions, and shows where it looked.",
       sections: [
         {
           title: "The Problem",
@@ -1061,15 +1061,15 @@ function ProjectSteps({ steps, accent }: { steps: Step[]; accent: string }) {
               </div>
             )}
             {s.flow && (
-              <ol className="grid md:grid-cols-3 gap-3 md:gap-0 my-5 list-none p-0">
+              <ol className={`grid gap-3 my-5 list-none p-0 ${s.flow.length === 4 ? "sm:grid-cols-2 lg:grid-cols-4 lg:gap-0" : "md:grid-cols-3 md:gap-0"}`}>
                 {s.flow.map((f, fi) => (
-                  <li key={f.name} className="relative bg-white border border-border rounded-xl p-4 md:mr-6 last:md:mr-0">
-                    <div className="font-mono text-[11px] text-muted-foreground mb-1">Agent {fi + 1}</div>
+                  <li key={f.name} className={`relative bg-white border border-border rounded-xl p-4 ${s.flow!.length === 4 ? "lg:mr-6 lg:last:mr-0" : "md:mr-6 md:last:mr-0"}`}>
+                    <div className="font-mono text-[11px] text-muted-foreground mb-1">{s.flowLabel ?? "Step"} {fi + 1}</div>
                     <div className="text-lg font-bold text-foreground mb-1">{f.name}</div>
                     <p className="text-[14px] text-slate-600 leading-relaxed mb-3">{f.does}</p>
                     <div className="font-mono text-[11.5px]" style={{ color: accentText(accent) }}>{f.limit}</div>
                     {fi < s.flow!.length - 1 && (
-                      <span className="hidden md:flex absolute top-1/2 -right-[22px] -translate-y-1/2 text-muted-foreground" aria-hidden="true">→</span>
+                      <span className={`hidden ${s.flow!.length === 4 ? "lg:flex" : "md:flex"} absolute top-1/2 -right-[22px] -translate-y-1/2 text-muted-foreground`} aria-hidden="true">→</span>
                     )}
                   </li>
                 ))}

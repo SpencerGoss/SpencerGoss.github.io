@@ -11,6 +11,7 @@ export type Step = {
   title: string;
   stats?: { value: string; label: string }[];
   flow?: { name: string; does: string; limit: string }[];
+  flowLabel?: string;
   body?: string;
   pointsTitle?: string;
   points?: string[];
@@ -29,32 +30,30 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
     {
       label: "The problem",
       title: "Who's about to cancel, and why?",
-      body: "This was a case competition in my MSBA program. A subscription business was losing customers and wanted three answers: who is likely to leave next, what is driving it, and where a retention team should spend its time first.",
+      stats: [
+        { value: "5,636", label: "customers" },
+        { value: "1 in 4", label: "had already left" },
+        { value: "0.899", label: "best model AUC" },
+      ],
+      body: "A case competition in my MSBA program. The company wanted to know who would leave next, why, and where its retention team should start.",
     },
     {
       label: "The data",
-      title: "5,636 customers in one flat file",
-      body: "Each row was a customer: demographics, the services they paid for, their contract and billing, and whether they had left. About one in four had. To query it properly I also loaded it into a normalized SQLite database with five linked tables. Every number in the chart below comes from that database.",
+      title: "Where customers leave",
+      body: "I loaded the customer file into a small SQL database so I could slice it different ways. Click through the groups.",
       widget: "churn",
-      note: "The first six months are where customers are lost. More than half of the newest customers left, against under 10% of customers past four years.",
+      note: "The first six months are the danger zone. More than half of the newest customers left, compared with under 10% of customers past four years.",
     },
     {
-      label: "What I used",
-      title: "The tools and what each one did",
-      tools: [
-        { name: "Python and pandas", use: "Cleaning the data and getting the columns ready for modeling" },
-        { name: "SQL (SQLite)", use: "A five-table database for the data and the group comparisons on this page" },
-        { name: "scikit-learn", use: "Cross-validation, the Random Forest baseline and K-means clustering" },
-        { name: "XGBoost, LightGBM, CatBoost", use: "The three gradient-boosted models I compared" },
-        { name: "SHAP", use: "Explaining which way each factor pushes a single customer's risk" },
-        { name: "Jupyter", use: "The full analysis, start to finish, in one notebook" },
+      label: "How I did it",
+      title: "Clean, model, explain, segment",
+      flow: [
+        { name: "Clean", does: "Fixed gaps and odd values and got the columns ready to model.", limit: "pandas" },
+        { name: "Model", does: "Trained four models, tuned each the same way, and tested each once on held-out data.", limit: "CatBoost, XGBoost, LightGBM, RF" },
+        { name: "Explain", does: "Looked at which way each factor pushes a single customer's risk.", limit: "SHAP" },
+        { name: "Segment", does: "Split customers into three groups that need different approaches.", limit: "K-means" },
       ],
-    },
-    {
-      label: "How I solved it",
-      title: "Four models, tuned the same way, tested once",
-      body: "I trained four tree-based models on the same features and tuned each with cross-validation. Each was then scored one time on a held-out test set it had never seen, so the comparison is fair. CatBoost came out on top.",
-      figures: [{ img: P + "churn-roc.webp", caption: "ROC curves for all four models on the test set" }],
+      figures: [{ img: P + "churn-roc.webp", caption: "All four models on the test set" }],
       table: {
         head: ["Model", "Test AUC"],
         rows: [["CatBoost", "0.899"], ["XGBoost", "0.893"], ["LightGBM", "0.885"], ["Random Forest", "0.867"]],
@@ -62,24 +61,163 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
       },
     },
     {
-      label: "What I found",
-      title: "Contract, tenure and referrals drive it",
-      body: "Feature importance shows what the model leans on. SHAP shows the direction: referrals and dependents pull customers toward staying, while month-to-month contracts and short tenure push them toward leaving.",
-      figures: [
-        { img: P + "churn-features.webp", caption: "Top 10 drivers in the CatBoost model" },
-        { img: P + "churn-shap.webp", caption: "SHAP summary: each dot is one customer" },
+      label: "What I used",
+      title: "Tools",
+      tools: [
+        { name: "Python and pandas", use: "Cleaning and prepping the data" },
+        { name: "SQL (SQLite)", use: "A five-table database and the group numbers on this page" },
+        { name: "scikit-learn", use: "Cross-validation, Random Forest and K-means" },
+        { name: "XGBoost, LightGBM, CatBoost", use: "The three boosted models" },
+        { name: "SHAP", use: "Explaining individual predictions" },
       ],
     },
     {
-      label: "What I'd tell the business",
-      title: "Where a retention team should start",
-      points: [
-        "Start with new customers on month-to-month plans. That group leaves the most, and early onboarding is the cheapest time to keep them.",
-        "Treat referrals as a retention tool, not only a marketing one. Customers who refer friends leave far less often.",
-        "Give each of the three customer segments from K-means its own approach instead of one blanket offer.",
-        "Use the model's scores as a ranked call list so the team starts with the customers most likely to leave.",
+      label: "What I found",
+      title: "Contract, tenure and referrals drive it",
+      body: "Referrals and dependents pull customers toward staying. Month-to-month contracts and short tenure push them out.",
+      figures: [
+        { img: P + "churn-features.webp", caption: "Top 10 drivers in the CatBoost model" },
+        { img: P + "churn-shap.webp", caption: "SHAP: each dot is one customer" },
       ],
-      note: "These are associations, not proof of cause. They show where to look first.",
+    },
+    {
+      label: "What I'd tell them",
+      title: "Where to start",
+      points: [
+        "Focus on new month-to-month customers. They leave the most, and early on is the cheapest time to keep them.",
+        "Use referrals to keep customers, not just to find new ones.",
+        "Give each of the three segments its own offer.",
+        "Work the model's scores as a call list, highest risk first.",
+      ],
+      note: "These show what goes along with churn, not proof of what causes it.",
+    },
+  ],
+
+  "box-office": [
+    {
+      label: "The question",
+      title: "Do films that earn more also rate higher?",
+      stats: [
+        { value: "5,659", label: "films" },
+        { value: "7", label: "data-quality checks" },
+        { value: "3NF", label: "PostgreSQL database" },
+      ],
+      body: "I wanted to answer it end to end: pull the raw data, build a clean database, and put an app on top that anyone can explore.",
+    },
+    {
+      label: "How it's built",
+      title: "One script, start to finish",
+      flow: [
+        { name: "Extract", does: "Pulls every film from 2000 on, then each film's budget and revenue.", limit: "TMDB API" },
+        { name: "Transform", does: "Works out profit, return on budget, budget tier and decade.", limit: "pandas" },
+        { name: "Check", does: "Runs seven quality checks. A serious failure stops the run.", limit: "Python" },
+        { name: "Load", does: "Writes to the database so a rerun never duplicates a row.", limit: "PostgreSQL" },
+      ],
+      body: "The quality filter dropped 349 films with placeholder budgets or streaming-only revenue. Netflix originals, for example, report tiny theater runs and would otherwise look like huge flops.",
+      links: [{ label: "See the architecture diagram", href: P + "boxoffice-architecture.webp" }],
+    },
+    {
+      label: "The answer",
+      title: "Yes. Better-rated films earn far more",
+      body: "The typical film rated under 5 loses money. The typical film rated 8 or higher makes back more than five times its budget. Switch the view to see budget size and genre.",
+      widget: "boxoffice",
+      note: "These are medians. A few tiny-budget viral hits would throw off an average.",
+    },
+    {
+      label: "The app",
+      title: "A film explorer anyone can use",
+      body: "Search any film for its full breakdown, compare two films head to head, or browse the top 10 lists.",
+      figures: [
+        { img: P + "boxoffice-film.webp", caption: "One film's breakdown", tall: true },
+        { img: P + "boxoffice-compare.webp", caption: "Two films head to head", tall: true },
+        { img: P + "boxoffice-top.webp", caption: "Top 10 poster walls", tall: true },
+        { img: P + "boxoffice-money.webp", caption: "What makes money", tall: true },
+      ],
+      links: [{ label: "Open the live app (can take a minute to wake up)", href: "https://box-office-vs-ratings.onrender.com" }],
+    },
+    {
+      label: "What I used",
+      title: "Tools",
+      tools: [
+        { name: "Python and the TMDB API", use: "Pulling the data, with retries when a call fails" },
+        { name: "pandas", use: "Cleaning and building the new columns" },
+        { name: "PostgreSQL and SQLAlchemy", use: "The database and the load" },
+        { name: "Dash and Plotly", use: "The interactive app" },
+        { name: "Render", use: "Hosting the live app" },
+      ],
+    },
+  ],
+
+  "chest-xray": [
+    {
+      label: "The problem",
+      title: "One X-ray, 14 possible conditions",
+      stats: [
+        { value: "14", label: "conditions" },
+        { value: "8", label: "models compared" },
+        { value: "0.729", label: "best macro AUC" },
+      ],
+      body: "One chest X-ray can show several conditions at once, so the model gives a separate probability for each one. I also wanted it to show where it was looking.",
+    },
+    {
+      label: "The data",
+      title: "Most X-rays show nothing",
+      body: "I used the public NIH ChestX-ray14 dataset. The average image is negative for 13.28 of the 14 conditions, so a model that always says \"nothing found\" would look very accurate. That's why I scored everything on AUC.",
+      figures: [
+        { img: P + "xray-frequency.webp", caption: "How often each condition appears" },
+        { img: P + "xray-findings.webp", caption: "Findings per image" },
+        { img: P + "xray-cooccur.webp", caption: "Which conditions show up together" },
+      ],
+    },
+    {
+      label: "How I did it",
+      title: "Features, models, thresholds",
+      flow: [
+        { name: "Features", does: "A pretrained image network turns each X-ray into 1,280 numbers.", limit: "EfficientNetB0" },
+        { name: "Models", does: "Eight models trained on those numbers, scored on AUC across all 14 conditions.", limit: "Keras, scikit-learn" },
+        { name: "Thresholds", does: "A separate cutoff for each condition, set to catch more disease.", limit: "Recall 0.543 to 0.577" },
+      ],
+      table: {
+        head: ["Model", "Test macro AUC"],
+        rows: [
+          ["Neural network (512-256-14)", "0.729"],
+          ["Neural network, deeper", "0.725"],
+          ["Random forest", "0.703"],
+          ["Naive Bayes", "0.686"],
+        ],
+        best: 0,
+      },
+    },
+    {
+      label: "Checking it",
+      title: "How far to trust it",
+      points: [
+        "The same patient can show up in many images. When no patient is allowed in both training and testing, the score drops to 0.670. That's the more realistic number.",
+        "More data kept helping: 0.619 with 1,000 training images, 0.712 with 15,000.",
+      ],
+      figures: [{ img: P + "xray-learning.webp", caption: "Test AUC by number of training images" }],
+    },
+    {
+      label: "Where it looked",
+      title: "Heat maps of the model's attention",
+      body: "Grad-CAM lights up the parts of the image behind a prediction. It shows when the model is looking in the right place and when it isn't.",
+      figures: [
+        { img: P + "xray-gradcam-right.webp", caption: "Right: fluid low in the chest, and that's where it looked" },
+        { img: P + "xray-gradcam-wrong.webp", caption: "Off: it spread across both lungs and flagged extra conditions" },
+      ],
+      note: "A class project, not a medical tool.",
+    },
+    {
+      label: "What I used",
+      title: "Tools",
+      tools: [
+        { name: "TensorFlow and Keras", use: "The pretrained network and the neural nets" },
+        { name: "scikit-learn", use: "The other six models" },
+        { name: "Grad-CAM", use: "The heat maps" },
+        { name: "Streamlit", use: "A small app: upload an X-ray, get the 14 probabilities" },
+        { name: "Google Colab", use: "Runs the whole notebook in a browser" },
+      ],
+      links: [{ label: "Open the notebook in Colab", href: "https://colab.research.google.com/github/SpencerGoss/chest-xray-classifier/blob/main/chest_xray_portable_pipeline.ipynb" }],
     },
   ],
 
@@ -98,6 +236,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
     {
       label: "How it works",
       title: "Three agents: read, check, route",
+      flowLabel: "Agent",
       flow: [
         { name: "Read", does: "Pulls the vendor, PO, date, line items and total off the PDF.", limit: "Read-only" },
         { name: "Check", does: "Runs nine rules and marks the invoice CLEAN or ESCALATED, listing every reason.", limit: "Has no tools" },
@@ -163,123 +302,6 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
         { img: P + "invoice-playbook-p6.webp", caption: "Page 6: governance" },
       ],
       links: [{ label: "Open the playbook (PDF)", href: "/docs/Invoice_Triage_Agent_Playbook.pdf" }],
-    },
-  ],
-
-  "box-office": [
-    {
-      label: "The question",
-      title: "Do films that earn more also rate higher?",
-      body: "And do some genres or budget sizes show a steady gap between what a film earns and how audiences rate it? I wanted to answer that end to end, from raw API data to an app anyone can explore.",
-    },
-    {
-      label: "The data",
-      title: "5,659 films from the TMDB API",
-      body: "Every film released from 2000 on with a real budget and revenue: runtime, audience rating, vote count and genres. A quality filter dropped 349 rows with placeholder budgets or streaming-only revenue. Netflix originals, for example, report token theater runs that would otherwise look like nine-figure flops.",
-    },
-    {
-      label: "What I used",
-      title: "The tools and what each one did",
-      tools: [
-        { name: "Python and the TMDB API", use: "A two-stage extract with retry and backoff" },
-        { name: "pandas", use: "Cleaning and deriving profit, return, budget tier and decade" },
-        { name: "PostgreSQL and SQLAlchemy", use: "A normalized (3NF) database with an idempotent load" },
-        { name: "Dash and Plotly", use: "The interactive film explorer" },
-        { name: "Render", use: "Hosting the live app" },
-      ],
-    },
-    {
-      label: "The pipeline",
-      title: "One script, no manual steps",
-      points: [
-        "Extract: find films by year, then pull each film's financials.",
-        "Transform: derive profit, return on budget, budget tier, hit or flop, and decade.",
-        "Check: seven data-quality checks run before anything loads (nulls, duplicate keys, types, ranges, references, row counts). A critical failure stops the run.",
-        "Load: upserts into PostgreSQL, so running it twice never duplicates a row.",
-      ],
-      figures: [{ img: P + "boxoffice-architecture.webp", caption: "TMDB API to ETL to PostgreSQL to the Dash app" }],
-    },
-    {
-      label: "The answer",
-      title: "Better-rated films earn far more",
-      body: "Median return climbs with every step up in rating. Films rated under 5 lose money on a typical release; films rated 8 and up return more than five times their budget. Switch the view to see budget size and genre.",
-      widget: "boxoffice",
-      note: "Medians, not averages. A few micro-budget viral hits would pull any average way up.",
-    },
-    {
-      label: "The app",
-      title: "A film explorer anyone can use",
-      body: "Search any film and get its full breakdown: poster, budget to revenue to profit, percentile ranks, and where it sits against every other film. Top-10 poster walls, head-to-head comparisons and filters for genre, decade and budget round it out.",
-      figures: [
-        { img: P + "boxoffice-film.webp", caption: "One film's full breakdown", tall: true },
-        { img: P + "boxoffice-compare.webp", caption: "Two films head to head", tall: true },
-        { img: P + "boxoffice-top.webp", caption: "Top-10 poster walls", tall: true },
-        { img: P + "boxoffice-money.webp", caption: "What makes money", tall: true },
-      ],
-    },
-  ],
-
-  "chest-xray": [
-    {
-      label: "The problem",
-      title: "One X-ray, up to 14 possible conditions",
-      body: "A single chest X-ray can show several conditions at once, so this is a multi-label problem: the model gives a separate probability for each of 14 conditions. The goal was a model that is honest about how well it works and can show where it is looking.",
-    },
-    {
-      label: "The data",
-      title: "Why plain accuracy is the wrong score here",
-      body: "The public NIH ChestX-ray14 dataset. Most images have no finding at all, and the conditions are very unbalanced. An average image is negative for 13.28 of the 14 conditions, so a model that always says \"nothing found\" looks highly accurate. That's why I scored everything on AUC instead.",
-      figures: [
-        { img: P + "xray-frequency.webp", caption: "How often each condition appears" },
-        { img: P + "xray-findings.webp", caption: "Findings per image: most have none" },
-        { img: P + "xray-cooccur.webp", caption: "Which conditions show up together" },
-      ],
-    },
-    {
-      label: "What I used",
-      title: "The tools and what each one did",
-      tools: [
-        { name: "TensorFlow and Keras", use: "EfficientNetB0, pretrained on ImageNet, to turn each X-ray into 1,280 features" },
-        { name: "scikit-learn", use: "Logistic regression, naive Bayes, k-NN, random forest and gradient boosting" },
-        { name: "Grad-CAM", use: "Heat maps of where the model looked" },
-        { name: "Streamlit", use: "A small app: upload an X-ray, get 14 probabilities and the heat map" },
-        { name: "Google Colab", use: "Runs the whole notebook in a browser with no setup" },
-      ],
-    },
-    {
-      label: "How I solved it",
-      title: "Eight models on the same image features",
-      body: "Transfer learning turned every image into the same 1,280 features. I trained eight models on top, from a baseline to two neural networks, and scored them on macro AUC across all 14 conditions. Then I tuned a separate decision threshold for each condition to favor catching disease.",
-      table: {
-        head: ["Model", "Test macro AUC"],
-        rows: [
-          ["Neural network (512-256-14)", "0.729"],
-          ["Neural network, deeper", "0.725"],
-          ["Random forest", "0.703"],
-          ["Naive Bayes", "0.686"],
-        ],
-        best: 0,
-        note: "Tuned thresholds raised macro recall from 0.543 to 0.577.",
-      },
-    },
-    {
-      label: "Checking the result",
-      title: "Two tests of how far to trust it",
-      points: [
-        "Patient-level split: the same patient can appear in many images. Re-splitting so no patient sits in both train and test gives 0.670 AUC, the more realistic number.",
-        "Learning curve: test AUC rose from 0.619 with 1,000 training images to 0.712 with 15,000, so more data is the clearest next step.",
-      ],
-      figures: [{ img: P + "xray-learning.webp", caption: "Test AUC by number of training images" }],
-    },
-    {
-      label: "Seeing inside it",
-      title: "Where the model looked",
-      body: "Grad-CAM lights up the parts of the image that drove a prediction. It shows when the model is looking in a sensible place, and when it isn't.",
-      figures: [
-        { img: P + "xray-gradcam-right.webp", caption: "Right: effusion, and the heat sits low in the chest where fluid collects" },
-        { img: P + "xray-gradcam-wrong.webp", caption: "Off: true finding was infiltration, but the heat spreads across both lungs and it also flags nodule and mass" },
-      ],
-      note: "An educational project, not a medical device. Never for real diagnosis.",
     },
   ],
 
