@@ -196,7 +196,7 @@ const PROJECTS = [
       { display: "40", label: "Test cases" },
     ],
     caseStudy: {
-      hook: "My MSBA capstone: an AI agent workflow that takes over the routine part of accounts payable invoice intake, plus everything a company would need to decide whether to trust it. MidwestCorp is the course's case company, so the numbers come from that case.",
+      hook: "My MSBA capstone: an AI agent that handles the routine part of invoice intake for an accounts payable team, and the plan for deciding whether to trust it.",
       sections: [
         {
           title: "The Problem",
@@ -1049,9 +1049,36 @@ function ProjectSteps({ steps, accent }: { steps: Step[]; accent: string }) {
           </div>
           <div className="min-w-0">
             <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground mb-3">{s.title}</h3>
+            {s.stats && (
+              <div className="flex flex-wrap border-y border-border my-5 max-w-[640px]">
+                {s.stats.map((st) => (
+                  <div key={st.label} className="flex-1 min-w-[140px] py-4 px-3 text-center border-r border-border last:border-r-0">
+                    <div className="w-6 h-[3px] rounded-full mx-auto mb-2.5 opacity-70" aria-hidden="true" style={{ background: accent }} />
+                    <div className="text-2xl font-extrabold tracking-tight tabular-nums text-foreground">{st.value}</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">{st.label}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {s.flow && (
+              <ol className="grid md:grid-cols-3 gap-3 md:gap-0 my-5 list-none p-0">
+                {s.flow.map((f, fi) => (
+                  <li key={f.name} className="relative bg-white border border-border rounded-xl p-4 md:mr-6 last:md:mr-0">
+                    <div className="font-mono text-[11px] text-muted-foreground mb-1">Agent {fi + 1}</div>
+                    <div className="text-lg font-bold text-foreground mb-1">{f.name}</div>
+                    <p className="text-[14px] text-slate-600 leading-relaxed mb-3">{f.does}</p>
+                    <div className="font-mono text-[11.5px]" style={{ color: accentText(accent) }}>{f.limit}</div>
+                    {fi < s.flow!.length - 1 && (
+                      <span className="hidden md:flex absolute top-1/2 -right-[22px] -translate-y-1/2 text-muted-foreground" aria-hidden="true">→</span>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            )}
             {s.body && <p className="text-[15px] md:text-base text-slate-600 leading-[1.75] max-w-[68ch]">{s.body}</p>}
+            {s.pointsTitle && <p className="mt-4 text-[15px] font-semibold text-foreground">{s.pointsTitle}</p>}
             {s.points && (
-              <ul className="mt-3 space-y-2.5 max-w-[68ch]">
+              <ul className={`${s.pointsTitle ? "mt-2" : "mt-3"} space-y-2.5 max-w-[68ch]`}>
                 {s.points.map((pt) => (
                   <li key={pt} className="flex gap-3 text-[15px] text-slate-600 leading-[1.7]">
                     <span className="mt-[11px] w-1.5 h-1.5 rounded-full shrink-0" style={{ background: accent }} aria-hidden="true" />
@@ -1087,6 +1114,15 @@ function ProjectSteps({ steps, accent }: { steps: Step[]; accent: string }) {
                 {s.table && <StepTableView table={s.table} accent={accent} />}
                 {s.figures && <StepFigures figures={s.figures} />}
               </>
+            )}
+            {s.links && (
+              <div className="flex flex-wrap gap-x-6 gap-y-2 mt-5">
+                {s.links.map((l) => (
+                  <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-foreground border-b-[1.5px] pb-0.5 hover:opacity-80" style={{ borderColor: accent }}>
+                    {l.label} <ArrowUpRight size={13} aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
             )}
             {s.note && (
               <p className="mt-5 pl-3.5 border-l-2 text-[14px] text-slate-600 leading-relaxed max-w-[68ch]" style={{ borderColor: accent }}>

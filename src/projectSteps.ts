@@ -9,8 +9,12 @@ export type StepTable = { head: string[]; rows: string[][]; best?: number; note?
 export type Step = {
   label: string;
   title: string;
+  stats?: { value: string; label: string }[];
+  flow?: { name: string; does: string; limit: string }[];
   body?: string;
+  pointsTitle?: string;
   points?: string[];
+  links?: { label: string; href: string }[];
   tools?: { name: string; use: string }[];
   figures?: Fig[];
   table?: StepTable;
@@ -82,58 +86,62 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
   "invoice-agent": [
     {
       label: "The problem",
-      title: "1,200 invoices a month, keyed by hand",
-      body: "My MSBA capstone. In the course case, MidwestCorp's two AP clerks key about 1,200 vendor invoices a month into NetSuite. That costs about $15,200 a month in labor and runs a 4 to 6% error rate from missed POs, duplicate payments and wrong amounts. Before my master's I spent a year in accounts payable at Churchill Downs, so this was a workflow I knew from the inside.",
-      note: "MidwestCorp is the case company from the course. All dollar figures on this page come from that case, not a real deployment.",
+      title: "Two clerks typing in 1,200 invoices a month",
+      stats: [
+        { value: "1,200", label: "invoices a month" },
+        { value: "$15,200", label: "a month in clerk labor" },
+        { value: "4 to 6%", label: "error rate" },
+      ],
+      body: "That's the setup in my capstone case. Most invoices are routine, but every one gets keyed into NetSuite by hand, and mistakes like missed POs and duplicate payments get through. I worked a year in accounts payable at Churchill Downs before my master's, so I knew this work well.",
+      note: "MidwestCorp is the case company from the course, so the dollar figures on this page come from the case.",
     },
     {
-      label: "The design",
-      title: "Three agents, each with one job",
-      body: "I built a single-agent prototype in Microsoft Copilot Studio, then split it into three agents. Each one gets its own tools and its own limits, so a mistake in one can't spread. None of them can approve or pay anything.",
-      figures: [{ img: P + "invoice-agent-architecture.webp", caption: "The three-agent design, with the points where a person steps in" }],
-      table: {
-        head: ["Agent", "Job", "Can it change anything?"],
-        rows: [
-          ["1. Intake", "Read the PDF and pull out the fields", "No, read-only"],
-          ["2. Triage", "Apply nine rules, label CLEAN or ESCALATED with every reason", "No, no tools at all"],
-          ["3. Router", "Send the right notification", "Notifications only"],
-        ],
-      },
+      label: "How it works",
+      title: "Three agents: read, check, route",
+      flow: [
+        { name: "Read", does: "Pulls the vendor, PO, date, line items and total off the PDF.", limit: "Read-only" },
+        { name: "Check", does: "Runs nine rules and marks the invoice CLEAN or ESCALATED, listing every reason.", limit: "Has no tools" },
+        { name: "Route", does: "Clean invoices go to the approval queue. Anything flagged goes to an AP clerk.", limit: "Can only send notifications" },
+      ],
+      body: "I built a working one-agent version in Copilot Studio first, then split it into three so a mistake in one step can't spread to the next. None of the agents can approve or pay an invoice.",
+      pointsTitle: "A person always steps in when",
+      points: [
+        "the PDF can't be read",
+        "the agent is less than 90% sure",
+        "the total is over $100,000",
+        "anything asks it to skip a rule",
+      ],
+      links: [{ label: "See the full architecture diagram", href: P + "invoice-agent-architecture.webp" }],
     },
     {
-      label: "Try the rules",
-      title: "Pick an invoice and watch it get triaged",
-      body: "These are the nine escalation rules from my triage prompt. Pick a sample and they run right here.",
+      label: "Try it",
+      title: "Run an invoice through the rules",
+      body: "Pick a sample invoice. The nine checks are the same rules I wrote into the triage agent's prompt.",
       widget: "invoice",
     },
     {
       label: "What I used",
-      title: "The tools and what each one did",
+      title: "Tools",
       tools: [
-        { name: "Microsoft Copilot Studio", use: "Built and tested the working prototype agent" },
-        { name: "Prompt design", use: "A shared base prompt plus one prompt per agent, so each stage has clear rules" },
-        { name: "NIST AI Risk Management Framework", use: "Structure for the governance plan: govern, map, measure, manage" },
-        { name: "Claude", use: "Pressure-testing the design and drafting test cases from my rules (noted in the playbook)" },
+        { name: "Microsoft Copilot Studio", use: "Built and tested the working agent" },
+        { name: "Prompt writing", use: "One shared base prompt, plus one prompt for each agent" },
+        { name: "NIST AI RMF", use: "The framework for the governance plan" },
+        { name: "Claude", use: "Helped me pressure-test the design and draft test cases" },
       ],
     },
     {
-      label: "Testing and governance",
-      title: "How a team would know if it stopped working",
+      label: "Testing it",
+      title: "How you'd know if it broke",
       points: [
-        "40 test cases in four groups: normal invoices, edge cases, attacks (override requests, instructions hidden inside a PDF) and compliance checks. Run every week.",
-        "An error ceiling of 1%, about 12 invoices a month, tied back to the dollar savings.",
-        "A human escalation matrix with response times, and kill criteria for error rate, drift and clerks rubber-stamping the agent's work.",
-        "Mapped to the NIST AI RMF, with an EU AI Act risk tier and the US rules that apply: SOX, 1099 reporting and OFAC sanctions screening.",
-      ],
-      figures: [
-        { img: P + "invoice-playbook-p5.webp", caption: "Playbook p5: the evaluation plan", tall: true },
-        { img: P + "invoice-playbook-p6.webp", caption: "Playbook p6: governance and the escalation matrix", tall: true },
+        "40 test cases, run every week: normal invoices, edge cases, attack attempts (like instructions hidden in a PDF) and compliance checks.",
+        "An error ceiling of 1%, which is about 12 invoices a month.",
+        "Clear reasons to shut it off: the error rate climbs, results drift, or clerks start approving without looking.",
+        "Checked against the NIST AI RMF, SOX, 1099 reporting and OFAC sanctions screening.",
       ],
     },
     {
-      label: "The recommendation",
-      title: "Deploy, with conditions",
-      body: "A 30-day pilot at limited volume, expanding only after sanctions screening is tested end to end, clerks are trained to actually review the agent's work, and the test set passes every week.",
+      label: "My call",
+      title: "Run a 30-day pilot first",
       table: {
         head: ["Monthly cost (case numbers)", "Today", "With the agent"],
         rows: [
@@ -142,9 +150,19 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
           ["API and compute", "$0", "$600"],
           ["Total", "$18,200 to $19,700", "$5,400"],
         ],
-        note: "About $150,000 to $170,000 a year in savings at full volume, with payback in about two months.",
       },
-      figures: [{ img: P + "invoice-playbook-p1.webp", caption: "Playbook p1: the recommendation and the business case", tall: true }],
+      body: "In the case numbers that's about $150,000 to $170,000 saved a year, paid back in about two months. I'd still only expand past the pilot once sanctions screening is tested, clerks are trained to really review the agent's work, and the test set passes every week.",
+    },
+    {
+      label: "The playbook",
+      title: "The full write-up",
+      body: "Seven pages covering the business case, the design, the prompts, testing and governance.",
+      figures: [
+        { img: P + "invoice-playbook-p1.webp", caption: "Page 1: business case" },
+        { img: P + "invoice-playbook-p5.webp", caption: "Page 5: testing plan" },
+        { img: P + "invoice-playbook-p6.webp", caption: "Page 6: governance" },
+      ],
+      links: [{ label: "Open the playbook (PDF)", href: "/docs/Invoice_Triage_Agent_Playbook.pdf" }],
     },
   ],
 

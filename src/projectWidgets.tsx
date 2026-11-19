@@ -242,7 +242,7 @@ export function InvoiceWalkthrough({ accent }: { accent: string }) {
         </div>
       </div>
       <p className="font-mono text-[12px] text-muted-foreground mt-4">
-        Sample invoices I wrote for this page. The nine checks are the rules from my triage prompt, coded here so they run in your browser. Today's date in this demo: Nov 15, 2026.
+        Sample invoices I made for this page. Today's date in this demo is Nov 15, 2026.
       </p>
     </div>
   );
