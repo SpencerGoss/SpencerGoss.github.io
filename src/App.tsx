@@ -110,7 +110,7 @@ const PROJECTS = [
         {
           title: "What I Built",
           color: "#8B5CF6",
-          body: "Oddsix pulls from league data feeds and public odds through the day, validates everything on the way in, and rebuilds the site's data products automatically. It holds roughly 68,000 games and pages for about 57,000 players, with record books going back to each league's early years. Each sport has its own prediction model built from engineered features like team strength ratings, recent form, opponent-adjusted efficiency, rest and injuries. Models are validated on seasons they never trained on and their probabilities are calibrated. A new generation of models is in live testing this season.",
+          body: "Oddsix pulls from league data feeds through the day, validates everything on the way in, and rebuilds the site's data products automatically. It holds roughly 68,000 games and pages for about 57,000 players, with record books going back to each league's early years. Each sport has its own prediction model built from engineered features like team strength ratings, recent form, opponent-adjusted efficiency, rest and injuries. Models are tested on seasons they never trained on. A new generation of models is in live testing this season.",
           features: [
             { emoji: "\u{1F3C0}", name: "Five Leagues, One Place", desc: "Live scores, standings, team and player pages across the NBA, NFL, MLB, NHL and soccer" },
             { emoji: "\u{1F4CA}", name: "Player and Team Analytics", desc: "Career stats and game logs for about 57,000 players, shot data, and franchise records" },
@@ -141,12 +141,12 @@ const PROJECTS = [
     metrics: [
       { value: 11, suffix: "", label: "Reusable Skills" },
       { value: 3, suffix: "", label: "Published Patterns" },
-      { value: 5, suffix: "", label: "AI Models Coordinated" },
+      { value: 4, suffix: "", label: "AI Models Coordinated" },
     ],
     cardMetrics: [
       { display: "11", label: "Reusable skills" },
       { display: "3", label: "Patterns" },
-      { display: "5", label: "AI models" },
+      { display: "4", label: "AI models" },
     ],
     caseStudy: {
       hook: "How I use AI coding agents on real projects without trusting every answer, published as patterns and skills anyone can use.",
@@ -177,7 +177,7 @@ const PROJECTS = [
     accentBg: "rgba(5,150,105,0.08)",
     featured: false,
     cardImage: "/images/projects/invoice-agent-card.webp",
-    shortDescription: "An AI agent workflow for accounts payable invoice intake, built in Microsoft Copilot Studio: three agents read each invoice, check it against nine triage rules, and route it to an approver or an AP clerk. Includes the business case, a 40-case evaluation plan and a governance plan.",
+    shortDescription: "An AI agent for accounts payable invoice intake. I built a working agent in Microsoft Copilot Studio, then designed a three-agent version that reads each invoice, checks it against nine triage rules, and routes it to an approver or an AP clerk. Includes the business case, a 40-case test plan and a governance plan.",
     url: "#",
     github: "https://github.com/SpencerGoss/invoice-triage-agent",
     tags: ["Copilot Studio", "AI Agents", "Prompt Design", "AI Governance", "NIST AI RMF", "Accounts Payable"],
@@ -185,15 +185,15 @@ const PROJECTS = [
       { label: "3-agent architecture", desc: "Intake, triage classifier and router, each with its own tools, model tier and blast radius, plus the human escalation points", img: "/images/projects/invoice-agent-architecture.webp" },
     ],
     metrics: [
-      { value: 3, suffix: "", label: "Agents" },
+      { value: 3, suffix: "", label: "Agents Designed" },
       { value: 9, suffix: "", label: "Triage Rules" },
       { value: 40, suffix: "", label: "Evaluation Cases" },
       { value: 4, suffix: "", label: "Human Escalation Points" },
     ],
     cardMetrics: [
-      { display: "3", label: "Agents" },
+      { display: "3", label: "Agents designed" },
       { display: "9", label: "Triage rules" },
-      { display: "40", label: "Test cases" },
+      { display: "40", label: "Case test plan" },
     ],
     caseStudy: {
       hook: "An MSBA class project: an AI agent that handles the routine part of invoice intake for an accounts payable team, and the plan for deciding whether to trust it.",
@@ -245,7 +245,7 @@ const PROJECTS = [
     cardMetrics: [
       { display: "Live", label: "API data" },
       { display: "5", label: "Azure parts" },
-      { display: "2", label: "Team" },
+      { display: "2", label: "Person team" },
     ],
     caseStudy: {
       hook: "Ask about any company, and an Azure AI agent pulls live data and explains it in plain English.",
@@ -283,13 +283,13 @@ const PROJECTS = [
     tags: ["Python", "LightGBM", "scikit-learn", "K-Means", "NBA Stats API"],
     screenshots: [],
     metrics: [
-      { value: 10500, suffix: "+", label: "Games Analyzed" },
+      { value: 10500, suffix: "+", label: "Team-Game Rows" },
       { value: 5, suffix: "", label: "NBA Seasons" },
       { value: 26, suffix: "", label: "Pre-Game Features" },
       { value: 4, suffix: "", label: "Play-Style Clusters" },
     ],
     cardMetrics: [
-      { display: "10.5K+", label: "Games" },
+      { display: "10.5K+", label: "Team-game rows" },
       { display: "26", label: "Features" },
       { display: "4", label: "Clusters" },
     ],
@@ -299,7 +299,7 @@ const PROJECTS = [
         {
           title: "The Problem",
           color: "#06B6D4",
-          body: "Game prediction is central to sports analytics: teams use it for preparation, broadcasters for storylines, and fans for every argument. The goal was a model that predicts NBA game outcomes using only what is known before tip-off. The data covers about 10,500 games across 30 teams over five seasons, pulled from the NBA Stats API, with each row one team's game joined to its opponent and labeled with the result.",
+          body: "Game prediction is central to sports analytics: teams use it for preparation, broadcasters for storylines, and fans for every argument. The goal was a model that predicts NBA game outcomes using only what is known before tip-off. The data covers five seasons for all 30 teams, pulled from the NBA Stats API: about 10,500 rows, each one team's game joined to its opponent and labeled with the result.",
         },
         {
           title: "The Approach",
@@ -325,7 +325,7 @@ const PROJECTS = [
     // VIDEO REMOVED 2026-10-06: YouTube id "mFgFajpfPD8" now returns "This video isn't available
     // anymore". Replaced with a live screenshot of the running app. To restore the walkthrough,
     // put `video: "<new id>",` back on this line.
-    shortDescription: "An end-to-end film analytics project: an ETL pipeline (TMDB API to a 3NF PostgreSQL database) powering a live interactive film explorer built with Dash.",
+    shortDescription: "An end-to-end film analytics project: an ETL pipeline (TMDB API to a PostgreSQL database with linked film and genre tables) powering a live interactive film explorer built with Dash.",
     url: "https://box-office-vs-ratings.onrender.com",
     github: "https://github.com/SpencerGoss/box-office-vs-ratings",
     tags: ["Python", "pandas", "PostgreSQL", "SQLAlchemy", "Dash", "Plotly", "TMDB API"],
@@ -336,12 +336,12 @@ const PROJECTS = [
       { value: 5659, suffix: "", label: "Films Pipelined" },
       { value: 19, suffix: "", label: "Genres" },
       { value: 7, suffix: "", label: "Data-Quality Checks" },
-      { value: 3, suffix: "NF", label: "PostgreSQL Schema" },
+      { value: 3, suffix: "", label: "Linked Tables" },
     ],
     cardMetrics: [
       { display: "5,659", label: "Films" },
       { display: "7", label: "QA Checks" },
-      { display: "3NF", label: "Postgres" },
+      { display: "3", label: "Linked tables" },
     ],
     caseStudy: {
       hook: "Do films that earn more also rate higher? I built the data pipeline, the database and an app to find out.",
@@ -354,12 +354,12 @@ const PROJECTS = [
         {
           title: "The Pipeline",
           color: "#8B5CF6",
-          body: "A single self-contained Python script runs the whole thing end to end (extract, clean, validate, load, export) with no manual steps. A two-stage TMDB extract (discover films by year, then pull per-film financials) with retry and backoff feeds a pandas transform layer that derives profit, ROI, profit margin, budget tier, hit/flop performance, and decade. A stricter quality filter drops 349 rows with placeholder budgets or streaming-only revenue (Netflix originals report token theatrical runs, so they masquerade as nine-figure flops). Before anything loads, 7 data-quality checks run (null required fields, duplicate keys, dtype coercion, range bounds, referential integrity, and row-count reconciliation), each logged PASS/FAIL, with critical failures aborting the run. The load is idempotent: ON CONFLICT upserts mean re-running never duplicates a row.",
+          body: "A single self-contained Python script runs the whole thing end to end (extract, clean, validate, load, export) with no manual steps. A two-stage TMDB extract (discover films by year, then pull per-film financials) with retry and backoff feeds a pandas transform layer that derives profit, ROI, profit margin, budget tier, hit/flop performance, and decade. A stricter quality filter drops 349 rows with placeholder budgets or streaming-only revenue (Netflix originals report token theatrical runs, so they masquerade as nine-figure flops). Before anything loads, 7 data-quality checks run (null required fields, duplicate keys, dtype coercion, range bounds, referential integrity, and row-count reconciliation), each logged PASS/FAIL, with critical failures aborting the run. Re-running the load never duplicates a row.",
         },
         {
           title: "The Database",
           color: "#2563EB",
-          body: "Everything lands in a 3NF PostgreSQL schema: a films table, a genres lookup, and a many-to-many film_genres bridge, plus an enriched view that joins in profit, ROI, and a comma-separated genre list. The current load holds 5,659 films (after the quality filter), 19 genres, and 14,914 film-genre links, fully documented with an ER diagram. Postgres is the source of truth and the app's CSV fallback is derived from it, so the live database, the inlined DDL, and the ER diagram all describe exactly the same schema, with no drift.",
+          body: "Everything lands in a PostgreSQL database: a films table, a genres lookup, and a many-to-many film_genres bridge, plus an enriched view that joins in profit, ROI, and a comma-separated genre list. The current load holds 5,659 films (after the quality filter), 19 genres, and 14,914 film-genre links, fully documented with an ER diagram. Postgres is the source of truth and the app's CSV fallback is derived from it, so the live database, the inlined DDL, and the ER diagram all describe exactly the same schema, with no drift.",
         },
         {
           title: "The Film Explorer",
@@ -377,7 +377,7 @@ const PROJECTS = [
   {
     id: "churn-model",
     title: "Churn Predictor",
-    subtitle: "MSBA Case Competition",
+    subtitle: "MSBA Case Competition (team)",
     accent: "#F59E0B",
     accentBg: "rgba(245,158,11,0.08)",
     featured: false,
@@ -394,7 +394,7 @@ const PROJECTS = [
     ],
     metrics: [
       { value: 3, suffix: "", label: "Customer Clusters" },
-      { value: 5636, suffix: "", label: "Data Points" },
+      { value: 5636, suffix: "", label: "Customers" },
       { value: 4, suffix: "", label: "Models Benchmarked" },
     ],
     cardMetrics: [
@@ -407,12 +407,12 @@ const PROJECTS = [
         {
           title: "The Brief",
           color: "#06B6D4",
-          body: "This was a case competition in my MSBA program. We were handed a real customer dataset of 5,636 records and a business problem: figure out who was likely to churn, pin down what was driving it, and turn that into retention recommendations the business could actually act on.",
+          body: "This was a team case competition in my MSBA program. We were handed a customer dataset of 5,636 records and a business problem: figure out who was likely to churn, pin down what was driving it, and turn that into retention recommendations the business could actually act on.",
         },
         {
-          title: "What I Built",
+          title: "What We Built",
           color: "#8B5CF6",
-          body: "I benchmarked four models for churn prediction (Random Forest, XGBoost, LightGBM, and CatBoost), with CatBoost winning at 0.899 AUC, and combined the winner with customer segmentation using clustering. SHAP driver analysis revealed that referrals, contract type, and tenure dominate: customers in their first 6 months on month-to-month plans are at highest risk (53% churn versus 14% for long-tenure customers), and customers who refer others churn significantly less. Three distinct customer clusters emerged, each requiring a different retention strategy.",
+          body: "We benchmarked four models for churn prediction (Random Forest, XGBoost, LightGBM, and CatBoost), with CatBoost winning at 0.899 AUC, and combined the winner with customer segmentation using clustering. SHAP driver analysis revealed that referrals, contract type, and tenure dominate: customers in their first 6 months on month-to-month plans are at highest risk (53% churn versus 14% for long-tenure customers), and customers who refer others churn significantly less. Three distinct customer clusters emerged, each requiring a different retention strategy.",
         },
         {
           title: "The Result",
@@ -425,7 +425,7 @@ const PROJECTS = [
   {
     id: "chest-xray",
     title: "Chest X-ray Classifier",
-    subtitle: "Deep Learning · Medical Imaging",
+    subtitle: "Deep Learning · MSBA Team Project",
     accent: "#8B5CF6",
     accentBg: "rgba(139,92,246,0.08)",
     featured: false,
@@ -479,38 +479,38 @@ type TechSkill = { name: string; category: string; shortName?: string } & (
 
 const TECH_SKILLS: TechSkill[] = [
   // Languages
-  { name: "Python", icon: "https://api.iconify.design/logos:python.svg", category: "Languages" },
+  { name: "Python", icon: "https://api.iconify.design/logos/python.svg", category: "Languages" },
   { name: "SQL", LucideIcon: Database, iconColor: "#4053D6", category: "Languages" },
-  { name: "R", icon: "https://api.iconify.design/logos:r-lang.svg", category: "Languages" },
+  { name: "R", icon: "https://api.iconify.design/logos/r-lang.svg", category: "Languages" },
   // AI & Automation
-  { name: "Claude AI", icon: "https://api.iconify.design/simple-icons:anthropic.svg", category: "AI & Automation" },
-  { name: "ChatGPT", icon: "https://api.iconify.design/logos:openai-icon.svg", category: "AI & Automation" },
-  { name: "Gemini", icon: "https://api.iconify.design/simple-icons:googlegemini.svg", category: "AI & Automation" },
-  { name: "GitHub Copilot", icon: "https://api.iconify.design/simple-icons:githubcopilot.svg", category: "AI & Automation" },
-  { name: "Microsoft Copilot", icon: "https://api.iconify.design/logos:microsoft-icon.svg", category: "AI & Automation" },
+  { name: "Claude AI", icon: "https://api.iconify.design/simple-icons/anthropic.svg", category: "AI & Automation" },
+  { name: "ChatGPT", icon: "https://api.iconify.design/logos/openai-icon.svg", category: "AI & Automation" },
+  { name: "Gemini", icon: "https://api.iconify.design/simple-icons/googlegemini.svg", category: "AI & Automation" },
+  { name: "GitHub Copilot", icon: "https://api.iconify.design/simple-icons/githubcopilot.svg", category: "AI & Automation" },
+  { name: "Microsoft Copilot", icon: "https://api.iconify.design/logos/microsoft-icon.svg", category: "AI & Automation" },
   { name: "Prompt Engineering", LucideIcon: Sparkles, iconColor: "#E8413C", category: "AI & Automation" },
   { name: "AI Agents", LucideIcon: Bot, iconColor: "#00B0D8", category: "AI & Automation" },
   // Machine Learning
-  { name: "scikit-learn", icon: "https://api.iconify.design/devicon:scikitlearn.svg", category: "Machine Learning" },
-  { name: "TensorFlow", icon: "https://api.iconify.design/logos:tensorflow.svg", category: "Machine Learning" },
-  { name: "pandas", icon: "https://api.iconify.design/logos:pandas-icon.svg", category: "Machine Learning" },
-  { name: "NumPy", icon: "https://api.iconify.design/logos:numpy.svg", category: "Machine Learning" },
-  { name: "Jupyter", icon: "https://api.iconify.design/devicon:jupyter-wordmark.svg", category: "Machine Learning" },
+  { name: "scikit-learn", icon: "https://api.iconify.design/devicon/scikitlearn.svg", category: "Machine Learning" },
+  { name: "TensorFlow", icon: "https://api.iconify.design/logos/tensorflow.svg", category: "Machine Learning" },
+  { name: "pandas", icon: "https://api.iconify.design/logos/pandas-icon.svg", category: "Machine Learning" },
+  { name: "NumPy", icon: "https://api.iconify.design/logos/numpy.svg", category: "Machine Learning" },
+  { name: "Jupyter", icon: "https://api.iconify.design/devicon/jupyter-wordmark.svg", category: "Machine Learning" },
   // Visualization
-  { name: "Tableau", icon: "https://api.iconify.design/logos:tableau-icon.svg", category: "Visualization" },
-  { name: "Power BI", icon: "https://api.iconify.design/logos:microsoft-power-bi.svg", category: "Visualization" },
-  { name: "Streamlit", icon: "https://api.iconify.design/simple-icons:streamlit.svg", category: "Visualization" },
+  { name: "Tableau", icon: "https://api.iconify.design/logos/tableau-icon.svg", category: "Visualization" },
+  { name: "Power BI", icon: "https://api.iconify.design/logos/microsoft-power-bi.svg", category: "Visualization" },
+  { name: "Streamlit", icon: "https://api.iconify.design/simple-icons/streamlit.svg", category: "Visualization" },
   // Data
-  { name: "PostgreSQL", icon: "https://api.iconify.design/logos:postgresql.svg", category: "Data" },
-  { name: "SQL Server", icon: "https://api.iconify.design/simple-icons:microsoftsqlserver.svg", category: "Data" },
+  { name: "PostgreSQL", icon: "https://api.iconify.design/logos/postgresql.svg", category: "Data" },
+  { name: "SQL Server", icon: "https://api.iconify.design/simple-icons/microsoftsqlserver.svg", category: "Data" },
   // Analytics
   // Tools & Platforms
-  { name: "Excel (pivot tables, XLOOKUP, VLOOKUP)", shortName: "Excel", icon: "https://api.iconify.design/simple-icons:microsoftexcel.svg", category: "Tools & Platforms" },
-  { name: "PowerPoint", icon: "https://api.iconify.design/simple-icons:microsoftpowerpoint.svg", category: "Tools & Platforms" },
-  { name: "Azure (coursework)", icon: "https://api.iconify.design/logos:microsoft-azure.svg", category: "Tools & Platforms" },
-  { name: "SAP", icon: "https://api.iconify.design/logos:sap.svg", category: "Tools & Platforms" },
+  { name: "Excel (pivot tables, XLOOKUP, VLOOKUP)", shortName: "Excel", icon: "https://api.iconify.design/simple-icons/microsoftexcel.svg", category: "Tools & Platforms" },
+  { name: "PowerPoint", icon: "https://api.iconify.design/simple-icons/microsoftpowerpoint.svg", category: "Tools & Platforms" },
+  { name: "Azure (coursework)", icon: "https://api.iconify.design/logos/microsoft-azure.svg", category: "Tools & Platforms" },
+  { name: "SAP", icon: "https://api.iconify.design/logos/sap.svg", category: "Tools & Platforms" },
   { name: "JD Edwards", LucideIcon: FileSpreadsheet, iconColor: "#C74634", category: "Tools & Platforms" },
-  { name: "GitHub", icon: "https://api.iconify.design/logos:github-icon.svg", category: "Tools & Platforms" },
+  { name: "GitHub", icon: "https://api.iconify.design/logos/github-icon.svg", category: "Tools & Platforms" },
 ];
 
 /* Business & professional skills, grouped by area. featured = stronger visual emphasis */
@@ -563,16 +563,15 @@ const EXPERIENCE = [
     org: "University of Louisville",
     location: "Louisville, KY",
     period: "Aug 2025 - Aug 2026",
-    description: "Completed a Master of Science in Business Analytics with a concentration in Artificial Intelligence in August 2026. Built predictive models, ML pipelines, and data tools that solve real business problems.",
+    description: "Completed a Master of Science in Business Analytics with a concentration in Artificial Intelligence in August 2026. Built predictive models, AI agents and data tools for business case problems.",
     details: [
       "Graduated with a 3.94 GPA; recipient of the College of Business Graduate Programs Scholarship",
-      "Concentration in Artificial Intelligence, applying ML techniques to real business problems",
-      "Python, R, and SQL for advanced analytics and predictive modeling",
-      "Built machine learning pipelines from data collection through deployment",
+      "Concentration in Artificial Intelligence: machine learning, AI agents in Copilot Studio and Azure AI Foundry",
+      "Python, R and SQL coursework for analytics and predictive modeling",
       "Coursework in machine learning, predictive modeling, data mining, database systems, cloud (Azure), and applied AI; case competition on customer churn",
       "Class project: designed an AI agent workflow for accounts payable invoice intake in Microsoft Copilot Studio, with a business case, evaluation plan and governance plan",
     ],
-    highlights: ["3.94 GPA", "AI Concentration", "Predictive Modeling", "Machine Learning Pipelines"],
+    highlights: ["3.94 GPA", "AI Concentration", "Predictive Modeling", "AI Agents"],
     type: "education" as const,
     logo: "/images/experience/uofl-logo.png",
     color: "#AD0000",
@@ -581,18 +580,17 @@ const EXPERIENCE = [
     bgImage: "/images/experience/uofl-campus.webp",
   },
   {
-    title: "Independent Projects",
-    org: "Independent Projects",
+    title: "Personal Projects",
+    org: "Independent",
     location: "Louisville, KY",
     period: "2025 - Present",
-    description: "Shipping real products: a live multi-sport analytics platform, a multi-model AI development system, a film-analytics data pipeline, and a deep-learning image classifier.",
+    description: "A live multi-sport data platform, AI agent workflows I use every day, and a film-analytics data pipeline.",
     details: [
       "Built and run Oddsix, a live sports data and prediction platform covering five leagues with 25+ years of history, pages for about 57,000 players, and a prediction model for every sport, updated continuously through the day",
-      "Built a multi-model AI development system where independent AI reviewers check each other's work, with a guardrail layer that turns past mistakes into enforced checks; the patterns and skills are published at github.com/SpencerGoss/agent-engineering",
-      "Built a film-analytics pipeline pulling 5,659 films from the TMDB API into a 3NF PostgreSQL database behind 7 data-quality checks, feeding a live Dash dashboard",
-      "Built a deep-learning classifier for 14 thoracic conditions on the NIH ChestX-ray14 dataset in TensorFlow, with Grad-CAM explainability and a runnable Streamlit app",
+      "Build AI agent workflows in Claude where one agent does the task and a second agent checks the result; the patterns and skills are published at github.com/SpencerGoss/agent-engineering",
+      "Built a film-analytics pipeline pulling 5,659 films from the TMDB API into a PostgreSQL database behind 7 data-quality checks, feeding a live Dash dashboard",
     ],
-    highlights: ["ML Platform", "AI Agents", "Data Pipelines", "Deep Learning"],
+    highlights: ["Live Data Platform", "AI Agents", "Data Pipelines"],
     type: "project" as const,
     logo: "",
     color: "#06B6D4",
@@ -624,12 +622,12 @@ const EXPERIENCE = [
     title: "BBA in Finance & Marketing, Business Analytics Minor",
     org: "University of Kentucky",
     location: "Lexington, KY",
-    period: "Aug 2020 - Mar 2024",
-    description: "Bachelor of Business Administration with focuses in Finance, Marketing, and a minor in Business Analytics. Built a strong foundation in quantitative analysis, business strategy, and data-driven decision-making.",
+    period: "Aug 2020 - May 2024",
+    description: "Bachelor of Business Administration, Finance and Marketing majors with a minor in Business Analytics.",
     details: [
-      "Graduated with a 3.61 GPA and Dean's List honors most semesters; UK Provost Scholarship and Humana Foundation Scholarship recipient",
-      "Finance and Marketing majors with a minor in Business Analytics, combining quantitative and strategic skills",
-      "Developed strong foundations in data analysis, financial modeling, and marketing analytics",
+      "Graduated with a 3.61 GPA; Dean's List four semesters; UK Provost Scholarship and Humana Foundation Scholarship recipient",
+      "Finance and Marketing majors with a minor in Business Analytics",
+      "Core finance coursework in NPV, capital budgeting and forecasting, plus marketing analytics",
       "Coursework in Business Analytics Strategy (AN 450G), Data Mining (AN 420G), and applied quantitative methods",
       "Active member of Delta Tau Delta fraternity",
     ],
@@ -646,13 +644,13 @@ const EXPERIENCE = [
     org: "Terex Corporation",
     location: "Louisville, KY",
     period: "May 2020 - Aug 2023",
-    description: "Shipping and receiving for a global heavy-equipment manufacturer over three years. Advanced from parts picker into shipping and receiving, coordinated with drivers and sales teams on order and delivery issues, and helped onboard new hires.",
+    description: "Shipping and receiving for a global heavy-equipment manufacturer, part-time and full-time around school from 2020 to 2023. Advanced from parts picker into shipping and receiving.",
     details: [
-      "Advanced from parts picker into shipping and receiving, handling both roles concurrently across 100+ daily packages",
-      "Coordinated with drivers and sales teams to resolve order and delivery issues",
-      "Helped onboard new hires on warehouse workflows; earned forklift certification",
+      "Advanced from parts picker into shipping and receiving, handling both roles across 100+ daily packages",
+      "Worked through solutions for misplaced and delayed orders, and closed out each day's UPS and freight shipments",
+      "Kept inventory counts accurate; earned forklift certification",
     ],
-    highlights: ["3+ Years", "Shipping & Receiving", "Team Onboarding"],
+    highlights: ["Shipping & Receiving", "Inventory Accuracy", "Forklift Certified"],
     type: "work" as const,
     logo: "https://www.google.com/s2/favicons?domain=terex.com&sz=128",
     color: "#1565C0",
@@ -1612,11 +1610,10 @@ function ExperienceSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEle
 type SystemNodeData = { label: string; sub: string; color: string; icon: React.ReactNode; detail: string };
 
 const COUNCIL_MODELS = [
-  { name: "Claude", role: "Architecture, code & reasoning", color: "#D97757", icon: "https://api.iconify.design/simple-icons:anthropic.svg" },
-  { name: "GPT-5 / Codex", role: "Code review & second opinions", color: "#19C37D", icon: "https://api.iconify.design/simple-icons:openai.svg" },
-  { name: "Gemini", role: "Research & fact-grounding", color: "#4796E3", icon: "https://api.iconify.design/simple-icons:googlegemini.svg" },
-  { name: "Copilot", role: "Pattern recall & structure", color: "#C9D1D9", icon: "https://api.iconify.design/simple-icons:githubcopilot.svg" },
-  { name: "Ollama", role: "Free local / offline tier", color: "#9CA3AF", icon: "https://api.iconify.design/simple-icons:ollama.svg" },
+  { name: "Claude", role: "Architecture, code & reasoning", color: "#D97757", icon: "https://api.iconify.design/simple-icons/anthropic.svg" },
+  { name: "GPT-5 / Codex", role: "Code review & second opinions", color: "#19C37D", icon: "https://api.iconify.design/simple-icons/openai.svg" },
+  { name: "Gemini", role: "Research & fact-grounding", color: "#4796E3", icon: "https://api.iconify.design/simple-icons/googlegemini.svg" },
+  { name: "Copilot", role: "Code suggestions in the editor", color: "#C9D1D9", icon: "https://api.iconify.design/simple-icons/githubcopilot.svg" },
 ];
 
 
@@ -1661,7 +1658,7 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
             How I work with AI
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-            I use five AI models together on real work. Each has a defined job, an independent reviewer checks results before they are accepted, and recurring errors become enforced rules. Every change is reviewed by me before it ships.
+            I use four AI models together on real work. Each has a defined job, an independent reviewer checks results before they are accepted, and recurring errors become enforced rules. I review the results before I use them.
           </p>
         </ScrollReveal>
 
@@ -1670,7 +1667,7 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
           <div className="text-center mb-8">
             <h3 className="text-lg font-semibold text-white mb-2">The model council</h3>
             <p className="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
-              Important decisions go to all five models at once, each chosen for what it does best.
+              Important decisions go to all four models at once, each chosen for what it does best.
             </p>
           </div>
 
@@ -1684,7 +1681,7 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
                 </div>
                 <div className="text-left">
                   <div className="text-sm font-bold text-white leading-tight">A hard decision</div>
-                  <div className="text-[10px] text-cyan-300/70 leading-tight">dispatched to the council</div>
+                  <div className="text-[10px] text-cyan-300/70 leading-tight">sent to all four models</div>
                 </div>
               </div>
             </div>
@@ -1694,7 +1691,7 @@ function AISystemSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
           </div>
 
           {/* 5 model chips */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {COUNCIL_MODELS.map((m) => (
               <div
                 key={m.name}
@@ -2132,8 +2129,8 @@ export default function App() {
               </h2>
               <Separator className="w-12 bg-primary h-0.5 mb-8" />
               <p className="text-xl md:text-2xl font-semibold tracking-tight text-foreground/80 leading-snug mb-8">
-                Turning raw data into<br />
-                <span style={{ color: accentText("#06B6D4") }}>real-world solutions</span>
+                Making manual work<br />
+                <span style={{ color: accentText("#06B6D4") }}>reliable and automatic</span>
               </p>
 
               {/* Quick facts */}
@@ -2159,7 +2156,7 @@ export default function App() {
             {/* Right — bio + details */}
             <div className="lg:w-3/5 lg:pl-12">
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-10">
-                I finished my M.S. in Business Analytics, with a concentration in AI, at the University of Louisville in August 2026. Before that I spent a year in accounts payable at Churchill Downs, checking invoice and vendor data across more than ten properties, and three years in shipping and receiving at Terex. Outside of work I build: a live sports data platform, AI agent workflows, data pipelines and predictive models. The work I enjoy most is taking a manual, error-prone process and making it reliable and automatic.
+                I finished my M.S. in Business Analytics, with a concentration in AI, at the University of Louisville in August 2026. Before that I spent a year in accounts payable at Churchill Downs, checking invoice and vendor data across more than ten properties, and worked shipping and receiving at Terex around school from 2020 to 2023. Outside of work I build: a live sports data platform, AI agent workflows, data pipelines and predictive models. The work I enjoy most is taking a manual, error-prone process and making it reliable and automatic.
               </p>
 
               {/* Where I fit: one line per kind of team, each backed by real work */}
@@ -2167,7 +2164,7 @@ export default function App() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 {[
                   { label: "AI and automation", value: "Multi-agent AI workflows, Claude and Microsoft Copilot in daily use, and a Copilot agent that triages invoices.", color: "#8B5CF6" },
-                  { label: "Data and analytics", value: "SQL, Python, Power BI and Tableau, from data pipelines through to dashboards and live apps.", color: "#06B6D4" },
+                  { label: "Data and analytics", value: "SQL and Python in my own projects, Power BI and Tableau in coursework, from data pipelines to dashboards and live apps.", color: "#06B6D4" },
                   { label: "Finance and operations", value: "A year validating invoice and vendor data in SAP and JD Edwards, plus a B.B.A. in Finance.", color: "#10B981" },
                 ].map((item, i) => (
                   <div key={i} className="pl-4" style={{ borderLeft: `2px solid ${item.color}` }}>

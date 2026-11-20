@@ -36,7 +36,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
         { value: "1 in 4", label: "had already left" },
         { value: "0.899", label: "best model AUC" },
       ],
-      body: "A case competition in my MSBA program. The company wanted to know who would leave next, why, and where its retention team should start.",
+      body: "A team case competition in my MSBA program. The company wanted to know who would leave next, why, and where its retention team should start.",
     },
     {
       label: "The data",
@@ -46,7 +46,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
       note: "The first six months are the danger zone. More than half of the newest customers left, compared with under 10% of customers past four years.",
     },
     {
-      label: "How I did it",
+      label: "How we did it",
       title: "Clean, model, explain, segment",
       flow: [
         { name: "Clean", does: "Fixed gaps and odd values and got the columns ready to model.", limit: "pandas" },
@@ -73,7 +73,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
       ],
     },
     {
-      label: "What I found",
+      label: "What we found",
       title: "Contract, tenure and referrals drive it",
       body: "Referrals and dependents pull customers toward staying. Month-to-month contracts and short tenure push them out.",
       figures: [
@@ -82,7 +82,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
       ],
     },
     {
-      label: "What I'd tell them",
+      label: "What we'd tell them",
       title: "Where to start",
       points: [
         "Focus on new month-to-month customers. They leave the most, and early on is the cheapest time to keep them.",
@@ -101,7 +101,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
       stats: [
         { value: "5,659", label: "films" },
         { value: "7", label: "data-quality checks" },
-        { value: "3NF", label: "PostgreSQL database" },
+        { value: "3", label: "linked database tables" },
       ],
       body: "I wanted to answer it end to end: pull the raw data, build a clean database, and put an app on top that anyone can explore.",
     },
@@ -158,12 +158,12 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
         { value: "8", label: "models compared" },
         { value: "0.729", label: "best macro AUC" },
       ],
-      body: "One chest X-ray can show several conditions at once, so the model gives a separate probability for each one. I also wanted it to show where it was looking.",
+      body: "One chest X-ray can show several conditions at once, so the model gives a separate probability for each one. We also wanted it to show where it was looking. This was a team project in my MSBA program.",
     },
     {
       label: "The data",
       title: "Most X-rays show nothing",
-      body: "I used the public NIH ChestX-ray14 dataset. The average image is negative for 13.28 of the 14 conditions, so a model that always says \"nothing found\" would look very accurate. That's why I scored everything on AUC.",
+      body: "We used the public NIH ChestX-ray14 dataset. The average image is negative for 13.28 of the 14 conditions, so a model that always says \"nothing found\" would look very accurate. That's why I scored everything on AUC.",
       figures: [
         { img: P + "xray-frequency.webp", caption: "How often each condition appears" },
         { img: P + "xray-findings.webp", caption: "Findings per image" },
@@ -171,7 +171,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
       ],
     },
     {
-      label: "How I did it",
+      label: "How we did it",
       title: "Features, models, thresholds",
       flow: [
         { name: "Features", does: "A pretrained image network turns each X-ray into 1,280 numbers.", limit: "EfficientNetB0" },
@@ -209,7 +209,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
       note: "A class project, not a medical tool.",
     },
     {
-      label: "What I used",
+      label: "What we used",
       title: "Tools",
       tools: [
         { name: "TensorFlow and Keras", use: "The pretrained network and the neural nets" },
@@ -243,7 +243,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
         { name: "Check", does: "Runs nine rules and marks the invoice CLEAN or ESCALATED, listing every reason.", limit: "Has no tools" },
         { name: "Route", does: "Clean invoices go to the approval queue. Anything flagged goes to an AP clerk.", limit: "Can only send notifications" },
       ],
-      body: "I built a working one-agent version in Copilot Studio first, then split it into three so a mistake in one step can't spread to the next. None of the agents can approve or pay an invoice.",
+      body: "I built a working one-agent version in Copilot Studio, then designed this three-agent version so a mistake in one step can't spread to the next. None of the agents can approve or pay an invoice.",
       pointsTitle: "A person always steps in when",
       points: [
         "the PDF can't be read",
@@ -283,7 +283,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
       label: "Testing it",
       title: "How you'd know if it broke",
       points: [
-        "40 test cases, run every week: normal invoices, edge cases, attack attempts (like instructions hidden in a PDF) and compliance checks.",
+        "A 40-case test plan, meant to run every week: normal invoices, edge cases, attack attempts (like instructions hidden in a PDF) and compliance checks.",
         "An error ceiling of 1%, which is about 12 invoices a month.",
         "Clear reasons to shut it off: the error rate climbs, results drift, or clerks start approving without looking.",
         "Checked against the NIST AI RMF, SOX, 1099 reporting and OFAC sanctions screening.",
@@ -332,7 +332,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
       label: "How it works",
       title: "Feeds in, pages out",
       flow: [
-        { name: "Ingest", does: "League feeds and public odds come in all day and get checked on the way in.", limit: "Python" },
+        { name: "Ingest", does: "League data feeds come in all day and get checked on the way in.", limit: "Python" },
         { name: "Store", does: "About 68,000 games, with the big archives kept in the cloud.", limit: "SQL, Cloudflare R2" },
         { name: "Model", does: "A separate model for each sport, tested on seasons it never trained on.", limit: "scikit-learn, LightGBM" },
         { name: "Publish", does: "The site rebuilds itself when the data changes.", limit: "Astro, Cloudflare Pages" },
@@ -448,7 +448,8 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
       label: "What we used",
       title: "Tools",
       tools: [
-        { name: "Azure AI Foundry", use: "The project, the model and the agent" },
+        { name: "Azure AI Foundry", use: "The project and the model deployment" },
+        { name: "Azure AI Agent Service", use: "Runs the agent and its instructions" },
         { name: "OpenAPI tool", use: "Lets the agent call the Finnhub API" },
         { name: "Finnhub API", use: "Live prices, profiles, metrics and news" },
         { name: "Azure connection", use: "Keeps the API key out of the agent's instructions" },
@@ -459,13 +460,13 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
   "msba-nba": [
     {
       label: "The problem",
-      title: "Pick the winner using only what's known before tip-off",
+      title: "Predict the winner using only what's known before tip-off",
       stats: [
-        { value: "10.5K", label: "games" },
+        { value: "10.5K", label: "team-game rows" },
         { value: "5", label: "seasons" },
         { value: "26", label: "pre-game features" },
       ],
-      body: "My MSBA 645 final. The hard part is staying honest: the model can only see what was known before the game started.",
+      body: "My MSBA 645 final. The model can only use what was known before the game started.",
     },
     {
       label: "How I did it",
