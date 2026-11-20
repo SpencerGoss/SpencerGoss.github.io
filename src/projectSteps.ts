@@ -231,7 +231,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
         { value: "$15,200", label: "a month in clerk labor" },
         { value: "4 to 6%", label: "error rate" },
       ],
-      body: "That's the setup in my capstone case. Most invoices are routine, but every one gets keyed into NetSuite by hand, and mistakes like missed POs and duplicate payments get through. I worked a year in accounts payable at Churchill Downs before my master's, so I knew this work well.",
+      body: "That's the setup in the class case. Most invoices are routine, but every one gets keyed into NetSuite by hand, and mistakes like missed POs and duplicate payments get through. I worked a year in accounts payable at Churchill Downs before my master's, so I knew this work well.",
       note: "MidwestCorp is the case company from the course, so the dollar figures on this page come from the case.",
     },
     {

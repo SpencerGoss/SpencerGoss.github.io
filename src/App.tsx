@@ -172,7 +172,7 @@ const PROJECTS = [
   {
     id: "invoice-agent",
     title: "Invoice Triage Agent",
-    subtitle: "AI Agent Workflow · MSBA Capstone",
+    subtitle: "AI Agent Workflow · MSBA Class Project",
     accent: "#059669",
     accentBg: "rgba(5,150,105,0.08)",
     featured: false,
@@ -196,7 +196,7 @@ const PROJECTS = [
       { display: "40", label: "Test cases" },
     ],
     caseStudy: {
-      hook: "My MSBA capstone: an AI agent that handles the routine part of invoice intake for an accounts payable team, and the plan for deciding whether to trust it.",
+      hook: "An MSBA class project: an AI agent that handles the routine part of invoice intake for an accounts payable team, and the plan for deciding whether to trust it.",
       sections: [
         {
           title: "The Problem",
@@ -570,7 +570,7 @@ const EXPERIENCE = [
       "Python, R, and SQL for advanced analytics and predictive modeling",
       "Built machine learning pipelines from data collection through deployment",
       "Coursework in machine learning, predictive modeling, data mining, database systems, cloud (Azure), and applied AI; case competition on customer churn",
-      "Capstone: designed an AI agent workflow for accounts payable invoice intake in Microsoft Copilot Studio, with a business case, evaluation plan and governance plan",
+      "Class project: designed an AI agent workflow for accounts payable invoice intake in Microsoft Copilot Studio, with a business case, evaluation plan and governance plan",
     ],
     highlights: ["3.94 GPA", "AI Concentration", "Predictive Modeling", "Machine Learning Pipelines"],
     type: "education" as const,
