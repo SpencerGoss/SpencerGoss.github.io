@@ -304,12 +304,12 @@ const PROJECTS = [
         {
           title: "The Approach",
           color: "#8B5CF6",
-          body: "I engineered 26 pre-game features: last-10-game rolling form, home and away win-rate splits, season-to-date averages, and team-versus-opponent matchup differentials. Models were trained on past seasons and tested on the most recent one (walk-forward validation), comparing logistic regression with LightGBM. I also used K-Means clustering to group teams by play style (Elite Efficiency, Pace and Pressure, Rebuilding, Middle of the Pack), which picked up real franchise shifts across seasons.",
+          body: "I engineered 26 pre-game features: last-10-game rolling form, home and away win-rate splits, season-to-date averages, and team-versus-opponent matchup differentials. Models were trained on four seasons (2020-21 to 2023-24) and tested on the 2024-25 season they never saw, comparing logistic regression with LightGBM. I also used K-Means clustering to group teams by play style (Elite Efficiency, Pace and Pressure, Rebuilding, Middle of the Pack), which picked up real franchise shifts across seasons.",
         },
         {
           title: "The Result",
           color: "#10B981",
-          body: "Logistic regression edged out LightGBM, and adding the play-style clusters as features added about 1.3 points of accuracy. The same pre-game feature approach and walk-forward testing became the foundation of the Oddsix prediction models.",
+          body: "Logistic regression beat LightGBM on the held-out season, 66.4% to 63.7%. Adding the play-style groups as features nudged both up by a little over a point. The same pre-game feature approach and season-based testing became the foundation of the Oddsix prediction models.",
         },
       ],
     },

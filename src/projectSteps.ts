@@ -473,7 +473,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
       title: "Features, testing, play styles",
       flow: [
         { name: "Features", does: "Recent form, home and away records, season averages and matchup gaps.", limit: "pandas" },
-        { name: "Test", does: "Train on earlier seasons, test on the next one, the way it would really be used.", limit: "Walk-forward" },
+        { name: "Test", does: "Train on four seasons, test on the 2024-25 season, the way it would really be used.", limit: "Season holdout" },
         { name: "Cluster", does: "Group teams into four play styles.", limit: "K-means" },
       ],
       body: "The four styles were Elite Efficiency, Pace and Pressure, Rebuilding, and Middle of the Pack. They picked up real changes in teams from season to season.",
@@ -481,7 +481,7 @@ export const PROJECT_STEPS: Record<string, Step[]> = {
     {
       label: "The result",
       title: "The simpler model won",
-      body: "Logistic regression edged out LightGBM, and adding the play-style groups added about 1.3 points of accuracy. This approach became the starting point for the Oddsix models.",
+      body: "Logistic regression beat LightGBM on the held-out season, 66.4% to 63.7%. Adding the play-style groups nudged both up by a little over a point. This approach became the starting point for the Oddsix models.",
     },
     {
       label: "What I used",
